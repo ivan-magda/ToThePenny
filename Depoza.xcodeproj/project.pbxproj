@@ -1,0 +1,444 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
+		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
+		506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */; };
+		506E728F1A1E0B450006F2DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E728E1A1E0B450006F2DF /* ViewController.m */; };
+		506E72921A1E0B450006F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506E72901A1E0B450006F2DF /* Main.storyboard */; };
+		506E72941A1E0B450006F2DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506E72931A1E0B450006F2DF /* Images.xcassets */; };
+		506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506E72951A1E0B450006F2DF /* LaunchScreen.xib */; };
+		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		506E729D1A1E0B450006F2DF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 506E72781A1E0B450006F2DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 506E727F1A1E0B450006F2DF;
+			remoteInfo = Depoza;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		506E72871A1E0B450006F2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		506E72881A1E0B450006F2DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Depoza.xcdatamodel; sourceTree = "<group>"; };
+		506E728D1A1E0B450006F2DF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		506E728E1A1E0B450006F2DF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		506E72911A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		506E72931A1E0B450006F2DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		506E72961A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		506E729C1A1E0B450006F2DF /* DepozaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		506E72A11A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		506E72A21A1E0B450006F2DF /* DepozaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DepozaTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		506E727D1A1E0B450006F2DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506E72991A1E0B450006F2DF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		506E72771A1E0B450006F2DF = {
+			isa = PBXGroup;
+			children = (
+				506E72821A1E0B450006F2DF /* Depoza */,
+				506E729F1A1E0B450006F2DF /* DepozaTests */,
+				506E72811A1E0B450006F2DF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		506E72811A1E0B450006F2DF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				506E72801A1E0B450006F2DF /* Depoza.app */,
+				506E729C1A1E0B450006F2DF /* DepozaTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		506E72821A1E0B450006F2DF /* Depoza */ = {
+			isa = PBXGroup;
+			children = (
+				506E72871A1E0B450006F2DF /* AppDelegate.h */,
+				506E72881A1E0B450006F2DF /* AppDelegate.m */,
+				506E728D1A1E0B450006F2DF /* ViewController.h */,
+				506E728E1A1E0B450006F2DF /* ViewController.m */,
+				506E72901A1E0B450006F2DF /* Main.storyboard */,
+				506E72931A1E0B450006F2DF /* Images.xcassets */,
+				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
+				506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */,
+				506E72831A1E0B450006F2DF /* Supporting Files */,
+			);
+			path = Depoza;
+			sourceTree = "<group>";
+		};
+		506E72831A1E0B450006F2DF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				506E72841A1E0B450006F2DF /* Info.plist */,
+				506E72851A1E0B450006F2DF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		506E729F1A1E0B450006F2DF /* DepozaTests */ = {
+			isa = PBXGroup;
+			children = (
+				506E72A21A1E0B450006F2DF /* DepozaTests.m */,
+				506E72A01A1E0B450006F2DF /* Supporting Files */,
+			);
+			path = DepozaTests;
+			sourceTree = "<group>";
+		};
+		506E72A01A1E0B450006F2DF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				506E72A11A1E0B450006F2DF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		506E727F1A1E0B450006F2DF /* Depoza */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 506E72A61A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "Depoza" */;
+			buildPhases = (
+				506E727C1A1E0B450006F2DF /* Sources */,
+				506E727D1A1E0B450006F2DF /* Frameworks */,
+				506E727E1A1E0B450006F2DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Depoza;
+			productName = Depoza;
+			productReference = 506E72801A1E0B450006F2DF /* Depoza.app */;
+			productType = "com.apple.product-type.application";
+		};
+		506E729B1A1E0B450006F2DF /* DepozaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 506E72A91A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "DepozaTests" */;
+			buildPhases = (
+				506E72981A1E0B450006F2DF /* Sources */,
+				506E72991A1E0B450006F2DF /* Frameworks */,
+				506E729A1A1E0B450006F2DF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				506E729E1A1E0B450006F2DF /* PBXTargetDependency */,
+			);
+			name = DepozaTests;
+			productName = DepozaTests;
+			productReference = 506E729C1A1E0B450006F2DF /* DepozaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		506E72781A1E0B450006F2DF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = "Ivan Magda";
+				TargetAttributes = {
+					506E727F1A1E0B450006F2DF = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					506E729B1A1E0B450006F2DF = {
+						CreatedOnToolsVersion = 6.1;
+						TestTargetID = 506E727F1A1E0B450006F2DF;
+					};
+				};
+			};
+			buildConfigurationList = 506E727B1A1E0B450006F2DF /* Build configuration list for PBXProject "Depoza" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 506E72771A1E0B450006F2DF;
+			productRefGroup = 506E72811A1E0B450006F2DF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				506E727F1A1E0B450006F2DF /* Depoza */,
+				506E729B1A1E0B450006F2DF /* DepozaTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		506E727E1A1E0B450006F2DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
+				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
+				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506E729A1A1E0B450006F2DF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		506E727C1A1E0B450006F2DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */,
+				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				506E728F1A1E0B450006F2DF /* ViewController.m in Sources */,
+				506E72861A1E0B450006F2DF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506E72981A1E0B450006F2DF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		506E729E1A1E0B450006F2DF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 506E727F1A1E0B450006F2DF /* Depoza */;
+			targetProxy = 506E729D1A1E0B450006F2DF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		506E72901A1E0B450006F2DF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				506E72911A1E0B450006F2DF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		506E72951A1E0B450006F2DF /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				506E72961A1E0B450006F2DF /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		506E72A41A1E0B450006F2DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		506E72A51A1E0B450006F2DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		506E72A71A1E0B450006F2DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Depoza/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		506E72A81A1E0B450006F2DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Depoza/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		506E72AA1A1E0B450006F2DF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DepozaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Depoza.app/Depoza";
+			};
+			name = Debug;
+		};
+		506E72AB1A1E0B450006F2DF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DepozaTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Depoza.app/Depoza";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		506E727B1A1E0B450006F2DF /* Build configuration list for PBXProject "Depoza" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506E72A41A1E0B450006F2DF /* Debug */,
+				506E72A51A1E0B450006F2DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		506E72A61A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "Depoza" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506E72A71A1E0B450006F2DF /* Debug */,
+				506E72A81A1E0B450006F2DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		506E72A91A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "DepozaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				506E72AA1A1E0B450006F2DF /* Debug */,
+				506E72AB1A1E0B450006F2DF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */,
+			);
+			currentVersion = 506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */;
+			path = Depoza.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 506E72781A1E0B450006F2DF /* Project object */;
+}
