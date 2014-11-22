@@ -7,14 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseViewController.m */; };
+		502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547971A1ED26600DCB8FB /* reveal-icon.png */; };
+		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
 		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
 		506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */; };
-		506E728F1A1E0B450006F2DF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E728E1A1E0B450006F2DF /* ViewController.m */; };
 		506E72921A1E0B450006F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506E72901A1E0B450006F2DF /* Main.storyboard */; };
 		506E72941A1E0B450006F2DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506E72931A1E0B450006F2DF /* Images.xcassets */; };
 		506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506E72951A1E0B450006F2DF /* LaunchScreen.xib */; };
 		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
+		506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72AD1A1E0B710006F2DF /* SWRevealViewController.m */; };
+		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
+		506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */; };
+		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,20 +34,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		502547941A1EC86600DCB8FB /* AddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewController.h; sourceTree = "<group>"; };
+		502547951A1EC86600DCB8FB /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
+		502547971A1ED26600DCB8FB /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
+		502547981A1ED26600DCB8FB /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
 		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		506E72871A1E0B450006F2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		506E72881A1E0B450006F2DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Depoza.xcdatamodel; sourceTree = "<group>"; };
-		506E728D1A1E0B450006F2DF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		506E728E1A1E0B450006F2DF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		506E72911A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		506E72931A1E0B450006F2DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		506E72961A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		506E729C1A1E0B450006F2DF /* DepozaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72A11A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72A21A1E0B450006F2DF /* DepozaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DepozaTests.m; sourceTree = "<group>"; };
+		506E72AC1A1E0B710006F2DF /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		506E72AD1A1E0B710006F2DF /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		506E72B01A1E0D560006F2DF /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		506E72B11A1E0D560006F2DF /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		506E72B31A1E0EBB0006F2DF /* SideBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SideBarViewController.h; sourceTree = "<group>"; };
+		506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideBarViewController.m; sourceTree = "<group>"; };
+		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
+		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +78,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5025479B1A1ED27600DCB8FB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				502547971A1ED26600DCB8FB /* reveal-icon.png */,
+				502547981A1ED26600DCB8FB /* reveal-icon@2x.png */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		506E72771A1E0B450006F2DF = {
 			isa = PBXGroup;
 			children = (
 				506E72821A1E0B450006F2DF /* Depoza */,
+				506E72AF1A1E0B820006F2DF /* SWRevealViewController */,
 				506E729F1A1E0B450006F2DF /* DepozaTests */,
 				506E72811A1E0B450006F2DF /* Products */,
 			);
@@ -85,12 +111,14 @@
 			children = (
 				506E72871A1E0B450006F2DF /* AppDelegate.h */,
 				506E72881A1E0B450006F2DF /* AppDelegate.m */,
-				506E728D1A1E0B450006F2DF /* ViewController.h */,
-				506E728E1A1E0B450006F2DF /* ViewController.m */,
+				508774851A1F0C19002D1A9E /* Expense.h */,
+				508774861A1F0C19002D1A9E /* Expense.m */,
+				508774881A1F0C2A002D1A9E /* View */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
 				506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */,
+				5025479B1A1ED27600DCB8FB /* Resources */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
 			);
 			path = Depoza;
@@ -120,6 +148,28 @@
 				506E72A11A1E0B450006F2DF /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		506E72AF1A1E0B820006F2DF /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				506E72AC1A1E0B710006F2DF /* SWRevealViewController.h */,
+				506E72AD1A1E0B710006F2DF /* SWRevealViewController.m */,
+			);
+			name = SWRevealViewController;
+			sourceTree = "<group>";
+		};
+		508774881A1F0C2A002D1A9E /* View */ = {
+			isa = PBXGroup;
+			children = (
+				506E72B31A1E0EBB0006F2DF /* SideBarViewController.h */,
+				506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */,
+				506E72B01A1E0D560006F2DF /* MainViewController.h */,
+				506E72B11A1E0D560006F2DF /* MainViewController.m */,
+				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
+				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,8 +253,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
+				5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
+				502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,8 +276,12 @@
 			files = (
 				506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
-				506E728F1A1E0B450006F2DF /* ViewController.m in Sources */,
+				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
+				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
+				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
+				506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
+				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +472,7 @@
 				506E72A81A1E0B450006F2DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		506E72A91A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "DepozaTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +481,7 @@
 				506E72AB1A1E0B450006F2DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

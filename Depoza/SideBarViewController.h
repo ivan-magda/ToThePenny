@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SideBarViewController.h
 //  Depoza
 //
 //  Created by Ivan Magda on 20.11.14.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SideBarViewController : UITableViewController
 
 @end
-
