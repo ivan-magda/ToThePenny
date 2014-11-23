@@ -7,6 +7,9 @@
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 
+- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
+- (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender;
+
 @end
 
 @implementation AddExpenseViewController {
@@ -115,10 +118,12 @@
 
         [self removeTableView];
         [self createTableView];
+        [self createDoneBarButton];
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
 
+        [self.descriptionTextField resignFirstResponder];
         self.descriptionTextField.hidden = YES;
 
         [self removeTableView];
@@ -139,8 +144,16 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    [self.expenseTextField resignFirstResponder];
-    [self removeDoneBarButton];
+    if (!_isChosenCategory) {
+        [self.expenseTextField resignFirstResponder];
+        [self removeDoneBarButton];
+    } else {
+//        Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
+
+        [self.descriptionTextField resignFirstResponder];
+
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - UITextFieldDelegate -
@@ -165,6 +178,21 @@
 
 - (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer {
     [self.expenseTextField resignFirstResponder];
+}
+
+#pragma mark - IBAction -
+
+- (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
+    if (!_isChosenCategory)
+        [self.expenseTextField resignFirstResponder];
+    else
+        [self.descriptionTextField resignFirstResponder];
+
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender {
+    [self doneBarButtonPressed:nil];
 }
 
 @end
