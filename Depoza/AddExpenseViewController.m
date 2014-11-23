@@ -18,6 +18,7 @@
     NSArray *_categories;
     NSIndexPath *_selectedRow;
     UITableView *_tableView;
+    BOOL _isChosenCategory;
 }
 
 #pragma mark - ViewController life cycle -
@@ -25,8 +26,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self customSetUp];
-
-    _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения", @"Test", @"Test", @"Test"];
 }
 
 - (void)customSetUp {
@@ -34,6 +33,8 @@
 
     [self.textField becomeFirstResponder];
     self.textField.delegate = self;
+
+    _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения", @"Test", @"Test", @"Test"];
 }
 
 #pragma mark - CustomTableView -
@@ -51,12 +52,25 @@
 }
 
 - (CGRect)tableViewRect {
-    CGFloat y = self.textField.frame.origin.y + self.textField.frame.size.height + 8;
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.textField.frame.size.height - 16;
-
-    CGRect tableViewRect = CGRectMake(0, y, width, height);
+        //8 and 16 are space values to layoutGuide and so on
+    CGRect tableViewRect;
+    CGFloat originY = self.textField.frame.origin.y + self.textField.frame.size.height + 8;
+    if (_isChosenCategory) {
+        CGFloat height = 44;
+        tableViewRect = CGRectMake(0, originY, self.view.frame.size.width, height);
+    } else {
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.textField.frame.size.height - 16;
+        tableViewRect = CGRectMake(0, originY, width, height);
+    }
     return tableViewRect;
+}
+
+- (void)removeTableView {
+    [_tableView removeFromSuperview];
+    _tableView.dataSource = nil;
+    _tableView.delegate = nil;
+    _tableView = nil;
 }
 
 #pragma mark UITableViewDataSource
@@ -66,33 +80,27 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_categories count];
+    return (_isChosenCategory ? 1 : [_categories count]);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (!cell) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:(_isChosenCategory ? UITableViewCellStyleValue1 : UITableViewCellStyleDefault) reuseIdentifier:identifier];
     }
     [self configurateCell:cell indexPath:indexPath];
 
     return cell;
 }
 
-- (void)configurateCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath
-{
+- (void)configurateCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     if (cell) {
-        cell.textLabel.text = _categories[indexPath.row];
-
-        if (cell.accessoryType == UITableViewCellAccessoryCheckmark) {
-            if (_selectedRow.row != indexPath.row) {
-                cell.accessoryType = UITableViewCellAccessoryNone;
-            }
-        } else if (_selectedRow) {
-            if (_selectedRow.row == indexPath.row) {
-                cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            }
+        if (!_isChosenCategory) {
+            cell.textLabel.text = _categories[indexPath.row];
+        } else {
+            cell.textLabel.text = _categories[_selectedRow.row];
+            cell.detailTextLabel.text = @"X";
         }
     }
 }
@@ -100,33 +108,20 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self configurateCheckmarkForCellAtIndexPath:indexPath tableView:tableView];
-
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
 
-- (void)configurateCheckmarkForCellAtIndexPath:(NSIndexPath *)indexPath tableView:(UITableView *)tableView
-{
-    if (_selectedRow == indexPath) {
-        UITableViewCell *cell = [tableView cellForRowAtIndexPath:_selectedRow];
-        [self changeAccessorytype:cell];
-        _selectedRow = nil;
-    } else {
-        if (_selectedRow) {
-            UITableViewCell *oldCell = [tableView cellForRowAtIndexPath:_selectedRow];
-            [self changeAccessorytype:oldCell];
-        }
-        UITableViewCell *newCell = [tableView cellForRowAtIndexPath:indexPath];
-        [self changeAccessorytype:newCell];
+    if (!_isChosenCategory) {
+        _isChosenCategory = YES;
         _selectedRow = indexPath;
-    }
-}
 
-- (void)changeAccessorytype:(UITableViewCell *)cell {
-    if (cell.accessoryType == UITableViewCellAccessoryNone) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        [self removeTableView];
+        [self createTableView];
     } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        _isChosenCategory = NO;
+        _selectedRow = nil;
+
+        [self removeTableView];
+        [self createTableView];
     }
 }
 
@@ -149,8 +144,7 @@
 
 #pragma mark - UITextFieldDelegate -
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *stringFromTextField = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if (stringFromTextField.length > 0) {
         _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
@@ -161,7 +155,6 @@
         if (_expenseFromTextField)
             _expenseFromTextField = @(0.0f);
     }
-
     return YES;
 }
 
