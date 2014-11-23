@@ -1,24 +1,22 @@
 #import "AddExpenseViewController.h"
 #import "Expense.h"
 
-@implementation CategoryTableViewCell
-
-@end
-
 
 @interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UITextField *textField;
+@property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
+@property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
 
 @end
 
 @implementation AddExpenseViewController {
     NSNumber *_expenseFromTextField;
-    UIBarButtonItem *_doneBarButtonItem;
     NSArray *_categories;
     NSIndexPath *_selectedRow;
-    UITableView *_tableView;
     BOOL _isChosenCategory;
+
+    UIBarButtonItem *_doneBarButtonItem;
+    UITableView *_tableView;
 }
 
 #pragma mark - ViewController life cycle -
@@ -31,10 +29,10 @@
 - (void)customSetUp {
     [self createTableView];
 
-    [self.textField becomeFirstResponder];
-    self.textField.delegate = self;
+    [self.expenseTextField becomeFirstResponder];
+    self.expenseTextField.delegate = self;
 
-    _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения", @"Test", @"Test", @"Test"];
+    _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения"];
 }
 
 #pragma mark - CustomTableView -
@@ -54,13 +52,13 @@
 - (CGRect)tableViewRect {
         //8 and 16 are space values to layoutGuide and so on
     CGRect tableViewRect;
-    CGFloat originY = self.textField.frame.origin.y + self.textField.frame.size.height + 8;
+    CGFloat originY = self.expenseTextField.frame.origin.y + self.expenseTextField.frame.size.height + 8;
     if (_isChosenCategory) {
         CGFloat height = 44;
         tableViewRect = CGRectMake(0, originY, self.view.frame.size.width, height);
     } else {
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.textField.frame.size.height - 16;
+        CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.expenseTextField.frame.size.height - 16;
         tableViewRect = CGRectMake(0, originY, width, height);
     }
     return tableViewRect;
@@ -108,17 +106,20 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
     if (!_isChosenCategory) {
         _isChosenCategory = YES;
         _selectedRow = indexPath;
+
+        self.descriptionTextField.hidden = NO;
+        [self.descriptionTextField becomeFirstResponder];
 
         [self removeTableView];
         [self createTableView];
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
+
+        self.descriptionTextField.hidden = YES;
 
         [self removeTableView];
         [self createTableView];
@@ -138,7 +139,7 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    [self.textField resignFirstResponder];
+    [self.expenseTextField resignFirstResponder];
     [self removeDoneBarButton];
 }
 
@@ -163,7 +164,7 @@
 }
 
 - (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer {
-    [self.textField resignFirstResponder];
+    [self.expenseTextField resignFirstResponder];
 }
 
 @end
