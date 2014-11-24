@@ -77,10 +77,10 @@
     return [formatter stringFromDate:theDate];
 }
 
-- (void)updateMostValuebleCategoriesWithExpense {
+- (void)updateLabelsForMostValuebleCategories {
     CGFloat maxValue = 0;
     NSString *maxCategoryName;
-    NSMutableSet *set = [NSMutableSet setWithCapacity:3];
+    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
     for (int i = 0; i < 3; ++i) {
         maxValue = 0;
         if (i > 0) {
@@ -134,7 +134,7 @@
 
     [self updateLabels];
 
-    [self updateMostValuebleCategoriesWithExpense];
+    [self updateLabelsForMostValuebleCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
