@@ -38,6 +38,7 @@
 		502547951A1EC86600DCB8FB /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
 		502547971A1ED26600DCB8FB /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		502547981A1ED26600DCB8FB /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
+		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerProtocol.h; sourceTree = "<group>"; };
 		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 				506E72B01A1E0D560006F2DF /* MainViewController.h */,
 				506E72B11A1E0D560006F2DF /* MainViewController.m */,
 				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
+				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
 				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
 			);
 			name = View;

@@ -35,6 +35,8 @@
     [self.expenseTextField becomeFirstResponder];
     self.expenseTextField.delegate = self;
 
+    self.descriptionTextField.hidden = YES;
+
     _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения"];
 }
 
@@ -45,9 +47,7 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
 
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    [_tableView addGestureRecognizer:gestureRecognizer];
+    [self addGesturesRecognizers];
 
     [self.view addSubview:_tableView];
 }
@@ -65,6 +65,12 @@
         tableViewRect = CGRectMake(0, originY, width, height);
     }
     return tableViewRect;
+}
+
+- (void)addGesturesRecognizers {
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [_tableView addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)removeTableView {
@@ -148,11 +154,11 @@
         [self.expenseTextField resignFirstResponder];
         [self removeDoneBarButton];
     } else {
-//        Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
+        Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
 
         [self.descriptionTextField resignFirstResponder];
 
-        [self dismissViewControllerAnimated:YES completion:nil];
+        [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
     }
 }
 
@@ -176,10 +182,6 @@
     _expenseFromTextField = [NSNumber numberWithFloat:[textField.text floatValue]];
 }
 
-- (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer {
-    [self.expenseTextField resignFirstResponder];
-}
-
 #pragma mark - IBAction -
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
@@ -193,6 +195,14 @@
 
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender {
     [self doneBarButtonPressed:nil];
+}
+
+#pragma mark - GestureRecognizer -
+
+- (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer {
+    if (self.expenseTextField.resignFirstResponder) {
+        [self.expenseTextField resignFirstResponder];
+    }
 }
 
 @end
