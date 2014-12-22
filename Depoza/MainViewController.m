@@ -35,6 +35,8 @@
     [self updateLabels];
 }
 
+#pragma mark - Helper methods -
+
 - (void)customSetUp {
     self.revealBarButton.target = self.revealViewController;
     self.revealBarButton.action = @selector(revealToggle:);
@@ -77,7 +79,7 @@
     return [formatter stringFromDate:theDate];
 }
 
-- (void)updateLabelsForMostValuebleCategories {
+- (void)updateLabelsForMostValuableCategories {
     CGFloat maxValue = 0;
     NSString *maxCategoryName;
     NSMutableSet *set = [NSMutableSet setWithCapacity:2];
@@ -129,12 +131,10 @@
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _totalExpeditures += [expense.sumOfExpense floatValue];
 
-    CGFloat value = [_categories[expense.category]floatValue] + [expense.sumOfExpense floatValue];
-    [_categories setValue:@(value) forKey:expense.category];
+    [_categories setValue:@([_categories[expense.category]floatValue] + [expense.sumOfExpense floatValue]) forKey:expense.category];
 
     [self updateLabels];
-
-    [self updateLabelsForMostValuebleCategories];
+    [self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }

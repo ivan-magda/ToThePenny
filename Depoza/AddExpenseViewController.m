@@ -2,7 +2,7 @@
 #import "Expense.h"
 
 
-@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
@@ -47,7 +47,9 @@
     _tableView.dataSource = self;
     _tableView.delegate = self;
 
-    [self addGesturesRecognizers];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [_tableView addGestureRecognizer:gestureRecognizer];
 
     [self.view addSubview:_tableView];
 }
@@ -65,12 +67,6 @@
         tableViewRect = CGRectMake(0, originY, width, height);
     }
     return tableViewRect;
-}
-
-- (void)addGesturesRecognizers {
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    [_tableView addGestureRecognizer:gestureRecognizer];
 }
 
 - (void)removeTableView {
@@ -203,6 +199,12 @@
     if (self.expenseTextField.resignFirstResponder) {
         [self.expenseTextField resignFirstResponder];
     }
+}
+
+#pragma mark - UIScrollViewDelegate -
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self hideKeyboard:nil];
 }
 
 @end
