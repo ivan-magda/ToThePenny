@@ -30,17 +30,22 @@
 
 @implementation MainViewController {
     CGFloat _totalExpeditures;
-
     NSMutableDictionary *_categories;
 }
 
 #pragma mark - ViewController life cycle -
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self loadExpenseData];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self customSetUp];
-    [self performFetch];
     [self updateLabels];
 }
 
@@ -48,29 +53,60 @@
     _fetchedResultsController.delegate = nil;
 }
 
+#pragma mark - Save/Load data for Labels -
+
+- (NSString *)dataFilePath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths firstObject];
+    return [documentsDirectory stringByAppendingPathComponent:@"Expense.plist"];
+}
+
+- (void)saveExpenses {
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:[NSNumber numberWithFloat:_totalExpeditures] forKey:@"Total"];
+    [archiver encodeObject:_categories forKey:@"Categories"];
+    [archiver finishEncoding];
+    [data writeToFile:[self dataFilePath] atomically:YES];
+}
+
+- (void)loadExpenseData {
+    NSString *path = [self dataFilePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        _totalExpeditures = [[unarchiver decodeObjectForKey:@"Total"]floatValue];
+        _categories = [unarchiver decodeObjectForKey:@"Categories"];
+        [unarchiver finishDecoding];
+    } else {
+        _categories = [@{
+                         @"Связь"        : @0,
+                         @"Вещи"         : @0,
+                         @"Здоровье"     : @0,
+                         @"Продукты"     : @0,
+                         @"Еда вне дома" : @0,
+                         @"Жилье"        : @0,
+                         @"Поездки"      : @0,
+                         @"Другое"       : @0,
+                         @"Развлечения"  : @0
+                         }mutableCopy];
+        _totalExpeditures = 0.0f;
+    }
+}
+
 #pragma mark - Helper methods -
 
 - (void)customSetUp {
-    [NSFetchedResultsController deleteCacheWithName:@"Expense"];
-
-    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
-    
     self.revealBarButton.target = self.revealViewController;
     self.revealBarButton.action = @selector(revealToggle:);
 
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
-    _categories = [@{
-                    @"Связь"        : @0,
-                    @"Вещи"         : @0,
-                    @"Здоровье"     : @0,
-                    @"Продукты"     : @0,
-                    @"Еда вне дома" : @0,
-                    @"Жилье"        : @0,
-                    @"Поездки"      : @0,
-                    @"Другое"       : @0,
-                    @"Развлечения"  : @0
-                    }mutableCopy];
+    [NSFetchedResultsController deleteCacheWithName:@"Expense"];
+
+    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
+
+    [self performFetch];
 }
 
 - (void)updateLabels {
@@ -81,6 +117,8 @@
         self.secondCategorySummaLabel.text = @"";
         self.thirdCategoryNameLabel.text = @"";
         self.thirdCategorySummaLabel.text = @"";
+    } else {
+        [self updateLabelsForMostValuableCategories];
     }
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
     self.monthLabel.text = [self formatDate:[NSDate date]];
@@ -147,6 +185,9 @@
 #pragma mark - AddExpenseViewControllerProtocol -
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
+    if (self.tableView.hidden) {
+        self.tableView.hidden = NO;
+    }
     _totalExpeditures += [expense.sumOfExpense floatValue];
 
     [_categories setValue:@([_categories[expense.category]floatValue] + [expense.sumOfExpense floatValue]) forKey:expense.category];
@@ -155,22 +196,31 @@
     [self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
+
+    [self saveExpenses];
 }
 
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [[self.fetchedResultsController sections]count];
+   return [[self.fetchedResultsController sections]count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    NSInteger rows = [sectionInfo numberOfObjects];
+
+    if (rows == 0) {
+        self.tableView.hidden = YES;
+        return rows;
+    } else {
+        return rows;
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = expense.descriptionOfExpense;
+    cell.textLabel.text = expense.category;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", expense.sumOfExpense];
 }
 

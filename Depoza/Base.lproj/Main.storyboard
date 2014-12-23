@@ -203,7 +203,7 @@
                                     <constraint firstAttribute="height" constant="30" id="1uD-qQ-cKm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <action selector="descriptionTextFieldDidEndOnExit:" destination="Xcd-an-bxR" eventType="editingDidEndOnExit" id="1GE-gH-8y4"/>
                                 </connections>
