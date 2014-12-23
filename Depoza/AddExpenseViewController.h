@@ -5,4 +5,6 @@
 
 @property (nonatomic, weak) id<AddExpenseViewControllerProtocol> delegate;
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
 @end

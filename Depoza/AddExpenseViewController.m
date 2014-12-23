@@ -1,5 +1,6 @@
 #import "AddExpenseViewController.h"
 #import "Expense.h"
+#import "ExpenseData.h"
 
 
 @interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
@@ -120,7 +121,10 @@
 
         [self removeTableView];
         [self createTableView];
-        [self createDoneBarButton];
+
+        if (_expenseFromTextField.floatValue > 0.0f) {
+            [self createDoneBarButton];
+        }
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
@@ -130,6 +134,7 @@
 
         [self removeTableView];
         [self createTableView];
+        [self removeDoneBarButton];
     }
 }
 
@@ -146,30 +151,46 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    if (!_isChosenCategory) {
-        [self.expenseTextField resignFirstResponder];
-        [self removeDoneBarButton];
-    } else {
-        Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
+    Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
 
-        [self.descriptionTextField resignFirstResponder];
+    ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:@"ExpenseData" inManagedObjectContext:self.managedObjectContext];
+    expenseData.sumOfExpense = expense.sumOfExpense;
+    expenseData.category = expense.category;
+    expenseData.descriptionOfExpense = expense.descriptionOfExpense;
+    expenseData.dateOfExpense = expense.dateOfExpense;
 
-        [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+    NSError *error;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
+
+    [self.descriptionTextField resignFirstResponder];
+
+    [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
 }
 
 #pragma mark - UITextFieldDelegate -
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+
     NSString *stringFromTextField = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
     if (stringFromTextField.length > 0) {
         _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
-        [self createDoneBarButton];
+
+        if (_isChosenCategory) {
+            if (!_doneBarButtonItem) {
+                [self createDoneBarButton];
+            }
+        }
+
     } else if (stringFromTextField.length == 0) {
-        if (_doneBarButtonItem)
-            [self removeDoneBarButton];
-        if (_expenseFromTextField)
+        if (_expenseFromTextField) {
             _expenseFromTextField = @(0.0f);
+        }
+        if (_doneBarButtonItem) {
+            [self removeDoneBarButton];
+        }
     }
     return YES;
 }
