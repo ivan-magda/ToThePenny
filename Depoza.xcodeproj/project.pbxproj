@@ -21,6 +21,7 @@
 		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
 		506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
+		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
 		50B3574A1A48512700168958 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B357491A48512700168958 /* ExpenseData.m */; };
 		50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* SharedManagedObjectContext.m */; };
 /* End PBXBuildFile section */
@@ -61,6 +62,8 @@
 		506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideBarViewController.m; sourceTree = "<group>"; };
 		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
+		50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		50B357481A48512700168958 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50B357491A48512700168958 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* SharedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedManagedObjectContext.h; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
 				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
 				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
+				50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */,
+				50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 			files = (
 				506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
 				50B3574A1A48512700168958 /* ExpenseData.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,

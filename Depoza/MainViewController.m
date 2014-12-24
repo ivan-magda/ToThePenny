@@ -4,6 +4,7 @@
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "SharedManagedObjectContext.h"
+#import "DetailsViewController.h"
 
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -190,6 +191,14 @@
         AddExpenseViewController *controller = (AddExpenseViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.managedObjectContext = self.managedObjectContext;
+    } else if ([segue.identifier isEqualToString:@"ShowDetails"]) {
+        DetailsViewController *controller = (DetailsViewController *)segue.destinationViewController;
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+            controller.expenseToShow = expense;
+        }
     }
 }
 
@@ -237,8 +246,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
-        // Set up the cell...
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -248,6 +255,12 @@
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
 
     return [[sectionInfo name]uppercaseString];
+}
+
+#pragma mark - UITableViewDelegate -
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - NSFetchedResultsController -
@@ -302,7 +315,6 @@
     UITableView *tableView = self.tableView;
 
     switch(type) {
-
         case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
@@ -326,13 +338,18 @@
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 
     switch(type) {
-
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
             break;
 
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
+            break;
+        case NSFetchedResultsChangeMove:
+            NSParameterAssert(false);
+            break;
+        case NSFetchedResultsChangeUpdate:
+            NSParameterAssert(false);
             break;
     }
 }
