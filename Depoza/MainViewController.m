@@ -121,17 +121,28 @@
         [self updateLabelsForMostValuableCategories];
     }
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
-    self.monthLabel.text = [self formatDate:[NSDate date]];
+    self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
 }
 
-- (NSString *)formatDate:(NSDate *)theDate {
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MMMM"];
-        [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+- (NSString *)formatDate:(NSDate *)theDate forLabel:(NSString *)text {
+    if ([text isEqualToString:@"monthLabel"]) {
+        static NSDateFormatter *formatter = nil;
+        if (formatter == nil) {
+            formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MMMM"];
+            [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+        }
+        return [formatter stringFromDate:theDate];
+    } else if ([text isEqualToString:@"detailTextLabel"]) {
+        static NSDateFormatter *formatter = nil;
+        if (formatter == nil) {
+            formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"HH:mm"];
+        }
+        return [formatter stringFromDate:theDate];
+
     }
-    return [formatter stringFromDate:theDate];
+    return nil;
 }
 
 - (void)updateLabelsForMostValuableCategories {
@@ -220,8 +231,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = expense.category;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", expense.sumOfExpense];
+    cell.textLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.sumOfExpense floatValue], [self formatDate:expense.dateOfExpense forLabel:@"detailTextLabel"]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -231,6 +242,12 @@
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+
+    return [[sectionInfo name]uppercaseString];
 }
 
 #pragma mark - NSFetchedResultsController -
@@ -245,16 +262,17 @@
                                    entityForName:@"ExpenseData"inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
 
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]
+    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category" ascending:NO];
+    NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
                               initWithKey:@"dateOfExpense" ascending:YES];
-    [fetchRequest setSortDescriptors:@[sort]];
+    [fetchRequest setSortDescriptors:@[categorySortDescriptor, dateSortDescriptor]];
 
     [fetchRequest setFetchBatchSize:20];
 
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:self.managedObjectContext
-                                          sectionNameKeyPath:nil
+                                          sectionNameKeyPath:@"category"
                                                    cacheName:@"Expense"];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
