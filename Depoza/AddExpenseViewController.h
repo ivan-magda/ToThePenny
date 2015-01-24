@@ -7,4 +7,6 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
+@property (nonatomic, copy) NSArray *categories;
+
 @end

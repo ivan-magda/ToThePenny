@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6750" systemVersion="14C106a" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="CategoryData" representedClassName="CategoryData" syncable="YES">
+        <attribute name="idValue" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="expense" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ExpenseData" inverseName="category" inverseEntity="ExpenseData" syncable="YES"/>
+    </entity>
+    <entity name="ExpenseData" representedClassName="ExpenseData" syncable="YES">
+        <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="categoryId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="dateOfExpense" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="descriptionOfExpense" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="idValue" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <relationship name="category" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CategoryData" inverseName="expense" inverseEntity="CategoryData" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CategoryData" positionX="-243" positionY="-18" width="128" height="88"/>
+        <element name="ExpenseData" positionX="-54" positionY="-18" width="128" height="133"/>
+    </elements>
+</model>

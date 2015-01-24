@@ -2,18 +2,21 @@
 //  ExpenseData.m
 //  Depoza
 //
-//  Created by Ivan Magda on 22/12/14.
-//  Copyright (c) 2014 Ivan Magda. All rights reserved.
+//  Created by Ivan Magda on 24.01.15.
+//  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
 #import "ExpenseData.h"
+#import "CategoryData.h"
 
 
 @implementation ExpenseData
 
-@dynamic sumOfExpense;
-@dynamic category;
-@dynamic descriptionOfExpense;
+@dynamic amount;
+@dynamic categoryId;
 @dynamic dateOfExpense;
+@dynamic descriptionOfExpense;
+@dynamic idValue;
+@dynamic category;
 
 @end

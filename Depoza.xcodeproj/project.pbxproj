@@ -12,7 +12,7 @@
 		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
 		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
-		506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */; };
+		506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
 		506E72921A1E0B450006F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506E72901A1E0B450006F2DF /* Main.storyboard */; };
 		506E72941A1E0B450006F2DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506E72931A1E0B450006F2DF /* Images.xcassets */; };
 		506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506E72951A1E0B450006F2DF /* LaunchScreen.xib */; };
@@ -21,9 +21,12 @@
 		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
 		506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
+		5097AA541A721B3400E8D145 /* NSDate+Components.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097AA531A721B3400E8D145 /* NSDate+Components.m */; };
 		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
-		50B3574A1A48512700168958 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B357491A48512700168958 /* ExpenseData.m */; };
 		50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* SharedManagedObjectContext.m */; };
+		50ED145A1A7348DB0081A22A /* CategoryData+RegisterDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */; };
+		50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689DD1A73C059002661E4 /* ExpenseData.m */; };
+		50F689E11A73C059002661E4 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689E01A73C059002661E4 /* CategoryData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +50,7 @@
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		506E72871A1E0B450006F2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		506E72881A1E0B450006F2DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Depoza.xcdatamodel; sourceTree = "<group>"; };
+		506E728B1A1E0B450006F2DF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		506E72911A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		506E72931A1E0B450006F2DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		506E72961A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -62,12 +65,18 @@
 		506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideBarViewController.m; sourceTree = "<group>"; };
 		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
+		5097AA521A721B3400E8D145 /* NSDate+Components.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Components.h"; sourceTree = "<group>"; };
+		5097AA531A721B3400E8D145 /* NSDate+Components.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Components.m"; sourceTree = "<group>"; };
 		50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
-		50B357481A48512700168958 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
-		50B357491A48512700168958 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* SharedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedManagedObjectContext.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* SharedManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedManagedObjectContext.m; sourceTree = "<group>"; };
+		50ED14581A7348DB0081A22A /* CategoryData+RegisterDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CategoryData+RegisterDefaults.h"; sourceTree = "<group>"; };
+		50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+RegisterDefaults.m"; sourceTree = "<group>"; };
+		50F689DC1A73C059002661E4 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
+		50F689DD1A73C059002661E4 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
+		50F689DF1A73C059002661E4 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
+		50F689E01A73C059002661E4 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,12 +130,11 @@
 			children = (
 				506E72871A1E0B450006F2DF /* AppDelegate.h */,
 				506E72881A1E0B450006F2DF /* AppDelegate.m */,
-				50B3574E1A48597300168958 /* DataModel */,
+				50B3574E1A48597300168958 /* CoreData */,
 				508774881A1F0C2A002D1A9E /* View */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
-				506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */,
 				5025479B1A1ED27600DCB8FB /* Resources */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
 			);
@@ -136,6 +144,8 @@
 		506E72831A1E0B450006F2DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5097AA521A721B3400E8D145 /* NSDate+Components.h */,
+				5097AA531A721B3400E8D145 /* NSDate+Components.m */,
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				506E72851A1E0B450006F2DF /* main.m */,
 			);
@@ -176,25 +186,30 @@
 				506E72B01A1E0D560006F2DF /* MainViewController.h */,
 				506E72B11A1E0D560006F2DF /* MainViewController.m */,
 				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
-				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
 				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
+				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
 				50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */,
 				50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
 		};
-		50B3574E1A48597300168958 /* DataModel */ = {
+		50B3574E1A48597300168958 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
+				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
 				50B3574B1A48596000168958 /* SharedManagedObjectContext.h */,
 				50B3574C1A48596000168958 /* SharedManagedObjectContext.m */,
+				50F689DF1A73C059002661E4 /* CategoryData.h */,
+				50F689E01A73C059002661E4 /* CategoryData.m */,
+				50F689DC1A73C059002661E4 /* ExpenseData.h */,
+				50F689DD1A73C059002661E4 /* ExpenseData.m */,
 				508774851A1F0C19002D1A9E /* Expense.h */,
 				508774861A1F0C19002D1A9E /* Expense.m */,
-				50B357481A48512700168958 /* ExpenseData.h */,
-				50B357491A48512700168958 /* ExpenseData.m */,
+				50ED14581A7348DB0081A22A /* CategoryData+RegisterDefaults.h */,
+				50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */,
 			);
-			name = DataModel;
+			name = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -246,6 +261,7 @@
 				TargetAttributes = {
 					506E727F1A1E0B450006F2DF = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 6UNHY8UY6E;
 					};
 					506E729B1A1E0B450006F2DF = {
 						CreatedOnToolsVersion = 6.1;
@@ -299,15 +315,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506E728C1A1E0B450006F2DF /* Depoza.xcdatamodeld in Sources */,
+				50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */,
+				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				5097AA541A721B3400E8D145 /* NSDate+Components.m in Sources */,
 				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
-				50B3574A1A48512700168958 /* ExpenseData.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
+				50ED145A1A7348DB0081A22A /* CategoryData+RegisterDefaults.m in Sources */,
 				50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */,
+				50F689E11A73C059002661E4 /* CategoryData.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
 			);
@@ -514,13 +533,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		506E728A1A1E0B450006F2DF /* Depoza.xcdatamodeld */ = {
+		506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */,
+				506E728B1A1E0B450006F2DF /* DataModel.xcdatamodel */,
 			);
-			currentVersion = 506E728B1A1E0B450006F2DF /* Depoza.xcdatamodel */;
-			path = Depoza.xcdatamodeld;
+			currentVersion = 506E728B1A1E0B450006F2DF /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

@@ -2,11 +2,12 @@
 
 @interface Expense : NSObject
 
-@property (nonatomic, strong) NSNumber *sumOfExpense;
+@property (nonatomic, strong) NSNumber *amount;
 @property (nonatomic, copy) NSString *category;
 @property (nonatomic, copy) NSString *descriptionOfExpense;
 @property (nonatomic, strong) NSDate *dateOfExpense;
+@property (nonatomic, assign) NSInteger idValue;
 
-+ (Expense *)expenseWithSum:(NSNumber *)sumOfExpense category:(NSString *)category description:(NSString *)description;
++ (Expense *)expenseWithAmount:(NSNumber *)amount category:(NSString *)category description:(NSString *)description;
 
 @end

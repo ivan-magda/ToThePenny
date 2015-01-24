@@ -13,7 +13,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *label;
 
-
 @end
 
 @implementation DetailsViewController
@@ -23,7 +22,7 @@
 
     self.title = @"Details";
 
-    self.label.text = [NSString stringWithFormat:@"%@\n %@\n %@\n %@", self.expenseToShow.sumOfExpense, self.expenseToShow.category, self.expenseToShow.descriptionOfExpense, self.expenseToShow.dateOfExpense];
+        //self.label.text = [NSString stringWithFormat:@"%@\n %@\n %@\n %@", self.expenseToShow.amount, self.expenseToShow.category, self.expenseToShow.descriptionOfExpense, self.expenseToShow.dateOfExpense];
 }
 
 @end

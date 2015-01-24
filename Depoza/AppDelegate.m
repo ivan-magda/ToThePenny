@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
-#import "SharedManagedObjectContext.h"
 #import "SWRevealViewController.h"
+
+    //CoreData
+#import "SharedManagedObjectContext.h"
+#import "CategoryData+RegisterDefaults.h"
+
 
 @interface AppDelegate ()
 
@@ -18,6 +22,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [CategoryData registerDefaultsCategoriesInSharedContext:[SharedManagedObjectContext sharedInstance]];
+    
     return YES;
 }
 

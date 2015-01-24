@@ -1,10 +1,13 @@
 #import "MainViewController.h"
 #import "SWRevealViewController.h"
 #import "AddExpenseViewController.h"
+#import "DetailsViewController.h"
+
+    //CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
+#import "CategoryData.h"
 #import "SharedManagedObjectContext.h"
-#import "DetailsViewController.h"
 
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -32,68 +35,69 @@
 @implementation MainViewController {
     CGFloat _totalExpeditures;
     NSMutableDictionary *_categories;
+    NSMutableArray *_allCategories;
 }
 
 #pragma mark - ViewController life cycle -
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        [self loadExpenseData];
-    }
-    return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
+
     [self customSetUp];
+    [self loadCategoriesData];
+    [self performFetch];
     [self updateLabels];
 }
 
 - (void)dealloc {
+    NSLog(@"Dealloc %@", self);
     _fetchedResultsController.delegate = nil;
 }
 
-#pragma mark - Save/Load data for Labels -
+- (void)loadCategoriesData {
+    NSFetchRequest *request = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
 
-- (NSString *)dataFilePath {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths firstObject];
-    return [documentsDirectory stringByAppendingPathComponent:@"Expense.plist"];
-}
+    NSError *error;
+    NSArray *fetchedCategories = [_managedObjectContext executeFetchRequest:request error:&error];
 
-- (void)saveExpenses {
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-    [archiver encodeObject:[NSNumber numberWithFloat:_totalExpeditures] forKey:@"Total"];
-    [archiver encodeObject:_categories forKey:@"Categories"];
-    [archiver finishEncoding];
-    [data writeToFile:[self dataFilePath] atomically:YES];
-}
-
-- (void)loadExpenseData {
-    NSString *path = [self dataFilePath];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-        _totalExpeditures = [[unarchiver decodeObjectForKey:@"Total"]floatValue];
-        _categories = [unarchiver decodeObjectForKey:@"Categories"];
-        [unarchiver finishDecoding];
+    _allCategories = [NSMutableArray arrayWithCapacity:8];
+    
+    if (fetchedCategories == nil || [fetchedCategories count] == 0) {
+        NSLog(@"Couldn't load categories data %@", [error localizedDescription]);
     } else {
-        _categories = [@{
-                         @"Связь"        : @0,
-                         @"Вещи"         : @0,
-                         @"Здоровье"     : @0,
-                         @"Продукты"     : @0,
-                         @"Еда вне дома" : @0,
-                         @"Жилье"        : @0,
-                         @"Поездки"      : @0,
-                         @"Другое"       : @0,
-                         @"Развлечения"  : @0
-                         }mutableCopy];
-        _totalExpeditures = 0.0f;
+        for (CategoryData *aData in fetchedCategories) {
+            [_allCategories addObject:aData.title];
+        }
     }
 }
+
+//- (void)loadExpenseData {
+//    NSString *path = [self dataFilePath];
+//    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
+//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+//        _totalExpeditures = [[unarchiver decodeObjectForKey:@"Total"]floatValue];
+//        _categories = [unarchiver decodeObjectForKey:@"Categories"];
+//        [unarchiver finishDecoding];
+//    } else {
+//        _categories = [@{
+//                         @"Связь"        : @0,
+//                         @"Вещи"         : @0,
+//                         @"Здоровье"     : @0,
+//                         @"Продукты"     : @0,
+//                         @"Еда вне дома" : @0,
+//                         @"Жилье"        : @0,
+//                         @"Поездки"      : @0,
+//                         @"Другое"       : @0,
+//                         @"Развлечения"  : @0
+//                         }mutableCopy];
+//        _totalExpeditures = 0.0f;
+//    }
+//}
 
 #pragma mark - Helper methods -
 
@@ -104,10 +108,6 @@
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
     [NSFetchedResultsController deleteCacheWithName:@"Expense"];
-
-    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
-
-    [self performFetch];
 }
 
 - (void)updateLabels {
@@ -153,6 +153,7 @@
     for (int i = 0; i < 3; ++i) {
         maxValue = 0;
         if (i > 0) {
+            NSParameterAssert(maxCategoryName != nil);
             [set addObject:maxCategoryName];
         }
         for (NSString *key in _categories) {
@@ -186,17 +187,23 @@
 #pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+
     if ([segue.identifier isEqualToString:@"AddExpense"]) {
         UINavigationController *navigationController = segue.destinationViewController;
+
         AddExpenseViewController *controller = (AddExpenseViewController *)navigationController.topViewController;
         controller.delegate = self;
-        controller.managedObjectContext = self.managedObjectContext;
+        controller.managedObjectContext = _managedObjectContext;
+        controller.categories = _allCategories;
+
     } else if ([segue.identifier isEqualToString:@"ShowDetails"]) {
         DetailsViewController *controller = (DetailsViewController *)segue.destinationViewController;
+
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
             controller.expenseToShow = expense;
         }
     }
@@ -208,40 +215,36 @@
     if (self.tableView.hidden) {
         self.tableView.hidden = NO;
     }
-    _totalExpeditures += [expense.sumOfExpense floatValue];
+    _totalExpeditures += [expense.amount floatValue];
 
-    [_categories setValue:@([_categories[expense.category]floatValue] + [expense.sumOfExpense floatValue]) forKey:expense.category];
+    [_categories setValue:@([_categories[expense.category]floatValue] + [expense.amount floatValue]) forKey:expense.category];
 
-    [self updateLabels];
     [self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
-
-    [self saveExpenses];
 }
 
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-   return [[self.fetchedResultsController sections]count];
+   NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
+    if (numberOfSections == 0) {
+        _tableView.hidden = YES;
+
+        return numberOfSections;
+    }
+    return numberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    NSInteger rows = [sectionInfo numberOfObjects];
-
-    if (rows == 0) {
-        self.tableView.hidden = YES;
-        return rows;
-    } else {
-        return rows;
-    }
+    return [sectionInfo numberOfObjects];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.sumOfExpense floatValue], [self formatDate:expense.dateOfExpense forLabel:@"detailTextLabel"]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense forLabel:@"detailTextLabel"]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -272,20 +275,21 @@
 
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"ExpenseData"inManagedObjectContext:self.managedObjectContext];
+                                   entityForName:NSStringFromClass([ExpenseData class])
+                                   inManagedObjectContext:_managedObjectContext];
     [fetchRequest setEntity:entity];
 
-    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category" ascending:NO];
+    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:NO];
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
-                              initWithKey:@"dateOfExpense" ascending:YES];
+                              initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:YES];
     [fetchRequest setSortDescriptors:@[categorySortDescriptor, dateSortDescriptor]];
 
     [fetchRequest setFetchBatchSize:20];
 
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                        managedObjectContext:self.managedObjectContext
-                                          sectionNameKeyPath:@"category"
+                                        managedObjectContext:_managedObjectContext
+                                          sectionNameKeyPath:@"category.title"
                                                    cacheName:@"Expense"];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
@@ -308,7 +312,6 @@
         // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
     [self.tableView beginUpdates];
 }
-
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
 
@@ -334,7 +337,6 @@
     }
 }
 
-
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
 
     switch(type) {
@@ -354,11 +356,9 @@
     }
 }
 
-
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
         // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     [self.tableView endUpdates];
 }
-
 
 @end

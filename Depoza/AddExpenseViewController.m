@@ -1,9 +1,12 @@
 #import "AddExpenseViewController.h"
+
+    //CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
+#import "CategoryData.h"
 
 
-@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate>
+@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
@@ -15,7 +18,6 @@
 
 @implementation AddExpenseViewController {
     NSNumber *_expenseFromTextField;
-    NSArray *_categories;
     NSIndexPath *_selectedRow;
     BOOL _isChosenCategory;
 
@@ -37,8 +39,6 @@
     self.expenseTextField.delegate = self;
 
     self.descriptionTextField.hidden = YES;
-
-    _categories = @[@"Связь", @"Вещи", @"Здоровье", @"Продукты", @"Еда вне дома", @"Жилье", @"Поездки", @"Другое", @"Развлечения"];
 }
 
 #pragma mark - CustomTableView -
@@ -47,10 +47,7 @@
     _tableView = [[UITableView alloc]initWithFrame:[self tableViewRect] style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
-
-    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(hideKeyboard:)];
-    gestureRecognizer.cancelsTouchesInView = NO;
-    [_tableView addGestureRecognizer:gestureRecognizer];
+    _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
 
     [self.view addSubview:_tableView];
 }
@@ -112,6 +109,8 @@
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.expenseTextField resignFirstResponder];
+
     if (!_isChosenCategory) {
         _isChosenCategory = YES;
         _selectedRow = indexPath;
@@ -121,6 +120,8 @@
 
         [self removeTableView];
         [self createTableView];
+
+        _tableView.scrollEnabled = NO;
 
         if (_expenseFromTextField.floatValue > 0.0f) {
             [self createDoneBarButton];
@@ -151,13 +152,19 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    Expense *expense = [Expense expenseWithSum:_expenseFromTextField category:_categories[_selectedRow.row] description:self.descriptionTextField.text];
+    Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
-    ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:@"ExpenseData" inManagedObjectContext:self.managedObjectContext];
-    expenseData.sumOfExpense = expense.sumOfExpense;
-    expenseData.category = expense.category;
-    expenseData.descriptionOfExpense = expense.descriptionOfExpense;
+    CategoryData *categoryData = [self findCategoryDataWithCategoryString:expense.category];
+
+    ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:self.managedObjectContext];
+    expenseData.amount = expense.amount;
+    expenseData.categoryId = categoryData.idValue;
     expenseData.dateOfExpense = expense.dateOfExpense;
+    expenseData.descriptionOfExpense = expense.descriptionOfExpense;
+    expenseData.idValue = @(expense.idValue);
+    expenseData.category = categoryData;
+
+    [categoryData addExpenseObject:expenseData];
 
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
@@ -167,6 +174,20 @@
     [self.descriptionTextField resignFirstResponder];
 
     [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+}
+
+- (CategoryData *)findCategoryDataWithCategoryString:(NSString *)category {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title = %@", category];
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:_managedObjectContext];
+    [fetchRequest setEntity:entityDescription];
+    [fetchRequest setPredicate:predicate];
+
+    NSError *error;
+    NSArray *foundCategory = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSParameterAssert([foundCategory count] == 1);
+
+    return [foundCategory firstObject];
 }
 
 #pragma mark - UITextFieldDelegate -
@@ -212,20 +233,6 @@
 
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender {
     [self doneBarButtonPressed:nil];
-}
-
-#pragma mark - GestureRecognizer -
-
-- (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer {
-    if (self.expenseTextField.resignFirstResponder) {
-        [self.expenseTextField resignFirstResponder];
-    }
-}
-
-#pragma mark - UIScrollViewDelegate -
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    [self hideKeyboard:nil];
 }
 
 @end
