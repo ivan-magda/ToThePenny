@@ -90,6 +90,8 @@
 
     NSArray *days = [self getFirstAndLastDaysInTheCurrentMonth];
 
+    _totalExpeditures = 0.0f;
+
     for (int i = 0; i < [_categoriesData count]; ++i) {
         NSNumber *idValue = [_categoriesData[i]objectForKey:@"id"];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((dateOfExpense >= %@) and (dateOfExpense <= %@)) and categoryId = %@", [days firstObject], [days lastObject], idValue];
@@ -103,6 +105,8 @@
                 NSParameterAssert(aData.categoryId == _categoriesData[i][@"id"]);
 
                 [_categoriesData[i] setObject:@([_categoriesData[i][@"expenses"]floatValue] + [aData.amount floatValue]) forKey:@"expenses"];
+
+                _totalExpeditures += [_categoriesData[i][@"expenses"]floatValue];
             }
         }
     }
@@ -174,8 +178,7 @@
         self.thirdCategoryNameLabel.text = @"";
         self.thirdCategorySummaLabel.text = @"";
     } else {
-#warning uncomment after ...
-            //[self updateLabelsForMostValuableCategories];
+        [self updateLabelsForMostValuableCategories];
     }
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
     self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
@@ -202,44 +205,49 @@
     return nil;
 }
 
-#warning redo it
-//- (void)updateLabelsForMostValuableCategories {
-//    CGFloat maxValue = 0;
-//    NSString *maxCategoryName;
-//    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
-//    for (int i = 0; i < 3; ++i) {
-//        maxValue = 0;
-//        if (i > 0) {
-//            NSParameterAssert(maxCategoryName != nil);
-//            [set addObject:maxCategoryName];
-//        }
-//        for (NSString *key in _categories) {
-//            CGFloat currentvalue = [_categories[key]floatValue];
-//            if (currentvalue > maxValue) {
-//                if (![set member:key]) {
-//                    maxValue = currentvalue;
-//                    maxCategoryName = key;
-//                }
-//            }
-//        }
-//        if (maxValue > 0) {
-//            switch (i) {
-//                case 0:
-//                    self.firstCategoryNameLabel.text = maxCategoryName;
-//                    self.firstCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-//                    break;
-//                case 1:
-//                    self.secondCategoryNameLabel.text = maxCategoryName;
-//                    self.secondCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-//                    break;
-//                case 2:
-//                    self.thirdCategoryNameLabel.text = maxCategoryName;
-//                    self.thirdCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-//                    break;
-//            }
-//        }
-//    }
-//}
+- (void)updateLabelsForMostValuableCategories {
+    CGFloat maxValue = 0;
+    NSString *maxCategoryTitle;
+    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
+
+    for (int i = 0; i < 3; ++i) {
+        maxValue = 0;
+
+        if (i > 0) {
+            NSParameterAssert(maxCategoryTitle != nil);
+            [set addObject:maxCategoryTitle];
+        }
+
+        for (NSDictionary *aDictionary in _categoriesData) {
+            CGFloat currentvalue = [aDictionary[@"expenses"]floatValue];
+            NSString *title = aDictionary[NSStringFromSelector(@selector(title))];
+
+            if (currentvalue > maxValue) {
+                if (![set member:title]) {
+                    maxValue = currentvalue;
+                    maxCategoryTitle = title;
+                }
+            }
+        }
+
+        if (maxValue > 0 && maxCategoryTitle.length > 0) {
+            switch (i) {
+                case 0:
+                    self.firstCategoryNameLabel.text = maxCategoryTitle;
+                    self.firstCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+                    break;
+                case 1:
+                    self.secondCategoryNameLabel.text = maxCategoryTitle;
+                    self.secondCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+                    break;
+                case 2:
+                    self.thirdCategoryNameLabel.text = maxCategoryTitle;
+                    self.thirdCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+                    break;
+            }
+        }
+    }
+}
 
 #pragma mark - Navigation -
 
@@ -252,8 +260,11 @@
         controller.delegate = self;
         controller.managedObjectContext = _managedObjectContext;
 
-#warning replace with correct
-            //controller.categories = _allCategories;
+        NSMutableArray *categoriesTitles = [NSMutableArray arrayWithCapacity:[_categoriesData count]];
+        for (NSDictionary *aDictionary in _categoriesData) {
+            [categoriesTitles addObject:aDictionary[NSStringFromSelector(@selector(title))]];
+        }
+        controller.categories = categoriesTitles;
 
     } else if ([segue.identifier isEqualToString:@"ShowDetails"]) {
         DetailsViewController *controller = (DetailsViewController *)segue.destinationViewController;
@@ -276,11 +287,19 @@
     }
     _totalExpeditures += [expense.amount floatValue];
 
-#warning uncomment after proper imp
-        //[_categories setValue:@([_categories[expense.category]floatValue] + [expense.amount floatValue]) forKey:expense.category];
+    [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSParameterAssert([obj isKindOfClass:[NSDictionary class]]);
+        if ([obj[NSStringFromSelector(@selector(title))] isEqualToString:expense.category]) {
+            CGFloat value = [_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue];
+            [_categoriesData[idx]setObject:@(value) forKey:@"expenses"];
 
-#warning uncomment after proper implementation
-        //[self updateLabelsForMostValuableCategories];
+            BOOL finish = YES;
+            stop = &finish;
+        }
+    }];
+
+    [self updateLabels];
+    [self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
