@@ -293,8 +293,7 @@
             CGFloat value = [_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue];
             [_categoriesData[idx]setObject:@(value) forKey:@"expenses"];
 
-            BOOL finish = YES;
-            stop = &finish;
+            *stop = YES;
         }
     }];
 
