@@ -9,6 +9,9 @@
 #import "CategoryData.h"
 #import "SharedManagedObjectContext.h"
 
+    //Categories
+#import "NSDate+Components.h"
+
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
@@ -34,8 +37,7 @@
 
 @implementation MainViewController {
     CGFloat _totalExpeditures;
-    NSMutableDictionary *_categories;
-    NSMutableArray *_allCategories;
+    NSMutableArray *_categoriesData;
 }
 
 #pragma mark - ViewController life cycle -
@@ -61,43 +63,96 @@
     NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:_managedObjectContext];
     [request setEntity:entity];
 
+    NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:NSStringFromSelector(@selector(title)) ascending:NO];
+    [request setSortDescriptors:@[sort]];
+
     NSError *error;
     NSArray *fetchedCategories = [_managedObjectContext executeFetchRequest:request error:&error];
 
-    _allCategories = [NSMutableArray arrayWithCapacity:8];
-    
+    _categoriesData = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
+
+    NSParameterAssert(fetchedCategories != nil);
     if (fetchedCategories == nil || [fetchedCategories count] == 0) {
         NSLog(@"Couldn't load categories data %@", [error localizedDescription]);
     } else {
         for (CategoryData *aData in fetchedCategories) {
-            [_allCategories addObject:aData.title];
+            NSMutableDictionary *category = [@{@"title"    : aData.title,
+                                               @"id"       : aData.idValue,
+                                               @"expenses" : @0
+                                               }mutableCopy];
+            [_categoriesData addObject:category];
+        }
+    }
+
+    request = [[NSFetchRequest alloc]init];
+    entity = [NSEntityDescription entityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:_managedObjectContext];
+    [request setEntity:entity];
+
+    NSArray *days = [self getFirstAndLastDaysInTheCurrentMonth];
+
+    for (int i = 0; i < [_categoriesData count]; ++i) {
+        NSNumber *idValue = [_categoriesData[i]objectForKey:@"id"];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((dateOfExpense >= %@) and (dateOfExpense <= %@)) and categoryId = %@", [days firstObject], [days lastObject], idValue];
+        [request setPredicate:predicate];
+
+        NSArray *fetchedExpenses = [_managedObjectContext executeFetchRequest:request error:&error];
+        NSParameterAssert(error == nil);
+
+        if (fetchedExpenses && [fetchedExpenses count] > 0) {
+            for (ExpenseData *aData in fetchedExpenses) {
+                NSParameterAssert(aData.categoryId == _categoriesData[i][@"id"]);
+
+                [_categoriesData[i] setObject:@([_categoriesData[i][@"expenses"]floatValue] + [aData.amount floatValue]) forKey:@"expenses"];
+            }
         }
     }
 }
 
-//- (void)loadExpenseData {
-//    NSString *path = [self dataFilePath];
-//    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
-//        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-//        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-//        _totalExpeditures = [[unarchiver decodeObjectForKey:@"Total"]floatValue];
-//        _categories = [unarchiver decodeObjectForKey:@"Categories"];
-//        [unarchiver finishDecoding];
-//    } else {
-//        _categories = [@{
-//                         @"Связь"        : @0,
-//                         @"Вещи"         : @0,
-//                         @"Здоровье"     : @0,
-//                         @"Продукты"     : @0,
-//                         @"Еда вне дома" : @0,
-//                         @"Жилье"        : @0,
-//                         @"Поездки"      : @0,
-//                         @"Другое"       : @0,
-//                         @"Развлечения"  : @0
-//                         }mutableCopy];
-//        _totalExpeditures = 0.0f;
-//    }
-//}
+- (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
+    NSDate *today = [NSDate date];
+
+    NSDictionary *components = [today getComponents];
+
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+
+    NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
+                           inUnit:NSCalendarUnitMonth
+                          forDate:today];
+
+    NSInteger year = [components[@"year"]integerValue];
+    NSInteger month = [components[@"month"]integerValue];
+
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *localeIdentifier = [[[locale localeIdentifier]componentsSeparatedByString:@"_"]lastObject];
+
+    BOOL isUS = [localeIdentifier isEqualToString:@"US"];
+
+    NSDateComponents *firstDayComponents = [[NSDateComponents alloc]init];
+    firstDayComponents.year = year;
+    firstDayComponents.month = month;
+    firstDayComponents.day = 1;
+    firstDayComponents.hour = (isUS == YES ? 12 : 0);
+    firstDayComponents.minute = 0;
+    firstDayComponents.second = 0;
+
+    NSDateComponents *lastDayComponents = [[NSDateComponents alloc]init];
+    lastDayComponents.year = year;
+    lastDayComponents.month = month;
+    lastDayComponents.day = days.length;
+    lastDayComponents.hour = (isUS == YES ? 11 : 23);
+    lastDayComponents.minute = 59;
+    lastDayComponents.second = 59;
+
+    NSDate *firstDay = [calendar dateFromComponents:firstDayComponents];
+    NSDate *lastDay = [calendar dateFromComponents:lastDayComponents];
+
+    NSAssert((firstDay != nil) && (lastDay != nil), @"Dates can't be nil!");
+
+    NSLog(@"%@", [firstDay descriptionWithLocale:[NSLocale currentLocale]]);
+    NSLog(@"%@", [lastDay descriptionWithLocale:[NSLocale currentLocale]]);
+
+    return @[firstDay, lastDay];
+}
 
 #pragma mark - Helper methods -
 
@@ -119,7 +174,8 @@
         self.thirdCategoryNameLabel.text = @"";
         self.thirdCategorySummaLabel.text = @"";
     } else {
-        [self updateLabelsForMostValuableCategories];
+#warning uncomment after ...
+            //[self updateLabelsForMostValuableCategories];
     }
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
     self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
@@ -146,43 +202,44 @@
     return nil;
 }
 
-- (void)updateLabelsForMostValuableCategories {
-    CGFloat maxValue = 0;
-    NSString *maxCategoryName;
-    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
-    for (int i = 0; i < 3; ++i) {
-        maxValue = 0;
-        if (i > 0) {
-            NSParameterAssert(maxCategoryName != nil);
-            [set addObject:maxCategoryName];
-        }
-        for (NSString *key in _categories) {
-            CGFloat currentvalue = [_categories[key]floatValue];
-            if (currentvalue > maxValue) {
-                if (![set member:key]) {
-                    maxValue = currentvalue;
-                    maxCategoryName = key;
-                }
-            }
-        }
-        if (maxValue > 0) {
-            switch (i) {
-                case 0:
-                    self.firstCategoryNameLabel.text = maxCategoryName;
-                    self.firstCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-                case 1:
-                    self.secondCategoryNameLabel.text = maxCategoryName;
-                    self.secondCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-                case 2:
-                    self.thirdCategoryNameLabel.text = maxCategoryName;
-                    self.thirdCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-            }
-        }
-    }
-}
+#warning redo it
+//- (void)updateLabelsForMostValuableCategories {
+//    CGFloat maxValue = 0;
+//    NSString *maxCategoryName;
+//    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
+//    for (int i = 0; i < 3; ++i) {
+//        maxValue = 0;
+//        if (i > 0) {
+//            NSParameterAssert(maxCategoryName != nil);
+//            [set addObject:maxCategoryName];
+//        }
+//        for (NSString *key in _categories) {
+//            CGFloat currentvalue = [_categories[key]floatValue];
+//            if (currentvalue > maxValue) {
+//                if (![set member:key]) {
+//                    maxValue = currentvalue;
+//                    maxCategoryName = key;
+//                }
+//            }
+//        }
+//        if (maxValue > 0) {
+//            switch (i) {
+//                case 0:
+//                    self.firstCategoryNameLabel.text = maxCategoryName;
+//                    self.firstCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+//                    break;
+//                case 1:
+//                    self.secondCategoryNameLabel.text = maxCategoryName;
+//                    self.secondCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+//                    break;
+//                case 2:
+//                    self.thirdCategoryNameLabel.text = maxCategoryName;
+//                    self.thirdCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
+//                    break;
+//            }
+//        }
+//    }
+//}
 
 #pragma mark - Navigation -
 
@@ -194,7 +251,9 @@
         AddExpenseViewController *controller = (AddExpenseViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.managedObjectContext = _managedObjectContext;
-        controller.categories = _allCategories;
+
+#warning replace with correct
+            //controller.categories = _allCategories;
 
     } else if ([segue.identifier isEqualToString:@"ShowDetails"]) {
         DetailsViewController *controller = (DetailsViewController *)segue.destinationViewController;
@@ -217,9 +276,11 @@
     }
     _totalExpeditures += [expense.amount floatValue];
 
-    [_categories setValue:@([_categories[expense.category]floatValue] + [expense.amount floatValue]) forKey:expense.category];
+#warning uncomment after proper imp
+        //[_categories setValue:@([_categories[expense.category]floatValue] + [expense.amount floatValue]) forKey:expense.category];
 
-    [self updateLabelsForMostValuableCategories];
+#warning uncomment after proper implementation
+        //[self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }

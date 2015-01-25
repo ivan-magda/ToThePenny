@@ -23,7 +23,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [CategoryData registerDefaultsCategoriesInSharedContext:[SharedManagedObjectContext sharedInstance]];
-    
     return YES;
 }
 

@@ -10,6 +10,6 @@
 
 @interface NSDate (Components)
 
-+ (NSDictionary *)getComponentsFromDate:(NSDate *)date;
+- (NSDictionary *)getComponents;
 
 @end

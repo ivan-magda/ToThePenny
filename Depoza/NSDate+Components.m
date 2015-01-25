@@ -10,9 +10,9 @@
 
 @implementation NSDate (Components)
 
-+ (NSDictionary *)getComponentsFromDate:(NSDate *)date {
+- (NSDictionary *)getComponents {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:self];
 
     NSDictionary *dictComponents = @{
                                      @"year"  : @([components year]),
