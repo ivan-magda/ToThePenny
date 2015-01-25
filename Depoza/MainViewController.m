@@ -170,16 +170,15 @@
 }
 
 - (void)updateLabels {
-    if (_totalExpeditures == 0) {
-        self.firstCategoryNameLabel.text = @"";
-        self.firstCategorySummaLabel.text = @"";
-        self.secondCategoryNameLabel.text = @"";
-        self.secondCategorySummaLabel.text = @"";
-        self.thirdCategoryNameLabel.text = @"";
-        self.thirdCategorySummaLabel.text = @"";
-    } else {
-        [self updateLabelsForMostValuableCategories];
-    }
+    self.firstCategoryNameLabel.text = @"";
+    self.firstCategorySummaLabel.text = @"";
+    self.secondCategoryNameLabel.text = @"";
+    self.secondCategorySummaLabel.text = @"";
+    self.thirdCategoryNameLabel.text = @"";
+    self.thirdCategorySummaLabel.text = @"";
+
+    [self updateLabelsForMostValuableCategories];
+
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
     self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
 }
