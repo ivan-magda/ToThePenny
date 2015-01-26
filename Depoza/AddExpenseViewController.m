@@ -4,6 +4,7 @@
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
+#import "Fetch.h"
 
 
 @interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
@@ -154,7 +155,15 @@
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
     Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
-    CategoryData *categoryData = [self findCategoryDataWithCategoryString:expense.category];
+    [self addExpenseToCategoryData:expense];
+
+    [self.descriptionTextField resignFirstResponder];
+
+    [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+}
+
+- (void)addExpenseToCategoryData:(Expense *)expense {
+    CategoryData *categoryData = [Fetch findCategoryFromTitle:expense.category context:_managedObjectContext];
 
     ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:self.managedObjectContext];
     expenseData.amount = expense.amount;
@@ -170,24 +179,6 @@
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-
-    [self.descriptionTextField resignFirstResponder];
-
-    [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
-}
-
-- (CategoryData *)findCategoryDataWithCategoryString:(NSString *)category {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title = %@", category];
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entityDescription];
-    [fetchRequest setPredicate:predicate];
-
-    NSError *error;
-    NSArray *foundCategory = [_managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    NSParameterAssert([foundCategory count] == 1);
-
-    return [foundCategory firstObject];
 }
 
 #pragma mark - UITextFieldDelegate -

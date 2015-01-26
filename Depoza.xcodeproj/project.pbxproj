@@ -11,6 +11,7 @@
 		502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547971A1ED26600DCB8FB /* reveal-icon.png */; };
 		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
+		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
 		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
 		506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
@@ -47,6 +48,8 @@
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerProtocol.h; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
 		505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+FirstAndLastDaysOfMonth.m"; sourceTree = "<group>"; };
+		505CA13C1A761B21009CA7B1 /* Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fetch.h; sourceTree = "<group>"; };
+		505CA13D1A761B21009CA7B1 /* Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fetch.m; sourceTree = "<group>"; };
 		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -106,6 +109,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		505CA13F1A762653009CA7B1 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */,
+				505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		506E72771A1E0B450006F2DF = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +147,7 @@
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
+				505CA13F1A762653009CA7B1 /* Categories */,
 				5025479B1A1ED27600DCB8FB /* Resources */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
 			);
@@ -144,8 +157,6 @@
 		506E72831A1E0B450006F2DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */,
-				505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */,
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				506E72851A1E0B450006F2DF /* main.m */,
 			);
@@ -206,6 +217,8 @@
 				50F689DD1A73C059002661E4 /* ExpenseData.m */,
 				508774851A1F0C19002D1A9E /* Expense.h */,
 				508774861A1F0C19002D1A9E /* Expense.m */,
+				505CA13C1A761B21009CA7B1 /* Fetch.h */,
+				505CA13D1A761B21009CA7B1 /* Fetch.m */,
 				50ED14581A7348DB0081A22A /* CategoryData+RegisterDefaults.h */,
 				50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */,
 			);
@@ -318,6 +331,7 @@
 				50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */,
 				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
 				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,

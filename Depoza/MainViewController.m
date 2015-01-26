@@ -9,10 +9,7 @@
 #import "ExpenseData.h"
 #import "CategoryData.h"
 #import "SharedManagedObjectContext.h"
-
-    //Categories
-#import "NSDate+FirstAndLastDaysOfMonth.h"
-
+#import "Fetch.h"
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
@@ -57,60 +54,6 @@
     _fetchedResultsController.delegate = nil;
 }
 
-- (void)loadCategoriesData {
-    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
-
-    NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:NSStringFromSelector(@selector(title)) ascending:NO];
-    [request setSortDescriptors:@[sort]];
-
-    NSError *error;
-    NSArray *fetchedCategories = [_managedObjectContext executeFetchRequest:request error:&error];
-
-    _categoriesData = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
-
-    NSParameterAssert(fetchedCategories != nil);
-    if (fetchedCategories == nil || [fetchedCategories count] == 0) {
-        NSLog(@"Couldn't load categories data %@", [error localizedDescription]);
-    } else {
-        for (CategoryData *aData in fetchedCategories) {
-            NSMutableDictionary *category = [@{@"title"    : aData.title,
-                                               @"id"       : aData.idValue,
-                                               @"expenses" : @0
-                                               }mutableCopy];
-            [_categoriesData addObject:category];
-        }
-    }
-
-    request = [[NSFetchRequest alloc]init];
-    entity = [NSEntityDescription entityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:_managedObjectContext];
-    [request setEntity:entity];
-
-    NSArray *days = [NSDate getFirstAndLastDaysInTheCurrentMonth];
-
-    _totalExpeditures = 0.0f;
-
-    for (int i = 0; i < [_categoriesData count]; ++i) {
-        NSNumber *idValue = [_categoriesData[i]objectForKey:@"id"];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((dateOfExpense >= %@) and (dateOfExpense <= %@)) and categoryId = %@", [days firstObject], [days lastObject], idValue];
-        [request setPredicate:predicate];
-
-        NSArray *fetchedExpenses = [_managedObjectContext executeFetchRequest:request error:&error];
-        NSParameterAssert(error == nil);
-
-        if (fetchedExpenses && [fetchedExpenses count] > 0) {
-            for (ExpenseData *aData in fetchedExpenses) {
-                NSParameterAssert(aData.categoryId == _categoriesData[i][@"id"]);
-
-                [_categoriesData[i] setObject:@([_categoriesData[i][@"expenses"]floatValue] + [aData.amount floatValue]) forKey:@"expenses"];
-
-                _totalExpeditures += [aData.amount floatValue];
-            }
-        }
-    }
-}
-
 #pragma mark - Helper methods -
 
 - (void)customSetUp {
@@ -124,6 +67,10 @@
     [NSFetchedResultsController deleteCacheWithName:@"Expense"];
 }
 
+- (void)loadCategoriesData {
+    _categoriesData = [Fetch loadCategoriesDataInContext:_managedObjectContext totalExpeditures:&_totalExpeditures];
+}
+
 - (void)updateLabels {
     self.firstCategoryNameLabel.text = @"";
     self.firstCategorySummaLabel.text = @"";
@@ -132,7 +79,9 @@
     self.thirdCategoryNameLabel.text = @"";
     self.thirdCategorySummaLabel.text = @"";
 
-    [self updateLabelsForMostValuableCategories];
+    if (_totalExpeditures > 0.0f) {
+        [self updateLabelsForMostValuableCategories];
+    }
 
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
     self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
@@ -154,7 +103,6 @@
             [formatter setDateFormat:@"HH:mm"];
         }
         return [formatter stringFromDate:theDate];
-
     }
     return nil;
 }
