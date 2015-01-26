@@ -1,3 +1,4 @@
+    //View
 #import "MainViewController.h"
 #import "SWRevealViewController.h"
 #import "AddExpenseViewController.h"
@@ -10,7 +11,7 @@
 #import "SharedManagedObjectContext.h"
 
     //Categories
-#import "NSDate+Components.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -44,8 +45,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
 
     [self customSetUp];
     [self loadCategoriesData];
@@ -88,7 +87,7 @@
     entity = [NSEntityDescription entityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:_managedObjectContext];
     [request setEntity:entity];
 
-    NSArray *days = [self getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *days = [NSDate getFirstAndLastDaysInTheCurrentMonth];
 
     _totalExpeditures = 0.0f;
 
@@ -112,52 +111,6 @@
     }
 }
 
-- (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
-    NSDate *today = [NSDate date];
-
-    NSDictionary *components = [today getComponents];
-
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
-                           inUnit:NSCalendarUnitMonth
-                          forDate:today];
-
-    NSInteger year = [components[@"year"]integerValue];
-    NSInteger month = [components[@"month"]integerValue];
-
-    NSLocale *locale = [NSLocale currentLocale];
-    NSString *localeIdentifier = [[[locale localeIdentifier]componentsSeparatedByString:@"_"]lastObject];
-
-    BOOL isUS = [localeIdentifier isEqualToString:@"US"];
-
-    NSDateComponents *firstDayComponents = [[NSDateComponents alloc]init];
-    firstDayComponents.year = year;
-    firstDayComponents.month = month;
-    firstDayComponents.day = 1;
-    firstDayComponents.hour = (isUS == YES ? 12 : 0);
-    firstDayComponents.minute = 0;
-    firstDayComponents.second = 0;
-
-    NSDateComponents *lastDayComponents = [[NSDateComponents alloc]init];
-    lastDayComponents.year = year;
-    lastDayComponents.month = month;
-    lastDayComponents.day = days.length;
-    lastDayComponents.hour = (isUS == YES ? 11 : 23);
-    lastDayComponents.minute = 59;
-    lastDayComponents.second = 59;
-
-    NSDate *firstDay = [calendar dateFromComponents:firstDayComponents];
-    NSDate *lastDay = [calendar dateFromComponents:lastDayComponents];
-
-    NSAssert((firstDay != nil) && (lastDay != nil), @"Dates can't be nil!");
-
-    NSLog(@"%@", [firstDay descriptionWithLocale:[NSLocale currentLocale]]);
-    NSLog(@"%@", [lastDay descriptionWithLocale:[NSLocale currentLocale]]);
-
-    return @[firstDay, lastDay];
-}
-
 #pragma mark - Helper methods -
 
 - (void)customSetUp {
@@ -165,6 +118,8 @@
     self.revealBarButton.action = @selector(revealToggle:);
 
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
+
+    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
 
     [NSFetchedResultsController deleteCacheWithName:@"Expense"];
 }
@@ -295,11 +250,10 @@
 
             *stop = YES;
         }
-        
+
     }];
 
     [self updateLabels];
-    [self updateLabelsForMostValuableCategories];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
