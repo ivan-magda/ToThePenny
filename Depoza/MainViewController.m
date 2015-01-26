@@ -106,7 +106,7 @@
 
                 [_categoriesData[i] setObject:@([_categoriesData[i][@"expenses"]floatValue] + [aData.amount floatValue]) forKey:@"expenses"];
 
-                _totalExpeditures += [_categoriesData[i][@"expenses"]floatValue];
+                _totalExpeditures += [aData.amount floatValue];
             }
         }
     }
@@ -288,12 +288,14 @@
 
     [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSParameterAssert([obj isKindOfClass:[NSDictionary class]]);
+
         if ([obj[NSStringFromSelector(@selector(title))] isEqualToString:expense.category]) {
             CGFloat value = [_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue];
             [_categoriesData[idx]setObject:@(value) forKey:@"expenses"];
 
             *stop = YES;
         }
+        
     }];
 
     [self updateLabels];
