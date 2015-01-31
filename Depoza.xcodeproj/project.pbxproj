@@ -25,7 +25,7 @@
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
 		50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* SharedManagedObjectContext.m */; };
-		50ED145A1A7348DB0081A22A /* CategoryData+RegisterDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */; };
+		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
 		50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689DD1A73C059002661E4 /* ExpenseData.m */; };
 		50F689E11A73C059002661E4 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689E01A73C059002661E4 /* CategoryData.m */; };
 /* End PBXBuildFile section */
@@ -74,8 +74,7 @@
 		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* SharedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedManagedObjectContext.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* SharedManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedManagedObjectContext.m; sourceTree = "<group>"; };
-		50ED14581A7348DB0081A22A /* CategoryData+RegisterDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CategoryData+RegisterDefaults.h"; sourceTree = "<group>"; };
-		50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+RegisterDefaults.m"; sourceTree = "<group>"; };
+		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
 		50F689DC1A73C059002661E4 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50F689DD1A73C059002661E4 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50F689DF1A73C059002661E4 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
@@ -157,6 +156,7 @@
 		506E72831A1E0B450006F2DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				50EF5C4D1A7CDF7900890569 /* seed.sqlite */,
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				506E72851A1E0B450006F2DF /* main.m */,
 			);
@@ -219,8 +219,6 @@
 				508774861A1F0C19002D1A9E /* Expense.m */,
 				505CA13C1A761B21009CA7B1 /* Fetch.h */,
 				505CA13D1A761B21009CA7B1 /* Fetch.m */,
-				50ED14581A7348DB0081A22A /* CategoryData+RegisterDefaults.h */,
-				50ED14591A7348DB0081A22A /* CategoryData+RegisterDefaults.m */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -309,6 +307,7 @@
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
 				5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
+				50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */,
 				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
 				502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */,
 			);
@@ -335,7 +334,6 @@
 				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
-				50ED145A1A7348DB0081A22A /* CategoryData+RegisterDefaults.m in Sources */,
 				50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */,

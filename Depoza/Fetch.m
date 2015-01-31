@@ -18,13 +18,12 @@
 
 @implementation Fetch
 
-+ (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key {
++ (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key
+{
     NSAssert(entityName.length > 0, @"Entity must has a legal Name!");
     NSParameterAssert(context);
 
-    NSFetchRequest *request = [[NSFetchRequest alloc]init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
-    [request setEntity:entity];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
 
     if (key) {
         NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:key ascending:NO];
@@ -49,7 +48,7 @@
 
     NSMutableArray *categoriesData = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
 
-    NSParameterAssert(fetchedCategories != nil);
+    NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
     for (CategoryData *aData in fetchedCategories) {
         NSMutableDictionary *category = [@{@"title"    : aData.title,
                                            @"id"       : aData.idValue,
@@ -64,6 +63,7 @@
 
     for (int i = 0; i < [categoriesData count]; ++i) {
         NSNumber *idValue = [categoriesData[i]objectForKey:@"id"];
+
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((dateOfExpense >= %@) and (dateOfExpense <= %@)) and categoryId = %@", [days firstObject], [days lastObject], idValue];
 
         NSArray *fetchedExpenses = [self getObjectsWithEntity:NSStringFromClass([ExpenseData class]) predicate:predicate context:context sortKey:nil];
@@ -82,13 +82,9 @@
 }
 
 + (CategoryData *)findCategoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context {
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc]init];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title = %@", category];
-
-    NSEntityDescription *entityDescription = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
-
-    [fetchRequest setEntity:entityDescription];
     [fetchRequest setPredicate:predicate];
 
     NSError *error;

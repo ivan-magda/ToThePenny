@@ -194,15 +194,14 @@
 
         if ([obj[NSStringFromSelector(@selector(title))] isEqualToString:expense.category]) {
             CGFloat value = [_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue];
+
             [_categoriesData[idx]setObject:@(value) forKey:@"expenses"];
 
             *stop = YES;
         }
 
     }];
-
     [self updateLabels];
-
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -255,11 +254,7 @@
         return _fetchedResultsController;
     }
 
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:NSStringFromClass([ExpenseData class])
-                                   inManagedObjectContext:_managedObjectContext];
-    [fetchRequest setEntity:entity];
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
 
     NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:NO];
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]

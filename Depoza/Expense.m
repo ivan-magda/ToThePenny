@@ -17,11 +17,11 @@
 + (NSInteger)nextId {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
-    NSInteger valueId = [userDefaults integerForKey:@"idValue"];
-    [userDefaults setInteger:valueId + 1 forKey:@"idValue"];
+    NSInteger idValue = [userDefaults integerForKey:@"idValue"];
+    [userDefaults setInteger:idValue + 1 forKey:@"idValue"];
     [userDefaults synchronize];
 
-    return valueId;
+    return idValue;
 }
 
 @end

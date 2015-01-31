@@ -31,7 +31,6 @@
     NSParameterAssert(false);
 }
 
-
 #pragma mark - Core Data stack
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -65,6 +64,8 @@
     if (!_persistentStoreCoordinator) {
         NSURL *storeURL = [NSURL fileURLWithPath:[self dataStorePath]];
 
+        [self initStore:storeURL];
+
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:self.managedObjectModel];
 
         NSError *error;
@@ -74,6 +75,38 @@
         }
     }
     return _persistentStoreCoordinator;
+}
+
+- (void)initStore:(NSURL *)storeURL {
+    if (![[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]]) {
+        NSURL *preloadURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"seed" ofType:@"sqlite"]];
+
+        NSError* err;
+        if (![[NSFileManager defaultManager] copyItemAtURL:preloadURL toURL:storeURL error:&err]) {
+            NSLog(@"Oops, could copy preloaded data");
+        } else {
+            NSLog(@"Store successfully initialized using the original seed");
+
+            [self performSelector:@selector(setCategoryId) withObject:nil afterDelay:0.1];
+        }
+    } else {
+        NSLog(@"The original seed isn't needed. There is already a backing store.");
+    }
+}
+
+- (void)setCategoryId {
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"CategoryData"];
+    fetch.resultType = NSCountResultType;
+
+    NSError *error = nil;
+    NSUInteger numberOfCategories = [self.managedObjectContext countForFetchRequest:fetch error:&error];
+    if (error) {
+        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
+    }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:numberOfCategories - 1 forKey:@"categoryId"];
+    [defaults synchronize];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
