@@ -24,7 +24,7 @@
 		506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
-		50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* SharedManagedObjectContext.m */; };
+		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
 		50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689DD1A73C059002661E4 /* ExpenseData.m */; };
 		50F689E11A73C059002661E4 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689E01A73C059002661E4 /* CategoryData.m */; };
@@ -72,8 +72,8 @@
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
-		50B3574B1A48596000168958 /* SharedManagedObjectContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedManagedObjectContext.h; sourceTree = "<group>"; };
-		50B3574C1A48596000168958 /* SharedManagedObjectContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedManagedObjectContext.m; sourceTree = "<group>"; };
+		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
+		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
 		50F689DC1A73C059002661E4 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50F689DD1A73C059002661E4 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
@@ -209,8 +209,8 @@
 			isa = PBXGroup;
 			children = (
 				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
-				50B3574B1A48596000168958 /* SharedManagedObjectContext.h */,
-				50B3574C1A48596000168958 /* SharedManagedObjectContext.m */,
+				50B3574B1A48596000168958 /* Persistence.h */,
+				50B3574C1A48596000168958 /* Persistence.m */,
 				50F689DF1A73C059002661E4 /* CategoryData.h */,
 				50F689E01A73C059002661E4 /* CategoryData.m */,
 				50F689DC1A73C059002661E4 /* ExpenseData.h */,
@@ -334,7 +334,7 @@
 				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				506E72AE1A1E0B710006F2DF /* SWRevealViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
-				50B3574D1A48596000168958 /* SharedManagedObjectContext.m in Sources */,
+				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */,
 				50F689E11A73C059002661E4 /* CategoryData.m in Sources */,

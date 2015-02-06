@@ -8,7 +8,7 @@
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
-#import "SharedManagedObjectContext.h"
+#import "Persistence.h"
 #import "Fetch.h"
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -28,6 +28,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
+@property (nonatomic, strong) Persistence *persistence;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -40,12 +41,18 @@
 
 #pragma mark - ViewController life cycle -
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self createPersistenceInBackground];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     [self customSetUp];
-    [self loadCategoriesData];
-    [self performFetch];
     [self updateLabels];
 }
 
@@ -62,9 +69,29 @@
 
     [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
 
-    self.managedObjectContext = [[SharedManagedObjectContext sharedInstance]managedObjectContext];
+    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+}
 
-    [NSFetchedResultsController deleteCacheWithName:@"Expense"];
+- (void)createPersistenceInBackground {
+    [self addObserver:self forKeyPath:NSStringFromSelector(@selector(managedObjectContext)) options:NSKeyValueObservingOptionNew context:NULL];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.persistence = [Persistence sharedInstance];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.managedObjectContext = [self.persistence managedObjectContext];
+        });
+    });
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(managedObjectContext))]) {
+        [self loadCategoriesData];
+        [self performFetch];
+        [self updateLabels];
+
+        [self.tableView reloadData];
+    }
 }
 
 - (void)loadCategoriesData {
@@ -208,18 +235,26 @@
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-   NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
-    if (numberOfSections == 0) {
-        _tableView.hidden = YES;
+    if (_fetchedResultsController) {
+        NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
+        if (numberOfSections == 0) {
+            _tableView.hidden = YES;
 
+            return numberOfSections;
+        }
         return numberOfSections;
+    } else {
+        return 0;
     }
-    return numberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    if (_fetchedResultsController) {
+        id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
+        return [sectionInfo numberOfObjects];
+    } else {
+        return 0;
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -267,7 +302,7 @@
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext
                                           sectionNameKeyPath:@"category.title"
-                                                   cacheName:@"Expense"];
+                                                   cacheName:NSStringFromClass([Expense class])];
     self.fetchedResultsController = theFetchedResultsController;
     _fetchedResultsController.delegate = self;
 

@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Ivan Magda. All rights reserved.
 //
 
-#import "SharedManagedObjectContext.h"
+#import "Persistence.h"
 
-@implementation SharedManagedObjectContext
+@implementation Persistence
 
 + (instancetype)sharedInstance {
-    static SharedManagedObjectContext *this = nil;
+    static Persistence *this = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        this = [[SharedManagedObjectContext alloc] init];
+        this = [Persistence new];
     });
     return this;
 }
@@ -96,14 +96,18 @@
 
 - (void)setCategoryId {
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"CategoryData"];
-    fetch.resultType = NSCountResultType;
 
     NSError *error = nil;
     NSUInteger numberOfCategories = [self.managedObjectContext countForFetchRequest:fetch error:&error];
+
+    NSParameterAssert(numberOfCategories > 0);
+
+    NSLog(@"Number of categories: %lu", numberOfCategories);
+
     if (error) {
         NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
     }
-    
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:numberOfCategories - 1 forKey:@"categoryId"];
     [defaults synchronize];
@@ -118,6 +122,14 @@
         }
     }
     return _managedObjectContext;
+}
+
+- (NSManagedObjectContext *)createManagedObjectContext {
+    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
+
+    [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+
+    return managedObjectContext;
 }
 
 #pragma mark - Core Data Saving support
