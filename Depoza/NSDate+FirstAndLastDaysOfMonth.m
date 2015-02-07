@@ -57,8 +57,10 @@
 
     NSAssert((firstDay != nil) && (lastDay != nil), @"Dates can't be nil!");
 
+    /*
     NSLog(@"%@", [firstDay descriptionWithLocale:[NSLocale currentLocale]]);
     NSLog(@"%@", [lastDay descriptionWithLocale:[NSLocale currentLocale]]);
+     */
     
     return @[firstDay, lastDay];
 }

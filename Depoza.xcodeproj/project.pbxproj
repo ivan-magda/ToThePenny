@@ -117,6 +117,52 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		5063D1981A85F0B3006168D3 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				506E72871A1E0B450006F2DF /* AppDelegate.h */,
+				506E72881A1E0B450006F2DF /* AppDelegate.m */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
+		5063D1991A85F0C2006168D3 /* MainView */ = {
+			isa = PBXGroup;
+			children = (
+				506E72B01A1E0D560006F2DF /* MainViewController.h */,
+				506E72B11A1E0D560006F2DF /* MainViewController.m */,
+			);
+			name = MainView;
+			sourceTree = "<group>";
+		};
+		5063D19A1A85F0D5006168D3 /* SideView */ = {
+			isa = PBXGroup;
+			children = (
+				506E72B31A1E0EBB0006F2DF /* SideBarViewController.h */,
+				506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */,
+			);
+			name = SideView;
+			sourceTree = "<group>";
+		};
+		5063D19B1A85F0EF006168D3 /* AddExpenseView */ = {
+			isa = PBXGroup;
+			children = (
+				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
+				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
+				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
+			);
+			name = AddExpenseView;
+			sourceTree = "<group>";
+		};
+		5063D19C1A85F0FE006168D3 /* DetailsView */ = {
+			isa = PBXGroup;
+			children = (
+				50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */,
+				50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */,
+			);
+			name = DetailsView;
+			sourceTree = "<group>";
+		};
 		506E72771A1E0B450006F2DF = {
 			isa = PBXGroup;
 			children = (
@@ -139,10 +185,9 @@
 		506E72821A1E0B450006F2DF /* Depoza */ = {
 			isa = PBXGroup;
 			children = (
-				506E72871A1E0B450006F2DF /* AppDelegate.h */,
-				506E72881A1E0B450006F2DF /* AppDelegate.m */,
+				5063D1981A85F0B3006168D3 /* AppDelegate */,
 				50B3574E1A48597300168958 /* CoreData */,
-				508774881A1F0C2A002D1A9E /* View */,
+				508774881A1F0C2A002D1A9E /* User Interface */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
@@ -189,20 +234,15 @@
 			name = SWRevealViewController;
 			sourceTree = "<group>";
 		};
-		508774881A1F0C2A002D1A9E /* View */ = {
+		508774881A1F0C2A002D1A9E /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				506E72B31A1E0EBB0006F2DF /* SideBarViewController.h */,
-				506E72B41A1E0EBB0006F2DF /* SideBarViewController.m */,
-				506E72B01A1E0D560006F2DF /* MainViewController.h */,
-				506E72B11A1E0D560006F2DF /* MainViewController.m */,
-				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
-				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
-				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
-				50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */,
-				50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */,
+				5063D19A1A85F0D5006168D3 /* SideView */,
+				5063D1991A85F0C2006168D3 /* MainView */,
+				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
+				5063D19C1A85F0FE006168D3 /* DetailsView */,
 			);
-			name = View;
+			name = "User Interface";
 			sourceTree = "<group>";
 		};
 		50B3574E1A48597300168958 /* CoreData */ = {

@@ -102,7 +102,7 @@
 
     NSParameterAssert(numberOfCategories > 0);
 
-    NSLog(@"Number of categories: %lu", numberOfCategories);
+    NSLog(@"Number of categories: %lu", (unsigned long)numberOfCategories);
 
     if (error) {
         NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);

@@ -95,7 +95,7 @@
 }
 
 - (void)loadCategoriesData {
-    _categoriesData = [Fetch loadCategoriesDataInContext:_managedObjectContext totalExpeditures:&_totalExpeditures];
+    _categoriesData = [Fetch loadCategoriesDataInContext:_managedObjectContext totalExpeditures:& _totalExpeditures];
 }
 
 - (void)updateLabels {

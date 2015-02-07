@@ -159,7 +159,9 @@
 
     [self.descriptionTextField resignFirstResponder];
 
-    [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+    if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
+        [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+    }
 }
 
 - (void)addExpenseToCategoryData:(Expense *)expense {

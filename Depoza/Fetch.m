@@ -12,14 +12,12 @@
 #import "CategoryData.h"
 #import "ExpenseData.h"
 
-    //category
+    //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
-
 
 @implementation Fetch
 
-+ (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key
-{
++ (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key {
     NSAssert(entityName.length > 0, @"Entity must has a legal Name!");
     NSParameterAssert(context);
 
@@ -56,28 +54,38 @@
                                            }mutableCopy];
         [categoriesData addObject:category];
     }
-
     NSArray *days = [NSDate getFirstAndLastDaysInTheCurrentMonth];
 
-    *totalExpeditures = 0.0f;
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(expense, $x, ($x.dateOfExpense >= %@) AND ($x.dateOfExpense <= %@)).@count > 0)", [days firstObject], [days lastObject]];
 
-    for (int i = 0; i < [categoriesData count]; ++i) {
-        NSNumber *idValue = [categoriesData[i]objectForKey:@"id"];
+    NSDate *start = [NSDate date];
 
-        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"((dateOfExpense >= %@) and (dateOfExpense <= %@)) and categoryId = %@", [days firstObject], [days lastObject], idValue];
+    NSArray *categories = [context executeFetchRequest:fetchRequest error:nil];
 
-        NSArray *fetchedExpenses = [self getObjectsWithEntity:NSStringFromClass([ExpenseData class]) predicate:predicate context:context sortKey:nil];
+    float __block countForExpenditures = 0.0f;
 
-        if (fetchedExpenses && [fetchedExpenses count] > 0) {
-            for (ExpenseData *aData in fetchedExpenses) {
-                NSParameterAssert(aData.categoryId == categoriesData[i][@"id"]);
+    for (CategoryData *category in categories) {
+        [categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary *dictionary = (NSDictionary *)obj;
+            if (category.idValue == dictionary[@"id"]) {
+                for (ExpenseData *expense in category.expense) {
+                    [categoriesData[idx] setObject:@([categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue]) forKey:@"expenses"];
 
-                [categoriesData[i] setObject:@([categoriesData[i][@"expenses"]floatValue] + [aData.amount floatValue]) forKey:@"expenses"];
+                    countForExpenditures += [expense.amount floatValue];
 
-                *totalExpeditures += [aData.amount floatValue];
+                    [context refreshObject:expense mergeChanges:NO];
+                }
+                *stop = YES;
             }
-        }
+        }];
     }
+    *totalExpeditures = countForExpenditures;
+
+    NSDate *end = [NSDate date];
+    NSLog(@"Second version with subquery and prefetching time execution: %f", [end timeIntervalSinceDate:start]);
+
     return categoriesData;
 }
 
