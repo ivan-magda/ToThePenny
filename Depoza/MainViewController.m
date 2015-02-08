@@ -7,15 +7,12 @@
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
-#import "Persistence.h"
 #import "Fetch.h"
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *revealBarButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalSummaLabel;
@@ -30,8 +27,6 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) Persistence *persistence;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
 @end
@@ -42,14 +37,6 @@
 }
 
 #pragma mark - ViewController life cycle -
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self createPersistenceInBackground];
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,18 +54,6 @@
 
 - (void)customSetUp {
     [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
-}
-
-- (void)createPersistenceInBackground {
-    [self addObserver:self forKeyPath:NSStringFromSelector(@selector(managedObjectContext)) options:NSKeyValueObservingOptionNew context:NULL];
-
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.persistence = [Persistence sharedInstance];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.managedObjectContext = [self.persistence managedObjectContext];
-        });
-    });
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {

@@ -7,18 +7,44 @@
 //
 
 #import "AppDelegate.h"
+#import "MainViewController.h"
 
     //CoreData
 #import "Persistence.h"
 
 @interface AppDelegate ()
 
+@property (strong, nonatomic) Persistence *persistence;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end
 
 @implementation AppDelegate
 
+- (void)spreadManagedObjectContext {
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+
+        //Get the MainViewController and set it's as a observer for creating context
+    UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
+    MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
+
+    [mainViewController addObserver:mainViewController forKeyPath:NSStringFromSelector(@selector(managedObjectContext)) options:NSKeyValueObservingOptionNew context:NULL];
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.persistence = [Persistence sharedInstance];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.managedObjectContext = [self.persistence managedObjectContext];
+
+            NSParameterAssert(_managedObjectContext);
+            mainViewController.managedObjectContext = _managedObjectContext;
+        });
+    });
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self spreadManagedObjectContext];
+
     return YES;
 }
 
@@ -44,7 +70,7 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Saves changes in the application's managed object context before the application terminates.
     
-    [[Persistence sharedInstance]saveContext];
+    [_persistence saveContext];
 }
 
 @end

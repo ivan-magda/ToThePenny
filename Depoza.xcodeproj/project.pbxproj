@@ -21,12 +21,13 @@
 		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
 		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
+		50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */; };
+		50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F41A87AC860019CB55 /* CategoryData.m */; };
+		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
-		50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689DD1A73C059002661E4 /* ExpenseData.m */; };
-		50F689E11A73C059002661E4 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689E01A73C059002661E4 /* CategoryData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,12 @@
 		506E72B11A1E0D560006F2DF /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
+		50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllExpensesTableViewController.h; sourceTree = "<group>"; };
+		50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllExpensesTableViewController.m; sourceTree = "<group>"; };
+		50AA42F31A87AC860019CB55 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
+		50AA42F41A87AC860019CB55 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
+		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
+		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
@@ -72,10 +79,6 @@
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
-		50F689DC1A73C059002661E4 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
-		50F689DD1A73C059002661E4 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
-		50F689DF1A73C059002661E4 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
-		50F689E01A73C059002661E4 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -177,6 +180,7 @@
 				5063D1981A85F0B3006168D3 /* AppDelegate */,
 				50B3574E1A48597300168958 /* CoreData */,
 				508774881A1F0C2A002D1A9E /* User Interface */,
+				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
@@ -224,16 +228,25 @@
 			name = "User Interface";
 			sourceTree = "<group>";
 		};
+		50AA42EC1A87A2310019CB55 /* AllExpensesView */ = {
+			isa = PBXGroup;
+			children = (
+				50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */,
+				50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */,
+			);
+			name = AllExpensesView;
+			sourceTree = "<group>";
+		};
 		50B3574E1A48597300168958 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
 				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
 				50B3574B1A48596000168958 /* Persistence.h */,
 				50B3574C1A48596000168958 /* Persistence.m */,
-				50F689DF1A73C059002661E4 /* CategoryData.h */,
-				50F689E01A73C059002661E4 /* CategoryData.m */,
-				50F689DC1A73C059002661E4 /* ExpenseData.h */,
-				50F689DD1A73C059002661E4 /* ExpenseData.m */,
+				50AA42F61A87AC860019CB55 /* ExpenseData.h */,
+				50AA42F71A87AC860019CB55 /* ExpenseData.m */,
+				50AA42F31A87AC860019CB55 /* CategoryData.h */,
+				50AA42F41A87AC860019CB55 /* CategoryData.m */,
 				508774851A1F0C19002D1A9E /* Expense.h */,
 				508774861A1F0C19002D1A9E /* Expense.m */,
 				505CA13C1A761B21009CA7B1 /* Fetch.h */,
@@ -346,16 +359,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */,
 				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */,
 				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
 				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
+				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
+				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
-				50F689E11A73C059002661E4 /* CategoryData.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
 				505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
