@@ -25,6 +25,7 @@
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
+		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
 		50F689DE1A73C059002661E4 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689DD1A73C059002661E4 /* ExpenseData.m */; };
 		50F689E11A73C059002661E4 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F689E01A73C059002661E4 /* CategoryData.m */; };
@@ -74,6 +75,8 @@
 		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
+		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
+		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
 		50F689DC1A73C059002661E4 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50F689DD1A73C059002661E4 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
@@ -113,6 +116,8 @@
 			children = (
 				505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */,
 				505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */,
+				50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */,
+				50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -377,6 +382,7 @@
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				506E72B51A1E0EBB0006F2DF /* SideBarViewController.m in Sources */,
+				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				50F689E11A73C059002661E4 /* CategoryData.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,

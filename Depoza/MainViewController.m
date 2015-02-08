@@ -11,6 +11,9 @@
 #import "Persistence.h"
 #import "Fetch.h"
 
+    //Caategories
+#import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
+
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *revealBarButton;
@@ -288,12 +291,31 @@
     if (_fetchedResultsController) {
         return _fetchedResultsController;
     }
-
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
 
-    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:NO];
+        //Create compound predicate: dateOfExpense >= dates[0] AND dateOfExpense <= dates[1]
+    NSArray *dates = [NSDate getStartAndEndDatesOfTheCurrentDate];
+
+    NSExpression *dateOfExpense = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
+    NSExpression *startDate = [NSExpression expressionForConstantValue:[dates firstObject]];
+    NSPredicate *predicateStartDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
+                                                                         rightExpression:startDate
+                                                                                modifier:NSDirectPredicateModifier
+                                                                                    type:NSGreaterThanOrEqualToPredicateOperatorType
+                                                                                 options:0];
+
+    NSExpression *endDate = [NSExpression expressionForConstantValue:[dates lastObject]];
+    NSPredicate *predicateEndDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
+                                                                       rightExpression:endDate
+                                                                              modifier:NSDirectPredicateModifier
+                                                                                  type:NSLessThanOrEqualToPredicateOperatorType
+                                                                               options:0];
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicateStartDate, predicateEndDate]];
+    fetchRequest.predicate = predicate;
+
+    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:YES];
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
-                              initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:YES];
+                              initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
     [fetchRequest setSortDescriptors:@[categorySortDescriptor, dateSortDescriptor]];
 
     [fetchRequest setFetchBatchSize:20];
@@ -316,7 +338,6 @@
         exit(-1);  // Fail
     }
 }
-
 
 #pragma mark NSFetchedResultsControllerDelegate
 

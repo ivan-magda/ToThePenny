@@ -7,6 +7,8 @@
 //
 
 #import "Persistence.h"
+#import "CategoryData.h"
+#import "ExpenseData.h"
 
 @implementation Persistence
 
@@ -22,7 +24,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         NSLog(@"Allocate SharedManagedObjectContext");
-        [self managedObjectContext];
+        [self persistentStoreCoordinator];
     }
     return self;
 }
@@ -95,7 +97,7 @@
 }
 
 - (void)setCategoryId {
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:@"CategoryData"];
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
     NSError *error = nil;
     NSUInteger numberOfCategories = [self.managedObjectContext countForFetchRequest:fetch error:&error];
@@ -107,9 +109,8 @@
     if (error) {
         NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
     }
-
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:numberOfCategories - 1 forKey:@"categoryId"];
+    [defaults setInteger:numberOfCategories - 1 forKey:NSStringFromSelector(@selector(categoryId))];
     [defaults synchronize];
 }
 
