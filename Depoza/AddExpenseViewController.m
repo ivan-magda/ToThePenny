@@ -7,7 +7,7 @@
 #import "Fetch.h"
 
 
-@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
@@ -22,7 +22,6 @@
     NSIndexPath *_selectedRow;
     BOOL _isChosenCategory;
 
-    UIBarButtonItem *_doneBarButtonItem;
     UITableView *_tableView;
 }
 
@@ -33,7 +32,12 @@
     [self customSetUp];
 }
 
+- (void)dealloc {
+    NSLog(@"Dealloc %@", self);
+}
+
 - (void)customSetUp {
+    [self createDoneBarButton];
     [self createTableView];
 
     [self.expenseTextField becomeFirstResponder];
@@ -70,8 +74,6 @@
 
 - (void)removeTableView {
     [_tableView removeFromSuperview];
-    _tableView.dataSource = nil;
-    _tableView.delegate = nil;
     _tableView = nil;
 }
 
@@ -123,10 +125,6 @@
         [self createTableView];
 
         _tableView.scrollEnabled = NO;
-
-        if (_expenseFromTextField.floatValue > 0.0f) {
-            [self createDoneBarButton];
-        }
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
@@ -136,31 +134,45 @@
 
         [self removeTableView];
         [self createTableView];
-        [self removeDoneBarButton];
     }
 }
 
-#pragma mark - CustomDoneBarButtonItem -
+#pragma mark - Helper Methods -
 
-- (void)createDoneBarButton {
-    _doneBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneBarButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = _doneBarButtonItem;
+- (void)resignActiveTextField {
+    if (!_isChosenCategory)
+        [self.expenseTextField resignFirstResponder];
+    else
+        [self.descriptionTextField resignFirstResponder];
 }
 
-- (void)removeDoneBarButton {
-    self.navigationItem.rightBarButtonItem = nil;
-    _doneBarButtonItem = nil;
+#pragma mark - DoneBarButtonItem -
+
+- (void)createDoneBarButton {
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneBarButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = doneButton;
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
+    if (_expenseFromTextField.floatValue > 0.0f) {
+        Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
-    [self addExpenseToCategoryData:expense];
+        [self addExpenseToCategoryData:expense];
 
-    [self.descriptionTextField resignFirstResponder];
+        [self.descriptionTextField resignFirstResponder];
 
-    if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
-        [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+        if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
+            [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+        }
+    } else {
+        [self resignActiveTextField];
+
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil
+                                                           message:@"Please enter the amount of expense."
+                                                          delegate:self
+                                                 cancelButtonTitle:@"Ok"
+                                                 otherButtonTitles:nil];
+        [alertView show];
     }
 }
 
@@ -191,19 +203,9 @@
 
     if (stringFromTextField.length > 0) {
         _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
-
-        if (_isChosenCategory) {
-            if (!_doneBarButtonItem) {
-                [self createDoneBarButton];
-            }
-        }
-
     } else if (stringFromTextField.length == 0) {
         if (_expenseFromTextField) {
             _expenseFromTextField = @(0.0f);
-        }
-        if (_doneBarButtonItem) {
-            [self removeDoneBarButton];
         }
     }
     return YES;
@@ -216,16 +218,19 @@
 #pragma mark - IBAction -
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
-    if (!_isChosenCategory)
-        [self.expenseTextField resignFirstResponder];
-    else
-        [self.descriptionTextField resignFirstResponder];
+    [self resignActiveTextField];
 
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender {
     [self doneBarButtonPressed:nil];
+}
+
+#pragma mark - UIAlertViewDelegate -
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [_expenseTextField becomeFirstResponder];
 }
 
 @end

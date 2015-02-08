@@ -26,4 +26,8 @@
     self.label.text = [NSString stringWithFormat:@"Amount:%@\n Category:%@\n Description:%@\n Date:%@\n idValue:%@", self.expenseToShow.amount, self.expenseToShow.category.title, self.expenseToShow.descriptionOfExpense, self.expenseToShow.dateOfExpense, self.expenseToShow.idValue];
 }
 
+- (void)dealloc {
+    NSLog(@"Dealloc %@", self);
+}
+
 @end
