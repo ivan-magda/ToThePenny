@@ -1,6 +1,5 @@
     //View
 #import "MainViewController.h"
-#import "SWRevealViewController.h"
 #import "AddExpenseViewController.h"
 #import "DetailsViewController.h"
 
@@ -67,11 +66,6 @@
 #pragma mark - Helper methods -
 
 - (void)customSetUp {
-    self.revealBarButton.target = self.revealViewController;
-    self.revealBarButton.action = @selector(revealToggle:);
-
-    [self.view addGestureRecognizer:self.revealViewController.panGestureRecognizer];
-
     [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
 }
 
