@@ -75,7 +75,7 @@
 
                     countForExpenditures += [expense.amount floatValue];
 
-                    [context refreshObject:expense mergeChanges:NO];
+                [context refreshObject:expense mergeChanges:NO];
                 }
                 *stop = YES;
             }
@@ -92,12 +92,18 @@
 + (CategoryData *)findCategoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title = %@", category];
-    [fetchRequest setPredicate:predicate];
+    NSExpression *title = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(title))];
+    NSExpression *categoryTitle = [NSExpression expressionForConstantValue:category];
+    NSPredicate *predicate = [NSComparisonPredicate
+                              predicateWithLeftExpression:title
+                              rightExpression:categoryTitle
+                              modifier:NSDirectPredicateModifier
+                              type:NSEqualToPredicateOperatorType
+                              options:0];
+    fetchRequest.predicate = predicate;
 
     NSError *error;
     NSArray *foundCategory = [context executeFetchRequest:fetchRequest error:&error];
-
     if (error) {
         NSLog(@"***Error: %@", [error localizedDescription]);
     }
