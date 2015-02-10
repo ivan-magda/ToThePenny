@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "AllExpensesTableViewController.h"
 
     //CoreData
 #import "Persistence.h"
@@ -30,6 +31,11 @@
 
     [mainViewController addObserver:mainViewController forKeyPath:NSStringFromSelector(@selector(managedObjectContext)) options:NSKeyValueObservingOptionNew context:NULL];
 
+        //Get the AllExpensesViewController
+    navigationController = (UINavigationController *)tabBarController.viewControllers[1];
+    AllExpensesTableViewController *allExpensesController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
+
+
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.persistence = [Persistence sharedInstance];
 
@@ -38,6 +44,7 @@
 
             NSParameterAssert(_managedObjectContext);
             mainViewController.managedObjectContext = _managedObjectContext;
+            allExpensesController.managedObjectContext = _managedObjectContext;
         });
     });
 }

@@ -13,11 +13,56 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AllCell" id="IoL-Ki-fam">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="AllCell" editingAccessoryType="detailDisclosureButton" id="IoL-Ki-fam" customClass="CustomTableViewCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IoL-Ki-fam" id="wmv-oC-vOq">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z09-ix-4HU">
+                                            <rect key="frame" x="243" y="11" width="44" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNr-ID-JYm">
+                                            <rect key="frame" x="14" y="7" width="79" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmE-j0-7iZ">
+                                            <rect key="frame" x="14" y="29" width="47" height="12"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="cmE-j0-7iZ" secondAttribute="trailing" constant="226" id="06b-su-rZY"/>
+                                        <constraint firstItem="Z09-ix-4HU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oNr-ID-JYm" secondAttribute="trailing" constant="8" symbolic="YES" id="3wn-W0-tWZ"/>
+                                        <constraint firstAttribute="bottom" secondItem="cmE-j0-7iZ" secondAttribute="bottom" constant="2" id="AAX-Qs-vFO"/>
+                                        <constraint firstItem="Z09-ix-4HU" firstAttribute="top" secondItem="wmv-oC-vOq" secondAttribute="top" constant="11" id="FpE-hB-WMY"/>
+                                        <constraint firstAttribute="bottom" secondItem="Z09-ix-4HU" secondAttribute="bottom" constant="11" id="TKW-fi-fUg"/>
+                                        <constraint firstItem="Z09-ix-4HU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cmE-j0-7iZ" secondAttribute="trailing" constant="8" symbolic="YES" id="fKK-U8-2jB"/>
+                                        <constraint firstItem="oNr-ID-JYm" firstAttribute="top" secondItem="wmv-oC-vOq" secondAttribute="top" constant="7" id="gSW-H0-ZZE"/>
+                                        <constraint firstItem="cmE-j0-7iZ" firstAttribute="leading" secondItem="wmv-oC-vOq" secondAttribute="leading" constant="14" id="lZk-eo-0N2"/>
+                                        <constraint firstItem="cmE-j0-7iZ" firstAttribute="trailing" secondItem="oNr-ID-JYm" secondAttribute="trailing" constant="-32" id="nLr-Cq-TEu"/>
+                                        <constraint firstAttribute="trailing" secondItem="Z09-ix-4HU" secondAttribute="trailing" id="pGC-hl-Evl"/>
+                                        <constraint firstItem="oNr-ID-JYm" firstAttribute="leading" secondItem="wmv-oC-vOq" secondAttribute="leading" constant="14" id="vpb-sR-aqy"/>
+                                        <constraint firstItem="cmE-j0-7iZ" firstAttribute="top" secondItem="oNr-ID-JYm" secondAttribute="bottom" constant="4" id="x2M-jx-jbc"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="06b-su-rZY"/>
+                                            <exclude reference="nLr-Cq-TEu"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="categoryTitleLabel" destination="cmE-j0-7iZ" id="GXe-um-bWD"/>
+                                    <outlet property="descriptionLabel" destination="oNr-ID-JYm" id="GyX-np-205"/>
+                                    <outlet property="detailsLabel" destination="Z09-ix-4HU" id="i8r-L8-tPq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -27,6 +72,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="All Expenses" id="ihl-OM-MD1"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="tableView" destination="sTV-hZ-UKe" id="aJs-3J-j88"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GQh-BI-Fho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -148,7 +196,7 @@
                         <outlet property="monthLabel" destination="JH0-xh-I1B" id="Gio-dx-kcf"/>
                         <outlet property="secondCategoryNameLabel" destination="ikf-7w-Jkq" id="LHq-w8-DRV"/>
                         <outlet property="secondCategorySummaLabel" destination="POl-9q-h5e" id="gpA-59-0qS"/>
-                        <outlet property="tableView" destination="5VS-lh-3Pv" id="QNJ-fV-kzD"/>
+                        <outlet property="tableView" destination="5VS-lh-3Pv" id="NnF-R6-nlB"/>
                         <outlet property="thirdCategoryNameLabel" destination="bxB-Bn-RpR" id="YD6-mK-eo8"/>
                         <outlet property="thirdCategorySummaLabel" destination="atr-tJ-CG1" id="9pu-4h-OtC"/>
                         <outlet property="totalSummaLabel" destination="kxL-xl-ePS" id="SeE-Kg-moV"/>
@@ -368,7 +416,7 @@
         <scene sceneID="FHe-Il-uU4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l5R-23-sta" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" id="RJ6-dR-x4Q"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="TabIconSettings.png" id="RJ6-dR-x4Q"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pjl-9k-Al6">
@@ -386,6 +434,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TabIconSettings.png" width="32" height="32"/>
         <image name="reveal-icon.png" width="22" height="17"/>
     </resources>
 </document>

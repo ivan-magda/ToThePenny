@@ -28,6 +28,11 @@
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
+		50F41B381A88884400ABE09F /* TabIconSettings_Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */; };
+		50F41B391A88884400ABE09F /* TabIconSettings_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */; };
+		50F41B3A1A88884400ABE09F /* TabIconSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B361A88884400ABE09F /* TabIconSettings.png */; };
+		50F41B3B1A88884400ABE09F /* TabIconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B371A88884400ABE09F /* TabIconSettings@2x.png */; };
+		50F41B411A88A32000ABE09F /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F41B401A88A32000ABE09F /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +84,12 @@
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
+		50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabIconSettings_Highlighted.png; sourceTree = "<group>"; };
+		50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings_Highlighted@2x.png"; sourceTree = "<group>"; };
+		50F41B361A88884400ABE09F /* TabIconSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabIconSettings.png; sourceTree = "<group>"; };
+		50F41B371A88884400ABE09F /* TabIconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings@2x.png"; sourceTree = "<group>"; };
+		50F41B3F1A88A32000ABE09F /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
+		50F41B401A88A32000ABE09F /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +113,10 @@
 		5025479B1A1ED27600DCB8FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */,
+				50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */,
+				50F41B361A88884400ABE09F /* TabIconSettings.png */,
+				50F41B371A88884400ABE09F /* TabIconSettings@2x.png */,
 				502547971A1ED26600DCB8FB /* reveal-icon.png */,
 				502547981A1ED26600DCB8FB /* reveal-icon@2x.png */,
 			);
@@ -180,7 +195,6 @@
 				5063D1981A85F0B3006168D3 /* AppDelegate */,
 				50B3574E1A48597300168958 /* CoreData */,
 				508774881A1F0C2A002D1A9E /* User Interface */,
-				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
@@ -222,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				5063D1991A85F0C2006168D3 /* MainView */,
+				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
 				5063D19C1A85F0FE006168D3 /* DetailsView */,
 			);
@@ -233,6 +248,8 @@
 			children = (
 				50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */,
 				50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */,
+				50F41B3F1A88A32000ABE09F /* CustomTableViewCell.h */,
+				50F41B401A88A32000ABE09F /* CustomTableViewCell.m */,
 			);
 			name = AllExpensesView;
 			sourceTree = "<group>";
@@ -336,10 +353,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50F41B3B1A88884400ABE09F /* TabIconSettings@2x.png in Resources */,
+				50F41B391A88884400ABE09F /* TabIconSettings_Highlighted@2x.png in Resources */,
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
 				5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */,
+				50F41B3A1A88884400ABE09F /* TabIconSettings.png in Resources */,
+				50F41B381A88884400ABE09F /* TabIconSettings_Highlighted.png in Resources */,
 				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
 				502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */,
 			);
@@ -367,6 +388,7 @@
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
+				50F41B411A88A32000ABE09F /* CustomTableViewCell.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
