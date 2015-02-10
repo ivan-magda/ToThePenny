@@ -48,6 +48,7 @@
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
     _fetchedResultsController.delegate = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 #pragma mark - Helper methods -
@@ -63,6 +64,29 @@
         [self updateLabels];
 
         [self.tableView reloadData];
+
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidDelete:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
+    }
+}
+
+- (void)contextDidDelete:(NSNotification *)notification {
+    NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
+    if ([setWithKeys member:@"deleted"]) {
+        NSArray *deletedExpense = [notification.userInfo[@"deleted"]allObjects];
+        NSParameterAssert(deletedExpense.count == 1);
+
+        ExpenseData *expense = [deletedExpense firstObject];
+
+        _totalExpeditures -= [expense.amount floatValue];
+        [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary *dictionary = (NSDictionary *)obj;
+            if (dictionary[@"id"] == expense.categoryId) {
+                [self updateCategoriesExpensesDataAtIndex:idx withValue:-expense.amount.floatValue];
+
+                *stop = YES;
+            }
+        }];
+        [self updateLabels];
     }
 }
 
@@ -71,6 +95,10 @@
 }
 
 - (void)updateLabels {
+    static NSNumber *totalExpensesHolder = nil;
+    if (totalExpensesHolder == nil) {
+        totalExpensesHolder = @(_totalExpeditures);
+    }
     self.firstCategoryNameLabel.text = @"";
     self.firstCategorySummaLabel.text = @"";
     self.secondCategoryNameLabel.text = @"";
@@ -78,8 +106,12 @@
     self.thirdCategoryNameLabel.text = @"";
     self.thirdCategorySummaLabel.text = @"";
 
-    if (_totalExpeditures > 0.0f) {
+    if (_totalExpeditures > 0.0f &&
+        [totalExpensesHolder floatValue] == _totalExpeditures) {
         [self updateLabelsForMostValuableCategories];
+    } else if ([totalExpensesHolder floatValue] != _totalExpeditures) {
+        [self updateLabelsForMostValuableCategories];
+        totalExpensesHolder = @(_totalExpeditures);
     }
 
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
@@ -176,11 +208,18 @@
 
             ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
             controller.expenseToShow = expense;
+            controller.managedObjectContext = _managedObjectContext;
         }
     }
 }
 
 #pragma mark - AddExpenseViewControllerProtocol -
+
+- (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
+    CGFloat value = [_categoriesData[index][@"expenses"]floatValue] + amount;
+
+    [_categoriesData[index]setObject:@(value) forKey:@"expenses"];
+}
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
     if (self.tableView.hidden) {
@@ -192,9 +231,7 @@
         NSParameterAssert([obj isKindOfClass:[NSDictionary class]]);
 
         if ([obj[NSStringFromSelector(@selector(title))] isEqualToString:expense.category]) {
-            CGFloat value = [_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue];
-
-            [_categoriesData[idx]setObject:@(value) forKey:@"expenses"];
+            [self updateCategoriesExpensesDataAtIndex:idx withValue:expense.amount.floatValue];
 
             *stop = YES;
         }
@@ -246,6 +283,24 @@
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
 
     return [[sectionInfo name]uppercaseString];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [_managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+
+        NSError *error = nil;
+        if (![_managedObjectContext save:&error]) {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }
+    }
 }
 
 #pragma mark - UITableViewDelegate -

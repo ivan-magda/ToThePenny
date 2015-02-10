@@ -21,13 +21,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSParameterAssert(_managedObjectContext);
+
     self.title = @"Details";
+
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteButtonPressed)];
+    self.navigationItem.rightBarButtonItem = deleteButton;
 
     self.label.text = [NSString stringWithFormat:@"Amount:%@\n Category:%@\n Description:%@\n Date:%@\n idValue:%@", self.expenseToShow.amount, self.expenseToShow.category.title, self.expenseToShow.descriptionOfExpense, self.expenseToShow.dateOfExpense, self.expenseToShow.idValue];
 }
 
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
+}
+
+- (void)deleteButtonPressed {
+    NSManagedObjectContext *context = _managedObjectContext;
+    [context deleteObject:_expenseToShow];
+
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

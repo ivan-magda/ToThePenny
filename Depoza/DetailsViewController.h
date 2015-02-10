@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class ExpenseData;
+@class NSManagedObjectContext;
 
 @interface DetailsViewController : UIViewController
 
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) ExpenseData *expenseToShow;
 
 @end

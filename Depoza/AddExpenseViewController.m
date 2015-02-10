@@ -154,7 +154,7 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
-    if (_expenseFromTextField.floatValue > 0.0f) {
+    if (_expenseFromTextField.floatValue > 0.0f && _isChosenCategory) {
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
         [self addExpenseToCategoryData:expense];
