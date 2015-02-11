@@ -11,6 +11,7 @@
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
@@ -51,11 +52,7 @@
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
-#pragma mark - Helper methods -
-
-- (void)customSetUp {
-    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
-}
+#pragma mark - NSKeyValueObserving -
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(managedObjectContext))]) {
@@ -65,29 +62,46 @@
 
         [self.tableView reloadData];
 
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidDelete:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
     }
 }
 
-- (void)contextDidDelete:(NSNotification *)notification {
+#pragma mark - Notifications -
+
+- (void)contextDidChange:(NSNotification *)notification {
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
     if ([setWithKeys member:@"deleted"]) {
-        NSArray *deletedExpense = [notification.userInfo[@"deleted"]allObjects];
-        NSParameterAssert(deletedExpense.count == 1);
+        NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
+        ExpenseData *expense = [notification.userInfo[@"deleted"]anyObject];
 
-        ExpenseData *expense = [deletedExpense firstObject];
+        NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+        NSDate *startDate = dates.firstObject;
+        NSDate *endDate = dates.lastObject;
 
-        _totalExpeditures -= [expense.amount floatValue];
-        [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSDictionary *dictionary = (NSDictionary *)obj;
-            if (dictionary[@"id"] == expense.categoryId) {
-                [self updateCategoriesExpensesDataAtIndex:idx withValue:-expense.amount.floatValue];
+            //expense.dateOfExpense >= dates.firstObject && expense.dateOfExpense <= dates.lastObject
+        if (([expense.dateOfExpense compare:startDate] == NSOrderedSame ||
+             [expense.dateOfExpense compare:startDate] == NSOrderedDescending) &&
+            ([expense.dateOfExpense compare:endDate]   == NSOrderedSame ||
+             [expense.dateOfExpense compare:endDate]   == NSOrderedAscending)) {
 
-                *stop = YES;
-            }
-        }];
-        [self updateLabels];
+            _totalExpeditures -= [expense.amount floatValue];
+            [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSDictionary *dictionary = (NSDictionary *)obj;
+                if (dictionary[@"id"] == expense.categoryId) {
+                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-expense.amount.floatValue];
+
+                    *stop = YES;
+                }
+            }];
+            [self updateLabels];
+        }
     }
+}
+
+#pragma mark - Helper methods -
+
+- (void)customSetUp {
+    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
 }
 
 - (void)loadCategoriesData {
@@ -109,8 +123,12 @@
     if (_totalExpeditures > 0.0f &&
         [totalExpensesHolder floatValue] == _totalExpeditures) {
         [self updateLabelsForMostValuableCategories];
-    } else if ([totalExpensesHolder floatValue] != _totalExpeditures) {
+    } else if ([totalExpensesHolder floatValue] != _totalExpeditures &&
+               _totalExpeditures > 0.0f) {
         [self updateLabelsForMostValuableCategories];
+        totalExpensesHolder = @(_totalExpeditures);
+    } else if ([totalExpensesHolder floatValue] != _totalExpeditures &&
+               _totalExpeditures == 0) {
         totalExpensesHolder = @(_totalExpeditures);
     }
 
