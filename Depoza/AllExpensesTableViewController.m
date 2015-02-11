@@ -11,33 +11,77 @@
 #import "CategoryData.h"
 #import "CustomTableViewCell.h"
 
-@interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating>
+@interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) NSPredicate *searchPredicate;
+
+@property (strong, nonatomic) UIBarButtonItem *searchButton;
 
 @end
 
 @implementation AllExpensesTableViewController
 
+#pragma mark - ViewControllerLifeCycle -
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-        // Create the search controller with this controller displaying the search results
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.searchResultsUpdater = self;
-    [self.searchController.searchBar sizeToFit];
-    self.tableView.tableHeaderView = self.searchController.searchBar;
-    self.definesPresentationContext = YES;
+    [self createSearchButton];
 
+    [self createSearchController];
+
+    self.definesPresentationContext = YES;
     [NSFetchedResultsController deleteCacheWithName:@"All"];
 
     [self performFetch];
 }
+
+#pragma mark - Search -
+
+- (void)createSearchButton {
+    _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
+    self.navigationItem.rightBarButtonItem = _searchButton;
+}
+
+- (void)searchBarButtonPressed:(UIBarButtonItem *)sender {
+    self.navigationItem.rightBarButtonItem = nil;
+    self.navigationItem.titleView = _searchController.searchBar;
+    [self.navigationItem.titleView becomeFirstResponder];
+}
+
+- (void)createSearchController {
+        // Create the search controller with this controller displaying the search results
+    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    self.searchController.dimsBackgroundDuringPresentation = NO;
+    self.searchController.hidesNavigationBarDuringPresentation = NO;
+    self.searchController.searchResultsUpdater = self;
+    self.searchController.searchBar.delegate = self;
+    [self.searchController.searchBar sizeToFit];
+}
+
+#pragma mark UISearchBarDelegate
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    CGRect frame = self.navigationItem.titleView.frame;
+    frame.size.width = 0.0f;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         self.navigationItem.titleView.frame = frame;
+                         self.navigationItem.titleView.alpha = 0;
+                     } completion:^(BOOL finished) {
+                         self.navigationItem.titleView = nil;
+                         self.navigationItem.rightBarButtonItem = _searchButton;
+                     }];
+     }
+
+#pragma mark SearchResultsUpdater
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
     NSString *searchText = self.searchController.searchBar.text;
