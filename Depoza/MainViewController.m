@@ -13,6 +13,8 @@
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 
+static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
+
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
@@ -42,6 +44,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    for (UIView *aView in self.view.subviews) {
+        if ([aView isKindOfClass:[UILabel class]] ||
+            [aView isKindOfClass:[UITableView class]]) {
+            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
+            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
+        }
+    }
+
     [self customSetUp];
     [self updateLabels];
 }
@@ -51,6 +61,29 @@
     _fetchedResultsController.delegate = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
+
+- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
+    view.frame = CGRectInset(view.frame, -value, -value);
+}
+
+- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
+    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.x"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    xMotion.minimumRelativeValue = @(-magnitude);
+    xMotion.maximumRelativeValue = @(magnitude);
+
+    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.y"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    yMotion.minimumRelativeValue = @(-magnitude);
+    yMotion.maximumRelativeValue = @(magnitude);
+
+    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+    group.motionEffects = @[xMotion, yMotion];
+    [view addMotionEffect:group];
+}
+
 
 #pragma mark - NSKeyValueObserving -
 
