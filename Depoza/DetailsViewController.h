@@ -11,7 +11,7 @@
 @class ExpenseData;
 @class NSManagedObjectContext;
 
-@interface DetailsViewController : UIViewController
+@interface DetailsViewController : UITableViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) ExpenseData *expenseToShow;

@@ -44,6 +44,18 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self customSetUp];
+}
+
+- (void)dealloc {
+    NSLog(@"Dealloc %@", self);
+    _fetchedResultsController.delegate = nil;
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+#pragma mark - MotionEffect -
+
+- (void)addMotionEffectToViews {
     for (UIView *aView in self.view.subviews) {
         if ([aView isKindOfClass:[UILabel class]] ||
             [aView isKindOfClass:[UITableView class]]) {
@@ -51,15 +63,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
         }
     }
-
-    [self customSetUp];
-    [self updateLabels];
-}
-
-- (void)dealloc {
-    NSLog(@"Dealloc %@", self);
-    _fetchedResultsController.delegate = nil;
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 - (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
@@ -135,6 +138,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)customSetUp {
     [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+
+    [self addMotionEffectToViews];
+    [self updateLabels];
 }
 
 - (void)loadCategoriesData {
@@ -146,12 +152,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     if (totalExpensesHolder == nil) {
         totalExpensesHolder = @(_totalExpeditures);
     }
-    self.firstCategoryNameLabel.text = @"";
-    self.firstCategorySummaLabel.text = @"";
-    self.secondCategoryNameLabel.text = @"";
+    self.firstCategoryNameLabel.text   = @"";
+    self.firstCategorySummaLabel.text  = @"";
+    self.secondCategoryNameLabel.text  = @"";
     self.secondCategorySummaLabel.text = @"";
-    self.thirdCategoryNameLabel.text = @"";
-    self.thirdCategorySummaLabel.text = @"";
+    self.thirdCategoryNameLabel.text   = @"";
+    self.thirdCategorySummaLabel.text  = @"";
 
     if (_totalExpeditures > 0.0f &&
         [totalExpensesHolder floatValue] == _totalExpeditures) {
@@ -164,13 +170,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                _totalExpeditures == 0) {
         totalExpensesHolder = @(_totalExpeditures);
     }
-
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
-    self.monthLabel.text = [self formatDate:[NSDate date] forLabel:@"monthLabel"];
+    self.monthLabel.text = [self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))];
 }
 
 - (NSString *)formatDate:(NSDate *)theDate forLabel:(NSString *)text {
-    if ([text isEqualToString:@"monthLabel"]) {
+    if ([text isEqualToString:NSStringFromSelector(@selector(monthLabel))]) {
         static NSDateFormatter *formatter = nil;
         if (formatter == nil) {
             formatter = [[NSDateFormatter alloc] init];

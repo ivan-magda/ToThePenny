@@ -12,28 +12,52 @@
 
 @interface DetailsViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *label;
+@property (weak, nonatomic) IBOutlet UILabel *amountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *categoryName;
+@property (weak, nonatomic) IBOutlet UILabel *textOfDescription;
 
 @end
 
 @implementation DetailsViewController
+
+#pragma mark - ViewControllerLifeCycle -
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     NSParameterAssert(_managedObjectContext);
 
-    self.title = @"Details";
+    [self updateLabels];
 
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteButtonPressed)];
     self.navigationItem.rightBarButtonItem = deleteButton;
-
-    self.label.text = [NSString stringWithFormat:@"Amount:%@\n Category:%@\n Description:%@\n Date:%@\n idValue:%@", self.expenseToShow.amount, self.expenseToShow.category.title, self.expenseToShow.descriptionOfExpense, self.expenseToShow.dateOfExpense, self.expenseToShow.idValue];
 }
 
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
 }
+
+#pragma mark - SetUp -
+
+- (void)updateLabels {
+    self.amountLabel.text = [NSString stringWithFormat:@"%.2f", _expenseToShow.amount.floatValue];
+    self.dateLabel.text = [self formatDate:_expenseToShow.dateOfExpense];
+    self.categoryName.text = _expenseToShow.category.title;
+    self.textOfDescription.text = _expenseToShow.descriptionOfExpense;
+}
+
+- (NSString *)formatDate:(NSDate *)date {
+    static NSDateFormatter *dateFormatter = nil;
+    if (dateFormatter == nil) {
+        dateFormatter = [NSDateFormatter new];
+        dateFormatter.timeZone = [NSTimeZone localTimeZone];
+        dateFormatter.dateFormat = @"dd MMMM yyyy";
+    }
+    return [dateFormatter stringFromDate:date];
+}
+
+#pragma mark - Selector -
 
 - (void)deleteButtonPressed {
     NSManagedObjectContext *context = _managedObjectContext;
