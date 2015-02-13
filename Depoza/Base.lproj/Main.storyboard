@@ -27,13 +27,13 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNr-ID-JYm">
                                             <rect key="frame" x="14" y="7" width="79" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmE-j0-7iZ">
                                             <rect key="frame" x="14" y="29" width="47" height="12"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -62,6 +62,7 @@
                                     <outlet property="categoryTitleLabel" destination="cmE-j0-7iZ" id="GXe-um-bWD"/>
                                     <outlet property="descriptionLabel" destination="oNr-ID-JYm" id="GyX-np-205"/>
                                     <outlet property="detailsLabel" destination="Z09-ix-4HU" id="i8r-L8-tPq"/>
+                                    <segue destination="hVW-5R-IRp" kind="show" identifier="MoreInfo" id="xVv-M7-M5P"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -78,7 +79,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GQh-BI-Fho" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="563" y="-1017"/>
+            <point key="canvasLocation" x="597" y="-1023"/>
         </scene>
         <!--Expenses-->
         <scene sceneID="uaz-hx-xfG">
@@ -170,7 +171,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="hVW-5R-IRp" kind="show" identifier="ShowDetails" id="pW9-gu-CTW"/>
+                                            <segue destination="hVW-5R-IRp" kind="show" identifier="MoreInfo" id="pW9-gu-CTW"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -204,7 +205,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nh9-BY-Rd1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="563" y="-383"/>
+            <point key="canvasLocation" x="597" y="-383"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="uxQ-Dh-Vwa">
@@ -263,12 +264,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VKY-Ma-HRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1369" y="-383"/>
+            <point key="canvasLocation" x="1511" y="-383"/>
         </scene>
-        <!--Details-->
+        <!--More Info-->
         <scene sceneID="q1Z-Yn-PMO">
             <objects>
-                <tableViewController title="Details" id="hVW-5R-IRp" customClass="DetailsViewController" sceneMemberID="viewController">
+                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="DetailsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="N7s-HD-2zQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,7 +336,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90q-lG-WxA">
                                                     <rect key="frame" x="251" y="11" width="36" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -372,7 +373,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xf0-ZZ-484">
                                                     <rect key="frame" x="241" y="11" width="46" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -409,7 +410,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0BE-aA-fbK">
                                                     <rect key="frame" x="255" y="11" width="32" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -441,7 +442,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n4g-e4-axB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1369" y="307"/>
+            <point key="canvasLocation" x="1120" y="-1023"/>
         </scene>
         <!--Today-->
         <scene sceneID="9Bk-YW-U8l">
@@ -461,7 +462,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asx-3q-bNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="147" y="-383"/>
+            <point key="canvasLocation" x="181" y="-383"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nIb-Z6-984">
@@ -511,7 +512,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4V-79-vgx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="978" y="-383"/>
+            <point key="canvasLocation" x="1120" y="-383"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="pMZ-VW-iFP">
@@ -552,7 +553,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ziy-Id-Bc1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="147" y="-1017"/>
+            <point key="canvasLocation" x="181" y="-1023"/>
         </scene>
         <!--Settings-->
         <scene sceneID="FHe-Il-uU4">
@@ -579,4 +580,7 @@
         <image name="TabIconSettings.png" width="32" height="32"/>
         <image name="reveal-icon.png" width="22" height="17"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="pW9-gu-CTW"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -6,10 +6,14 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //View
 #import "AllExpensesTableViewController.h"
+#import "DetailsViewController.h"
+#import "CustomTableViewCell.h"
+
+    //CoreData
 #import "ExpenseData.h"
 #import "CategoryData.h"
-#import "CustomTableViewCell.h"
 
 @interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
@@ -112,9 +116,22 @@
 #pragma mark - Segues
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"MoreInfo"]) {
+        DetailsViewController *detailsViewController = (DetailsViewController *)[segue destinationViewController];
+
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            detailsViewController.expenseToShow = expense;
+            detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
+        }
+    }
 }
 
-#pragma mark - Table View
+#pragma mark - UITableView -
+#pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return self.searchPredicate == nil ? [[self.fetchedResultsController sections] count] : 1;
@@ -174,6 +191,12 @@
     cell.descriptionLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
     cell.detailsLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
     cell.categoryTitleLabel.text = expense.category.title;
+}
+
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - NSFetchedResultsController -

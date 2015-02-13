@@ -238,7 +238,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }
 }
 
-#pragma mark - Navigation -
+#pragma mark - Segues -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
 
@@ -255,7 +255,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
         controller.categories = categoriesTitles;
 
-    } else if ([segue.identifier isEqualToString:@"ShowDetails"]) {
+    } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailsViewController *controller = (DetailsViewController *)segue.destinationViewController;
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
