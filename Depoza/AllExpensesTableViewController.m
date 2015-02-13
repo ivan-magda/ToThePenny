@@ -8,7 +8,7 @@
 
     //View
 #import "AllExpensesTableViewController.h"
-#import "DetailsViewController.h"
+#import "MoreInfoViewController.h"
 #import "CustomTableViewCell.h"
 
     //CoreData
@@ -117,7 +117,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        DetailsViewController *detailsViewController = (DetailsViewController *)[segue destinationViewController];
+        MoreInfoViewController *detailsViewController = (MoreInfoViewController *)[segue destinationViewController];
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;

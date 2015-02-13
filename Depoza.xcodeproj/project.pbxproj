@@ -24,7 +24,7 @@
 		50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */; };
 		50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F41A87AC860019CB55 /* CategoryData.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
-		50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */; };
+		50B195D71A4A66FB00E0F0B8 /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
@@ -77,8 +77,8 @@
 		50AA42F41A87AC860019CB55 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
-		50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
-		50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		50B195D51A4A66FB00E0F0B8 /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoViewController.h; sourceTree = "<group>"; };
+		50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoViewController.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 		5063D19C1A85F0FE006168D3 /* DetailsView */ = {
 			isa = PBXGroup;
 			children = (
-				50B195D51A4A66FB00E0F0B8 /* DetailsViewController.h */,
-				50B195D61A4A66FB00E0F0B8 /* DetailsViewController.m */,
+				50B195D51A4A66FB00E0F0B8 /* MoreInfoViewController.h */,
+				50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */,
 			);
 			name = DetailsView;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
 				50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */,
 				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
-				50B195D71A4A66FB00E0F0B8 /* DetailsViewController.m in Sources */,
+				50B195D71A4A66FB00E0F0B8 /* MoreInfoViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,

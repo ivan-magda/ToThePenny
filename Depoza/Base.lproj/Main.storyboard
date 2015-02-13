@@ -269,7 +269,7 @@
         <!--More Info-->
         <scene sceneID="q1Z-Yn-PMO">
             <objects>
-                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="DetailsViewController" sceneMemberID="viewController">
+                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="MoreInfoViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="N7s-HD-2zQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

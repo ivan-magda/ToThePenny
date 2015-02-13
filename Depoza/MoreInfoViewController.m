@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Ivan Magda. All rights reserved.
 //
 
-#import "DetailsViewController.h"
+#import "MoreInfoViewController.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
 
-@interface DetailsViewController ()
+@interface MoreInfoViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation DetailsViewController
+@implementation MoreInfoViewController
 
 #pragma mark - ViewControllerLifeCycle -
 
