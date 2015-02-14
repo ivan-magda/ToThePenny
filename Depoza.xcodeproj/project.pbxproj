@@ -32,7 +32,6 @@
 		50F41B391A88884400ABE09F /* TabIconSettings_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */; };
 		50F41B3A1A88884400ABE09F /* TabIconSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B361A88884400ABE09F /* TabIconSettings.png */; };
 		50F41B3B1A88884400ABE09F /* TabIconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B371A88884400ABE09F /* TabIconSettings@2x.png */; };
-		50F41B411A88A32000ABE09F /* CustomTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F41B401A88A32000ABE09F /* CustomTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,8 +87,6 @@
 		50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings_Highlighted@2x.png"; sourceTree = "<group>"; };
 		50F41B361A88884400ABE09F /* TabIconSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabIconSettings.png; sourceTree = "<group>"; };
 		50F41B371A88884400ABE09F /* TabIconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings@2x.png"; sourceTree = "<group>"; };
-		50F41B3F1A88A32000ABE09F /* CustomTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTableViewCell.h; sourceTree = "<group>"; };
-		50F41B401A88A32000ABE09F /* CustomTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,8 +245,6 @@
 			children = (
 				50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */,
 				50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */,
-				50F41B3F1A88A32000ABE09F /* CustomTableViewCell.h */,
-				50F41B401A88A32000ABE09F /* CustomTableViewCell.m */,
 			);
 			name = AllExpensesView;
 			sourceTree = "<group>";
@@ -388,7 +383,6 @@
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
-				50F41B411A88A32000ABE09F /* CustomTableViewCell.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,

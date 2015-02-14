@@ -24,7 +24,7 @@
 - (instancetype)init {
     if (self = [super init]) {
         NSLog(@"Allocate SharedManagedObjectContext");
-        [self persistentStoreCoordinator];
+        _persistentStoreCoordinator = [self persistentStoreCoordinator];
     }
     return self;
 }

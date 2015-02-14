@@ -9,15 +9,12 @@
     //View
 #import "AllExpensesTableViewController.h"
 #import "MoreInfoViewController.h"
-#import "CustomTableViewCell.h"
 
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData.h"
 
 @interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
-
-@property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
@@ -35,11 +32,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self createSearchButton];
-
+    [self createSearchBarButtonItem];
+    [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
     [self createSearchController];
 
     self.definesPresentationContext = YES;
+
     [NSFetchedResultsController deleteCacheWithName:@"All"];
 
     [self performFetch];
@@ -47,13 +45,17 @@
 
 #pragma mark - Search -
 
-- (void)createSearchButton {
+- (void)createSearchBarButtonItem {
     _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
-    self.navigationItem.rightBarButtonItem = _searchButton;
+}
+
+- (void)addRightBarButtonItemsToNavigationItem:(NSArray *)items {
+    [self.navigationItem setRightBarButtonItems:items animated:YES];
 }
 
 - (void)searchBarButtonPressed:(UIBarButtonItem *)sender {
-    self.navigationItem.rightBarButtonItem = nil;
+    [self addRightBarButtonItemsToNavigationItem:nil];
+
     self.navigationItem.titleView = _searchController.searchBar;
     [self.navigationItem.titleView becomeFirstResponder];
 }
@@ -66,6 +68,18 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     [self.searchController.searchBar sizeToFit];
+}
+
+#pragma mark SuperEditButtonItem
+
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    [super setEditing:editing animated:animated];
+
+    if (self.navigationItem.rightBarButtonItems.count == 2) {
+        [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem]];
+    } else if (self.navigationItem.rightBarButtonItems.count == 1) {
+        [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
+    }
 }
 
 #pragma mark UISearchBarDelegate
@@ -81,7 +95,7 @@
                          self.navigationItem.titleView.alpha = 0;
                      } completion:^(BOOL finished) {
                          self.navigationItem.titleView = nil;
-                         self.navigationItem.rightBarButtonItem = _searchButton;
+                         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
                      }];
      }
 
@@ -147,7 +161,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CustomTableViewCell *cell = (CustomTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"AllCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AllCell"];
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -176,27 +190,20 @@
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [NSDateFormatter new];
-        [formatter setDateFormat:@"HH:mm"];
+        [formatter setDateFormat:@"dd.MM.YY"];
     }
     return [formatter stringFromDate:theDate];
 }
 
-- (void)configureCell:(CustomTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = nil;
     if (self.searchPredicate == nil) {
         expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
     } else {
         expense = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate][indexPath.row];
     }
-    cell.descriptionLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
-    cell.detailsLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
-    cell.categoryTitleLabel.text = expense.category.title;
-}
-
-#pragma mark UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    cell.textLabel.text = expense.category.title;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
 }
 
 #pragma mark - NSFetchedResultsController -
@@ -261,7 +268,7 @@
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:(CustomTableViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
             break;
 
         case NSFetchedResultsChangeMove:
