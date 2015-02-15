@@ -1,7 +1,7 @@
     //View
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
-#import "MoreInfoViewController.h"
+#import "MoreInfoTableViewController.h"
 
     //CoreData
 #import "Expense.h"
@@ -256,7 +256,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         controller.categories = categoriesTitles;
 
     } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        MoreInfoViewController *controller = (MoreInfoViewController *)segue.destinationViewController;
+        MoreInfoTableViewController *controller = (MoreInfoTableViewController *)segue.destinationViewController;
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;

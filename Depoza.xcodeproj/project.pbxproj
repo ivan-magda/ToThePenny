@@ -10,6 +10,7 @@
 		502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseViewController.m */; };
 		502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547971A1ED26600DCB8FB /* reveal-icon.png */; };
 		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
+		505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
@@ -24,7 +25,7 @@
 		50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */; };
 		50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F41A87AC860019CB55 /* CategoryData.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
-		50B195D71A4A66FB00E0F0B8 /* MoreInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */; };
+		50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
@@ -50,6 +51,8 @@
 		502547971A1ED26600DCB8FB /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		502547981A1ED26600DCB8FB /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerProtocol.h; sourceTree = "<group>"; };
+		505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewController.h; sourceTree = "<group>"; };
+		505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
 		505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+FirstAndLastDaysOfMonth.m"; sourceTree = "<group>"; };
 		505CA13C1A761B21009CA7B1 /* Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fetch.h; sourceTree = "<group>"; };
@@ -76,8 +79,8 @@
 		50AA42F41A87AC860019CB55 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
-		50B195D51A4A66FB00E0F0B8 /* MoreInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoViewController.h; sourceTree = "<group>"; };
-		50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoViewController.m; sourceTree = "<group>"; };
+		50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoTableViewController.h; sourceTree = "<group>"; };
+		50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoTableViewController.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
@@ -162,8 +165,8 @@
 		5063D19C1A85F0FE006168D3 /* DetailsView */ = {
 			isa = PBXGroup;
 			children = (
-				50B195D51A4A66FB00E0F0B8 /* MoreInfoViewController.h */,
-				50B195D61A4A66FB00E0F0B8 /* MoreInfoViewController.m */,
+				50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */,
+				50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */,
 			);
 			name = DetailsView;
 			sourceTree = "<group>";
@@ -193,6 +196,8 @@
 				50B3574E1A48597300168958 /* CoreData */,
 				508774881A1F0C2A002D1A9E /* User Interface */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
+				505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */,
+				505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
 				505CA13F1A762653009CA7B1 /* Categories */,
@@ -379,11 +384,12 @@
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
 				50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */,
 				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
-				50B195D71A4A66FB00E0F0B8 /* MoreInfoViewController.m in Sources */,
+				50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
+				505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,

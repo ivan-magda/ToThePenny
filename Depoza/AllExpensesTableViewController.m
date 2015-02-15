@@ -8,7 +8,8 @@
 
     //View
 #import "AllExpensesTableViewController.h"
-#import "MoreInfoViewController.h"
+#import "MoreInfoTableViewController.h"
+#import "EditExpenseTableViewController.h"
 
     //CoreData
 #import "ExpenseData.h"
@@ -131,15 +132,14 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        MoreInfoViewController *detailsViewController = (MoreInfoViewController *)[segue destinationViewController];
-
+        MoreInfoTableViewController *detailsViewController = (MoreInfoTableViewController *)[segue destinationViewController];
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
             ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
-            detailsViewController.expenseToShow = expense;
             detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
+            detailsViewController.expenseToShow = expense;
         }
     }
 }
@@ -186,6 +186,8 @@
     }
 }
 
+#pragma mark Helpers
+
 - (NSString *)formatDate:(NSDate *)theDate {
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
@@ -204,6 +206,22 @@
     }
     cell.textLabel.text = expense.category.title;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+}
+
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditNavigationController"];
+
+    EditExpenseTableViewController *editExpenseViewController = [navigationController.viewControllers firstObject];
+    editExpenseViewController.managedObjectContext = _managedObjectContext;
+    editExpenseViewController.expenseToEdit = [_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController -
