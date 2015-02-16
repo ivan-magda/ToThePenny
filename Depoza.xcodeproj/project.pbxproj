@@ -171,6 +171,15 @@
 			name = DetailsView;
 			sourceTree = "<group>";
 		};
+		506803DC1A91E273002A3DA0 /* EditView */ = {
+			isa = PBXGroup;
+			children = (
+				505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */,
+				505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */,
+			);
+			name = EditView;
+			sourceTree = "<group>";
+		};
 		506E72771A1E0B450006F2DF = {
 			isa = PBXGroup;
 			children = (
@@ -195,9 +204,8 @@
 				5063D1981A85F0B3006168D3 /* AppDelegate */,
 				50B3574E1A48597300168958 /* CoreData */,
 				508774881A1F0C2A002D1A9E /* User Interface */,
+				506803DC1A91E273002A3DA0 /* EditView */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
-				505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */,
-				505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
 				505CA13F1A762653009CA7B1 /* Categories */,

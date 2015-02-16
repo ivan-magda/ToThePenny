@@ -52,7 +52,7 @@
     if (dateFormatter == nil) {
         dateFormatter = [NSDateFormatter new];
         dateFormatter.timeZone = [NSTimeZone localTimeZone];
-        dateFormatter.dateFormat = @"dd MMMM yyyy";
+        dateFormatter.dateFormat = @"dd MMMM yyyy, HH:mm";
     }
     return [dateFormatter stringFromDate:date];
 }

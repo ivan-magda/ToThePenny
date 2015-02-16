@@ -391,6 +391,7 @@
                         <outlet property="categoryNameLabel" destination="uxS-mc-hf3" id="dS6-Vr-bYD"/>
                         <outlet property="dateLabel" destination="jkK-n9-121" id="Ggd-hp-xPC"/>
                         <outlet property="descriptionLabel" destination="zHA-Av-m7y" id="JAT-DD-2Ng"/>
+                        <outlet property="doneBarButton" destination="D1p-4q-gvf" id="ezn-HB-11Z"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqm-uv-xqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
