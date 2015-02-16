@@ -17,6 +17,4 @@
 
 + (NSMutableArray *)loadCategoriesDataInContext:(NSManagedObjectContext *)context totalExpeditures:(double *)totalExpeditures;
 
-+ (CategoryData *)findCategoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context;
-
 @end

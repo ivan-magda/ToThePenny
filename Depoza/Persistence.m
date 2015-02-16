@@ -96,6 +96,7 @@
     }
 }
 
+#warning Move the implementation to CategoryData category file
 - (void)setCategoryId {
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 

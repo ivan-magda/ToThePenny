@@ -89,29 +89,4 @@
     return categoriesData;
 }
 
-+ (CategoryData *)findCategoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context {
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
-
-    NSExpression *title = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(title))];
-    NSExpression *categoryTitle = [NSExpression expressionForConstantValue:category];
-    NSPredicate *predicate = [NSComparisonPredicate
-                              predicateWithLeftExpression:title
-                              rightExpression:categoryTitle
-                              modifier:NSDirectPredicateModifier
-                              type:NSEqualToPredicateOperatorType
-                              options:0];
-    fetchRequest.predicate = predicate;
-
-    NSError *error;
-    NSArray *foundCategory = [context executeFetchRequest:fetchRequest error:&error];
-    if (error) {
-        NSLog(@"***Error: %@", [error localizedDescription]);
-    }
-    
-    NSParameterAssert([foundCategory count] == 1);
-    NSParameterAssert([[foundCategory firstObject]isKindOfClass:[CategoryData class]]);
-
-    return [foundCategory firstObject];
-}
-
 @end

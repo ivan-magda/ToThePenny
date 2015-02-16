@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSNumber * idValue;
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSSet *expense;
+
 @end
 
 @interface CategoryData (CoreDataGeneratedAccessors)

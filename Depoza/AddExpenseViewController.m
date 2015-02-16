@@ -4,7 +4,7 @@
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
-#import "Fetch.h"
+#import "CategoryData+Fetch.h"
 
 
 @interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
@@ -177,7 +177,7 @@
 }
 
 - (void)addExpenseToCategoryData:(Expense *)expense {
-    CategoryData *categoryData = [Fetch findCategoryFromTitle:expense.category context:_managedObjectContext];
+    CategoryData *categoryData = [CategoryData categoryFromTitle:expense.category context:_managedObjectContext];
 
     ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:self.managedObjectContext];
     expenseData.amount = expense.amount;
