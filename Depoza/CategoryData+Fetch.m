@@ -10,6 +10,19 @@
 
 @implementation CategoryData (Fetch)
 
++ (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+
+    NSError *error = nil;
+    NSArray *foundCategories = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"***Error: %@", [error localizedDescription]);
+    }
+    NSParameterAssert(foundCategories.count > 0);
+
+    return foundCategories;
+}
+
 + (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
@@ -33,6 +46,16 @@
     NSParameterAssert([[foundCategory firstObject]isKindOfClass:[CategoryData class]]);
 
     return [foundCategory firstObject];
+}
+
++ (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context {
+    NSArray *categories = [CategoryData getAllCategoriesInContext:context];
+    NSMutableArray *titles = [NSMutableArray arrayWithCapacity:[categories count]];
+
+    for (CategoryData *category in categories) {
+        [titles addObject:category.title];
+    }
+    return titles;
 }
 
 @end

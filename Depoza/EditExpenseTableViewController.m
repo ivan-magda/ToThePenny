@@ -6,9 +6,14 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //View
 #import "EditExpenseTableViewController.h"
+#import "ChooseCategoryTableViewController.h"
+
+    //CoreData
 #import "ExpenseData.h"
 #import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 
 @interface EditExpenseTableViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *amountTextView;
@@ -64,6 +69,29 @@
         dateFormatter.dateFormat = @"dd MMMM yyyy, HH:mm";
     }
     return [dateFormatter stringFromDate:date];
+}
+
+#pragma mark - Segues -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ChooseCategory"]) {
+        ChooseCategoryTableViewController *controller = (ChooseCategoryTableViewController *)segue.destinationViewController;
+
+        NSArray *allCategoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
+
+        controller.delegate = self;
+        controller.titles = allCategoriesTitles;
+        controller.managedObjectContext = _managedObjectContext;
+        controller.originalCategoryName = self.categoryNameLabel.text;
+    }
+}
+
+#pragma mark - ChooseCategoryTableViewControllerDelegate -
+
+- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategory:(NSString *)category {
+    self.categoryNameLabel.text = category;
+
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - UITableView
@@ -195,6 +223,24 @@
 }
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
+    _expenseToEdit.amount = @([_amountTextView.text floatValue]);
+    _expenseToEdit.dateOfExpense = _dateOfExpense;
+    _expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
+
+    if (![_expenseToEdit.category.title isEqualToString:_categoryNameLabel.text]) {
+        CategoryData *newSelectedCategory = [CategoryData categoryFromTitle:_categoryNameLabel.text context:_managedObjectContext];
+
+        [_expenseToEdit.category removeExpenseObject:_expenseToEdit];
+
+        _expenseToEdit.category = newSelectedCategory;
+        _expenseToEdit.categoryId = newSelectedCategory.idValue;
+        [newSelectedCategory addExpenseObject:_expenseToEdit];
+    }
+    NSError *error;
+    if (![_managedObjectContext save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

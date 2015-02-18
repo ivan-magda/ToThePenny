@@ -1,5 +1,5 @@
 //
-//  EditExpenseTableViewController.h
+//  ChooseCategoryTableViewController.h
 //  Depoza
 //
 //  Created by Ivan Magda on 16.02.15.
@@ -9,12 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ChooseCategoryTableViewControllerDelegate.h"
 
-@class ExpenseData;
 @class NSManagedObjectContext;
 
-@interface EditExpenseTableViewController : UITableViewController <ChooseCategoryTableViewControllerDelegate>
+@interface ChooseCategoryTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) ExpenseData *expenseToEdit;
+@property (nonatomic, copy) NSString *originalCategoryName;
+
+@property (nonatomic, strong) id<ChooseCategoryTableViewControllerDelegate> delegate;
 
 @end

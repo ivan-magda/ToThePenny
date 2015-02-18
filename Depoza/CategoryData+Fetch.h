@@ -12,4 +12,6 @@
 
 + (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context;
 
++ (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
+
 @end
