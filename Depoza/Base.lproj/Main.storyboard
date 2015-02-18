@@ -344,13 +344,13 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dgE-tI-zX7" id="aiL-cy-r5o">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWO-k2-EMN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWO-k2-EMN">
                                                     <rect key="frame" x="15" y="11" width="88" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" text="Description" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
                                                     <rect key="frame" x="199" y="11" width="88" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -361,8 +361,8 @@
                                                 <constraint firstItem="zHA-Av-m7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="trailing" constant="8" symbolic="YES" id="2PI-zu-PIG"/>
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="66D-2f-6LI"/>
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="leading" secondItem="aiL-cy-r5o" secondAttribute="leading" constant="15" id="6he-mT-uCR"/>
-                                                <constraint firstAttribute="bottom" secondItem="TWO-k2-EMN" secondAttribute="bottom" constant="11" id="Wqx-sy-fhe"/>
-                                                <constraint firstAttribute="bottom" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="bTy-Oi-ibG"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="bottom" priority="999" constant="11" id="Wqx-sy-fhe"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="bTy-Oi-ibG"/>
                                                 <constraint firstItem="zHA-Av-m7y" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="h5O-Qe-rx0"/>
                                                 <constraint firstAttribute="trailing" secondItem="zHA-Av-m7y" secondAttribute="trailing" id="wV1-l9-009"/>
                                             </constraints>
@@ -562,7 +562,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="llh-jN-lOQ" id="1vd-cw-xXd">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0X-xb-QME">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z0X-xb-QME">
                                                     <rect key="frame" x="15" y="11" width="88" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="88" id="OGY-75-BUP"/>
@@ -576,7 +576,7 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0BE-aA-fbK">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="751" verticalCompressionResistancePriority="751" text="Text" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="193" translatesAutoresizingMaskIntoConstraints="NO" id="0BE-aA-fbK">
                                                     <rect key="frame" x="272" y="11" width="32" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -586,8 +586,8 @@
                                             <constraints>
                                                 <constraint firstItem="0BE-aA-fbK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z0X-xb-QME" secondAttribute="trailing" constant="8" symbolic="YES" id="86E-Us-l4b"/>
                                                 <constraint firstItem="0BE-aA-fbK" firstAttribute="top" secondItem="1vd-cw-xXd" secondAttribute="top" constant="11" id="DGN-Kr-2x3"/>
-                                                <constraint firstAttribute="bottom" secondItem="z0X-xb-QME" secondAttribute="bottom" constant="11" id="Ez4-6g-w1e"/>
-                                                <constraint firstAttribute="bottom" secondItem="0BE-aA-fbK" secondAttribute="bottom" constant="11" id="HC0-Ke-LFv"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="z0X-xb-QME" secondAttribute="bottom" priority="999" constant="11" id="Ez4-6g-w1e"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0BE-aA-fbK" secondAttribute="bottom" constant="11" id="HC0-Ke-LFv"/>
                                                 <constraint firstItem="z0X-xb-QME" firstAttribute="leading" secondItem="1vd-cw-xXd" secondAttribute="leading" constant="15" id="Q24-9Y-G6Z"/>
                                                 <constraint firstItem="z0X-xb-QME" firstAttribute="top" secondItem="1vd-cw-xXd" secondAttribute="top" constant="11" id="vMX-7o-KnM"/>
                                                 <constraint firstAttribute="trailing" secondItem="0BE-aA-fbK" secondAttribute="trailing" constant="16" id="zVq-ea-Wwi"/>
