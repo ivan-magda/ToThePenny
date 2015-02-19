@@ -294,7 +294,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     }];
     [self updateLabels];
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource -

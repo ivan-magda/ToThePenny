@@ -15,6 +15,9 @@
 #import "CategoryData.h"
 #import "CategoryData+Fetch.h"
 
+    //KVNProgress
+#import <KVNProgress/KVNProgress.h>
+
 @interface EditExpenseTableViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *amountTextView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -223,9 +226,25 @@
 }
 
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
-    _expenseToEdit.amount = @([_amountTextView.text floatValue]);
-    _expenseToEdit.dateOfExpense = _dateOfExpense;
-    _expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
+    [self.amountTextView resignFirstResponder];
+    [self hideDatePicker];
+
+    BOOL isChanged = NO;
+
+    if (_expenseToEdit.amount.floatValue != [_amountTextView.text floatValue]) {
+        _expenseToEdit.amount = @([_amountTextView.text floatValue]);
+        isChanged = YES;
+    }
+
+    if ([_expenseToEdit.dateOfExpense compare:_dateOfExpense] != NSOrderedSame) {
+        _expenseToEdit.dateOfExpense = _dateOfExpense;
+        isChanged = YES;
+    }
+
+    if (![_expenseToEdit.descriptionOfExpense isEqualToString:_descriptionLabel.text]) {
+        _expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
+        isChanged = YES;
+    }
 
     if (![_expenseToEdit.category.title isEqualToString:_categoryNameLabel.text]) {
         CategoryData *newSelectedCategory = [CategoryData categoryFromTitle:_categoryNameLabel.text context:_managedObjectContext];
@@ -235,13 +254,20 @@
         _expenseToEdit.category = newSelectedCategory;
         _expenseToEdit.categoryId = newSelectedCategory.idValue;
         [newSelectedCategory addExpenseObject:_expenseToEdit];
+
+        isChanged = YES;
     }
     NSError *error;
     if (![_managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+    if (isChanged) {
+        [KVNProgress showSuccessWithStatus:@"Updated" completion:^{                [self dismissViewControllerAnimated:YES completion:nil];
+        }];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 @end

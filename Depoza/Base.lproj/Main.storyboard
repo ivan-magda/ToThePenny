@@ -206,6 +206,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="aYD-lE-7za"/>
                                 </constraints>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="42"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>

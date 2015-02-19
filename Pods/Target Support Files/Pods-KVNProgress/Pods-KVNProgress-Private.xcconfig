@@ -1,0 +1,5 @@
+#include "Pods-KVNProgress.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Build" "${PODS_ROOT}/Headers/Build/KVNProgress" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/KVNProgress"
+OTHER_LDFLAGS = ${PODS_KVNPROGRESS_OTHER_LDFLAGS} -ObjC
+PODS_ROOT = ${SRCROOT}

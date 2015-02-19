@@ -1,0 +1,1 @@
+PODS_KVNPROGRESS_OTHER_LDFLAGS = -framework "GLKit" -framework "QuartzCore"

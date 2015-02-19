@@ -6,8 +6,10 @@
 #import "CategoryData.h"
 #import "CategoryData+Fetch.h"
 
+    //KVNProgress
+#import <KVNProgress/KVNProgress.h>
 
-@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
@@ -23,6 +25,8 @@
     BOOL _isChosenCategory;
 
     UITableView *_tableView;
+
+    KVNProgressConfiguration *_configuration;
 }
 
 #pragma mark - ViewController life cycle -
@@ -44,6 +48,10 @@
     self.expenseTextField.delegate = self;
 
     self.descriptionTextField.hidden = YES;
+
+    _configuration = [KVNProgressConfiguration defaultConfiguration];
+    _configuration.minimumSuccessDisplayTime = 0.6f;
+    [KVNProgress setConfiguration:_configuration];
 }
 
 #pragma mark - CustomTableView -
@@ -140,10 +148,8 @@
 #pragma mark - Helper Methods -
 
 - (void)resignActiveTextField {
-    if (!_isChosenCategory)
-        [self.expenseTextField resignFirstResponder];
-    else
-        [self.descriptionTextField resignFirstResponder];
+    [self.expenseTextField resignFirstResponder];
+    [self.descriptionTextField resignFirstResponder];
 }
 
 #pragma mark - DoneBarButtonItem -
@@ -154,25 +160,33 @@
 }
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
+    [self resignActiveTextField];
+
     if (_expenseFromTextField.floatValue > 0.0f && _isChosenCategory) {
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
         [self addExpenseToCategoryData:expense];
 
-        [self.descriptionTextField resignFirstResponder];
-
         if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
             [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+            [KVNProgress showSuccessWithStatus:@"Added" completion:^{
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+        } else {
+            NSParameterAssert(NO);
         }
+    } else if (_expenseFromTextField.floatValue == 0.0f && _isChosenCategory){
+        [KVNProgress showErrorWithStatus:@"Please enter the amount of expense" completion:^{
+            [_expenseTextField becomeFirstResponder];
+        }];
+    } else if (_expenseFromTextField.floatValue > 0.0f && !_isChosenCategory) {
+        [KVNProgress showErrorWithStatus:@"Please choose category" completion:^{
+            [self resignActiveTextField];
+        }];
     } else {
-        [self resignActiveTextField];
-
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:nil
-                                                           message:@"Please enter the amount of expense."
-                                                          delegate:self
-                                                 cancelButtonTitle:@"Ok"
-                                                 otherButtonTitles:nil];
-        [alertView show];
+        [KVNProgress showErrorWithStatus:@"Please enter the data" completion:^{
+            [_expenseTextField becomeFirstResponder];
+        }];
     }
 }
 
@@ -225,12 +239,6 @@
 
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender {
     [self doneBarButtonPressed:nil];
-}
-
-#pragma mark - UIAlertViewDelegate -
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    [_expenseTextField becomeFirstResponder];
 }
 
 @end
