@@ -14,4 +14,8 @@
 
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
 
++ (NSInteger)nextId;
+
++ (CategoryData *)categoryDataWithName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context;
+
 @end

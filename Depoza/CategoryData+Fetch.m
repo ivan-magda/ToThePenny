@@ -10,6 +10,24 @@
 
 @implementation CategoryData (Fetch)
 
++ (NSInteger)nextId {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+
+    NSInteger idValue = [userDefaults integerForKey:@"categoryId"];
+    [userDefaults setInteger:idValue + 1 forKey:@"categoryId"];
+    [userDefaults synchronize];
+
+    return idValue;
+}
+
++ (CategoryData *)categoryDataWithName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context {
+    CategoryData *categoryData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
+    categoryData.idValue = @([self nextId]);
+    categoryData.title = name;
+    
+    return categoryData;
+}
+
 + (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 

@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "AllExpensesTableViewController.h"
+#import "SettingsTableViewController.h"
 
     //CoreData
 #import "Persistence.h"
@@ -35,6 +36,9 @@
     navigationController = (UINavigationController *)tabBarController.viewControllers[1];
     AllExpensesTableViewController *allExpensesController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
 
+        //Get the SettingsTableViewController
+    navigationController = (UINavigationController *)tabBarController.viewControllers[2];
+    SettingsTableViewController *settingsViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.persistence = [Persistence sharedInstance];
@@ -45,6 +49,7 @@
             NSParameterAssert(_managedObjectContext);
             mainViewController.managedObjectContext = _managedObjectContext;
             allExpensesController.managedObjectContext = _managedObjectContext;
+            settingsViewController.managedObjectContext = _managedObjectContext;
         });
     });
 }
