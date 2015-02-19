@@ -144,6 +144,15 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		502589B41A961B4200918017 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				50BA1B991A960FB10091644D /* SettingsTableViewController.h */,
+				50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */,
+			);
+			name = SettingsView;
+			sourceTree = "<group>";
+		};
 		505CA13F1A762653009CA7B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -267,14 +276,13 @@
 		508774881A1F0C2A002D1A9E /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				50BA1B991A960FB10091644D /* SettingsTableViewController.h */,
-				50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */,
 				5063D1991A85F0C2006168D3 /* MainView */,
 				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
 				5063D19C1A85F0FE006168D3 /* DetailsView */,
 				506803DC1A91E273002A3DA0 /* EditView */,
 				50D4E0F71A92253A0040C260 /* ChooseCategoryView */,
+				502589B41A961B4200918017 /* SettingsView */,
 				50FEF8341A96030E007BC483 /* AddCategoryView */,
 			);
 			name = "User Interface";

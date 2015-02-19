@@ -44,7 +44,7 @@
     self.amountLabel.text = [NSString stringWithFormat:@"%.2f", _expenseToShow.amount.floatValue];
     self.dateLabel.text = [self formatDate:_expenseToShow.dateOfExpense];
     self.categoryName.text = _expenseToShow.category.title;
-    self.textOfDescription.text = _expenseToShow.descriptionOfExpense;
+    self.textOfDescription.text = (_expenseToShow.descriptionOfExpense.length > 0) ? _expenseToShow.descriptionOfExpense : NSLocalizedString(@"(No Description)", @"MoreInfoVC text for description label");
 }
 
 - (NSString *)formatDate:(NSDate *)date {

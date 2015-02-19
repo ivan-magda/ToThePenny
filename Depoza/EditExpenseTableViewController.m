@@ -56,7 +56,7 @@
 - (void)updateText {
     self.amountTextView.text = [NSString stringWithFormat:@"%.2f", _expenseToEdit.amount.floatValue];
     self.categoryNameLabel.text = _expenseToEdit.category.title;
-    self.descriptionLabel.text = _expenseToEdit.descriptionOfExpense;
+    self.descriptionLabel.text = (_expenseToEdit.descriptionOfExpense.length > 0) ? _expenseToEdit.descriptionOfExpense : NSLocalizedString(@"(No Description)", @"EditExpenseVC text for description label");
     [self updateDateLabel];
 }
 
