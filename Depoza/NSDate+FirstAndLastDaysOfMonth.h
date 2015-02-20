@@ -14,4 +14,6 @@
 
 + (NSArray *)getFirstAndLastDaysInTheCurrentMonth;
 
+- (NSArray *)getFirstAndLastDaysInTheCurrentMonth;
+
 @end

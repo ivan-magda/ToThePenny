@@ -52,12 +52,15 @@
     [self adjustmentOfText];
 
     if ([self isUniqueName:_categoryName]) {
-        [CategoryData categoryDataWithName:_categoryName managedObjectContext:_managedObjectContext];
+        CategoryData *category = [CategoryData categoryDataWithName:_categoryName managedObjectContext:_managedObjectContext];
 
         NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {
             NSLog(@"Error when save %@", [error localizedDescription]);
         }
+
+        [self.delegate addCategoryViewController:self didFinishAddingCategory:category];
+
         [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddCategoryVC succes text for show") completion:^{
             [self dismissViewControllerAnimated:YES completion:nil];
         }];

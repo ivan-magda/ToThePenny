@@ -6,7 +6,7 @@
     //CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
-#import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 #import "Fetch.h"
 
     //Caategories
@@ -106,35 +106,42 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)contextDidChange:(NSNotification *)notification {
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
+
     if ([setWithKeys member:@"deleted"]) {
         NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
-        ExpenseData *expense = [notification.userInfo[@"deleted"]anyObject];
+        ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
 
-        NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
-        NSDate *startDate = dates.firstObject;
-        NSDate *endDate = dates.lastObject;
-
-            //expense.dateOfExpense >= dates.firstObject && expense.dateOfExpense <= dates.lastObject
-        if (([expense.dateOfExpense compare:startDate] == NSOrderedSame ||
-             [expense.dateOfExpense compare:startDate] == NSOrderedDescending) &&
-            ([expense.dateOfExpense compare:endDate]   == NSOrderedSame ||
-             [expense.dateOfExpense compare:endDate]   == NSOrderedAscending)) {
-
-            _totalExpeditures -= [expense.amount floatValue];
+        if ([self isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
+            _totalExpeditures -= [deletedExpense.amount floatValue];
             [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 NSDictionary *dictionary = (NSDictionary *)obj;
-                if (dictionary[@"id"] == expense.categoryId) {
-                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-expense.amount.floatValue];
+                if (dictionary[@"id"] == deletedExpense.categoryId) {
+                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
 
                     *stop = YES;
                 }
             }];
             [self updateLabels];
+            return;
         }
     }
 }
 
 #pragma mark - Helper methods -
+
+- (BOOL)isDateBetweenCurrentMonth:(NSDate *)dateToCompare {
+    NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+    NSDate *startDate = dates.firstObject;
+    NSDate *endDate = dates.lastObject;
+
+    //dateToCompare >= startDate && dateToCompare <= endDate
+    BOOL isBetween = ([dateToCompare compare:startDate] == NSOrderedSame ||
+                      [dateToCompare compare:startDate] == NSOrderedDescending) &&
+    ([dateToCompare compare:endDate]   == NSOrderedSame ||
+     [dateToCompare compare:endDate]   == NSOrderedAscending);
+
+    return isBetween;
+}
 
 - (void)customSetUp {
     [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
@@ -269,12 +276,16 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }
 }
 
-#pragma mark - AddExpenseViewControllerProtocol -
+#pragma mark - AddExpenseViewControllerDelegate
 
 - (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
     CGFloat value = [_categoriesData[index][@"expenses"]floatValue] + amount;
 
     [_categoriesData[index]setObject:@(value) forKey:@"expenses"];
+}
+
+- (void)setCategoryAmountAtIndex:(NSInteger)index withValue:(CGFloat)amount {
+    [_categoriesData[index]setObject:@(amount) forKey:@"expenses"];
 }
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
@@ -294,6 +305,45 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     }];
     [self updateLabels];
+}
+
+#pragma mark - EditExpenseTableViewControllerDelegate
+
+- (void)editExpenseTableViewControllerDelegate:(EditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
+    NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:[NSDate date]managedObjectContext:_managedObjectContext];
+
+    for (NSMutableDictionary *category in _categoriesData) {
+        category[@"expenses"] = @0;
+    }
+
+    float __block countForExpenditures = 0.0f;
+
+    for (CategoryData *category in categories) {
+        [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            NSDictionary *dictionary = (NSDictionary *)obj;
+            if (category.idValue == dictionary[@"id"]) {
+                for (ExpenseData *expense in category.expense) {
+                    [_categoriesData[idx] setObject:@([_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue]) forKey:@"expenses"];
+
+                    countForExpenditures += [expense.amount floatValue];
+                }
+                *stop = YES;
+            }
+        }];
+    }
+    _totalExpeditures = countForExpenditures;
+
+    [self updateLabels];
+}
+
+#pragma mark - AddCategoryViewControllerDelegate
+
+- (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
+    NSMutableDictionary *newCategory = [@{@"title"    : category.title,
+                                          @"id"       : category.idValue,
+                                          @"expenses" : @0
+                                         }mutableCopy];
+    [_categoriesData addObject:newCategory];
 }
 
 #pragma mark - UITableViewDataSource -

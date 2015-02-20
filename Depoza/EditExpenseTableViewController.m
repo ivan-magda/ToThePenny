@@ -9,10 +9,10 @@
     //View
 #import "EditExpenseTableViewController.h"
 #import "ChooseCategoryTableViewController.h"
+#import "MainViewController.h"
 
     //CoreData
 #import "ExpenseData.h"
-#import "CategoryData.h"
 #import "CategoryData+Fetch.h"
 
     //KVNProgress
@@ -42,6 +42,14 @@
 
     NSParameterAssert(self.managedObjectContext);
     NSParameterAssert(self.expenseToEdit);
+
+    UIWindow *window = [[[UIApplication sharedApplication]windows]firstObject];
+    UITabBarController *tabBarController = (UITabBarController *)window.rootViewController;
+
+    UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
+    MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
+
+    self.delegate = mainViewController;
 
     _amountTextView.delegate = self;
     _dateOfExpense = _expenseToEdit.dateOfExpense;
@@ -210,7 +218,7 @@
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     NSString *newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
 
-    self.doneBarButton.enabled = ([newText length] > 0);
+    self.doneBarButton.enabled = (([newText length] > 0) && (newText.floatValue > 0.0f));
 
     return YES;
 }
@@ -241,10 +249,11 @@
         isChanged = YES;
     }
 
-    if (![_expenseToEdit.descriptionOfExpense isEqualToString:_descriptionLabel.text]) {
+    if (![_expenseToEdit.descriptionOfExpense isEqualToString:_descriptionLabel.text] && ![_descriptionLabel.text isEqualToString:NSLocalizedString(@"(No Description)", @"EditExpenseVC check for no description text when done button pressed")]) {
         _expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
         isChanged = YES;
     }
+    NSParameterAssert(![_expenseToEdit.descriptionOfExpense isEqualToString:NSLocalizedString(@"(No Description)", @"EditExpenseVC assertion check")]);
 
     if (![_expenseToEdit.category.title isEqualToString:_categoryNameLabel.text]) {
         CategoryData *newSelectedCategory = [CategoryData categoryFromTitle:_categoryNameLabel.text context:_managedObjectContext];
@@ -257,13 +266,17 @@
 
         isChanged = YES;
     }
+
     NSError *error;
     if (![_managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
 
     if (isChanged) {
-        [KVNProgress showSuccessWithStatus:@"Updated" completion:^{                [self dismissViewControllerAnimated:YES completion:nil];
+        [self.delegate editExpenseTableViewControllerDelegate:self didFinishUpdateExpense:_expenseToEdit];
+
+        [KVNProgress showSuccessWithStatus:@"Updated" completion:^{
+            [self dismissViewControllerAnimated:YES completion:nil];
         }];
     } else {
         [self dismissViewControllerAnimated:YES completion:nil];

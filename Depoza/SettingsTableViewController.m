@@ -8,6 +8,7 @@
 
 #import "SettingsTableViewController.h"
 #import "AddCategoryViewController.h"
+#import "MainViewController.h"
 
 @implementation SettingsTableViewController
 
@@ -21,10 +22,17 @@
     NSParameterAssert(self.managedObjectContext != nil);
 
     if ([segue.identifier isEqualToString:@"AddCategory"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
+        UINavigationController *navigationController = self.navigationController;
+
+        UITabBarController *tabBarController = (UITabBarController *)navigationController.parentViewController;
+        navigationController = (UINavigationController *)tabBarController.viewControllers[0];
+        MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
+
+        navigationController = segue.destinationViewController;
 
         AddCategoryViewController *controller = (AddCategoryViewController *)navigationController.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
+        controller.delegate = mainViewController;
     }
 }
 

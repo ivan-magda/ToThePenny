@@ -7,6 +7,7 @@
 //
 
 #import "CategoryData+Fetch.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 @implementation CategoryData (Fetch)
 
@@ -74,6 +75,20 @@
         [titles addObject:category.title];
     }
     return titles;
+}
+
++ (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context {
+    NSArray *days = [date getFirstAndLastDaysInTheCurrentMonth];
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(expense, $x, ($x.dateOfExpense >= %@) AND ($x.dateOfExpense <= %@)).@count > 0)", [days firstObject], [days lastObject]];
+
+    NSError *error = nil;
+    NSArray *categories = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"Error occured %@", [error localizedDescription]);
+    }
+    return categories;
 }
 
 @end

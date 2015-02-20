@@ -22,16 +22,14 @@
     return dictComponents;
 }
 
-+ (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
-    NSDate *today = [self date];
-
-    NSDictionary *components = [today getComponents];
++ (NSArray *)getDatesFromDate:(NSDate *)date {
+    NSDictionary *components = [date getComponents];
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
 
     NSRange days = [calendar rangeOfUnit:NSCalendarUnitDay
                                   inUnit:NSCalendarUnitMonth
-                                 forDate:today];
+                                 forDate:date];
 
     NSInteger year = [components[@"year"]integerValue];
     NSInteger month = [components[@"month"]integerValue];
@@ -58,11 +56,20 @@
     NSAssert((firstDay != nil) && (lastDay != nil), @"Dates can't be nil!");
 
     /*
-    NSLog(@"%@", [firstDay descriptionWithLocale:[NSLocale currentLocale]]);
-    NSLog(@"%@", [lastDay descriptionWithLocale:[NSLocale currentLocale]]);
+     NSLog(@"%@", [firstDay descriptionWithLocale:[NSLocale currentLocale]]);
+     NSLog(@"%@", [lastDay descriptionWithLocale:[NSLocale currentLocale]]);
      */
-    
+
     return @[firstDay, lastDay];
+}
+
++ (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
+    return [NSDate getDatesFromDate:[NSDate date]];
+}
+
+- (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
+    NSArray *dates = [NSDate getDatesFromDate:self];
+    return dates;
 }
 
 @end

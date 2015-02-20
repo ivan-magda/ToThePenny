@@ -50,7 +50,7 @@
     self.descriptionTextField.hidden = YES;
 
     _configuration = [KVNProgressConfiguration defaultConfiguration];
-    _configuration.minimumSuccessDisplayTime = 0.6f;
+    _configuration.minimumSuccessDisplayTime = 0.5f;
     [KVNProgress setConfiguration:_configuration];
 }
 
@@ -163,12 +163,13 @@
     [self resignActiveTextField];
 
     if (_expenseFromTextField.floatValue > 0.0f && _isChosenCategory) {
-        Expense *expense = [Expense expenseWithAmount:_expenseFromTextField category:_categories[_selectedRow.row] description:_descriptionTextField.text];
+        Expense *expense = [Expense expenseWithAmount:_expenseFromTextField categoryName:_categories[_selectedRow.row] description:_descriptionTextField.text];
 
         [self addExpenseToCategoryData:expense];
 
         if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
             [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
+
             [KVNProgress showSuccessWithStatus:@"Added" completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];

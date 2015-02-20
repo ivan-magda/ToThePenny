@@ -3,7 +3,7 @@
 @class AddExpenseViewController;
 @class Expense;
 
-@protocol AddExpenseViewControllerProtocol <NSObject>
+@protocol AddExpenseViewControllerDelegate <NSObject>
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense;
 

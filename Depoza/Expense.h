@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+@class ExpenseData;
+
 @interface Expense : NSObject
 
 @property (nonatomic, strong) NSNumber *amount;
@@ -8,6 +10,8 @@
 @property (nonatomic, strong) NSDate *dateOfExpense;
 @property (nonatomic, assign) NSInteger idValue;
 
-+ (Expense *)expenseWithAmount:(NSNumber *)amount category:(NSString *)category description:(NSString *)description;
++ (Expense *)expenseWithAmount:(NSNumber *)amount categoryName:(NSString *)category description:(NSString *)description;
+
++ (Expense *)expenseFromExpenseData:(ExpenseData *)expenseData;
 
 @end

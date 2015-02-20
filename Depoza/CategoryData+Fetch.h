@@ -10,12 +10,12 @@
 
 @interface CategoryData (Fetch)
 
-+ (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context;
-
-+ (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
-
 + (NSInteger)nextId;
 
++ (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context;
 + (CategoryData *)categoryDataWithName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context;
+
++ (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
++ (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 
 @end

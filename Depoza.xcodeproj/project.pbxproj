@@ -57,7 +57,7 @@
 		502547951A1EC86600DCB8FB /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
 		502547971A1ED26600DCB8FB /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		502547981A1ED26600DCB8FB /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
-		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerProtocol.h; sourceTree = "<group>"; };
+		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerDelegate.h; sourceTree = "<group>"; };
 		505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewController.h; sourceTree = "<group>"; };
 		505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
@@ -101,6 +101,8 @@
 		50D4E0F81A9225620040C260 /* ChooseCategoryTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
+		50E50B241A96C7B20025D0E1 /* EditExpenseTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewControllerDelegate.h; sourceTree = "<group>"; };
+		50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewControllerDelegate.h; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
 		50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabIconSettings_Highlighted.png; sourceTree = "<group>"; };
 		50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings_Highlighted@2x.png"; sourceTree = "<group>"; };
@@ -187,7 +189,7 @@
 			children = (
 				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
 				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
-				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerProtocol.h */,
+				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */,
 			);
 			name = AddExpenseView;
 			sourceTree = "<group>";
@@ -206,6 +208,7 @@
 			children = (
 				505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */,
 				505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */,
+				50E50B241A96C7B20025D0E1 /* EditExpenseTableViewControllerDelegate.h */,
 			);
 			name = EditView;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 			children = (
 				50FEF8311A960309007BC483 /* AddCategoryViewController.h */,
 				50FEF8321A960309007BC483 /* AddCategoryViewController.m */,
+				50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */,
 			);
 			name = AddCategoryView;
 			sourceTree = "<group>";

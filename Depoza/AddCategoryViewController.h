@@ -7,12 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddCategoryViewControllerDelegate.h"
 
 @class NSManagedObjectContext;
 
 @interface AddCategoryViewController : UIViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic, strong) id<AddCategoryViewControllerDelegate> delegate;
 
 - (IBAction)done:(id)sender;
 
