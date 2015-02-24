@@ -9,6 +9,8 @@
 #import "CategoriesContainerViewController.h"
 #import "CustomCollectionCell.h"
 
+static const CGFloat kCellHeight = 46.0f;
+
 @interface CategoriesContainerViewController ()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -62,6 +64,20 @@
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout - 
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *categoryInfo = self.categories[indexPath.row];
+    NSString *categoryName = categoryInfo[@"title"];
+    NSString *amount = [NSString stringWithFormat:@"%@", categoryInfo[@"expenses"]];
+
+    CGSize size = [((categoryName.length > amount.length) ? categoryName : amount) sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]}];
+    size.width = roundf(size.width + 0.5f);
+    size.height = kCellHeight;
+
+    return size;
 }
 
 #pragma mark - UICollectionViewDelegate -

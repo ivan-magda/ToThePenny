@@ -34,6 +34,10 @@
     [self customSetUp];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
 }
@@ -59,6 +63,7 @@
     [self.view addSubview:_tableView];
 }
 
+#warning remake this using constraints
 - (CGRect)tableViewRect {
         //8 and 16 are space values to layoutGuide and so on
     CGRect tableViewRect;
@@ -67,7 +72,7 @@
         CGFloat height = 44;
         tableViewRect = CGRectMake(0, originY, self.view.frame.size.width, height);
     } else {
-        CGFloat width = self.view.frame.size.width;
+        CGFloat width = CGRectGetWidth(self.view.bounds);
         CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.expenseTextField.frame.size.height - 16;
         tableViewRect = CGRectMake(0, originY, width, height);
     }
