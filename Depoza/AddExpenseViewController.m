@@ -25,8 +25,6 @@
     BOOL _isChosenCategory;
 
     UITableView *_tableView;
-
-    KVNProgressConfiguration *_configuration;
 }
 
 #pragma mark - ViewController life cycle -
@@ -48,10 +46,6 @@
     self.expenseTextField.delegate = self;
 
     self.descriptionTextField.hidden = YES;
-
-    _configuration = [KVNProgressConfiguration defaultConfiguration];
-    _configuration.minimumSuccessDisplayTime = 0.5f;
-    [KVNProgress setConfiguration:_configuration];
 }
 
 #pragma mark - CustomTableView -

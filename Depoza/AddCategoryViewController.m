@@ -43,7 +43,7 @@
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     [self.textField resignFirstResponder];
 
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)done:(id)sender {
@@ -62,7 +62,7 @@
         [self.delegate addCategoryViewController:self didFinishAddingCategory:category];
 
         [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddCategoryVC succes text for show") completion:^{
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [self.navigationController popViewControllerAnimated:YES];
         }];
     } else {
         [KVNProgress showErrorWithStatus:NSLocalizedString(@"enter a unique name", @"AddCategorVC message for KVNProgress showWithError") completion:^{

@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSParameterAssert(_managedObjectContext);
+
     [self createSearchBarButtonItem];
     [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
     [self createSearchController];

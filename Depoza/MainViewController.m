@@ -2,6 +2,7 @@
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
 #import "MoreInfoTableViewController.h"
+#import "CategoriesContainerViewController.h"
 
     //CoreData
 #import "Expense.h"
@@ -20,14 +21,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalSummaLabel;
 
-@property (weak, nonatomic) IBOutlet UILabel *firstCategoryNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *secondCategoryNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *thirdCategoryNameLabel;
-
-@property (weak, nonatomic) IBOutlet UILabel *firstCategorySummaLabel;
-@property (weak, nonatomic) IBOutlet UILabel *secondCategorySummaLabel;
-@property (weak, nonatomic) IBOutlet UILabel *thirdCategorySummaLabel;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
@@ -43,6 +36,16 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    NSParameterAssert(_managedObjectContext);
+    NSParameterAssert(self.delegate);
+
+    [self loadCategoriesData];
+    [self.delegate mainViewController:self didLoadCategoriesData:_categoriesData];
+
+    [self performFetch];
+    [self updateLabels];
+        //[self addMotionEffectToViews];
 
     [self customSetUp];
 }
@@ -87,21 +90,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [view addMotionEffect:group];
 }
 
-
-#pragma mark - NSKeyValueObserving -
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(managedObjectContext))]) {
-        [self loadCategoriesData];
-        [self performFetch];
-        [self updateLabels];
-
-        [self.tableView reloadData];
-
-        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
-    }
-}
-
 #pragma mark - Notifications -
 
 - (void)contextDidChange:(NSNotification *)notification {
@@ -121,6 +109,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                     *stop = YES;
                 }
             }];
+            [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
             [self updateLabels];
             return;
         }
@@ -144,10 +133,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)customSetUp {
-    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
 
-    [self addMotionEffectToViews];
-    [self updateLabels];
+    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
 }
 
 - (void)loadCategoriesData {
@@ -155,34 +143,14 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)updateLabels {
-    static NSNumber *totalExpensesHolder = nil;
-    if (totalExpensesHolder == nil) {
-        totalExpensesHolder = @(_totalExpeditures);
-    }
-    self.firstCategoryNameLabel.text   = @"";
-    self.firstCategorySummaLabel.text  = @"";
-    self.secondCategoryNameLabel.text  = @"";
-    self.secondCategorySummaLabel.text = @"";
-    self.thirdCategoryNameLabel.text   = @"";
-    self.thirdCategorySummaLabel.text  = @"";
-
-    if (_totalExpeditures > 0.0f &&
-        [totalExpensesHolder floatValue] == _totalExpeditures) {
-        [self updateLabelsForMostValuableCategories];
-    } else if ([totalExpensesHolder floatValue] != _totalExpeditures &&
-               _totalExpeditures > 0.0f) {
-        [self updateLabelsForMostValuableCategories];
-        totalExpensesHolder = @(_totalExpeditures);
-    } else if ([totalExpensesHolder floatValue] != _totalExpeditures &&
-               _totalExpeditures == 0) {
-        totalExpensesHolder = @(_totalExpeditures);
-    }
     self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
-    self.monthLabel.text = [self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))];
+    if (![self.monthLabel.text isEqualToString:[self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))]]) {
+        self.monthLabel.text = [self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))];
+    }
 }
 
-- (NSString *)formatDate:(NSDate *)theDate forLabel:(NSString *)text {
-    if ([text isEqualToString:NSStringFromSelector(@selector(monthLabel))]) {
+- (NSString *)formatDate:(NSDate *)theDate forLabel:(NSString *)labelName {
+    if ([labelName isEqualToString:NSStringFromSelector(@selector(monthLabel))]) {
         static NSDateFormatter *formatter = nil;
         if (formatter == nil) {
             formatter = [[NSDateFormatter alloc] init];
@@ -190,7 +158,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
         }
         return [formatter stringFromDate:theDate];
-    } else if ([text isEqualToString:@"detailTextLabel"]) {
+    } else if ([labelName isEqualToString:@"detailTextLabel"]) {
         static NSDateFormatter *formatter = nil;
         if (formatter == nil) {
             formatter = [[NSDateFormatter alloc] init];
@@ -201,54 +169,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     return nil;
 }
 
-- (void)updateLabelsForMostValuableCategories {
-    CGFloat maxValue = 0;
-    NSString *maxCategoryTitle;
-    NSMutableSet *set = [NSMutableSet setWithCapacity:2];
-
-    for (int i = 0; i < 3; ++i) {
-        maxValue = 0;
-
-        if (i > 0) {
-            NSParameterAssert(maxCategoryTitle != nil);
-            [set addObject:maxCategoryTitle];
-        }
-
-        for (NSDictionary *aDictionary in _categoriesData) {
-            CGFloat currentvalue = [aDictionary[@"expenses"]floatValue];
-            NSString *title = aDictionary[NSStringFromSelector(@selector(title))];
-
-            if (currentvalue > maxValue) {
-                if (![set member:title]) {
-                    maxValue = currentvalue;
-                    maxCategoryTitle = title;
-                }
-            }
-        }
-
-        if (maxValue > 0 && maxCategoryTitle.length > 0) {
-            switch (i) {
-                case 0:
-                    self.firstCategoryNameLabel.text = maxCategoryTitle;
-                    self.firstCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-                case 1:
-                    self.secondCategoryNameLabel.text = maxCategoryTitle;
-                    self.secondCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-                case 2:
-                    self.thirdCategoryNameLabel.text = maxCategoryTitle;
-                    self.thirdCategorySummaLabel.text = [NSString stringWithFormat:@"%.2f", maxValue];
-                    break;
-            }
-        }
-    }
-}
-
 #pragma mark - Segues -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-
     if ([segue.identifier isEqualToString:@"AddExpense"]) {
         UINavigationController *navigationController = segue.destinationViewController;
 
@@ -273,6 +196,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             controller.expenseToShow = expense;
             controller.managedObjectContext = _managedObjectContext;
         }
+    } else if ([segue.identifier isEqualToString:@"CategoriesInfo"]) {
+        CategoriesContainerViewController *controller = segue.destinationViewController;
+        self.delegate = controller;
     }
 }
 
@@ -284,14 +210,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [_categoriesData[index]setObject:@(value) forKey:@"expenses"];
 }
 
-- (void)setCategoryAmountAtIndex:(NSInteger)index withValue:(CGFloat)amount {
-    [_categoriesData[index]setObject:@(amount) forKey:@"expenses"];
-}
-
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
-    if (self.tableView.hidden) {
-        self.tableView.hidden = NO;
-    }
     _totalExpeditures += [expense.amount floatValue];
 
     [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -304,6 +223,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
 
     }];
+    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
     [self updateLabels];
 }
 
@@ -333,6 +253,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }
     _totalExpeditures = countForExpenditures;
 
+    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
     [self updateLabels];
 }
 
@@ -344,6 +265,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                                           @"expenses" : @0
                                          }mutableCopy];
     [_categoriesData addObject:newCategory];
+    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
 }
 
 #pragma mark - UITableViewDataSource -
@@ -351,11 +273,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (_fetchedResultsController) {
         NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
-        if (numberOfSections == 0) {
-            _tableView.hidden = YES;
-
-            return numberOfSections;
-        }
         return numberOfSections;
     } else {
         return 0;

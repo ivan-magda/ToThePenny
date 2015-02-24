@@ -14,6 +14,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    NSParameterAssert(_managedObjectContext);
 }
 
 #pragma mark - Segues -
@@ -28,9 +30,7 @@
         navigationController = (UINavigationController *)tabBarController.viewControllers[0];
         MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
-        navigationController = segue.destinationViewController;
-
-        AddCategoryViewController *controller = (AddCategoryViewController *)navigationController.topViewController;
+        AddCategoryViewController *controller = (AddCategoryViewController *)segue.destinationViewController;
         controller.managedObjectContext = self.managedObjectContext;
         controller.delegate = mainViewController;
     }

@@ -74,7 +74,7 @@
     for (CategoryData *category in categories) {
         [titles addObject:category.title];
     }
-    return titles;
+    return [NSArray arrayWithArray:titles];
 }
 
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context {

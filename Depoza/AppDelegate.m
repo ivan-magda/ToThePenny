@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "AllExpensesTableViewController.h"
 #import "SettingsTableViewController.h"
+#import <KVNProgress/KVNProgress.h>
 
     //CoreData
 #import "Persistence.h"
@@ -30,8 +31,6 @@
     UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
     MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
-    [mainViewController addObserver:mainViewController forKeyPath:NSStringFromSelector(@selector(managedObjectContext)) options:NSKeyValueObservingOptionNew context:NULL];
-
         //Get the AllExpensesViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[1];
     AllExpensesTableViewController *allExpensesController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
@@ -40,22 +39,22 @@
     navigationController = (UINavigationController *)tabBarController.viewControllers[2];
     SettingsTableViewController *settingsViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
 
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.persistence = [Persistence sharedInstance];
+    self.persistence = [Persistence sharedInstance];
+    self.managedObjectContext = [self.persistence managedObjectContext];
 
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.managedObjectContext = [self.persistence managedObjectContext];
-
-            NSParameterAssert(_managedObjectContext);
-            mainViewController.managedObjectContext = _managedObjectContext;
-            allExpensesController.managedObjectContext = _managedObjectContext;
-            settingsViewController.managedObjectContext = _managedObjectContext;
-        });
-    });
+    NSParameterAssert(_managedObjectContext);
+    mainViewController.managedObjectContext = _managedObjectContext;
+    allExpensesController.managedObjectContext = _managedObjectContext;
+    settingsViewController.managedObjectContext = _managedObjectContext;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [self spreadManagedObjectContext];
+
+    KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
+    configuration.minimumSuccessDisplayTime = 0.55f;
+    configuration.minimumErrorDisplayTime   = 0.75f;
+    [KVNProgress setConfiguration:configuration];
 
     return YES;
 }
