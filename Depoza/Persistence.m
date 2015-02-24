@@ -111,7 +111,7 @@
         NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:numberOfCategories - 1 forKey:NSStringFromSelector(@selector(categoryId))];
+    [defaults setInteger:numberOfCategories forKey:NSStringFromSelector(@selector(categoryId))];
     [defaults synchronize];
 }
 
