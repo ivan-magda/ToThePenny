@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-#import "CustomCollectionCell.h"
+#import "CategoryInfoCollectionViewCell.h"
 
-@implementation CustomCollectionCell
+@implementation CategoryInfoCollectionViewCell
 
 @end

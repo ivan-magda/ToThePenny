@@ -7,7 +7,7 @@
 //
 
 #import "CategoriesContainerViewController.h"
-#import "CustomCollectionCell.h"
+#import "CategoryInfoCollectionViewCell.h"
 
 static const CGFloat kCellHeight = 46.0f;
 
@@ -49,7 +49,7 @@ static const CGFloat kCellHeight = 46.0f;
     }
 }
 
-- (void)configureCell:(CustomCollectionCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(CategoryInfoCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *categoryInfo = _categories[indexPath.row];
 
     NSString *categoryName = categoryInfo[@"title"];
@@ -60,7 +60,7 @@ static const CGFloat kCellHeight = 46.0f;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CustomCollectionCell *cell = (CustomCollectionCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionCell" forIndexPath:indexPath];
+    CategoryInfoCollectionViewCell *cell = (CategoryInfoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionCell" forIndexPath:indexPath];
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;

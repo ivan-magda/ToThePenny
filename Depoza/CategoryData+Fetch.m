@@ -11,6 +11,17 @@
 
 @implementation CategoryData (Fetch)
 
++ (NSInteger)countForCategoriesInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+
+    NSError *error = nil;
+    NSUInteger count = [context countForFetchRequest:fetch error:&error];
+    if (error) {
+        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
+    }
+    return count;
+}
+
 + (NSInteger)nextId {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 
@@ -19,6 +30,12 @@
     [userDefaults synchronize];
 
     return idValue;
+}
+
++ (void)synchronizeUserDefaultsWithNumberCategories:(NSInteger)categories {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:categories forKey:@"categoryId"];
+    [defaults synchronize];
 }
 
 + (CategoryData *)categoryDataWithName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context {

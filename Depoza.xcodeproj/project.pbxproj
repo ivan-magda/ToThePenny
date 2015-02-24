@@ -38,7 +38,7 @@
 		50F41B3A1A88884400ABE09F /* TabIconSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B361A88884400ABE09F /* TabIconSettings.png */; };
 		50F41B3B1A88884400ABE09F /* TabIconSettings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B371A88884400ABE09F /* TabIconSettings@2x.png */; };
 		50FDE3B11A9B5A8D007C9FC0 /* CategoriesContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */; };
-		50FDE3B51A9B5EE4007C9FC0 /* CustomCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CustomCollectionCell.m */; };
+		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		50FEF8331A960309007BC483 /* AddCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FEF8321A960309007BC483 /* AddCategoryViewController.m */; };
 		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -113,8 +113,8 @@
 		50F41B371A88884400ABE09F /* TabIconSettings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings@2x.png"; sourceTree = "<group>"; };
 		50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesContainerViewController.h; sourceTree = "<group>"; };
 		50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesContainerViewController.m; sourceTree = "<group>"; };
-		50FDE3B31A9B5EE4007C9FC0 /* CustomCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionCell.h; sourceTree = "<group>"; };
-		50FDE3B41A9B5EE4007C9FC0 /* CustomCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionCell.m; sourceTree = "<group>"; };
+		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
+		50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryInfoCollectionViewCell.m; sourceTree = "<group>"; };
 		50FEF8311A960309007BC483 /* AddCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewController.h; sourceTree = "<group>"; };
 		50FEF8321A960309007BC483 /* AddCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCategoryViewController.m; sourceTree = "<group>"; };
 		583FFBE7D2D90CA3E7515346 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -362,8 +362,8 @@
 			children = (
 				50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */,
 				50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */,
-				50FDE3B31A9B5EE4007C9FC0 /* CustomCollectionCell.h */,
-				50FDE3B41A9B5EE4007C9FC0 /* CustomCollectionCell.m */,
+				50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */,
+				50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */,
 			);
 			name = ContainerView;
 			sourceTree = "<group>";
@@ -554,7 +554,7 @@
 				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
-				50FDE3B51A9B5EE4007C9FC0 /* CustomCollectionCell.m in Sources */,
+				50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
 				5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */,

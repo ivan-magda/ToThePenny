@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomCollectionCell : UICollectionViewCell
+@interface CategoryInfoCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *categoryNameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *amountLabel;

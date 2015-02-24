@@ -7,7 +7,7 @@
 //
 
 #import "Persistence.h"
-#import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 #import "ExpenseData.h"
 
 @implementation Persistence
@@ -96,23 +96,14 @@
     }
 }
 
-#warning Move the implementation to CategoryData category file
 - (void)setCategoryId {
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
-
-    NSError *error = nil;
-    NSUInteger numberOfCategories = [self.managedObjectContext countForFetchRequest:fetch error:&error];
+    NSUInteger numberOfCategories = [CategoryData countForCategoriesInContext:_managedObjectContext];
 
     NSParameterAssert(numberOfCategories > 0);
 
     NSLog(@"Number of categories: %lu", (unsigned long)numberOfCategories);
 
-    if (error) {
-        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
-    }
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:numberOfCategories forKey:NSStringFromSelector(@selector(categoryId))];
-    [defaults synchronize];
+    [CategoryData synchronizeUserDefaultsWithNumberCategories:numberOfCategories];
 }
 
 - (NSManagedObjectContext *)managedObjectContext {
