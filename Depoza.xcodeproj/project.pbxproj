@@ -174,6 +174,15 @@
 			name = TableViewProtocolsImplementer;
 			sourceTree = "<group>";
 		};
+		503BF6FA1A9F1B9C00791B90 /* UICollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */,
+				50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */,
+			);
+			name = UICollectionViewCell;
+			sourceTree = "<group>";
+		};
 		505CA13F1A762653009CA7B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,8 +384,7 @@
 			children = (
 				50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */,
 				50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */,
-				50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */,
-				50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */,
+				503BF6FA1A9F1B9C00791B90 /* UICollectionViewCell */,
 			);
 			name = ContainerView;
 			sourceTree = "<group>";

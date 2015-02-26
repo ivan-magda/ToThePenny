@@ -24,6 +24,8 @@
 
 @implementation AppDelegate
 
+#pragma mark - Helper Methods -
+
 - (void)spreadManagedObjectContext {
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
 
@@ -48,13 +50,16 @@
     settingsViewController.managedObjectContext = _managedObjectContext;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self spreadManagedObjectContext];
-
+- (void)setKVNDisplayTime {
     KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
     configuration.minimumSuccessDisplayTime = 0.55f;
     configuration.minimumErrorDisplayTime   = 0.75f;
     [KVNProgress setConfiguration:configuration];
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [self spreadManagedObjectContext];
+    [self setKVNDisplayTime];
 
     return YES;
 }
