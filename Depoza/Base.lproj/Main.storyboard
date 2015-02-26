@@ -135,10 +135,6 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="Eo6-E8-pxc" id="cVH-Gq-cib"/>
-                                    <outlet property="delegate" destination="Eo6-E8-pxc" id="nU6-bA-i0F"/>
-                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -153,7 +149,7 @@
                     <connections>
                         <outlet property="monthLabel" destination="JH0-xh-I1B" id="Gio-dx-kcf"/>
                         <outlet property="tableView" destination="LcM-Rm-VQk" id="rCs-nx-4dA"/>
-                        <outlet property="totalSummaLabel" destination="kxL-xl-ePS" id="SeE-Kg-moV"/>
+                        <outlet property="totalAmountLabel" destination="kxL-xl-ePS" id="7Ab-vg-ieE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nh9-BY-Rd1" userLabel="First Responder" sceneMemberID="firstResponder"/>

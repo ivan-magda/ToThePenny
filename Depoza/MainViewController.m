@@ -3,6 +3,7 @@
 #import "AddExpenseViewController.h"
 #import "MoreInfoTableViewController.h"
 #import "CategoriesContainerViewController.h"
+#import "MainTableViewProtocolsImplementer.h"
 
     //CoreData
 #import "Expense.h"
@@ -16,14 +17,14 @@
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
-@interface MainViewController () <NSFetchedResultsControllerDelegate>
+@interface MainViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
-@property (weak, nonatomic) IBOutlet UILabel *totalSummaLabel;
-
+@property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) MainTableViewProtocolsImplementer *tableViewProtocolsImplementer;
 
 @end
 
@@ -40,14 +41,19 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
 
+    self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.fetchedResultsController];
+    self.fetchedResultsController.delegate = self.tableViewProtocolsImplementer;
+
+    self.tableView.dataSource = self.tableViewProtocolsImplementer;
+    self.tableView.delegate = self.tableViewProtocolsImplementer;
+
     [self loadCategoriesData];
     [self.delegate mainViewController:self didLoadCategoriesData:_categoriesData];
 
+    [self customSetUp];
     [self performFetch];
     [self updateLabels];
         //[self addMotionEffectToViews];
-
-    [self customSetUp];
 }
 
 - (void)dealloc {
@@ -90,32 +96,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [view addMotionEffect:group];
 }
 
-#pragma mark - Notifications -
-
-- (void)contextDidChange:(NSNotification *)notification {
-    NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
-
-    if ([setWithKeys member:@"deleted"]) {
-        NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
-        ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
-
-        if ([self isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
-            _totalExpeditures -= [deletedExpense.amount floatValue];
-            [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSDictionary *dictionary = (NSDictionary *)obj;
-                if (dictionary[@"id"] == deletedExpense.categoryId) {
-                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
-
-                    *stop = YES;
-                }
-            }];
-            [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
-            [self updateLabels];
-            return;
-        }
-    }
-}
-
 #pragma mark - Helper methods -
 
 - (BOOL)isDateBetweenCurrentMonth:(NSDate *)dateToCompare {
@@ -143,30 +123,48 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)updateLabels {
-    self.totalSummaLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
-    if (![self.monthLabel.text isEqualToString:[self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))]]) {
-        self.monthLabel.text = [self formatDate:[NSDate date] forLabel:NSStringFromSelector(@selector(monthLabel))];
+    self.totalAmountLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
+
+    NSString *monthString = [self formatDateForMonthLabel:[NSDate date]];
+    if (![self.monthLabel.text isEqualToString:monthString]) {
+        self.monthLabel.text = monthString;
     }
 }
 
-- (NSString *)formatDate:(NSDate *)theDate forLabel:(NSString *)labelName {
-    if ([labelName isEqualToString:NSStringFromSelector(@selector(monthLabel))]) {
-        static NSDateFormatter *formatter = nil;
-        if (formatter == nil) {
-            formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMMM"];
-            [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
-        }
-        return [formatter stringFromDate:theDate];
-    } else if ([labelName isEqualToString:@"detailTextLabel"]) {
-        static NSDateFormatter *formatter = nil;
-        if (formatter == nil) {
-            formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"HH:mm"];
-        }
-        return [formatter stringFromDate:theDate];
+- (NSString *)formatDateForMonthLabel:(NSDate *)theDate {
+    static NSDateFormatter *formatter = nil;
+    if (formatter == nil) {
+        formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MMMM"];
+        [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
     }
-    return nil;
+    return [formatter stringFromDate:theDate];
+}
+
+#pragma mark - Notifications -
+
+- (void)contextDidChange:(NSNotification *)notification {
+    NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
+
+    if ([setWithKeys member:@"deleted"]) {
+        NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
+        ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
+
+        if ([self isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
+            _totalExpeditures -= [deletedExpense.amount floatValue];
+            [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                NSDictionary *dictionary = (NSDictionary *)obj;
+                if (dictionary[@"id"] == deletedExpense.categoryId) {
+                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
+
+                    *stop = YES;
+                }
+            }];
+            [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
+            [self updateLabels];
+            return;
+        }
+    }
 }
 
 #pragma mark - Segues -
@@ -268,69 +266,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
 }
 
-#pragma mark - UITableViewDataSource -
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (_fetchedResultsController) {
-        NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
-        return numberOfSections;
-    } else {
-        return 0;
-    }
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (_fetchedResultsController) {
-        id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-        return [sectionInfo numberOfObjects];
-    } else {
-        return 0;
-    }
-}
-
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense forLabel:@"detailTextLabel"]];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    [self configureCell:cell atIndexPath:indexPath];
-
-    return cell;
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-
-    return [[sectionInfo name]uppercaseString];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-
-        NSError *error = nil;
-        if (![_managedObjectContext save:&error]) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }
-    }
-}
-
-#pragma mark - UITableViewDelegate -
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
 #pragma mark - NSFetchedResultsController -
 
 - (NSFetchedResultsController *)fetchedResultsController {
@@ -372,7 +307,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                                           sectionNameKeyPath:@"category.title"
                                                    cacheName:NSStringFromClass([Expense class])];
     self.fetchedResultsController = theFetchedResultsController;
-    _fetchedResultsController.delegate = self;
 
     return _fetchedResultsController;
 }
@@ -383,61 +317,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
-}
-
-#pragma mark NSFetchedResultsControllerDelegate
-
-- (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
-        // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
-    [self.tableView beginUpdates];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-
-    UITableView *tableView = self.tableView;
-
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeUpdate:
-            [self configureCell:[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
-            break;
-
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeDelete:
-            [self.tableView deleteSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-        case NSFetchedResultsChangeMove:
-            NSParameterAssert(false);
-            break;
-        case NSFetchedResultsChangeUpdate:
-            NSParameterAssert(false);
-            break;
-    }
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-        // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    [self.tableView endUpdates];
 }
 
 @end

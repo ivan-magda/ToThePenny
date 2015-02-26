@@ -10,6 +10,7 @@
 		502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseViewController.m */; };
 		502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547971A1ED26600DCB8FB /* reveal-icon.png */; };
 		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
+		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
 		505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
@@ -61,6 +62,8 @@
 		502547971A1ED26600DCB8FB /* reveal-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon.png"; sourceTree = "<group>"; };
 		502547981A1ED26600DCB8FB /* reveal-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reveal-icon@2x.png"; sourceTree = "<group>"; };
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerDelegate.h; sourceTree = "<group>"; };
+		503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewProtocolsImplementer.h; sourceTree = "<group>"; };
+		503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
 		505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewController.h; sourceTree = "<group>"; };
 		505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
@@ -162,6 +165,15 @@
 			name = SettingsView;
 			sourceTree = "<group>";
 		};
+		503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */ = {
+			isa = PBXGroup;
+			children = (
+				503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */,
+				503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */,
+			);
+			name = TableViewProtocolsImplementer;
+			sourceTree = "<group>";
+		};
 		505CA13F1A762653009CA7B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +200,7 @@
 				506E72B01A1E0D560006F2DF /* MainViewController.h */,
 				506E72B11A1E0D560006F2DF /* MainViewController.m */,
 				5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */,
+				503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */,
 				50FDE3B21A9B5A95007C9FC0 /* ContainerView */,
 			);
 			name = MainView;
@@ -554,6 +567,7 @@
 				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
+				503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */,
 				50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
