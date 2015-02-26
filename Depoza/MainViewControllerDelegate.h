@@ -13,7 +13,7 @@
 
 @protocol MainViewControllerDelegate <NSObject>
 
-- (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesData:(NSArray *)categoriesData;
-- (void)mainViewController:(MainViewController *)mainViewController didUpdateCategoriesData:(NSArray *)categoriesData;
+- (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesInfo:(NSArray *)categoriesData;
+- (void)mainViewController:(MainViewController *)mainViewController didUpdateCategoriesInfo:(NSArray *)categoriesData;
 
 @end

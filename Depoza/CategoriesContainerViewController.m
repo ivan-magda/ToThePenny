@@ -8,6 +8,7 @@
 
 #import "CategoriesContainerViewController.h"
 #import "CategoryInfoCollectionViewCell.h"
+#import "CategoriesInfo.h"
 
 static const CGFloat kCellHeight = 46.0f;
 
@@ -26,23 +27,23 @@ static const CGFloat kCellHeight = 46.0f;
 #pragma mark - MainViewControllerDelegate -
 
 - (void)updateCategories:(NSArray *)categoriesData {
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"expenses" ascending:NO];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"amount" ascending:NO];
     self.categories = [categoriesData sortedArrayUsingDescriptors:@[sortDescriptor]];
     [self.collectionView reloadData];
 }
 
-- (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesData:(NSArray *)categoriesData {
+- (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesInfo:(NSArray *)categoriesData {
     [self updateCategories:categoriesData];
 }
 
-- (void)mainViewController:(MainViewController *)mainViewController didUpdateCategoriesData:(NSArray *)categoriesData {
+- (void)mainViewController:(MainViewController *)mainViewController didUpdateCategoriesInfo:(NSArray *)categoriesData {
     [self updateCategories:categoriesData];
 }
 
 #pragma mark - UICollectionViewDataSource -
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    if (_categories) {
+    if (self.categories) {
         return [self.categories count];
     } else {
         return 0;
@@ -50,17 +51,15 @@ static const CGFloat kCellHeight = 46.0f;
 }
 
 - (void)configureCell:(CategoryInfoCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *categoryInfo = _categories[indexPath.row];
+    CategoriesInfo *categoryInfo = _categories[indexPath.row];
 
-    NSString *categoryName = categoryInfo[@"title"];
-    NSString *categoryAmount = [NSString stringWithFormat:@"%@", categoryInfo[@"expenses"]];
-
-    cell.categoryNameLabel.text = categoryName;
-    cell.amountLabel.text = categoryAmount;
+    cell.categoryNameLabel.text = categoryInfo.title;
+    cell.amountLabel.text = [NSString stringWithFormat:@"%@", categoryInfo.amount];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CategoryInfoCollectionViewCell *cell = (CategoryInfoCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CollectionCell" forIndexPath:indexPath];
+
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -69,9 +68,9 @@ static const CGFloat kCellHeight = 46.0f;
 #pragma mark - UICollectionViewDelegateFlowLayout - 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *categoryInfo = self.categories[indexPath.row];
-    NSString *categoryName = categoryInfo[@"title"];
-    NSString *amount = [NSString stringWithFormat:@"%@", categoryInfo[@"expenses"]];
+    CategoriesInfo *categoryInfo = _categories[indexPath.row];
+    NSString *categoryName = categoryInfo.title;
+    NSString *amount = [NSString stringWithFormat:@"%@", categoryInfo.amount];
 
     CGSize size = [((categoryName.length > amount.length) ? categoryName : amount) sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]}];
     size.width = roundf(size.width + 0.5f);

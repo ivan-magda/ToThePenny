@@ -10,6 +10,8 @@
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
+    //Data
+#import "CategoriesInfo.h"
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
@@ -30,7 +32,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 @implementation MainViewController {
     CGFloat _totalExpeditures;
-    NSMutableArray *_categoriesData;
+    NSMutableArray *_categoriesInfo;
 }
 
 #pragma mark - ViewController life cycle -
@@ -48,7 +50,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     self.tableView.delegate = self.tableViewProtocolsImplementer;
 
     [self loadCategoriesData];
-    [self.delegate mainViewController:self didLoadCategoriesData:_categoriesData];
+
+    for (CategoriesInfo *anInfo in _categoriesInfo) {
+        NSParameterAssert(anInfo.title && anInfo.idValue && anInfo.amount);
+    }
+
+    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     [self customSetUp];
     [self performFetch];
@@ -113,13 +120,13 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)customSetUp {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:_managedObjectContext];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
 
     [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
 }
 
 - (void)loadCategoriesData {
-    _categoriesData = [Fetch loadCategoriesDataInContext:_managedObjectContext totalExpeditures:& _totalExpeditures];
+    _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpeditures:& _totalExpeditures];
 }
 
 - (void)updateLabels {
@@ -152,15 +159,15 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
         if ([self isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
             _totalExpeditures -= [deletedExpense.amount floatValue];
-            [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                NSDictionary *dictionary = (NSDictionary *)obj;
-                if (dictionary[@"id"] == deletedExpense.categoryId) {
+            [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                CategoriesInfo *info = obj;
+                if (info.idValue == deletedExpense.categoryId) {
                     [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
 
                     *stop = YES;
                 }
             }];
-            [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
+            [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
             [self updateLabels];
             return;
         }
@@ -177,9 +184,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         controller.delegate = self;
         controller.managedObjectContext = _managedObjectContext;
 
-        NSMutableArray *categoriesTitles = [NSMutableArray arrayWithCapacity:[_categoriesData count]];
-        for (NSDictionary *aDictionary in _categoriesData) {
-            [categoriesTitles addObject:aDictionary[NSStringFromSelector(@selector(title))]];
+        NSMutableArray *categoriesTitles = [NSMutableArray arrayWithCapacity:[_categoriesInfo count]];
+        for (CategoriesInfo *anInfo in _categoriesInfo) {
+            [categoriesTitles addObject:anInfo.title];
         }
         controller.categories = categoriesTitles;
 
@@ -203,25 +210,27 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark - AddExpenseViewControllerDelegate
 
 - (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
-    CGFloat value = [_categoriesData[index][@"expenses"]floatValue] + amount;
+    CategoriesInfo *info = _categoriesInfo[index];
+    CGFloat value = [[info amount] floatValue] + amount;
 
-    [_categoriesData[index]setObject:@(value) forKey:@"expenses"];
+    info.amount = @(value);
 }
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _totalExpeditures += [expense.amount floatValue];
 
-    [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSParameterAssert([obj isKindOfClass:[NSDictionary class]]);
+    [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSParameterAssert([obj isKindOfClass:[CategoriesInfo class]]);
+        CategoriesInfo *anInfo = obj;
 
-        if ([obj[NSStringFromSelector(@selector(title))] isEqualToString:expense.category]) {
+        if ([anInfo.title isEqualToString:expense.category]) {
             [self updateCategoriesExpensesDataAtIndex:idx withValue:expense.amount.floatValue];
 
             *stop = YES;
         }
 
     }];
-    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
 }
 
@@ -230,19 +239,19 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (void)editExpenseTableViewControllerDelegate:(EditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
     NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:[NSDate date]managedObjectContext:_managedObjectContext];
 
-    for (NSMutableDictionary *category in _categoriesData) {
-        category[@"expenses"] = @0;
+    for (CategoriesInfo *anInfo in _categoriesInfo) {
+        anInfo.amount = @0;
     }
 
     float __block countForExpenditures = 0.0f;
 
     for (CategoryData *category in categories) {
-        [_categoriesData enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            NSDictionary *dictionary = (NSDictionary *)obj;
-            if (category.idValue == dictionary[@"id"]) {
+        [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CategoriesInfo *anInfo = obj;
+            if (category.idValue == anInfo.idValue) {
                 for (ExpenseData *expense in category.expense) {
-                    [_categoriesData[idx] setObject:@([_categoriesData[idx][@"expenses"]floatValue] + [expense.amount floatValue]) forKey:@"expenses"];
-
+                    CategoriesInfo *infoForUpdate = _categoriesInfo[idx];
+                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [expense.amount floatValue]);
                     countForExpenditures += [expense.amount floatValue];
                 }
                 *stop = YES;
@@ -251,19 +260,16 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }
     _totalExpeditures = countForExpenditures;
 
-    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
 }
 
 #pragma mark - AddCategoryViewControllerDelegate
 
 - (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
-    NSMutableDictionary *newCategory = [@{@"title"    : category.title,
-                                          @"id"       : category.idValue,
-                                          @"expenses" : @0
-                                         }mutableCopy];
-    [_categoriesData addObject:newCategory];
-    [self.delegate mainViewController:self didUpdateCategoriesData:_categoriesData];
+    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title adValue:category.idValue amount:@0];
+    [_categoriesInfo addObject:info];
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
 }
 
 #pragma mark - NSFetchedResultsController -

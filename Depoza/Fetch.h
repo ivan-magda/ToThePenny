@@ -15,6 +15,6 @@
 
 + (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key;
 
-+ (NSMutableArray *)loadCategoriesDataInContext:(NSManagedObjectContext *)context totalExpeditures:(double *)totalExpeditures;
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(double *)totalExpeditures;
 
 @end

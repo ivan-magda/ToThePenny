@@ -11,6 +11,7 @@
 		502547991A1ED26600DCB8FB /* reveal-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547971A1ED26600DCB8FB /* reveal-icon.png */; };
 		5025479A1A1ED26600DCB8FB /* reveal-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 502547981A1ED26600DCB8FB /* reveal-icon@2x.png */; };
 		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
+		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
 		505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
@@ -64,6 +65,8 @@
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerDelegate.h; sourceTree = "<group>"; };
 		503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewProtocolsImplementer.h; sourceTree = "<group>"; };
 		503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
+		504C435D1A9F4856007D6D4B /* CategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesInfo.h; sourceTree = "<group>"; };
+		504C435E1A9F4856007D6D4B /* CategoriesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesInfo.m; sourceTree = "<group>"; };
 		505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewController.h; sourceTree = "<group>"; };
 		505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
@@ -183,6 +186,25 @@
 			name = UICollectionViewCell;
 			sourceTree = "<group>";
 		};
+		504C43601A9F57DF007D6D4B /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				50B3574E1A48597300168958 /* CoreData */,
+				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
+				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
+			);
+			name = DataModel;
+			sourceTree = "<group>";
+		};
+		504C43611A9F580B007D6D4B /* Fetch */ = {
+			isa = PBXGroup;
+			children = (
+				505CA13C1A761B21009CA7B1 /* Fetch.h */,
+				505CA13D1A761B21009CA7B1 /* Fetch.m */,
+			);
+			name = Fetch;
+			sourceTree = "<group>";
+		};
 		505CA13F1A762653009CA7B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,7 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				5063D1981A85F0B3006168D3 /* AppDelegate */,
-				50B3574E1A48597300168958 /* CoreData */,
+				504C43601A9F57DF007D6D4B /* DataModel */,
 				508774881A1F0C2A002D1A9E /* UserInterface */,
 				506E72901A1E0B450006F2DF /* Main.storyboard */,
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
@@ -363,8 +385,7 @@
 				50B3574C1A48596000168958 /* Persistence.m */,
 				50A6C05E1A92C99700699862 /* Expense */,
 				50A6C05F1A92C9A000699862 /* Category */,
-				505CA13C1A761B21009CA7B1 /* Fetch.h */,
-				505CA13D1A761B21009CA7B1 /* Fetch.m */,
+				504C43611A9F580B007D6D4B /* Fetch */,
 			);
 			name = CoreData;
 			sourceTree = "<group>";
@@ -562,6 +583,7 @@
 				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
 				50AA42F51A87AC860019CB55 /* CategoryData.m in Sources */,
+				504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */,
 				50FDE3B11A9B5A8D007C9FC0 /* CategoriesContainerViewController.m in Sources */,
 				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
 				50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */,
