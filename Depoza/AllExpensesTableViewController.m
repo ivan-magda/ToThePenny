@@ -178,6 +178,7 @@
     } else if ([segue.identifier isEqualToString:@"AddExpense"]) {
         NSArray *categoriesTitles = sender;
 
+            //Get MainVC and set it as delegate of AddExpenseVC
         NSArray *windows = [[UIApplication sharedApplication]windows];
         UITabBarController *tabBarController = (UITabBarController *)[[windows firstObject] rootViewController];
         UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
@@ -231,6 +232,9 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        NSArray *categoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
+        [self performSegueWithIdentifier:@"AddExpense" sender:categoriesTitles];
     }
 }
 
