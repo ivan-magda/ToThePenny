@@ -16,6 +16,7 @@
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+#import "NSDate+IsDateBetweenCurrentMonth.h"
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
@@ -105,20 +106,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 #pragma mark - Helper methods -
 
-- (BOOL)isDateBetweenCurrentMonth:(NSDate *)dateToCompare {
-    NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
-    NSDate *startDate = dates.firstObject;
-    NSDate *endDate = dates.lastObject;
-
-    //dateToCompare >= startDate && dateToCompare <= endDate
-    BOOL isBetween = ([dateToCompare compare:startDate] == NSOrderedSame ||
-                      [dateToCompare compare:startDate] == NSOrderedDescending) &&
-    ([dateToCompare compare:endDate]   == NSOrderedSame ||
-     [dateToCompare compare:endDate]   == NSOrderedAscending);
-
-    return isBetween;
-}
-
 - (void)customSetUp {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
 
@@ -157,7 +144,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
         ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
 
-        if ([self isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
+        if ([NSDate isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
             _totalExpeditures -= [deletedExpense.amount floatValue];
             [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 CategoriesInfo *info = obj;

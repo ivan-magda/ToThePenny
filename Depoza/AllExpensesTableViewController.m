@@ -10,10 +10,12 @@
 #import "AllExpensesTableViewController.h"
 #import "MoreInfoTableViewController.h"
 #import "EditExpenseTableViewController.h"
+#import "MainViewController.h"
+#import "AddExpenseViewController.h"
 
     //CoreData
 #import "ExpenseData.h"
-#import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 
 @interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
@@ -40,10 +42,19 @@
     [self createSearchController];
 
     self.definesPresentationContext = YES;
+    self.tableView.allowsSelectionDuringEditing = YES;
 
     [NSFetchedResultsController deleteCacheWithName:@"All"];
 
     [self performFetch];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+
+    if ([self isEditing]) {
+        [self setEditing:NO];
+    }
 }
 
 #pragma mark - Search -
@@ -78,10 +89,24 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
 
-    if (self.navigationItem.rightBarButtonItems.count == 2) {
+    if (editing) {
         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem]];
-    } else if (self.navigationItem.rightBarButtonItems.count == 1) {
+
+        [self.tableView beginUpdates];
+        for (int i = 0; i < [[self.fetchedResultsController sections]count]; ++i) {
+            id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
+            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[sectionInfo numberOfObjects] inSection:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        [self.tableView endUpdates];
+    } else {
         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
+
+        [self.tableView beginUpdates];
+        for (int i = 0; i < [[self.fetchedResultsController sections]count]; ++i) {
+            id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
+            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[sectionInfo numberOfObjects] inSection:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        }
+        [self.tableView endUpdates];
     }
 }
 
@@ -132,6 +157,13 @@
 
 #pragma mark - Segues
 
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    if ([identifier isEqualToString:@"MoreInfo"] && [self isEditing]) {
+        return NO;
+    }
+    return YES;
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         MoreInfoTableViewController *detailsViewController = (MoreInfoTableViewController *)[segue destinationViewController];
@@ -143,6 +175,19 @@
             detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
             detailsViewController.expenseToShow = expense;
         }
+    } else if ([segue.identifier isEqualToString:@"AddExpense"]) {
+        NSArray *categoriesTitles = sender;
+
+        NSArray *windows = [[UIApplication sharedApplication]windows];
+        UITabBarController *tabBarController = (UITabBarController *)[[windows firstObject] rootViewController];
+        UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
+        MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
+
+        UINavigationController *segueNavigationController = segue.destinationViewController;
+        AddExpenseViewController *controller = (AddExpenseViewController *)segueNavigationController.topViewController;
+        controller.delegate = mainViewController;
+        controller.managedObjectContext = _managedObjectContext;
+        controller.categories = categoriesTitles;
     }
 }
 
@@ -150,13 +195,14 @@
 #pragma mark UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.searchPredicate == nil ? [[self.fetchedResultsController sections] count] : 1;
+    return (self.searchPredicate == nil ? [[self.fetchedResultsController sections] count] : 1);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.searchPredicate == nil) {
+        int adjustment = [self isEditing] ? 1 : 0;
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        return [sectionInfo numberOfObjects];
+        return [sectionInfo numberOfObjects] + adjustment;
     } else {
         return [[self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate]count];
     }
@@ -188,6 +234,23 @@
     }
 }
 
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
+    if (indexPath.row >= [sectionInfo numberOfObjects]) {
+        return UITableViewCellEditingStyleInsert;
+    } else {
+        return UITableViewCellEditingStyleDelete;
+    }
+}
+
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
+    if ([self isEditing] && indexPath.row < [sectionInfo numberOfObjects]) {
+        return nil;
+    }
+    return indexPath;
+}
+
 #pragma mark Helpers
 
 - (NSString *)formatDate:(NSDate *)theDate {
@@ -201,19 +264,35 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = nil;
-    if (self.searchPredicate == nil) {
+
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
+
+    if (self.searchPredicate == nil && indexPath.row < [sectionInfo numberOfObjects]) {
         expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    } else {
+    } else if (indexPath.row < [sectionInfo numberOfObjects]){
         expense = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate][indexPath.row];
     }
-    cell.textLabel.text = expense.category.title;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+
+    if (self.searchPredicate == nil && indexPath.row >= [sectionInfo numberOfObjects] && [self isEditing]) {
+        cell.textLabel.text = @"Add Expense";
+        cell.detailTextLabel.text = nil;
+        cell.editingAccessoryType = UITableViewCellAccessoryNone;
+    } else {
+        cell.textLabel.text = expense.category.title;
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+    }
 }
 
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
+    if (indexPath.row >= [sectionInfo numberOfObjects] && [self isEditing]) {
+        NSArray *categoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
+        [self performSegueWithIdentifier:@"AddExpense" sender:categoriesTitles];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
