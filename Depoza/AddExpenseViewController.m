@@ -9,10 +9,16 @@
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
+static const CGFloat kDefaultTableViewCellHeight = 44.0f;
+
 @interface AddExpenseViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *expenseTextField;
 @property (weak, nonatomic) IBOutlet UITextField *descriptionTextField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *expenseTextFieldConstraintTop;
+
+@property (nonatomic, strong) UITableView *tableView;
+@property (weak, nonatomic) NSLayoutConstraint *tableViewConstraintHeight;
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender;
@@ -23,8 +29,6 @@
     NSNumber *_expenseFromTextField;
     NSIndexPath *_selectedRow;
     BOOL _isChosenCategory;
-
-    UITableView *_tableView;
 }
 
 #pragma mark - ViewController life cycle -
@@ -32,10 +36,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self customSetUp];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
 }
 
 - (void)dealloc {
@@ -52,57 +52,74 @@
     self.descriptionTextField.hidden = YES;
 }
 
-#pragma mark - CustomTableView -
+#pragma mark - UITableView
 
 - (void)createTableView {
-    _tableView = [[UITableView alloc]initWithFrame:[self tableViewRect] style:UITableViewStylePlain];
-    _tableView.dataSource = self;
-    _tableView.delegate = self;
-    _tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
+    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.keyboardDismissMode = UIScrollViewKeyboardDismissModeInteractive;
+    [self.view addSubview:self.tableView];
 
-    [self.view addSubview:_tableView];
+        //Constraints
+    NSDictionary *viewsDictionary = @{@"tableView" : self.tableView};
+
+    NSArray *horzConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|" options:0 metrics:nil views:viewsDictionary];
+    [self.view addConstraints:horzConstraints];
+
+    NSLayoutConstraint *topConstraint = [NSLayoutConstraint constraintWithItem:self.expenseTextField attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.tableView attribute:NSLayoutAttributeTop multiplier:1 constant:0];
+    [self.view addConstraint:topConstraint];
+
+    CGFloat height = [self calculateHeight];
+    NSArray *heigthConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[tableView(==%f)]", height] options:0 metrics:nil views:viewsDictionary];
+    NSParameterAssert(heigthConstraints.count == 1);
+
+    self.tableViewConstraintHeight = [heigthConstraints firstObject];
+    [self.view addConstraint:self.tableViewConstraintHeight];
 }
 
-#warning remake this using constraints
-- (CGRect)tableViewRect {
-        //8 and 16 are space values to layoutGuide and so on
-    CGRect tableViewRect;
-    CGFloat originY = self.expenseTextField.frame.origin.y + self.expenseTextField.frame.size.height + 8;
+- (CGFloat)calculateHeight {
     if (_isChosenCategory) {
-        CGFloat height = 44;
-        tableViewRect = CGRectMake(0, originY, self.view.frame.size.width, height);
+        return kDefaultTableViewCellHeight + 1.0f;
     } else {
-        CGFloat width = CGRectGetWidth(self.view.bounds);
-        CGFloat height = self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y - self.expenseTextField.frame.size.height - 16;
-        tableViewRect = CGRectMake(0, originY, width, height);
-    }
-    return tableViewRect;
-}
+        CGFloat superViewHeight = CGRectGetHeight(self.view.bounds);
+        CGFloat statusBarHeight = CGRectGetHeight([[UIApplication sharedApplication]statusBarFrame]);
+        CGFloat navigationBarHeight = CGRectGetHeight(self.navigationController.navigationBar.bounds);
+        CGFloat expenseTextFieldHeight = CGRectGetHeight(self.expenseTextField.bounds);
+        CGFloat expenseTextFieldTopSpace = self.expenseTextFieldConstraintTop.constant;
 
-- (void)removeTableView {
-    [_tableView removeFromSuperview];
-    _tableView = nil;
+        return (superViewHeight - statusBarHeight - navigationBarHeight - expenseTextFieldHeight - expenseTextFieldTopSpace);
+    }
 }
 
 #pragma mark UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (_isChosenCategory ? 1 : [_categories count]);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:(_isChosenCategory ? UITableViewCellStyleValue1 : UITableViewCellStyleDefault) reuseIdentifier:identifier];
-    }
-    [self configurateCell:cell indexPath:indexPath];
+    NSString *defaultIdentifier = @"Cell";
+    NSString *selectedIdentifier = @"Selected";
 
-    return cell;
+    if (_isChosenCategory) {
+        UITableViewCell *selectedCategoryCell = [tableView dequeueReusableCellWithIdentifier:selectedIdentifier];
+        if (selectedCategoryCell == nil) {
+            selectedCategoryCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:selectedIdentifier];
+        }
+        [self configurateCell:selectedCategoryCell indexPath:indexPath];
+
+        return selectedCategoryCell;
+    } else {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:defaultIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:defaultIdentifier];
+        }
+        [self configurateCell:cell indexPath:indexPath];
+
+        return cell;
+    }
 }
 
 - (void)configurateCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
@@ -128,10 +145,9 @@
         self.descriptionTextField.hidden = NO;
         [self.descriptionTextField becomeFirstResponder];
 
-        [self removeTableView];
-        [self createTableView];
-
+        self.tableViewConstraintHeight.constant = [self calculateHeight];
         _tableView.scrollEnabled = NO;
+        [self.tableView reloadData];
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
@@ -139,8 +155,9 @@
         [self.descriptionTextField resignFirstResponder];
         self.descriptionTextField.hidden = YES;
 
-        [self removeTableView];
-        [self createTableView];
+        self.tableViewConstraintHeight.constant = [self calculateHeight];
+        self.tableView.scrollEnabled = YES;
+        [self.tableView reloadData];
     }
 }
 
@@ -151,10 +168,10 @@
     [self.descriptionTextField resignFirstResponder];
 }
 
-#pragma mark - DoneBarButtonItem -
+#pragma mark - DoneBarButton -
 
 - (void)createDoneBarButton {
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneBarButtonPressed:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneBarButtonPressed:)];
     self.navigationItem.rightBarButtonItem = doneButton;
 }
 
@@ -189,6 +206,8 @@
         }];
     }
 }
+
+#pragma mark WorkWithCoreData
 
 - (void)addExpenseToCategoryData:(Expense *)expense {
     CategoryData *categoryData = [CategoryData categoryFromTitle:expense.category context:_managedObjectContext];
