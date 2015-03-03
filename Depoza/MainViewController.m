@@ -61,47 +61,13 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self customSetUp];
     [self performFetch];
     [self updateLabels];
-        //[self addMotionEffectToViews];
+    [self addMotionEffectToViews];
 }
 
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
     _fetchedResultsController.delegate = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self];
-}
-
-#pragma mark - MotionEffect -
-
-- (void)addMotionEffectToViews {
-    for (UIView *aView in self.view.subviews) {
-        if ([aView isKindOfClass:[UILabel class]] ||
-            [aView isKindOfClass:[UITableView class]]) {
-            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
-            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
-        }
-    }
-}
-
-- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
-    view.frame = CGRectInset(view.frame, -value, -value);
-}
-
-- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
-    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.x"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    xMotion.minimumRelativeValue = @(-magnitude);
-    xMotion.maximumRelativeValue = @(magnitude);
-
-    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.y"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-    yMotion.minimumRelativeValue = @(-magnitude);
-    yMotion.maximumRelativeValue = @(magnitude);
-
-    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
-    group.motionEffects = @[xMotion, yMotion];
-    [view addMotionEffect:group];
 }
 
 #pragma mark - Helper methods -
@@ -133,6 +99,39 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
     }
     return [formatter stringFromDate:theDate];
+}
+
+#pragma mark - MotionEffect -
+
+- (void)addMotionEffectToViews {
+    for (UIView *aView in self.view.subviews) {
+        if ([aView isKindOfClass:[UITableView class]]) {
+            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
+            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
+        }
+    }
+}
+
+- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
+    view.frame = CGRectInset(view.frame, -value, -value);
+}
+
+- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
+    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.x"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    xMotion.minimumRelativeValue = @(-magnitude);
+    xMotion.maximumRelativeValue = @(magnitude);
+
+    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.y"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    yMotion.minimumRelativeValue = @(-magnitude);
+    yMotion.maximumRelativeValue = @(magnitude);
+
+    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+    group.motionEffects = @[xMotion, yMotion];
+    [view addMotionEffect:group];
 }
 
 #pragma mark - Notifications -
