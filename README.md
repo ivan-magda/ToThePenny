@@ -1,2 +1,2 @@
 # Depoza
-Budget Tracker
+Expense Tracker
