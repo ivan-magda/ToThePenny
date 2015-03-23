@@ -48,11 +48,24 @@
     NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
 
     NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
+
+    NSMutableSet *categoriesIds = [NSMutableSet setWithCapacity:fetchedCategories.count];
+
+        //Create array of categories infos
     for (CategoryData *aData in fetchedCategories) {
         CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:aData.title idValue:aData.idValue andAmount:@0];
         NSParameterAssert(info.title && info.idValue && info.amount);
         [categoriesInfo addObject:info];
+
+            //Check for unique id values
+        if (![categoriesIds containsObject:aData.idValue]) {
+            [categoriesIds addObject:aData.idValue];
+        } else {
+            NSAssert(NO, @"Categories must have a unique id values!!!");
+        }
     }
+    categoriesIds = nil;
+    
     NSArray *days = [NSDate getFirstAndLastDaysInTheCurrentMonth];
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
