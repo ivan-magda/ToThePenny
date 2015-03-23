@@ -14,6 +14,6 @@
 @property (nonatomic, assign) NSNumber *idValue;
 @property (nonatomic, strong) NSNumber *amount;
 
-- (instancetype)initWithTitle:(NSString *)title adValue:(NSNumber *)idValue amount:(NSNumber *)amount;
+- (instancetype)initWithTitle:(NSString *)title idValue:(NSNumber *)idValue andAmount:(NSNumber *)amount;
 
 @end

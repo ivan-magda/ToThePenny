@@ -49,7 +49,7 @@
 
     NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
     for (CategoryData *aData in fetchedCategories) {
-        CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:aData.title adValue:aData.idValue amount:@0];
+        CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:aData.title idValue:aData.idValue andAmount:@0];
         NSParameterAssert(info.title && info.idValue && info.amount);
         [categoriesInfo addObject:info];
     }

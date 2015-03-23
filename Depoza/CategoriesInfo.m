@@ -10,7 +10,7 @@
 
 @implementation CategoriesInfo
 
-- (instancetype)initWithTitle:(NSString *)title adValue:(NSNumber *)idValue amount:(NSNumber *)amount {
+- (instancetype)initWithTitle:(NSString *)title idValue:(NSNumber *)idValue andAmount:(NSNumber *)amount {
     if (self = [super init]) {
         _title = title;
         _idValue = idValue;
