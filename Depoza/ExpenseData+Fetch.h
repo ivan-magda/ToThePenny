@@ -8,8 +8,12 @@
 
 #import "ExpenseData.h"
 
+@class NSManagedObjectContext;
+
 @interface ExpenseData (Fetch)
 
 + (NSInteger)nextId;
+
++ (NSArray *)expensesWithEqualDayWithDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ExpenseData+Fetch.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 @implementation ExpenseData (Fetch)
 
@@ -18,6 +19,32 @@
     [userDefaults synchronize];
 
     return idValue;
+}
+
++ (NSArray *)expensesWithEqualDayWithDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context {
+    NSArray *dates = [NSDate getDatesFromDate:date sameDayOrFirstAndLastOfMonth:YES];
+
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO]];
+
+    NSExpression *dateExp = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
+    NSExpression *dateStart = [NSExpression expressionForConstantValue:[dates firstObject]];
+    NSExpression *dateEnd = [NSExpression expressionForConstantValue:[dates lastObject]];
+    NSExpression *expression = [NSExpression expressionForAggregate:@[dateStart, dateEnd]];
+    NSPredicate *predicate = [NSComparisonPredicate predicateWithLeftExpression:dateExp
+                                                                rightExpression:expression
+                                                                       modifier:NSDirectPredicateModifier
+                                                                           type:NSBetweenPredicateOperatorType
+                                                                        options:0];
+    request.predicate = predicate;
+
+    NSError *error;
+    NSArray *expenses = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"Error %@", [error localizedDescription]);
+        NSParameterAssert(NO);
+    }
+    return (expenses.count > 0 ? expenses : nil);
 }
 
 @end

@@ -22,7 +22,7 @@
     return dictComponents;
 }
 
-+ (NSArray *)getDatesFromDate:(NSDate *)date {
++ (NSArray *)getDatesFromDate:(NSDate *)date sameDayOrFirstAndLastOfMonth:(BOOL)sameDay {
     NSDictionary *components = [date getComponents];
 
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -33,11 +33,12 @@
 
     NSInteger year = [components[@"year"]integerValue];
     NSInteger month = [components[@"month"]integerValue];
+    NSInteger day = [components[@"day"]integerValue];
 
     NSDateComponents *firstDayComponents = [[NSDateComponents alloc]init];
     firstDayComponents.year = year;
     firstDayComponents.month = month;
-    firstDayComponents.day = 1;
+    firstDayComponents.day = sameDay ? day : 1;
     firstDayComponents.hour = 0;
     firstDayComponents.minute = 0;
     firstDayComponents.second = 0;
@@ -64,11 +65,11 @@
 }
 
 + (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
-    return [NSDate getDatesFromDate:[NSDate date]];
+    return [NSDate getDatesFromDate:[NSDate date] sameDayOrFirstAndLastOfMonth:NO];
 }
 
 - (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
-    NSArray *dates = [NSDate getDatesFromDate:self];
+    NSArray *dates = [NSDate getDatesFromDate:self sameDayOrFirstAndLastOfMonth:NO];
     return dates;
 }
 

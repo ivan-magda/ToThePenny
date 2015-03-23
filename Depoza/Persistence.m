@@ -49,22 +49,23 @@
     return _managedObjectModel;
 }
 
-- (NSString *)documentsDirectory {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths lastObject];
-    NSParameterAssert(documentsDirectory);
+- (NSURL *)documentsDirectory {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    return documentsDirectory;
+    NSURL *sharedContainerURL = [fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.com.vanyaland.depoza"];
+    NSParameterAssert(sharedContainerURL);
+
+    return sharedContainerURL;
 }
 
-- (NSString *)dataStorePath {
+- (NSURL *)dataStorePath {
     return [[self documentsDirectory]
-            stringByAppendingPathComponent:@"DataStore.sqlite"];
+            URLByAppendingPathComponent:@"DataStore.sqlite"];
 }
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (!_persistentStoreCoordinator) {
-        NSURL *storeURL = [NSURL fileURLWithPath:[self dataStorePath]];
+        NSURL *storeURL = [self dataStorePath];
 
         [self initStore:storeURL];
 

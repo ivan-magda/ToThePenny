@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Depoza Extension.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Depoza.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5015A5621AC02C230056271A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>506E727F1A1E0B450006F2DF</key>
 		<dict>
 			<key>primary</key>
