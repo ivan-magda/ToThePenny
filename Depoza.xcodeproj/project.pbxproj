@@ -252,13 +252,13 @@
 			name = AddExpenseView;
 			sourceTree = "<group>";
 		};
-		5063D19C1A85F0FE006168D3 /* DetailsView */ = {
+		5063D19C1A85F0FE006168D3 /* MoreInfoView */ = {
 			isa = PBXGroup;
 			children = (
 				50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */,
 				50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */,
 			);
-			name = DetailsView;
+			name = MoreInfoView;
 			sourceTree = "<group>";
 		};
 		506803DC1A91E273002A3DA0 /* EditView */ = {
@@ -340,7 +340,7 @@
 				5063D1991A85F0C2006168D3 /* MainView */,
 				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
-				5063D19C1A85F0FE006168D3 /* DetailsView */,
+				5063D19C1A85F0FE006168D3 /* MoreInfoView */,
 				506803DC1A91E273002A3DA0 /* EditView */,
 				50D4E0F71A92253A0040C260 /* ChooseCategoryView */,
 				502589B41A961B4200918017 /* SettingsView */,

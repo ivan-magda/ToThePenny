@@ -17,6 +17,4 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) ExpenseData *expenseToEdit;
 
-@property (nonatomic, strong) id<EditExpenseTableViewControllerDelegate> delegate;
-
 @end

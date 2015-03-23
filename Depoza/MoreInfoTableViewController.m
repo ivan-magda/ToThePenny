@@ -7,6 +7,7 @@
 //
 
 #import "MoreInfoTableViewController.h"
+#import "EditExpenseTableViewController.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
 
@@ -19,23 +20,47 @@
 
 @end
 
-@implementation MoreInfoTableViewController
+@implementation MoreInfoTableViewController {
+    BOOL _isEdited;
+}
 
 #pragma mark - ViewControllerLifeCycle -
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSParameterAssert(_managedObjectContext);
-
     [self updateLabels];
+    
+    NSParameterAssert(_managedObjectContext);
+}
 
-    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteButtonPressed)];
-    self.navigationItem.rightBarButtonItem = deleteButton;
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    if (_isEdited) {
+        [self.navigationController popViewControllerAnimated:animated];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    _isEdited = YES;
 }
 
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
+}
+
+#pragma mark - Navigation -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"EditExpense"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+
+        EditExpenseTableViewController *controller = (EditExpenseTableViewController *)navigationController.topViewController;
+        controller.managedObjectContext = _managedObjectContext;
+        controller.expenseToEdit = self.expenseToShow;
+    }
 }
 
 #pragma mark - SetUp -
@@ -55,20 +80,6 @@
         dateFormatter.dateFormat = @"dd MMMM yyyy, HH:mm";
     }
     return [dateFormatter stringFromDate:date];
-}
-
-#pragma mark - Selector -
-
-- (void)deleteButtonPressed {
-    NSManagedObjectContext *context = _managedObjectContext;
-    [context deleteObject:_expenseToShow];
-
-    NSError *error = nil;
-    if (![context save:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="14D105g" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -183,7 +183,7 @@
                                     <constraint firstAttribute="height" constant="30" id="1uD-qQ-cKm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" returnKeyType="done"/>
                                 <connections>
                                     <action selector="descriptionTextFieldDidEndOnExit:" destination="Xcd-an-bxR" eventType="editingDidEndOnExit" id="1GE-gH-8y4"/>
                                 </connections>
@@ -217,7 +217,7 @@
             </objects>
             <point key="canvasLocation" x="1667" y="-363"/>
         </scene>
-        <!--Edit-->
+        <!--Edit Expense Table View Controller-->
         <scene sceneID="5Sa-c7-MIX">
             <objects>
                 <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="EditExpenseTableViewController" sceneMemberID="viewController">
@@ -356,7 +356,7 @@
                             <outlet property="delegate" destination="4eo-eH-MDa" id="S6f-Ff-QdV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Edit" id="Qur-wg-iYa">
+                    <navigationItem key="navigationItem" id="Qur-wg-iYa">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vj3-ne-5Fl">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="4eo-eH-MDa" id="pe8-j1-oQr"/>
@@ -379,7 +379,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqm-uv-xqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="-1726"/>
+            <point key="canvasLocation" x="1818" y="-1079"/>
         </scene>
         <!--Category-->
         <scene sceneID="27C-1R-Ltg">
@@ -414,7 +414,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nOa-4O-XG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="-1726"/>
+            <point key="canvasLocation" x="2303" y="-1079"/>
         </scene>
         <!--More Info-->
         <scene sceneID="q1Z-Yn-PMO">
@@ -551,7 +551,13 @@
                             <outlet property="delegate" destination="hVW-5R-IRp" id="BTy-8H-Tm6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rYL-Y1-WBM"/>
+                    <navigationItem key="navigationItem" id="rYL-Y1-WBM">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="clg-PT-9c5">
+                            <connections>
+                                <segue destination="sM8-6r-2AZ" kind="modal" identifier="EditExpense" id="O44-bx-ku1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="amountLabel" destination="Pwv-RF-iGY" id="V8P-Ed-or3"/>
                         <outlet property="categoryName" destination="Xf0-ZZ-484" id="h4i-Mg-XBJ"/>
@@ -641,7 +647,7 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uuF-Ia-Wes">
                                 <rect key="frame" x="16" y="72" width="288" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                 <connections>
                                     <action selector="done:" destination="5xJ-vP-Ddy" eventType="editingDidEndOnExit" id="5nG-Sw-6z9"/>
                                 </connections>
@@ -770,7 +776,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LWX-el-cUx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="-1726"/>
+            <point key="canvasLocation" x="1410" y="-1079"/>
         </scene>
         <!--Categories Container View Controller-->
         <scene sceneID="6uK-uQ-VSv">
@@ -865,7 +871,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="xVv-M7-M5P"/>
         <segue reference="lzb-VO-Adi"/>
+        <segue reference="xVv-M7-M5P"/>
     </inferredMetricsTieBreakers>
 </document>

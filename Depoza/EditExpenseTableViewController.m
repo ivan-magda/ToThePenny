@@ -28,6 +28,8 @@
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender;
 
+@property (nonatomic, strong) id<EditExpenseTableViewControllerDelegate> delegateMainView;
+
 @end
 
 @implementation EditExpenseTableViewController {
@@ -49,7 +51,7 @@
     UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
     MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
-    self.delegate = mainViewController;
+    self.delegateMainView = mainViewController;
 
     _amountTextView.delegate = self;
     _dateOfExpense = _expenseToEdit.dateOfExpense;
@@ -277,7 +279,7 @@
     }
 
     if (isChanged) {
-        [self.delegate editExpenseTableViewControllerDelegate:self didFinishUpdateExpense:_expenseToEdit];
+        [self.delegateMainView editExpenseTableViewControllerDelegate:self didFinishUpdateExpense:_expenseToEdit];
 
         [KVNProgress showSuccessWithStatus:@"Updated" completion:^{
             [self dismissViewControllerAnimated:YES completion:nil];
