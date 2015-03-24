@@ -10,6 +10,8 @@
 #import "CategoryData+Fetch.h"
 #import "ExpenseData.h"
 
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+
 @implementation Persistence
 
 + (instancetype)sharedInstance {
@@ -52,7 +54,7 @@
 - (NSURL *)documentsDirectory {
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
-    NSURL *sharedContainerURL = [fileManager containerURLForSecurityApplicationGroupIdentifier:@"group.com.vanyaland.depoza"];
+    NSURL *sharedContainerURL = [fileManager containerURLForSecurityApplicationGroupIdentifier:kAppGroupSharedContainer];
     NSParameterAssert(sharedContainerURL);
 
     return sharedContainerURL;

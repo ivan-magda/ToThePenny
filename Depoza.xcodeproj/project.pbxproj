@@ -49,6 +49,7 @@
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
+		50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */; };
 		50EF5C4E1A7CDF7900890569 /* seed.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50EF5C4D1A7CDF7900890569 /* seed.sqlite */; };
 		50F41B381A88884400ABE09F /* TabIconSettings_Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */; };
 		50F41B391A88884400ABE09F /* TabIconSettings_Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */; };
@@ -158,6 +159,8 @@
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
 		50E50B241A96C7B20025D0E1 /* EditExpenseTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewControllerDelegate.h; sourceTree = "<group>"; };
+		50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionSettingsTableViewController.h; sourceTree = "<group>"; };
+		50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionSettingsTableViewController.m; sourceTree = "<group>"; };
 		50EF5C4D1A7CDF7900890569 /* seed.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seed.sqlite; sourceTree = "<group>"; };
 		50F41B341A88884400ABE09F /* TabIconSettings_Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TabIconSettings_Highlighted.png; sourceTree = "<group>"; };
 		50F41B351A88884400ABE09F /* TabIconSettings_Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "TabIconSettings_Highlighted@2x.png"; sourceTree = "<group>"; };
@@ -238,6 +241,7 @@
 			children = (
 				50BA1B991A960FB10091644D /* SettingsTableViewController.h */,
 				50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */,
+				50EA039D1AC1847B007E6FA2 /* Extension */,
 			);
 			name = SettingsView;
 			sourceTree = "<group>";
@@ -477,6 +481,15 @@
 				50D4E0F81A9225620040C260 /* ChooseCategoryTableViewControllerDelegate.h */,
 			);
 			name = ChooseCategoryView;
+			sourceTree = "<group>";
+		};
+		50EA039D1AC1847B007E6FA2 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */,
+				50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */,
+			);
+			name = Extension;
 			sourceTree = "<group>";
 		};
 		50FDE3B21A9B5A95007C9FC0 /* ContainerView */ = {
@@ -730,6 +743,7 @@
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
+				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */,

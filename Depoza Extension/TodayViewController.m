@@ -15,6 +15,7 @@
 #import "ExpenseData+Fetch.h"
 #import "CategoryData.h"
 
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 
 @interface TodayViewController () <NCWidgetProviding, UITableViewDataSource, UITableViewDelegate>
 
@@ -26,8 +27,8 @@
 
 @implementation TodayViewController {
     NSArray *_expenses;
-
     BOOL _isFirst;
+    NSUserDefaults *_userDefaults;
 }
 
 #pragma mark - ViewController life cycle -
@@ -55,6 +56,9 @@
                              self.tableView.hidden = YES;
                          }
                      } completion:nil];
+
+    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+    NSLog(@"%ld", (long)[_userDefaults integerForKey:@"numberExpenseToShow"]);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
