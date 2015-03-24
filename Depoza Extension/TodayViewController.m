@@ -1,10 +1,10 @@
-//
-//  TodayViewController.m
-//  Depoza Extension
-//
-//  Created by Ivan Magda on 23.03.15.
-//  Copyright (c) 2015 Ivan Magda. All rights reserved.
-//
+    //
+    //  TodayViewController.m
+    //  Depoza Extension
+    //
+    //  Created by Ivan Magda on 23.03.15.
+    //  Copyright (c) 2015 Ivan Magda. All rights reserved.
+    //
 
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
@@ -19,6 +19,7 @@
 @interface TodayViewController () <NCWidgetProviding, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UILabel *noExpensesLabel;
 @property (nonatomic, strong) Persistence *persistence;
 
 @end
@@ -29,28 +30,42 @@
     BOOL _isFirst;
 }
 
+#pragma mark - ViewController life cycle -
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     _persistence = [Persistence sharedInstance];
 
-    [self updateTableView];
+    _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+
+    [self.tableView layoutIfNeeded];
+
+    self.noExpensesLabel.textColor = [UIColor whiteColor];
+
+    [UIView animateWithDuration:0.25
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         if (_expenses.count > 0) {
+                             self.preferredContentSize = self.tableView.contentSize;
+
+                             self.noExpensesLabel.hidden = YES;
+                         } else {
+                             self.tableView.hidden = YES;
+                         }
+                     } completion:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)updateTableView {
-    _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
-
-    [self.tableView layoutIfNeeded];
-    self.preferredContentSize = self.tableView.contentSize;
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
 }
 
-- (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsMake(0.0f, 8.0f, 16.0f, 8.0f);
-}
+#pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return _expenses.count;
@@ -65,6 +80,8 @@
     return cell;
 }
 
+#pragma mark Helpers
+
 - (NSString *)formatDate:(NSDate *)theDate {
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
@@ -78,8 +95,8 @@
     ExpenseData *expense = _expenses[indexPath.row];
 
     cell.textLabel.text = expense.category.title;
+    cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
 }
-
 
 @end

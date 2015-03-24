@@ -38,7 +38,7 @@
     NSDateComponents *firstDayComponents = [[NSDateComponents alloc]init];
     firstDayComponents.year = year;
     firstDayComponents.month = month;
-    firstDayComponents.day = sameDay ? day : 1;
+    firstDayComponents.day = (sameDay ? day : 1);
     firstDayComponents.hour = 0;
     firstDayComponents.minute = 0;
     firstDayComponents.second = 0;
@@ -46,7 +46,7 @@
     NSDateComponents *lastDayComponents = [[NSDateComponents alloc]init];
     lastDayComponents.year = year;
     lastDayComponents.month = month;
-    lastDayComponents.day = days.length;
+    lastDayComponents.day = (sameDay ? day : days.length);
     lastDayComponents.hour = 23;
     lastDayComponents.minute = 59;
     lastDayComponents.second = 59;
