@@ -28,10 +28,12 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 @implementation TodayViewController {
     NSArray *_expenses;
     BOOL _isFirst;
+
     NSUserDefaults *_userDefaults;
+    NSInteger _numberExpensesToShow;
 }
 
-#pragma mark - ViewController life cycle -
+#pragma mark - ViewController Life Cycle -
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,6 +41,9 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     _persistence = [Persistence sharedInstance];
 
     _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+
+    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+    _numberExpensesToShow = [_userDefaults integerForKey:@"numberExpenseToShow"];
 
     [self.tableView layoutIfNeeded];
 
@@ -56,23 +61,12 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
                              self.tableView.hidden = YES;
                          }
                      } completion:nil];
-
-    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    NSLog(@"%ld", (long)[_userDefaults integerForKey:@"numberExpenseToShow"]);
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
 }
 
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _expenses.count;
+    return (_expenses.count > _numberExpensesToShow ? _numberExpensesToShow : _expenses.count);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -101,6 +95,10 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     cell.textLabel.text = expense.category.title;
     cell.textLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+
+    UIView *selectedView = [[UIView alloc]init];
+    selectedView.backgroundColor = [UIColor colorWithRed:0.1 green:0.09 blue:0.1 alpha:0.2];
+    [cell setSelectedBackgroundView:selectedView];
 }
 
 @end

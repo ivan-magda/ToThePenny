@@ -26,6 +26,7 @@
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
     request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO]];
+    request.fetchBatchSize = 10;
 
     NSExpression *dateExp = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
     NSExpression *dateStart = [NSExpression expressionForConstantValue:[dates firstObject]];
