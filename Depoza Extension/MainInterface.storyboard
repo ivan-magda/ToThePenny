@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7528.3" systemVersion="14D113c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="M4Y-Lb-cyx">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7518.3"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Today View Controller-->
@@ -14,11 +13,11 @@
                         <viewControllerLayoutGuide type="bottom" id="FKl-LY-JtV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Bg9-qK-6yJ">
-                                <rect key="frame" x="-7" y="0.0" width="311" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="Ulz-yK-SKZ" detailTextLabel="hzw-CU-Ffe" style="IBUITableViewCellStyleValue1" id="oAu-TO-LUE">
@@ -40,6 +39,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="8" maxY="0.0"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -48,21 +48,23 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No new expense today." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OJH-L4-n5K">
-                                <rect key="frame" x="0.0" y="8" width="320" height="552"/>
+                                <rect key="frame" x="20" y="65" width="180" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="TkR-QU-t9Z"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="OJH-L4-n5K" secondAttribute="bottom" priority="999" constant="8" symbolic="YES" id="98K-6K-kVb"/>
-                            <constraint firstItem="Bg9-qK-6yJ" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" id="JF2-qg-8V3"/>
-                            <constraint firstAttribute="trailing" secondItem="OJH-L4-n5K" secondAttribute="trailing" priority="999" id="K7Q-jR-njo"/>
-                            <constraint firstItem="OJH-L4-n5K" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" priority="999" constant="8" symbolic="YES" id="S2y-pf-Agv"/>
-                            <constraint firstItem="Bg9-qK-6yJ" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leadingMargin" constant="-23" id="VWy-J1-Oib"/>
-                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="Bg9-qK-6yJ" secondAttribute="bottom" id="bkp-5j-c80"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Bg9-qK-6yJ" secondAttribute="trailing" id="rZB-k0-KtT"/>
-                            <constraint firstItem="OJH-L4-n5K" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" priority="999" id="tbE-C8-85x"/>
+                            <constraint firstItem="FKl-LY-JtV" firstAttribute="top" secondItem="Bg9-qK-6yJ" secondAttribute="bottom" priority="250" id="33I-h6-pID"/>
+                            <constraint firstItem="Bg9-qK-6yJ" firstAttribute="top" secondItem="Ft6-oW-KC0" secondAttribute="bottom" priority="250" id="9Ao-DT-Izg"/>
+                            <constraint firstItem="OJH-L4-n5K" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" constant="20" symbolic="YES" id="AZh-6w-gmS"/>
+                            <constraint firstAttribute="centerY" secondItem="OJH-L4-n5K" secondAttribute="centerY" id="GHJ-ev-0Qr"/>
+                            <constraint firstAttribute="trailing" secondItem="Bg9-qK-6yJ" secondAttribute="trailing" id="bzZ-WA-VgG"/>
+                            <constraint firstItem="Bg9-qK-6yJ" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="ifP-cZ-Otf"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
@@ -70,7 +72,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="568"/>
+                    <size key="freeformSize" width="320" height="150"/>
                     <connections>
                         <outlet property="noExpensesLabel" destination="OJH-L4-n5K" id="czl-le-S1O"/>
                         <outlet property="tableView" destination="Bg9-qK-6yJ" id="T5f-gK-y24"/>
