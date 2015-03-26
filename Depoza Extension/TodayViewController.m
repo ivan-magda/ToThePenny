@@ -10,10 +10,10 @@
 #import <NotificationCenter/NotificationCenter.h>
 
     //CoreData
-@import CoreData;
 #import "Persistence.h"
 #import "ExpenseData+Fetch.h"
 #import "CategoryData.h"
+#import "Fetch.h"
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 
@@ -27,13 +27,11 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 
 @implementation TodayViewController {
     NSArray *_expenses;
-    BOOL _isFirst;
-
     NSUserDefaults *_userDefaults;
     NSInteger _numberExpensesToShow;
 }
 
-#pragma mark - ViewController Life Cycle -
+#pragma mark - ViewController Life Cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,8 +40,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 
     _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
 
-    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    _numberExpensesToShow = [_userDefaults integerForKey:@"numberExpenseToShow"];
+    [self configurateUserDefaults];
 
     [self.tableView layoutIfNeeded];
 
@@ -63,6 +60,28 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
                      } completion:nil];
 }
 
+#pragma mark Helpers
+
+- (void)configurateUserDefaults {
+    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+
+    _numberExpensesToShow = [_userDefaults integerForKey:@"numberExpenseToShow"];
+    if (_numberExpensesToShow == 0) {
+        _numberExpensesToShow = 5;
+        [_userDefaults setInteger:_numberExpensesToShow forKey:@"numberExpenseToShow"];
+    }
+}
+
+#pragma mark - NCWidgetProviding -
+
+- (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
+    if ([Fetch isNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
+        completionHandler(NCUpdateResultNewData);
+    } else {
+        completionHandler(NCUpdateResultNoData);
+    }
+}
+
 #pragma mark - UITableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -78,7 +97,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     return cell;
 }
 
-#pragma mark Helpers
+#pragma mark UITableView Helpers
 
 - (NSString *)formatDate:(NSDate *)theDate {
     static NSDateFormatter *formatter = nil;

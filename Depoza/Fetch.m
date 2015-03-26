@@ -11,10 +11,12 @@
 
     //CoreData
 #import "CategoryData.h"
-#import "ExpenseData.h"
+#import "ExpenseData+Fetch.h"
 
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 
 @implementation Fetch
 
@@ -98,6 +100,66 @@
     NSLog(@"Second version with subquery and prefetching time execution: %f", [end timeIntervalSinceDate:start]);
 
     return categoriesInfo;
+}
+
++ (BOOL)isNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
+        //Get info about todays expenses from user defaults
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+    NSDictionary *dictionaryInfo = [userDefaults dictionaryForKey:@"isNewToday"];
+
+        //Get today components
+    NSDictionary *dateComponents = [[NSDate date]getComponents];
+    NSInteger year  = [dateComponents[@"year"]integerValue];
+    NSInteger month = [dateComponents[@"month"]integerValue];
+    NSInteger day   = [dateComponents[@"day"]integerValue];
+
+    NSArray *expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:context];
+
+    if (dictionaryInfo == nil) {
+        [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
+
+        return YES;
+    } else {
+        NSInteger yearDict    = [dictionaryInfo[@"year"]integerValue];
+        NSInteger monthDict   = [dictionaryInfo[@"month"]integerValue];
+        NSInteger dayDict     = [dictionaryInfo[@"day"]integerValue];
+        NSInteger numExpenses = [dictionaryInfo[@"expenses"]integerValue];
+        NSParameterAssert(numExpenses >= 0);
+
+        if (yearDict == year && monthDict == month && dayDict == day) {
+            if (numExpenses != expenses.count) {
+                [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
+                return YES;
+            } else {
+                return NO;
+            }
+        } else {
+            [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
+            return YES;
+        }
+    }
+}
+
++ (NSDictionary *)setUpDictionaryWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day andNumberExpenses:(NSInteger)expenses {
+    NSDictionary *dictionary = @{
+                                 @"year"     : @(year),
+                                 @"month"    : @(month),
+                                 @"day"      : @(day),
+                                 @"expenses" : @(expenses)
+                                 };
+    return dictionary;
+}
+
++ (void)synchronizeUserDefaults:(NSUserDefaults *)userDefaults withDictionary:(NSDictionary *)dictionary {
+    [userDefaults setObject:dictionary forKey:@"isNewToday"];
+    [userDefaults synchronize];
+}
+
++ (void)updateTodayExpensesCount:(NSArray *)expenses day:(NSInteger)day month:(NSInteger)month year:(NSInteger)year userDefaults:(NSUserDefaults *)userDefaults
+{
+    NSDictionary *dictionaryInfo;
+    dictionaryInfo = [self setUpDictionaryWithYear:year month:month day:day andNumberExpenses:expenses.count];
+    [self synchronizeUserDefaults:userDefaults withDictionary:dictionaryInfo];
 }
 
 @end
