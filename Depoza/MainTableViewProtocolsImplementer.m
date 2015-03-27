@@ -6,11 +6,14 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //View
 #import "MainTableViewProtocolsImplementer.h"
 #import <UIKit/UITableViewCell.h>
 #import <UIKit/UILabel.h>
-
+    //CoreData
 #import "ExpenseData.h"
+    //Categories
+#import "NSString+FormatAmount.h"
 
 @implementation MainTableViewProtocolsImplementer
 
@@ -47,7 +50,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = (expense.descriptionOfExpense.length > 0 ? expense.descriptionOfExpense : @"(No Description)");
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

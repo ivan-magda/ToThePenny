@@ -15,6 +15,7 @@
 #import "CategoryData.h"
 #import "Fetch.h"
 
+#import "NSString+FormatAmount.h"
 
     //Declarations
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
@@ -74,7 +75,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
                          animations:^{
                              CGSize increasedTableViewContentSize = self.tableView.contentSize;
                                  //Increase height
-                             increasedTableViewContentSize.height = increasedTableViewContentSize.height + kDefaultRowHeight/2;
+                             increasedTableViewContentSize.height = increasedTableViewContentSize.height + kDefaultRowHeight/1.5f;
                              self.preferredContentSize = increasedTableViewContentSize;
 
                              self.tableView.alpha = 1.0f;
@@ -174,28 +175,18 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     return [formatter stringFromDate:theDate];
 }
 
-- (NSString *)formatAmount:(NSNumber *)amount {
-    static NSNumberFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [NSNumberFormatter new];
-        formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-        formatter.currencyCode = [[NSLocale currentLocale]objectForKey:NSLocaleCurrencyCode];
-    }
-    return [formatter stringFromNumber:amount];
-}
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = _expenses[indexPath.row];
 
     cell.textLabel.text = expense.category.title;
     cell.textLabel.textColor = [UIColor whiteColor];
 
-    NSString *amount = [self formatAmount:expense.amount];
+    NSString *amount = [NSString formatAmount:expense.amount];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", amount, [self formatDate:expense.dateOfExpense]];
 
         //Rangoon Green color
     UIView *selectedView = [[UIView alloc]init];
-    selectedView.backgroundColor = [UIColor colorWithRed:0.1 green:0.09 blue:0.1 alpha:0.2];
+    selectedView.backgroundColor = [UIColor colorWithRed:0.1 green:0.09 blue:0.1 alpha:0.3];
     [cell setSelectedBackgroundView:selectedView];
 }
 

@@ -17,6 +17,7 @@
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
+#import "NSString+FormatAmount.h"
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
@@ -83,7 +84,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)updateLabels {
-    self.totalAmountLabel.text = [NSString stringWithFormat:@"%.2f", _totalExpeditures];
+    self.totalAmountLabel.text = [NSString formatAmount:@(_totalExpeditures)];
 
     NSString *monthString = [self formatDateForMonthLabel:[NSDate date]];
     if (![self.monthLabel.text isEqualToString:monthString]) {

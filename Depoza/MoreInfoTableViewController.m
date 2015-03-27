@@ -6,10 +6,14 @@
 //  Copyright (c) 2014 Ivan Magda. All rights reserved.
 //
 
+    //View
 #import "MoreInfoTableViewController.h"
 #import "EditExpenseTableViewController.h"
+    //CoreData
 #import "ExpenseData.h"
 #import "CategoryData.h"
+    //Categories
+#import "NSString+FormatAmount.h"
 
 @interface MoreInfoTableViewController ()
 
@@ -66,7 +70,7 @@
 #pragma mark - SetUp -
 
 - (void)updateLabels {
-    self.amountLabel.text = [NSString stringWithFormat:@"%.2f", _expenseToShow.amount.floatValue];
+    self.amountLabel.text = [NSString formatAmount:_expenseToShow.amount];
     self.dateLabel.text = [self formatDate:_expenseToShow.dateOfExpense];
     self.categoryName.text = _expenseToShow.category.title;
     self.textOfDescription.text = (_expenseToShow.descriptionOfExpense.length > 0) ? _expenseToShow.descriptionOfExpense : NSLocalizedString(@"(No Description)", @"MoreInfoVC text for description label");

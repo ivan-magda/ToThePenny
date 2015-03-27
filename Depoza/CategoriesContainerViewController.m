@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //View
 #import "CategoriesContainerViewController.h"
 #import "CategoryInfoCollectionViewCell.h"
+    //CoreData
 #import "CategoriesInfo.h"
 
 static const CGFloat kCellHeight = 46.0f;
@@ -17,6 +19,7 @@ static const CGFloat kCellHeight = 46.0f;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
+
 
 @implementation CategoriesContainerViewController
 

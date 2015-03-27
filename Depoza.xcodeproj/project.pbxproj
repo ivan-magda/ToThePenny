@@ -20,6 +20,8 @@
 		505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
+		5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */; };
+		5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
 		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
 		506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
@@ -118,6 +120,8 @@
 		505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+FirstAndLastDaysOfMonth.m"; sourceTree = "<group>"; };
 		505CA13C1A761B21009CA7B1 /* Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fetch.h; sourceTree = "<group>"; };
 		505CA13D1A761B21009CA7B1 /* Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fetch.m; sourceTree = "<group>"; };
+		5064C6D41AC5491200979BF0 /* NSString+FormatAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FormatAmount.h"; sourceTree = "<group>"; };
+		5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FormatAmount.m"; sourceTree = "<group>"; };
 		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -286,12 +290,9 @@
 		505CA13F1A762653009CA7B1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */,
-				505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */,
-				50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */,
-				50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */,
-				5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */,
-				5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */,
+				5064C6D41AC5491200979BF0 /* NSString+FormatAmount.h */,
+				5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */,
+				5064C6D81AC5491B00979BF0 /* NSDate */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -334,6 +335,19 @@
 				50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */,
 			);
 			name = MoreInfoView;
+			sourceTree = "<group>";
+		};
+		5064C6D81AC5491B00979BF0 /* NSDate */ = {
+			isa = PBXGroup;
+			children = (
+				505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */,
+				505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */,
+				50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */,
+				50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */,
+				5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */,
+				5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */,
+			);
+			name = NSDate;
 			sourceTree = "<group>";
 		};
 		506803DC1A91E273002A3DA0 /* EditView */ = {
@@ -717,6 +731,7 @@
 			files = (
 				50A1D4DD1AC0435500E56EB1 /* Fetch.m in Sources */,
 				50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
+				5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
 				50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */,
 				50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */,
 				50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */,
@@ -744,6 +759,7 @@
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
+				5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
 				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */,

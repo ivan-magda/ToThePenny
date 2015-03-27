@@ -12,10 +12,11 @@
 #import "EditExpenseTableViewController.h"
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
-
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
+    //Categories
+#import "NSString+FormatAmount.h"
 
 @interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
@@ -283,7 +284,7 @@
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     } else {
         cell.textLabel.text = expense.category.title;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%.2f, %@", [expense.amount floatValue], [self formatDate:expense.dateOfExpense]];
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
     }
 }
 
