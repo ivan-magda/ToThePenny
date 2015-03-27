@@ -573,7 +573,7 @@
         <scene sceneID="9Bk-YW-U8l">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8zA-3A-IRG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" image="reveal-icon.png" id="HE9-VB-20J"/>
+                    <tabBarItem key="tabBarItem" title="Today" image="Banknotes.png" id="HE9-VB-20J"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="i28-j2-vsF">
@@ -808,7 +808,7 @@
         <scene sceneID="S1b-Sf-akN">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cQU-bB-Tgu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All Expenses" id="w29-Ws-Oc5"/>
+                    <tabBarItem key="tabBarItem" title="All Expenses" image="Bill.png" id="w29-Ws-Oc5"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="x4Y-IJ-Q0f">
@@ -828,7 +828,7 @@
         <scene sceneID="FHe-Il-uU4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l5R-23-sta" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="TabIconSettings.png" id="RJ6-dR-x4Q"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="Settings.png" id="RJ6-dR-x4Q"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pjl-9k-Al6">
@@ -947,8 +947,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="TabIconSettings.png" width="32" height="32"/>
-        <image name="reveal-icon.png" width="22" height="17"/>
+        <image name="Banknotes.png" width="32" height="32"/>
+        <image name="Bill.png" width="32" height="32"/>
+        <image name="Settings.png" width="32" height="32"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
