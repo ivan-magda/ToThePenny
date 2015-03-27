@@ -17,6 +17,6 @@
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(double *)totalExpeditures;
 
-+ (BOOL)isNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context;
++ (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

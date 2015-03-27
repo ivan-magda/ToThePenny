@@ -109,9 +109,11 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     return UIEdgeInsetsZero;
 }
 
+    //A widget is not created every time you view the notification center so loadView won't be called every time it is displayed.
+    //The notification center instead calls widgetPerformUpdateWithCompletionHandler when it thinks the widget information needs to be updated.
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     self.updateBlock = completionHandler;
-    if ([Fetch isNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
+    if ([Fetch hasNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
         [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
 
         self.updateBlock(NCUpdateResultNewData);

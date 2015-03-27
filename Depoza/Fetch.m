@@ -102,7 +102,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     return categoriesInfo;
 }
 
-+ (BOOL)isNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
++ (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
         //Get info about todays expenses from user defaults
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     NSDictionary *dictionaryInfo = [userDefaults dictionaryForKey:@"isNewToday"];
