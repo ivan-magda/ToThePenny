@@ -17,6 +17,7 @@
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 
 @implementation Fetch
 
@@ -105,7 +106,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 + (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
         //Get info about todays expenses from user defaults
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    NSDictionary *dictionaryInfo = [userDefaults dictionaryForKey:@"isNewToday"];
+    NSDictionary *dictionaryInfo = [userDefaults dictionaryForKey:kTodayExpensesUserDefaultsKey];
 
         //Get today components
     NSDictionary *dateComponents = [[NSDate date]getComponents];
@@ -151,7 +152,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 }
 
 + (void)synchronizeUserDefaults:(NSUserDefaults *)userDefaults withDictionary:(NSDictionary *)dictionary {
-    [userDefaults setObject:dictionary forKey:@"isNewToday"];
+    [userDefaults setObject:dictionary forKey:kTodayExpensesUserDefaultsKey];
     [userDefaults synchronize];
 }
 

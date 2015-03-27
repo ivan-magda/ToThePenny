@@ -15,10 +15,17 @@
 #import "CategoryData.h"
 #import "Fetch.h"
 
+
+    //Declarations
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
+
 static const CGFloat kDefaultRowHeight = 44.0f;
 
+static const NSInteger kDefaultNumberExpensesToShow = 5;
+
 typedef void (^UpdateBlock)(NCUpdateResult);
+
 
 @interface TodayViewController () <NCWidgetProviding, UITableViewDataSource, UITableViewDelegate>
 
@@ -53,7 +60,10 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 }
 
 - (void)updateUserInterfaceWithUpdateResult:(NCUpdateResult)updateResult {
-    _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+    if (_expenses == nil) {
+        _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+    }
+
     if (_expenses.count > 0 && updateResult == NCUpdateResultNewData) {
         self.tableView.hidden = NO;
         [self.tableView layoutIfNeeded];
@@ -96,10 +106,10 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 - (void)configurateUserDefaults {
     _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
 
-    _numberExpensesToShow = [_userDefaults integerForKey:@"numberExpenseToShow"];
+    _numberExpensesToShow = [_userDefaults integerForKey:kNumberExpensesToShowUserDefaultsKey];
     if (_numberExpensesToShow == 0) {
-        _numberExpensesToShow = 5;
-        [_userDefaults setInteger:_numberExpensesToShow forKey:@"numberExpenseToShow"];
+        _numberExpensesToShow = kDefaultNumberExpensesToShow;
+        [_userDefaults setInteger:_numberExpensesToShow forKey:kNumberExpensesToShowUserDefaultsKey];
     }
 }
 
@@ -129,7 +139,8 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    NSString *identifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     NSParameterAssert(cell);
 
     [self configureCell:cell atIndexPath:indexPath];
@@ -167,6 +178,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     NSString *amount = [self formatAmount:expense.amount];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", amount, [self formatDate:expense.dateOfExpense]];
 
+        //Rangoon Green color
     UIView *selectedView = [[UIView alloc]init];
     selectedView.backgroundColor = [UIColor colorWithRed:0.1 green:0.09 blue:0.1 alpha:0.2];
     [cell setSelectedBackgroundView:selectedView];
