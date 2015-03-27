@@ -48,4 +48,28 @@
     return (expenses.count > 0 ? expenses : nil);
 }
 
++ (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];
+    NSExpression *idToFind  = [NSExpression expressionForConstantValue:@(idValue)];
+    NSPredicate *predicate  = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath
+                                                                 rightExpression:idToFind
+                                                                        modifier:NSDirectPredicateModifier
+                                                                            type:NSEqualToPredicateOperatorType
+                                                                         options:0];
+    request.predicate = predicate;
+
+    NSError *error = nil;
+    NSArray *expense = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+    NSParameterAssert(expense.count == 1);
+    NSParameterAssert(expense.firstObject != nil);
+
+    return [expense firstObject];
+}
+
 @end

@@ -178,6 +178,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         MoreInfoTableViewController *controller = (MoreInfoTableViewController *)segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -185,7 +186,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
             ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
             controller.expenseToShow = expense;
-            controller.managedObjectContext = _managedObjectContext;
+        } else if ([sender isKindOfClass:[ExpenseData class]]) {
+            ExpenseData *expense = sender;
+            controller.expenseToShow = expense;
         }
     } else if ([segue.identifier isEqualToString:@"CategoriesInfo"]) {
         CategoriesContainerViewController *controller = segue.destinationViewController;

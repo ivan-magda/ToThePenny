@@ -16,4 +16,6 @@
 
 + (NSArray *)expensesWithEqualDayWithDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 
++ (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
+
 @end

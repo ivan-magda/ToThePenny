@@ -10,10 +10,12 @@
 #import "MainViewController.h"
 #import "AllExpensesTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "MoreInfoTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
 
     //CoreData
 #import "Persistence.h"
+#import "ExpenseData+Fetch.h"
 
 @interface AppDelegate ()
 
@@ -22,7 +24,9 @@
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    MainViewController *_mainViewController;
+}
 
 #pragma mark - Helper Methods -
 
@@ -31,7 +35,7 @@
 
         //Get the MainViewController and set it's as a observer for creating context
     UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
-    MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
+    _mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
         //Get the AllExpensesViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[1];
@@ -45,7 +49,7 @@
     self.managedObjectContext = [self.persistence managedObjectContext];
 
     NSParameterAssert(_managedObjectContext);
-    mainViewController.managedObjectContext = _managedObjectContext;
+    _mainViewController.managedObjectContext = _managedObjectContext;
     allExpensesController.managedObjectContext = _managedObjectContext;
     settingsViewController.managedObjectContext = _managedObjectContext;
 }
@@ -62,6 +66,35 @@
     [self setKVNDisplayTime];
 
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    NSString *query = url.query;
+    if (query != nil) {
+        if ([query hasPrefix:@"q="]) {
+            // If we have a query string, strip out the "q=" part so we're just left with the identifier
+            NSRange range = [query rangeOfString:@"q="];
+            NSString *identifier = [query stringByReplacingOccurrencesOfString:@"^q=" withString:@"" options:NSRegularExpressionSearch range:range];
+
+            ExpenseData *selectedExpense = [ExpenseData getExpenseFromIdValue:identifier.integerValue inManagedObjectContext:_managedObjectContext];
+
+                //Manage navigation stack of MainViewControler navigationController
+            NSInteger numberControllers = [_mainViewController.navigationController viewControllers].count;
+            if (numberControllers > 1) {
+                MoreInfoTableViewController *moreInfoController = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
+                if ([moreInfoController.expenseToShow isEqual:selectedExpense]) {
+                    return YES;
+                } else {
+                    [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
+                }
+            }
+
+            [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+
+            return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

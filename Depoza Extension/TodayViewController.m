@@ -148,6 +148,21 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+        // Call the app and pass in a query string with the expense identifier
+    NSParameterAssert(_expenses != nil);
+    ExpenseData *selectedExpense = _expenses[indexPath.row];
+    NSString *idValue = [NSString stringWithFormat:@"%@", selectedExpense.idValue];
+
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"depoza://expense/?q=%@", idValue]];
+    NSParameterAssert(url);
+    NSLog(@"%@", url);
+
+    [self.extensionContext openURL:url completionHandler:nil];
+}
+
 #pragma mark UITableView Helpers
 
 - (NSString *)formatDate:(NSDate *)theDate {
