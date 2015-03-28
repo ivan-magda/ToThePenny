@@ -92,7 +92,9 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
         } else {
             NSLog(@"Store successfully initialized using the original seed");
 
-            [self performSelector:@selector(setCategoryId) withObject:nil afterDelay:0.1];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self setCategoryId];
+            });
         }
     } else {
         NSLog(@"The original seed isn't needed. There is already a backing store.");
