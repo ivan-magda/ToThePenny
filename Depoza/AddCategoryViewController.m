@@ -52,7 +52,8 @@
     [self adjustmentOfText];
 
     if ([self isUniqueName:_categoryName]) {
-        CategoryData *category = [CategoryData categoryDataWithName:_categoryName managedObjectContext:_managedObjectContext];
+#warning redo it
+        CategoryData *category = [CategoryData categoryDataWithTitle:_categoryName iconName:nil andExpenses:nil inManagedObjectContext:_managedObjectContext];
 
         NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {

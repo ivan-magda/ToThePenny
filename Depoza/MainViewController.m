@@ -139,7 +139,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)contextDidChange:(NSNotification *)notification {
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
-
+    
     if ([setWithKeys member:@"deleted"]) {
         NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
         ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
