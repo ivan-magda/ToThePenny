@@ -31,6 +31,7 @@
 		500541051AC56226007EF006 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541011AC56226007EF006 /* Settings@2x.png */; };
 		500541061AC56226007EF006 /* SettingsFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541021AC56226007EF006 /* SettingsFilled.png */; };
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
+		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -140,6 +141,8 @@
 		500541021AC56226007EF006 /* SettingsFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsFilled.png; sourceTree = "<group>"; };
 		500541031AC56226007EF006 /* SettingsFilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsFilled@2x.png"; sourceTree = "<group>"; };
 		5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerDelegate.h; sourceTree = "<group>"; };
+		50086E8C1AC6E7F600162677 /* MainViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewCell.h; sourceTree = "<group>"; };
+		50086E8D1AC6E7F600162677 /* MainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewCell.m; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -376,6 +379,8 @@
 				506E72B01A1E0D560006F2DF /* MainViewController.h */,
 				506E72B11A1E0D560006F2DF /* MainViewController.m */,
 				5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */,
+				50086E8C1AC6E7F600162677 /* MainViewCell.h */,
+				50086E8D1AC6E7F600162677 /* MainViewCell.m */,
 				503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */,
 				50FDE3B21A9B5A95007C9FC0 /* ContainerView */,
 			);
@@ -857,6 +862,7 @@
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
 				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
 				5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */,
+				50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */,
 				50FEF8331A960309007BC483 /* AddCategoryViewController.m in Sources */,
 				505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
 			);
