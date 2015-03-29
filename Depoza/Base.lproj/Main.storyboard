@@ -8,7 +8,7 @@
         <!--All Expenses-->
         <scene sceneID="uX2-58-EhG">
             <objects>
-                <tableViewController id="c3E-y4-ULk" customClass="AllExpensesTableViewController" sceneMemberID="viewController">
+                <tableViewController id="c3E-y4-ULk" customClass="MIAAllExpensesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sTV-hZ-UKe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,7 +57,7 @@
         <!--Expenses-->
         <scene sceneID="uaz-hx-xfG">
             <objects>
-                <viewController id="Eo6-E8-pxc" customClass="MainViewController" sceneMemberID="viewController">
+                <viewController id="Eo6-E8-pxc" customClass="MIAMainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FU4-hz-4eJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Npd-sX-d81"/>
@@ -66,8 +66,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LcM-Rm-VQk">
-                                <rect key="frame" x="0.0" y="-5" width="320" height="568"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LcM-Rm-VQk">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="wje-QN-dOA" userLabel="InfoView">
                                     <rect key="frame" x="0.0" y="64" width="320" height="196"/>
@@ -112,7 +112,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="64" id="Ffu-bY-jbE" customClass="MainViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="64" id="Ffu-bY-jbE" customClass="MIAMainViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ffu-bY-jbE" id="PiI-ED-hPV">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -124,28 +124,34 @@
                                                         <constraint firstAttribute="width" constant="42" id="q16-q5-hre"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" fixedFrame="YES" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="son-R0-NKv">
-                                                    <rect key="frame" x="67" y="11" width="177" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="son-R0-NKv">
+                                                    <rect key="frame" x="65" y="11" width="71" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$25.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0c-N4-amn">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" text="$25.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O0c-N4-amn">
                                                     <rect key="frame" x="259" y="21" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" fixedFrame="YES" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDT-yv-n1E">
-                                                    <rect key="frame" x="67" y="32" width="177" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDT-yv-n1E">
+                                                    <rect key="frame" x="67" y="36" width="74" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="son-R0-NKv" firstAttribute="top" secondItem="PiI-ED-hPV" secondAttribute="top" constant="11" id="CCB-i5-vVK"/>
                                                 <constraint firstAttribute="centerY" secondItem="O0c-N4-amn" secondAttribute="centerY" id="DbA-xq-ude"/>
+                                                <constraint firstItem="O0c-N4-amn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DDT-yv-n1E" secondAttribute="trailing" constant="8" symbolic="YES" id="PVQ-aM-EE1"/>
+                                                <constraint firstAttribute="bottom" secondItem="DDT-yv-n1E" secondAttribute="bottom" constant="10" id="YbP-mW-cs7"/>
                                                 <constraint firstAttribute="centerY" secondItem="KBt-h0-rbQ" secondAttribute="centerY" id="aSY-XL-JM1"/>
+                                                <constraint firstItem="O0c-N4-amn" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="son-R0-NKv" secondAttribute="trailing" constant="8" symbolic="YES" id="j9E-jD-AkG"/>
+                                                <constraint firstItem="DDT-yv-n1E" firstAttribute="leading" secondItem="KBt-h0-rbQ" secondAttribute="trailing" constant="10" id="lyo-6G-J20"/>
+                                                <constraint firstItem="son-R0-NKv" firstAttribute="leading" secondItem="KBt-h0-rbQ" secondAttribute="trailing" constant="8" id="v7C-gd-Nyx"/>
                                                 <constraint firstItem="KBt-h0-rbQ" firstAttribute="leading" secondItem="PiI-ED-hPV" secondAttribute="leading" constant="15" id="xMA-3V-KPB"/>
                                                 <constraint firstAttribute="trailing" secondItem="O0c-N4-amn" secondAttribute="trailing" constant="8" id="zlH-ey-Uk7"/>
                                             </constraints>
@@ -154,6 +160,7 @@
                                             <outlet property="amountLabel" destination="O0c-N4-amn" id="TbF-PU-2Gz"/>
                                             <outlet property="categoryIcon" destination="KBt-h0-rbQ" id="eYo-PM-SbZ"/>
                                             <outlet property="categoryLabel" destination="son-R0-NKv" id="qJC-J7-xXo"/>
+                                            <outlet property="categoryLabelTopSpaceConstraint" destination="CCB-i5-vVK" id="FVB-od-0Uc"/>
                                             <outlet property="descriptionLabel" destination="DDT-yv-n1E" id="lQu-dY-bCv"/>
                                             <segue destination="hVW-5R-IRp" kind="push" identifier="MoreInfo" id="Cd2-B6-5f6"/>
                                         </connections>
@@ -162,6 +169,12 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="LcM-Rm-VQk" firstAttribute="top" secondItem="Lms-O3-59V" secondAttribute="top" id="6Kx-1w-gWY"/>
+                            <constraint firstItem="LcM-Rm-VQk" firstAttribute="leading" secondItem="Lms-O3-59V" secondAttribute="leading" id="WXf-kD-aUo"/>
+                            <constraint firstAttribute="bottom" secondItem="LcM-Rm-VQk" secondAttribute="bottom" id="fFl-AZ-SPK"/>
+                            <constraint firstAttribute="trailing" secondItem="LcM-Rm-VQk" secondAttribute="trailing" id="krU-4h-EdT"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Expenses" id="H7q-K3-3GL">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tTU-ch-4YA">
@@ -183,7 +196,7 @@
         <!--Add Expense-->
         <scene sceneID="uxQ-Dh-Vwa">
             <objects>
-                <viewController id="Xcd-an-bxR" customClass="AddExpenseViewController" sceneMemberID="viewController">
+                <viewController id="Xcd-an-bxR" customClass="MIAAddExpenseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uDg-4G-nOg"/>
                         <viewControllerLayoutGuide type="bottom" id="1b6-pT-yEg"/>
@@ -243,7 +256,7 @@
         <!--Edit Expense Table View Controller-->
         <scene sceneID="5Sa-c7-MIX">
             <objects>
-                <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="EditExpenseTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="MIAEditExpenseTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vfk-We-iwj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -407,7 +420,7 @@
         <!--Category-->
         <scene sceneID="27C-1R-Ltg">
             <objects>
-                <tableViewController title="Category" id="MpU-36-BsH" customClass="ChooseCategoryTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Category" id="MpU-36-BsH" customClass="MIAChooseCategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ium-A6-RAD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -442,7 +455,7 @@
         <!--More Info-->
         <scene sceneID="q1Z-Yn-PMO">
             <objects>
-                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="MoreInfoTableViewController" sceneMemberID="viewController">
+                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="MIAMoreInfoTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="N7s-HD-2zQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -615,7 +628,7 @@
         <!--Settings-->
         <scene sceneID="nIb-Z6-984">
             <objects>
-                <tableViewController id="Dv6-6c-FEv" customClass="SettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="Dv6-6c-FEv" customClass="MIASettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="m9r-gB-7bt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -679,7 +692,7 @@
         <!--Extension Settings-->
         <scene sceneID="Ir3-dO-CQe">
             <objects>
-                <tableViewController id="EhH-xj-Z4H" customClass="ExtensionSettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="EhH-xj-Z4H" customClass="MIAExtensionSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Qww-Pa-CrF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -743,7 +756,7 @@
         <!--Add Category View Controller-->
         <scene sceneID="1FI-NK-n9H">
             <objects>
-                <viewController id="5xJ-vP-Ddy" customClass="AddCategoryViewController" sceneMemberID="viewController">
+                <viewController id="5xJ-vP-Ddy" customClass="MIAAddCategoryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="B6L-z0-5SO"/>
                         <viewControllerLayoutGuide type="bottom" id="40v-Bl-Tc6"/>
@@ -889,7 +902,7 @@
         <!--Categories Container View Controller-->
         <scene sceneID="6uK-uQ-VSv">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Iim-03-1Nc" customClass="CategoriesContainerViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Iim-03-1Nc" customClass="MIACategoriesContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IuF-sS-e70"/>
                         <viewControllerLayoutGuide type="bottom" id="ZkX-M7-leA"/>
@@ -908,14 +921,14 @@
                                     <inset key="sectionInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="7Q8-bJ-Hyt" customClass="CategoryInfoCollectionViewCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="7Q8-bJ-Hyt" customClass="MIACategoryInfoCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="130" height="46"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wc3-Yc-bC2">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Category Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wc3-Yc-bC2">
                                                     <rect key="frame" x="0.0" y="2" width="130" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

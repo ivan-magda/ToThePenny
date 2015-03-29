@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class AddCategoryViewController;
+@class MIAAddCategoryViewController;
 @class CategoryData;
 
-@protocol AddCategoryViewControllerDelegate <NSObject>
+@protocol MIAAddCategoryViewControllerDelegate <NSObject>
 
-- (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category;
+- (void)addCategoryViewController:(MIAAddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category;
 
 @end

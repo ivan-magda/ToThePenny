@@ -1,10 +1,10 @@
 #import <Foundation/Foundation.h>
 
-@class AddExpenseViewController;
-@class Expense;
+@class MIAAddExpenseViewController;
+@class MIAExpense;
 
-@protocol AddExpenseViewControllerDelegate <NSObject>
+@protocol MIAAddExpenseViewControllerDelegate <NSObject>
 
-- (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense;
+- (void)addExpenseViewController:(MIAAddExpenseViewController *)controller didFinishAddingExpense:(MIAExpense *)expense;
 
 @end

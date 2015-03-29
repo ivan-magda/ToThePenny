@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @class ExpenseData;
-@class EditExpenseTableViewController;
+@class MIAEditExpenseTableViewController;
 
-@protocol EditExpenseTableViewControllerDelegate <NSObject>
+@protocol MIAEditExpenseTableViewControllerDelegate <NSObject>
 
-- (void)editExpenseTableViewControllerDelegate:(EditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense;
+- (void)editExpenseTableViewControllerDelegate:(MIAEditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense;
 
 @end

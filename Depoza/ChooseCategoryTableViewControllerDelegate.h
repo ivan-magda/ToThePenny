@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-@class ChooseCategoryTableViewController;
+@class MIAChooseCategoryTableViewController;
 @class NSString;
 
-@protocol ChooseCategoryTableViewControllerDelegate <NSObject>
+@protocol MIAChooseCategoryTableViewControllerDelegate <NSObject>
 
-- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategory:(NSString *)category;
+- (void)chooseCategoryTableViewController:(MIAChooseCategoryTableViewController *)controller didFinishChooseCategory:(NSString *)category;
 
 @end
