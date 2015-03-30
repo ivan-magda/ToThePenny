@@ -7,7 +7,7 @@
         <!--All Expenses-->
         <scene sceneID="uX2-58-EhG">
             <objects>
-                <tableViewController id="c3E-y4-ULk" customClass="MIAAllExpensesTableViewController" sceneMemberID="viewController">
+                <tableViewController id="c3E-y4-ULk" customClass="AllExpensesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sTV-hZ-UKe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -56,7 +56,7 @@
         <!--Expenses-->
         <scene sceneID="uaz-hx-xfG">
             <objects>
-                <viewController id="Eo6-E8-pxc" customClass="MIAMainViewController" sceneMemberID="viewController">
+                <viewController id="Eo6-E8-pxc" customClass="MainViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="FU4-hz-4eJ"/>
                         <viewControllerLayoutGuide type="bottom" id="Npd-sX-d81"/>
@@ -111,7 +111,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="54" id="Ffu-bY-jbE" customClass="MIAMainViewCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="54" id="Ffu-bY-jbE" customClass="MainViewCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ffu-bY-jbE" id="PiI-ED-hPV">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -195,7 +195,7 @@
         <!--Add Expense-->
         <scene sceneID="uxQ-Dh-Vwa">
             <objects>
-                <viewController id="Xcd-an-bxR" customClass="MIAAddExpenseViewController" sceneMemberID="viewController">
+                <viewController id="Xcd-an-bxR" customClass="AddExpenseViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="uDg-4G-nOg"/>
                         <viewControllerLayoutGuide type="bottom" id="1b6-pT-yEg"/>
@@ -255,7 +255,7 @@
         <!--Edit Expense Table View Controller-->
         <scene sceneID="5Sa-c7-MIX">
             <objects>
-                <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="MIAEditExpenseTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="EditExpenseTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="vfk-We-iwj">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -419,7 +419,7 @@
         <!--Category-->
         <scene sceneID="27C-1R-Ltg">
             <objects>
-                <tableViewController title="Category" id="MpU-36-BsH" customClass="MIAChooseCategoryTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Category" id="MpU-36-BsH" customClass="ChooseCategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ium-A6-RAD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -454,7 +454,7 @@
         <!--More Info-->
         <scene sceneID="q1Z-Yn-PMO">
             <objects>
-                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="MIAMoreInfoTableViewController" sceneMemberID="viewController">
+                <tableViewController title="More Info" id="hVW-5R-IRp" customClass="MoreInfoTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="N7s-HD-2zQ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -627,7 +627,7 @@
         <!--Settings-->
         <scene sceneID="nIb-Z6-984">
             <objects>
-                <tableViewController id="Dv6-6c-FEv" customClass="MIASettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="Dv6-6c-FEv" customClass="SettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="m9r-gB-7bt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -691,7 +691,7 @@
         <!--Extension Settings-->
         <scene sceneID="Ir3-dO-CQe">
             <objects>
-                <tableViewController id="EhH-xj-Z4H" customClass="MIAExtensionSettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController id="EhH-xj-Z4H" customClass="ExtensionSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Qww-Pa-CrF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -755,7 +755,7 @@
         <!--Add Category-->
         <scene sceneID="K5y-dP-7gO">
             <objects>
-                <tableViewController id="wV7-2g-efQ" customClass="MIAAddCategoryViewController" sceneMemberID="viewController">
+                <tableViewController id="wV7-2g-efQ" customClass="AddCategoryViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="k9C-xs-eUv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -840,7 +840,7 @@
         <!--Collection View Controller-->
         <scene sceneID="rzo-AG-MXw">
             <objects>
-                <collectionViewController id="K6k-wL-Ce8" customClass="MIACollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="K6k-wL-Ce8" customClass="CollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Scn-oM-ZUx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -990,7 +990,7 @@
         <!--Categories Container View Controller-->
         <scene sceneID="6uK-uQ-VSv">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Iim-03-1Nc" customClass="MIACategoriesContainerViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Iim-03-1Nc" customClass="CategoriesContainerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IuF-sS-e70"/>
                         <viewControllerLayoutGuide type="bottom" id="ZkX-M7-leA"/>
@@ -1009,7 +1009,7 @@
                                     <inset key="sectionInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="7Q8-bJ-Hyt" customClass="MIACategoryInfoCollectionViewCell">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="7Q8-bJ-Hyt" customClass="CategoryInfoCollectionViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">

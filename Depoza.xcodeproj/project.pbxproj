@@ -31,47 +31,47 @@
 		500541051AC56226007EF006 /* Settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541011AC56226007EF006 /* Settings@2x.png */; };
 		500541061AC56226007EF006 /* SettingsFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541021AC56226007EF006 /* SettingsFilled.png */; };
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
-		50086E8E1AC6E7F600162677 /* MIAMainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MIAMainViewCell.m */; };
+		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
-		5015A56B1AC02C230056271A /* MIATodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* MIATodayViewController.m */; };
+		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
 		5015A56D1AC02C230056271A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5015A56C1AC02C230056271A /* MainInterface.storyboard */; };
 		5015A5701AC02C230056271A /* Depoza Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5015A5631AC02C230056271A /* Depoza Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		50206E9C1AC8E097001A017E /* MIACollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50206E9B1AC8E097001A017E /* MIACollectionViewController.m */; };
-		502547961A1EC86600DCB8FB /* MIAAddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* MIAAddExpenseViewController.m */; };
-		503BF6F81A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.m */; };
-		504C435F1A9F4856007D6D4B /* MIACategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* MIACategoriesInfo.m */; };
-		505AF9341A91577000E0CB28 /* MIAEditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* MIAEditExpenseTableViewController.m */; };
+		50206E9C1AC8E097001A017E /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50206E9B1AC8E097001A017E /* CollectionViewController.m */; };
+		502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseViewController.m */; };
+		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
+		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
+		505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
-		505CA13E1A761B21009CA7B1 /* MIAFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* MIAFetch.m */; };
+		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
 		5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */; };
 		5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */ = {isa = PBXBuildFile; fileRef = 5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */; };
 		506E72861A1E0B450006F2DF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72851A1E0B450006F2DF /* main.m */; };
-		506E72891A1E0B450006F2DF /* MIAAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* MIAAppDelegate.m */; };
+		506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72881A1E0B450006F2DF /* AppDelegate.m */; };
 		506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
 		506E72921A1E0B450006F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506E72901A1E0B450006F2DF /* Main.storyboard */; };
 		506E72941A1E0B450006F2DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506E72931A1E0B450006F2DF /* Images.xcassets */; };
 		506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506E72951A1E0B450006F2DF /* LaunchScreen.xib */; };
 		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
-		506E72B21A1E0D560006F2DF /* MIAMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MIAMainViewController.m */; };
-		508774871A1F0C19002D1A9E /* MIAExpense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* MIAExpense.m */; };
+		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
+		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
-		5097DAD01A922294006DB197 /* MIAChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACF1A922294006DB197 /* MIAChooseCategoryTableViewController.m */; };
-		50A1D4D61AC0432900E56EB1 /* MIAPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* MIAPersistence.m */; };
+		5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */; };
+		50A1D4D61AC0432900E56EB1 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
-		50A1D4D81AC0434000E56EB1 /* MIAExpense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* MIAExpense.m */; };
+		50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50A1D4DA1AC0434600E56EB1 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
 		50A1D4DC1AC0435000E56EB1 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
-		50A1D4DD1AC0435500E56EB1 /* MIAFetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* MIAFetch.m */; };
-		50A1D4DF1AC0438C00E56EB1 /* MIACategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* MIACategoriesInfo.m */; };
+		50A1D4DD1AC0435500E56EB1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
+		50A1D4DF1AC0438C00E56EB1 /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
 		50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
-		50AA42EB1A87A22A0019CB55 /* MIAAllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* MIAAllExpensesTableViewController.m */; };
+		50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
-		50B195D71A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.m */; };
-		50B3574D1A48596000168958 /* MIAPersistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* MIAPersistence.m */; };
-		50BA1B9B1A960FB10091644D /* MIASettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1B9A1A960FB10091644D /* MIASettingsTableViewController.m */; };
+		50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */; };
+		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
+		50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */; };
 		50BB50431AC6391C001AE915 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BB50421AC6391C001AE915 /* CategoryData.m */; };
 		50BB50441AC6391C001AE915 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BB50421AC6391C001AE915 /* CategoryData.m */; };
 		50BB50491AC64972001AE915 /* seedUS.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50BB50481AC64972001AE915 /* seedUS.sqlite */; };
@@ -79,10 +79,10 @@
 		50C8A3641AC8BA2B000347D3 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C8A3621AC8BA2B000347D3 /* Search.png */; };
 		50C8A3651AC8BA2B000347D3 /* Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C8A3631AC8BA2B000347D3 /* Search@2x.png */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
-		50EA039C1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EA039B1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.m */; };
-		50FDE3B11A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B01A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.m */; };
-		50FDE3B51A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.m */; };
-		50FEF8331A960309007BC483 /* MIAAddCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FEF8321A960309007BC483 /* MIAAddCategoryViewController.m */; };
+		50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */; };
+		50FDE3B11A9B5A8D007C9FC0 /* CategoriesContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */; };
+		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
+		50FEF8331A960309007BC483 /* AddCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FEF8321A960309007BC483 /* AddCategoryViewController.m */; };
 		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -144,38 +144,38 @@
 		500541021AC56226007EF006 /* SettingsFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SettingsFilled.png; sourceTree = "<group>"; };
 		500541031AC56226007EF006 /* SettingsFilled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SettingsFilled@2x.png"; sourceTree = "<group>"; };
 		5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerDelegate.h; sourceTree = "<group>"; };
-		50086E8C1AC6E7F600162677 /* MIAMainViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAMainViewCell.h; sourceTree = "<group>"; };
-		50086E8D1AC6E7F600162677 /* MIAMainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAMainViewCell.m; sourceTree = "<group>"; };
+		50086E8C1AC6E7F600162677 /* MainViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewCell.h; sourceTree = "<group>"; };
+		50086E8D1AC6E7F600162677 /* MainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewCell.m; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5015A5641AC02C230056271A /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		5015A5681AC02C230056271A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5015A5691AC02C230056271A /* MIATodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIATodayViewController.h; sourceTree = "<group>"; };
-		5015A56A1AC02C230056271A /* MIATodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIATodayViewController.m; sourceTree = "<group>"; };
+		5015A5691AC02C230056271A /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
+		5015A56A1AC02C230056271A /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		5015A56C1AC02C230056271A /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
-		50206E9A1AC8E097001A017E /* MIACollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIACollectionViewController.h; sourceTree = "<group>"; };
-		50206E9B1AC8E097001A017E /* MIACollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIACollectionViewController.m; sourceTree = "<group>"; };
-		502547941A1EC86600DCB8FB /* MIAAddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAAddExpenseViewController.h; sourceTree = "<group>"; };
-		502547951A1EC86600DCB8FB /* MIAAddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAAddExpenseViewController.m; sourceTree = "<group>"; };
+		50206E9A1AC8E097001A017E /* CollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewController.h; sourceTree = "<group>"; };
+		50206E9B1AC8E097001A017E /* CollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewController.m; sourceTree = "<group>"; };
+		502547941A1EC86600DCB8FB /* AddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewController.h; sourceTree = "<group>"; };
+		502547951A1EC86600DCB8FB /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewControllerDelegate.h; sourceTree = "<group>"; };
-		503BF6F61A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAMainTableViewProtocolsImplementer.h; sourceTree = "<group>"; };
-		503BF6F71A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAMainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
-		504C435D1A9F4856007D6D4B /* MIACategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIACategoriesInfo.h; sourceTree = "<group>"; };
-		504C435E1A9F4856007D6D4B /* MIACategoriesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIACategoriesInfo.m; sourceTree = "<group>"; };
-		505AF9321A91577000E0CB28 /* MIAEditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAEditExpenseTableViewController.h; sourceTree = "<group>"; };
-		505AF9331A91577000E0CB28 /* MIAEditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAEditExpenseTableViewController.m; sourceTree = "<group>"; };
+		503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewProtocolsImplementer.h; sourceTree = "<group>"; };
+		503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
+		504C435D1A9F4856007D6D4B /* CategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesInfo.h; sourceTree = "<group>"; };
+		504C435E1A9F4856007D6D4B /* CategoriesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesInfo.m; sourceTree = "<group>"; };
+		505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewController.h; sourceTree = "<group>"; };
+		505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
 		505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+FirstAndLastDaysOfMonth.m"; sourceTree = "<group>"; };
-		505CA13C1A761B21009CA7B1 /* MIAFetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAFetch.h; sourceTree = "<group>"; };
-		505CA13D1A761B21009CA7B1 /* MIAFetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAFetch.m; sourceTree = "<group>"; };
+		505CA13C1A761B21009CA7B1 /* Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Fetch.h; sourceTree = "<group>"; };
+		505CA13D1A761B21009CA7B1 /* Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Fetch.m; sourceTree = "<group>"; };
 		5064C6D41AC5491200979BF0 /* NSString+FormatAmount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FormatAmount.h"; sourceTree = "<group>"; };
 		5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FormatAmount.m"; sourceTree = "<group>"; };
 		506E72801A1E0B450006F2DF /* Depoza.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Depoza.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72841A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72851A1E0B450006F2DF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		506E72871A1E0B450006F2DF /* MIAAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIAAppDelegate.h; sourceTree = "<group>"; };
-		506E72881A1E0B450006F2DF /* MIAAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MIAAppDelegate.m; sourceTree = "<group>"; };
+		506E72871A1E0B450006F2DF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		506E72881A1E0B450006F2DF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		506E728B1A1E0B450006F2DF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		506E72911A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		506E72931A1E0B450006F2DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -183,28 +183,28 @@
 		506E729C1A1E0B450006F2DF /* DepozaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		506E72A11A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		506E72A21A1E0B450006F2DF /* DepozaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DepozaTests.m; sourceTree = "<group>"; };
-		506E72B01A1E0D560006F2DF /* MIAMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAMainViewController.h; sourceTree = "<group>"; };
-		506E72B11A1E0D560006F2DF /* MIAMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAMainViewController.m; sourceTree = "<group>"; };
-		508774851A1F0C19002D1A9E /* MIAExpense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAExpense.h; sourceTree = "<group>"; };
-		508774861A1F0C19002D1A9E /* MIAExpense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAExpense.m; sourceTree = "<group>"; };
+		506E72B01A1E0D560006F2DF /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		506E72B11A1E0D560006F2DF /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
+		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		5097DACB1A921CD7006DB197 /* CategoryData+Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CategoryData+Fetch.h"; sourceTree = "<group>"; };
 		5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+Fetch.m"; sourceTree = "<group>"; };
-		5097DACE1A922294006DB197 /* MIAChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAChooseCategoryTableViewController.h; sourceTree = "<group>"; };
-		5097DACF1A922294006DB197 /* MIAChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAChooseCategoryTableViewController.m; sourceTree = "<group>"; };
+		5097DACE1A922294006DB197 /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
+		5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
 		50A1D4D21AC03ECA00E56EB1 /* Depoza.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Depoza.entitlements; sourceTree = "<group>"; };
 		50A1D4D31AC03F2200E56EB1 /* Depoza Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Depoza Extension.entitlements"; sourceTree = "<group>"; };
 		50A6C05B1A92C71800699862 /* ExpenseData+Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ExpenseData+Fetch.h"; sourceTree = "<group>"; };
 		50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ExpenseData+Fetch.m"; sourceTree = "<group>"; };
-		50AA42E91A87A22A0019CB55 /* MIAAllExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAAllExpensesTableViewController.h; sourceTree = "<group>"; };
-		50AA42EA1A87A22A0019CB55 /* MIAAllExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAAllExpensesTableViewController.m; sourceTree = "<group>"; };
+		50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllExpensesTableViewController.h; sourceTree = "<group>"; };
+		50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllExpensesTableViewController.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
-		50B195D51A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAMoreInfoTableViewController.h; sourceTree = "<group>"; };
-		50B195D61A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAMoreInfoTableViewController.m; sourceTree = "<group>"; };
-		50B3574B1A48596000168958 /* MIAPersistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAPersistence.h; sourceTree = "<group>"; };
-		50B3574C1A48596000168958 /* MIAPersistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAPersistence.m; sourceTree = "<group>"; };
-		50BA1B991A960FB10091644D /* MIASettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIASettingsTableViewController.h; sourceTree = "<group>"; };
-		50BA1B9A1A960FB10091644D /* MIASettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIASettingsTableViewController.m; sourceTree = "<group>"; };
+		50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoTableViewController.h; sourceTree = "<group>"; };
+		50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MoreInfoTableViewController.m; sourceTree = "<group>"; };
+		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
+		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
+		50BA1B991A960FB10091644D /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		50BB50411AC6391C001AE915 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
 		50BB50421AC6391C001AE915 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
 		50BB50481AC64972001AE915 /* seedUS.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seedUS.sqlite; sourceTree = "<group>"; };
@@ -216,14 +216,14 @@
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
 		50E50B241A96C7B20025D0E1 /* EditExpenseTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditExpenseTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewControllerDelegate.h; sourceTree = "<group>"; };
-		50EA039A1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAExtensionSettingsTableViewController.h; sourceTree = "<group>"; };
-		50EA039B1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAExtensionSettingsTableViewController.m; sourceTree = "<group>"; };
-		50FDE3AF1A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIACategoriesContainerViewController.h; sourceTree = "<group>"; };
-		50FDE3B01A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIACategoriesContainerViewController.m; sourceTree = "<group>"; };
-		50FDE3B31A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIACategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
-		50FDE3B41A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIACategoryInfoCollectionViewCell.m; sourceTree = "<group>"; };
-		50FEF8311A960309007BC483 /* MIAAddCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MIAAddCategoryViewController.h; sourceTree = "<group>"; };
-		50FEF8321A960309007BC483 /* MIAAddCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIAAddCategoryViewController.m; sourceTree = "<group>"; };
+		50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionSettingsTableViewController.h; sourceTree = "<group>"; };
+		50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionSettingsTableViewController.m; sourceTree = "<group>"; };
+		50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesContainerViewController.h; sourceTree = "<group>"; };
+		50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesContainerViewController.m; sourceTree = "<group>"; };
+		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
+		50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryInfoCollectionViewCell.m; sourceTree = "<group>"; };
+		50FEF8311A960309007BC483 /* AddCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewController.h; sourceTree = "<group>"; };
+		50FEF8321A960309007BC483 /* AddCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddCategoryViewController.m; sourceTree = "<group>"; };
 		583FFBE7D2D90CA3E7515346 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		99C6B0C42A04101D60C4BD79 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -292,8 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				50A1D4D31AC03F2200E56EB1 /* Depoza Extension.entitlements */,
-				5015A5691AC02C230056271A /* MIATodayViewController.h */,
-				5015A56A1AC02C230056271A /* MIATodayViewController.m */,
+				5015A5691AC02C230056271A /* TodayViewController.h */,
+				5015A56A1AC02C230056271A /* TodayViewController.m */,
 				5015A56C1AC02C230056271A /* MainInterface.storyboard */,
 				5015A5671AC02C230056271A /* Supporting Files */,
 			);
@@ -319,8 +319,8 @@
 		502589B41A961B4200918017 /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
-				50BA1B991A960FB10091644D /* MIASettingsTableViewController.h */,
-				50BA1B9A1A960FB10091644D /* MIASettingsTableViewController.m */,
+				50BA1B991A960FB10091644D /* SettingsTableViewController.h */,
+				50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */,
 				50EA039D1AC1847B007E6FA2 /* Extension */,
 			);
 			name = SettingsView;
@@ -329,8 +329,8 @@
 		503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */ = {
 			isa = PBXGroup;
 			children = (
-				503BF6F61A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.h */,
-				503BF6F71A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.m */,
+				503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */,
+				503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */,
 			);
 			name = TableViewProtocolsImplementer;
 			sourceTree = "<group>";
@@ -338,8 +338,8 @@
 		503BF6FA1A9F1B9C00791B90 /* UICollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				50FDE3B31A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.h */,
-				50FDE3B41A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.m */,
+				50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */,
+				50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */,
 			);
 			name = UICollectionViewCell;
 			sourceTree = "<group>";
@@ -348,8 +348,8 @@
 			isa = PBXGroup;
 			children = (
 				50B3574E1A48597300168958 /* CoreData */,
-				504C435D1A9F4856007D6D4B /* MIACategoriesInfo.h */,
-				504C435E1A9F4856007D6D4B /* MIACategoriesInfo.m */,
+				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
+				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -357,8 +357,8 @@
 		504C43611A9F580B007D6D4B /* Fetch */ = {
 			isa = PBXGroup;
 			children = (
-				505CA13C1A761B21009CA7B1 /* MIAFetch.h */,
-				505CA13D1A761B21009CA7B1 /* MIAFetch.m */,
+				505CA13C1A761B21009CA7B1 /* Fetch.h */,
+				505CA13D1A761B21009CA7B1 /* Fetch.m */,
 			);
 			name = Fetch;
 			sourceTree = "<group>";
@@ -376,8 +376,8 @@
 		5063D1981A85F0B3006168D3 /* AppDelegate */ = {
 			isa = PBXGroup;
 			children = (
-				506E72871A1E0B450006F2DF /* MIAAppDelegate.h */,
-				506E72881A1E0B450006F2DF /* MIAAppDelegate.m */,
+				506E72871A1E0B450006F2DF /* AppDelegate.h */,
+				506E72881A1E0B450006F2DF /* AppDelegate.m */,
 			);
 			name = AppDelegate;
 			sourceTree = "<group>";
@@ -385,11 +385,11 @@
 		5063D1991A85F0C2006168D3 /* MainView */ = {
 			isa = PBXGroup;
 			children = (
-				506E72B01A1E0D560006F2DF /* MIAMainViewController.h */,
-				506E72B11A1E0D560006F2DF /* MIAMainViewController.m */,
+				506E72B01A1E0D560006F2DF /* MainViewController.h */,
+				506E72B11A1E0D560006F2DF /* MainViewController.m */,
 				5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */,
-				50086E8C1AC6E7F600162677 /* MIAMainViewCell.h */,
-				50086E8D1AC6E7F600162677 /* MIAMainViewCell.m */,
+				50086E8C1AC6E7F600162677 /* MainViewCell.h */,
+				50086E8D1AC6E7F600162677 /* MainViewCell.m */,
 				503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */,
 				50FDE3B21A9B5A95007C9FC0 /* ContainerView */,
 			);
@@ -399,8 +399,8 @@
 		5063D19B1A85F0EF006168D3 /* AddExpenseView */ = {
 			isa = PBXGroup;
 			children = (
-				502547941A1EC86600DCB8FB /* MIAAddExpenseViewController.h */,
-				502547951A1EC86600DCB8FB /* MIAAddExpenseViewController.m */,
+				502547941A1EC86600DCB8FB /* AddExpenseViewController.h */,
+				502547951A1EC86600DCB8FB /* AddExpenseViewController.m */,
 				502A1E4D1A21FADC00C63EA6 /* AddExpenseViewControllerDelegate.h */,
 			);
 			name = AddExpenseView;
@@ -409,8 +409,8 @@
 		5063D19C1A85F0FE006168D3 /* MoreInfoView */ = {
 			isa = PBXGroup;
 			children = (
-				50B195D51A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.h */,
-				50B195D61A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.m */,
+				50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */,
+				50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */,
 			);
 			name = MoreInfoView;
 			sourceTree = "<group>";
@@ -431,8 +431,8 @@
 		506803DC1A91E273002A3DA0 /* EditView */ = {
 			isa = PBXGroup;
 			children = (
-				505AF9321A91577000E0CB28 /* MIAEditExpenseTableViewController.h */,
-				505AF9331A91577000E0CB28 /* MIAEditExpenseTableViewController.m */,
+				505AF9321A91577000E0CB28 /* EditExpenseTableViewController.h */,
+				505AF9331A91577000E0CB28 /* EditExpenseTableViewController.m */,
 				50E50B241A96C7B20025D0E1 /* EditExpenseTableViewControllerDelegate.h */,
 			);
 			name = EditView;
@@ -523,8 +523,8 @@
 		50A6C05E1A92C99700699862 /* Expense */ = {
 			isa = PBXGroup;
 			children = (
-				508774851A1F0C19002D1A9E /* MIAExpense.h */,
-				508774861A1F0C19002D1A9E /* MIAExpense.m */,
+				508774851A1F0C19002D1A9E /* Expense.h */,
+				508774861A1F0C19002D1A9E /* Expense.m */,
 				50AA42F61A87AC860019CB55 /* ExpenseData.h */,
 				50AA42F71A87AC860019CB55 /* ExpenseData.m */,
 				50A6C05B1A92C71800699862 /* ExpenseData+Fetch.h */,
@@ -547,8 +547,8 @@
 		50AA42EC1A87A2310019CB55 /* AllExpensesView */ = {
 			isa = PBXGroup;
 			children = (
-				50AA42E91A87A22A0019CB55 /* MIAAllExpensesTableViewController.h */,
-				50AA42EA1A87A22A0019CB55 /* MIAAllExpensesTableViewController.m */,
+				50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */,
+				50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */,
 			);
 			name = AllExpensesView;
 			sourceTree = "<group>";
@@ -557,8 +557,8 @@
 			isa = PBXGroup;
 			children = (
 				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
-				50B3574B1A48596000168958 /* MIAPersistence.h */,
-				50B3574C1A48596000168958 /* MIAPersistence.m */,
+				50B3574B1A48596000168958 /* Persistence.h */,
+				50B3574C1A48596000168958 /* Persistence.m */,
 				50A6C05E1A92C99700699862 /* Expense */,
 				50A6C05F1A92C9A000699862 /* Category */,
 				504C43611A9F580B007D6D4B /* Fetch */,
@@ -569,8 +569,8 @@
 		50D4E0F71A92253A0040C260 /* ChooseCategoryView */ = {
 			isa = PBXGroup;
 			children = (
-				5097DACE1A922294006DB197 /* MIAChooseCategoryTableViewController.h */,
-				5097DACF1A922294006DB197 /* MIAChooseCategoryTableViewController.m */,
+				5097DACE1A922294006DB197 /* ChooseCategoryTableViewController.h */,
+				5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */,
 				50D4E0F81A9225620040C260 /* ChooseCategoryTableViewControllerDelegate.h */,
 			);
 			name = ChooseCategoryView;
@@ -579,8 +579,8 @@
 		50EA039D1AC1847B007E6FA2 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				50EA039A1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.h */,
-				50EA039B1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.m */,
+				50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */,
+				50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */,
 			);
 			name = Extension;
 			sourceTree = "<group>";
@@ -588,8 +588,8 @@
 		50FDE3B21A9B5A95007C9FC0 /* ContainerView */ = {
 			isa = PBXGroup;
 			children = (
-				50FDE3AF1A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.h */,
-				50FDE3B01A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.m */,
+				50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */,
+				50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */,
 				503BF6FA1A9F1B9C00791B90 /* UICollectionViewCell */,
 			);
 			name = ContainerView;
@@ -598,11 +598,11 @@
 		50FEF8341A96030E007BC483 /* AddCategoryView */ = {
 			isa = PBXGroup;
 			children = (
-				50FEF8311A960309007BC483 /* MIAAddCategoryViewController.h */,
-				50FEF8321A960309007BC483 /* MIAAddCategoryViewController.m */,
+				50FEF8311A960309007BC483 /* AddCategoryViewController.h */,
+				50FEF8321A960309007BC483 /* AddCategoryViewController.m */,
 				50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */,
-				50206E9A1AC8E097001A017E /* MIACollectionViewController.h */,
-				50206E9B1AC8E097001A017E /* MIACollectionViewController.m */,
+				50206E9A1AC8E097001A017E /* CollectionViewController.h */,
+				50206E9B1AC8E097001A017E /* CollectionViewController.m */,
 			);
 			name = AddCategoryView;
 			sourceTree = "<group>";
@@ -690,7 +690,7 @@
 		506E72781A1E0B450006F2DF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = MIA;
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Ivan Magda";
 				TargetAttributes = {
@@ -832,17 +832,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50A1D4DD1AC0435500E56EB1 /* MIAFetch.m in Sources */,
+				50A1D4DD1AC0435500E56EB1 /* Fetch.m in Sources */,
 				50BB50441AC6391C001AE915 /* CategoryData.m in Sources */,
 				50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
 				5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
 				50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */,
-				50A1D4D81AC0434000E56EB1 /* MIAExpense.m in Sources */,
+				50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */,
 				50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */,
-				5015A56B1AC02C230056271A /* MIATodayViewController.m in Sources */,
-				50A1D4DF1AC0438C00E56EB1 /* MIACategoriesInfo.m in Sources */,
+				5015A56B1AC02C230056271A /* TodayViewController.m in Sources */,
+				50A1D4DF1AC0438C00E56EB1 /* CategoriesInfo.m in Sources */,
 				50A1D4DC1AC0435000E56EB1 /* CategoryData+Fetch.m in Sources */,
-				50A1D4D61AC0432900E56EB1 /* MIAPersistence.m in Sources */,
+				50A1D4D61AC0432900E56EB1 /* Persistence.m in Sources */,
 				50A1D4DA1AC0434600E56EB1 /* ExpenseData+Fetch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -852,33 +852,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
-				506E72891A1E0B450006F2DF /* MIAAppDelegate.m in Sources */,
-				504C435F1A9F4856007D6D4B /* MIACategoriesInfo.m in Sources */,
-				50FDE3B11A9B5A8D007C9FC0 /* MIACategoriesContainerViewController.m in Sources */,
-				505CA13E1A761B21009CA7B1 /* MIAFetch.m in Sources */,
-				50B195D71A4A66FB00E0F0B8 /* MIAMoreInfoTableViewController.m in Sources */,
-				502547961A1EC86600DCB8FB /* MIAAddExpenseViewController.m in Sources */,
+				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */,
+				50FDE3B11A9B5A8D007C9FC0 /* CategoriesContainerViewController.m in Sources */,
+				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
+				50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */,
+				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
-				50EA039C1AC1846C007E6FA2 /* MIAExtensionSettingsTableViewController.m in Sources */,
-				50206E9C1AC8E097001A017E /* MIACollectionViewController.m in Sources */,
+				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
+				50206E9C1AC8E097001A017E /* CollectionViewController.m in Sources */,
 				5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
-				50AA42EB1A87A22A0019CB55 /* MIAAllExpensesTableViewController.m in Sources */,
-				50B3574D1A48596000168958 /* MIAPersistence.m in Sources */,
-				505AF9341A91577000E0CB28 /* MIAEditExpenseTableViewController.m in Sources */,
-				508774871A1F0C19002D1A9E /* MIAExpense.m in Sources */,
+				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
+				50B3574D1A48596000168958 /* Persistence.m in Sources */,
+				505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */,
+				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */,
-				50BA1B9B1A960FB10091644D /* MIASettingsTableViewController.m in Sources */,
+				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
-				503BF6F81A9F08D600791B90 /* MIAMainTableViewProtocolsImplementer.m in Sources */,
-				50FDE3B51A9B5EE4007C9FC0 /* MIACategoryInfoCollectionViewCell.m in Sources */,
+				503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */,
+				50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
-				506E72B21A1E0D560006F2DF /* MIAMainViewController.m in Sources */,
-				5097DAD01A922294006DB197 /* MIAChooseCategoryTableViewController.m in Sources */,
-				50086E8E1AC6E7F600162677 /* MIAMainViewCell.m in Sources */,
-				50FEF8331A960309007BC483 /* MIAAddCategoryViewController.m in Sources */,
+				506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */,
+				5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */,
+				50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */,
+				50FEF8331A960309007BC483 /* AddCategoryViewController.m in Sources */,
 				505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

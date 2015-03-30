@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@class MIAMainViewController;
+@class MainViewController;
 @class NSArray;
 
-@protocol MIAMainViewControllerDelegate <NSObject>
+@protocol MainViewControllerDelegate <NSObject>
 
-- (void)mainViewController:(MIAMainViewController *)mainViewController didLoadCategoriesInfo:(NSArray *)categoriesData;
-- (void)mainViewController:(MIAMainViewController *)mainViewController didUpdateCategoriesInfo:(NSArray *)categoriesData;
+- (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesInfo:(NSArray *)categoriesData;
+- (void)mainViewController:(MainViewController *)mainViewController didUpdateCategoriesInfo:(NSArray *)categoriesData;
 
 @end
