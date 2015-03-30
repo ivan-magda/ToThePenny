@@ -85,7 +85,7 @@
     [self.searchController.searchBar sizeToFit];
 }
 
-#pragma mark SuperEditButtonItem
+#pragma mark SetEditig
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];

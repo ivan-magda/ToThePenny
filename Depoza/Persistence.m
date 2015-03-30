@@ -84,7 +84,16 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 
 - (void)initStore:(NSURL *)storeURL {
     if (![[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]]) {
-        NSURL *preloadURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"seed" ofType:@"sqlite"]];
+        NSLocale *locale = [NSLocale currentLocale];
+        NSString *path = nil;
+        NSString *countryCode = [locale objectForKey: NSLocaleCountryCode];
+        if ([countryCode isEqualToString:@"US"]) {
+            path = @"seedUS";
+        } else if ([countryCode isEqualToString:@"RU"]){
+            path = @"seedRU";
+        }
+
+        NSURL *preloadURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:path ofType:@"sqlite"]];
 
         NSError* err;
         if (![[NSFileManager defaultManager] copyItemAtURL:preloadURL toURL:storeURL error:&err]) {

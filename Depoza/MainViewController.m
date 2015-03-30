@@ -7,7 +7,7 @@
 
     //CoreData
 #import "Expense.h"
-#import "ExpenseData.h"
+#import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
     //Data
@@ -15,7 +15,6 @@
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
-#import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSString+FormatAmount.h"
 
@@ -139,7 +138,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)contextDidChange:(NSNotification *)notification {
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
-
+    
     if ([setWithKeys member:@"deleted"]) {
         NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
         ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
@@ -239,10 +238,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CategoriesInfo *anInfo = obj;
             if (category.idValue == anInfo.idValue) {
-                for (ExpenseData *expense in category.expense) {
+                for (ExpenseData *anExpense in category.expense) {
                     CategoriesInfo *infoForUpdate = _categoriesInfo[idx];
-                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [expense.amount floatValue]);
-                    countForExpenditures += [expense.amount floatValue];
+                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [anExpense.amount floatValue]);
+                    countForExpenditures += [anExpense.amount floatValue];
                 }
                 *stop = YES;
             }
@@ -252,12 +251,14 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
+
+    [self.tableViewProtocolsImplementer.tableView reloadData];
 }
 
 #pragma mark - AddCategoryViewControllerDelegate
 
 - (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
-    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title idValue:category.idValue andAmount:@0];
+    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
     [_categoriesInfo addObject:info];
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
 }
@@ -272,35 +273,18 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
         //Create compound predicate: dateOfExpense >= dates[0] AND dateOfExpense <= dates[1]
     NSArray *dates = [NSDate getStartAndEndDatesOfTheCurrentDate];
-
-    NSExpression *dateOfExpense = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
-    NSExpression *startDate = [NSExpression expressionForConstantValue:[dates firstObject]];
-    NSPredicate *predicateStartDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
-                                                                         rightExpression:startDate
-                                                                                modifier:NSDirectPredicateModifier
-                                                                                    type:NSGreaterThanOrEqualToPredicateOperatorType
-                                                                                 options:0];
-
-    NSExpression *endDate = [NSExpression expressionForConstantValue:[dates lastObject]];
-    NSPredicate *predicateEndDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
-                                                                       rightExpression:endDate
-                                                                              modifier:NSDirectPredicateModifier
-                                                                                  type:NSLessThanOrEqualToPredicateOperatorType
-                                                                               options:0];
-    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicateStartDate, predicateEndDate]];
+    NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
     fetchRequest.predicate = predicate;
 
-    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:YES];
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
                               initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
-    [fetchRequest setSortDescriptors:@[categorySortDescriptor, dateSortDescriptor]];
-
+    [fetchRequest setSortDescriptors:@[dateSortDescriptor]];
     [fetchRequest setFetchBatchSize:20];
 
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext
-                                          sectionNameKeyPath:@"category.title"
+                                          sectionNameKeyPath:nil
                                                    cacheName:NSStringFromClass([Expense class])];
     self.fetchedResultsController = theFetchedResultsController;
 

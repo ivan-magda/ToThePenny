@@ -11,9 +11,10 @@
 
 @class NSManagedObjectContext;
 
-@interface AddCategoryViewController : UIViewController
+@interface AddCategoryViewController : UITableViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, copy) NSString *iconName;
 
 @property (nonatomic, strong) id<AddCategoryViewControllerDelegate> delegate;
 

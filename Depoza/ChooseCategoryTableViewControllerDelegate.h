@@ -13,6 +13,6 @@
 
 @protocol ChooseCategoryTableViewControllerDelegate <NSObject>
 
-- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategory:(NSString *)category;
+- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategoryName:(NSString *)category andIconName:(NSString *)iconName;
 
 @end

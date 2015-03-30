@@ -35,6 +35,7 @@
 @implementation EditExpenseTableViewController {
     BOOL _datePickerVisible;
     NSDate *_dateOfExpense;
+    NSString *_iconName;
 }
 
 #pragma mark - UIViewController Life Cycle -
@@ -55,6 +56,7 @@
 
     _amountTextView.delegate = self;
     _dateOfExpense = _expenseToEdit.dateOfExpense;
+    _iconName = _expenseToEdit.category.iconName;
 
     [self updateText];
 
@@ -94,15 +96,16 @@
 
         controller.delegate = self;
         controller.titles = allCategoriesTitles;
-        controller.managedObjectContext = _managedObjectContext;
+        controller.iconName = _iconName;
         controller.originalCategoryName = self.categoryNameLabel.text;
     }
 }
 
 #pragma mark - ChooseCategoryTableViewControllerDelegate -
 
-- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategory:(NSString *)category {
+- (void)chooseCategoryTableViewController:(ChooseCategoryTableViewController *)controller didFinishChooseCategoryName:(NSString *)category andIconName:(NSString *)iconName {
     self.categoryNameLabel.text = category;
+    _iconName = iconName;
 
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -179,7 +182,7 @@
 - (void)showDatePicker {
     _datePickerVisible = YES;
 
-    NSIndexPath *indexPathDateRow = [NSIndexPath indexPathForRow:1 inSection:0];
+    NSIndexPath *indexPathDateRow    = [NSIndexPath indexPathForRow:1 inSection:0];
     NSIndexPath *indexPathDatePicker = [NSIndexPath indexPathForRow:2 inSection:0];
 
     _dateLabel.textColor = _dateLabel.tintColor;
@@ -198,7 +201,7 @@
     if (_datePickerVisible) {
         _datePickerVisible = NO;
 
-        NSIndexPath *indexPathDateRow = [NSIndexPath indexPathForRow:1 inSection:0];
+        NSIndexPath *indexPathDateRow    = [NSIndexPath indexPathForRow:1 inSection:0];
         NSIndexPath *indexPathDatePicker = [NSIndexPath indexPathForRow:2 inSection:0];
 
         _dateLabel.textColor = [UIColor blackColor];
@@ -246,17 +249,17 @@
     BOOL isChanged = NO;
 
     if (_expenseToEdit.amount.floatValue != [_amountTextView.text floatValue]) {
-        _expenseToEdit.amount = @([_amountTextView.text floatValue]);
+        self.expenseToEdit.amount = @([_amountTextView.text floatValue]);
         isChanged = YES;
     }
 
     if ([_expenseToEdit.dateOfExpense compare:_dateOfExpense] != NSOrderedSame) {
-        _expenseToEdit.dateOfExpense = _dateOfExpense;
+        self.expenseToEdit.dateOfExpense = _dateOfExpense;
         isChanged = YES;
     }
 
     if (![_expenseToEdit.descriptionOfExpense isEqualToString:_descriptionLabel.text] && ![_descriptionLabel.text isEqualToString:NSLocalizedString(@"(No Description)", @"EditExpenseVC check for no description text when done button pressed")]) {
-        _expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
+        self.expenseToEdit.descriptionOfExpense = _descriptionLabel.text;
         isChanged = YES;
     }
     NSParameterAssert(![_expenseToEdit.descriptionOfExpense isEqualToString:NSLocalizedString(@"(No Description)", @"EditExpenseVC assertion check")]);
@@ -266,10 +269,17 @@
 
         [_expenseToEdit.category removeExpenseObject:_expenseToEdit];
 
-        _expenseToEdit.category = newSelectedCategory;
-        _expenseToEdit.categoryId = newSelectedCategory.idValue;
+        self.expenseToEdit.category   = newSelectedCategory;
+        self.expenseToEdit.categoryId = newSelectedCategory.idValue;
         [newSelectedCategory addExpenseObject:_expenseToEdit];
 
+        isChanged = YES;
+    }
+
+    if (![_expenseToEdit.category.iconName isEqualToString:_iconName]) {
+        CategoryData *category = [CategoryData categoryFromTitle:_categoryNameLabel.text context:_managedObjectContext];
+        category.iconName = _iconName;
+        
         isChanged = YES;
     }
 

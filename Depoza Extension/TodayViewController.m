@@ -54,7 +54,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
     _persistence = [Persistence sharedInstance];
 
-    _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+    _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
 
     [self configurateUserDefaults];
     [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
@@ -62,7 +62,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
 - (void)updateUserInterfaceWithUpdateResult:(NCUpdateResult)updateResult {
     if (_expenses == nil) {
-        _expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:_persistence.managedObjectContext];
+        _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
     }
 
     if (_expenses.count > 0 && updateResult == NCUpdateResultNewData) {

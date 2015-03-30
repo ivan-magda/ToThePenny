@@ -76,7 +76,7 @@ static const CGFloat kCellHeight = 46.0f;
     NSString *amount = [NSString stringWithFormat:@"%@", categoryInfo.amount];
 
     CGSize size = [((categoryName.length > amount.length) ? categoryName : amount) sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]}];
-    size.width = roundf(size.width + 0.5f);
+    size.width = roundf(size.width + 1.0f);
     size.height = kCellHeight;
 
     return size;

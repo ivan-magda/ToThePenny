@@ -2,7 +2,7 @@
 //  CategoryData.h
 //  Depoza
 //
-//  Created by Ivan Magda on 08.02.15.
+//  Created by Ivan Magda on 28.03.15.
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
@@ -15,8 +15,8 @@
 
 @property (nonatomic, retain) NSNumber * idValue;
 @property (nonatomic, retain) NSString * title;
+@property (nonatomic, retain) NSString * iconName;
 @property (nonatomic, retain) NSSet *expense;
-
 @end
 
 @interface CategoryData (CoreDataGeneratedAccessors)

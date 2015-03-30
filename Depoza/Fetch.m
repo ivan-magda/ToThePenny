@@ -28,7 +28,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
 
     if (key) {
-        NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:key ascending:NO];
+        NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:key ascending:YES];
         [request setSortDescriptors:@[sort]];
     }
 
@@ -46,7 +46,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 }
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(double *)totalExpeditures {
-    NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(title))];
+    NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
 
     NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
 
@@ -56,7 +56,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 
         //Create array of categories infos
     for (CategoryData *aData in fetchedCategories) {
-        CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:aData.title idValue:aData.idValue andAmount:@0];
+        CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:aData.title iconName:aData.iconName idValue:aData.idValue andAmount:@0];
         NSParameterAssert(info.title && info.idValue && info.amount);
         [categoriesInfo addObject:info];
 
@@ -114,7 +114,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
     NSInteger month = [dateComponents[@"month"]integerValue];
     NSInteger day   = [dateComponents[@"day"]integerValue];
 
-    NSArray *expenses = [ExpenseData expensesWithEqualDayWithDate:[NSDate date] managedObjectContext:context];
+    NSArray *expenses = [ExpenseData getTodayExpensesInManagedObjectContext:context];
 
     if (dictionaryInfo == nil) {
         [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];

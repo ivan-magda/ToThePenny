@@ -7,6 +7,7 @@
 //
 
 #import "AddCategoryViewController.h"
+#import "CollectionViewController.h"
 
     //CoreData
 #import "CategoryData+Fetch.h"
@@ -20,6 +21,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *doneButton;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 
 @end
 
@@ -36,6 +38,11 @@
 
     self.textField.delegate = self;
     [self.textField becomeFirstResponder];
+
+    if (_iconName == nil) {
+        _iconName = @"Puzzle";
+    }
+    self.iconImage.image = [UIImage imageNamed:_iconName];
 }
 
 #pragma mark - IBActions -
@@ -43,7 +50,7 @@
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     [self.textField resignFirstResponder];
 
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)done:(id)sender {
@@ -52,7 +59,7 @@
     [self adjustmentOfText];
 
     if ([self isUniqueName:_categoryName]) {
-        CategoryData *category = [CategoryData categoryDataWithName:_categoryName managedObjectContext:_managedObjectContext];
+        CategoryData *category = [CategoryData categoryDataWithTitle:_categoryName iconName:_iconName andExpenses:nil inManagedObjectContext:_managedObjectContext];
 
         NSError *error = nil;
         if (![self.managedObjectContext save:&error]) {
@@ -62,7 +69,7 @@
         [self.delegate addCategoryViewController:self didFinishAddingCategory:category];
 
         [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddCategoryVC succes text for show") completion:^{
-            [self.navigationController popViewControllerAnimated:YES];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }];
     } else {
         [KVNProgress showErrorWithStatus:NSLocalizedString(@"enter a unique name", @"AddCategorVC message for KVNProgress showWithError") completion:^{
@@ -112,6 +119,31 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     _categoryName = textField.text;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self.textField resignFirstResponder];
+    return YES;
+}
+
+#pragma mark - Navigation -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"ChooseIcon"]) {
+        CollectionViewController *controller = segue.destinationViewController;
+        controller.selectedIconName = _iconName;
+        controller.isAddingNewCategoryMode = YES;
+    }
+}
+
+- (IBAction)didPickIcon:(UIStoryboardSegue *)unwindSegue {
+    UIViewController *sourceVC = unwindSegue.sourceViewController;
+    if ([sourceVC isKindOfClass:[CollectionViewController class]]) {
+        CollectionViewController *controller = (CollectionViewController *)sourceVC;
+        NSString *iconName = controller.selectedIconName;
+        self.iconImage.image = [UIImage imageNamed:iconName];
+        _iconName = iconName;
+    }
 }
 
 @end

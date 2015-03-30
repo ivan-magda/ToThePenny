@@ -12,8 +12,6 @@
 
 - (NSDictionary *)getComponents;
 
-+ (NSArray *)getDatesFromDate:(NSDate *)date sameDayOrFirstAndLastOfMonth:(BOOL)sameDay;
-
 + (NSArray *)getFirstAndLastDaysInTheCurrentMonth;
 
 - (NSArray *)getFirstAndLastDaysInTheCurrentMonth;

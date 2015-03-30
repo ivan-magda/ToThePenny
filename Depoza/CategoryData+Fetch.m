@@ -11,6 +11,20 @@
 
 @implementation CategoryData (Fetch)
 
++ (CategoryData *)categoryDataWithTitle:(NSString *)title iconName:(NSString *)iconName andExpenses:(NSSet *)expenses inManagedObjectContext:(NSManagedObjectContext *)context {
+    CategoryData *category = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
+    category.idValue = @([self nextId]);
+    category.title = title;
+    category.iconName = iconName;
+    
+    NSError *error = nil;
+    if (![context save:&error]) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
+    return category;
+}
+
 + (NSInteger)countForCategoriesInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
@@ -36,14 +50,6 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setInteger:categories forKey:@"categoryId"];
     [defaults synchronize];
-}
-
-+ (CategoryData *)categoryDataWithName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context {
-    CategoryData *categoryData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
-    categoryData.idValue = @([self nextId]);
-    categoryData.title = name;
-    
-    return categoryData;
 }
 
 + (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context {
