@@ -14,8 +14,10 @@
 
 + (NSInteger)nextId;
 
-+ (NSArray *)expensesWithEqualDayWithDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates;
 
 @end

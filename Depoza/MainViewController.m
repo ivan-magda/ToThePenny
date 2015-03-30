@@ -7,7 +7,7 @@
 
     //CoreData
 #import "Expense.h"
-#import "ExpenseData.h"
+#import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
     //Data
@@ -15,7 +15,6 @@
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
-#import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSString+FormatAmount.h"
 
@@ -274,35 +273,18 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
         //Create compound predicate: dateOfExpense >= dates[0] AND dateOfExpense <= dates[1]
     NSArray *dates = [NSDate getStartAndEndDatesOfTheCurrentDate];
-
-    NSExpression *dateOfExpense = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
-    NSExpression *startDate = [NSExpression expressionForConstantValue:[dates firstObject]];
-    NSPredicate *predicateStartDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
-                                                                         rightExpression:startDate
-                                                                                modifier:NSDirectPredicateModifier
-                                                                                    type:NSGreaterThanOrEqualToPredicateOperatorType
-                                                                                 options:0];
-
-    NSExpression *endDate = [NSExpression expressionForConstantValue:[dates lastObject]];
-    NSPredicate *predicateEndDate = [NSComparisonPredicate predicateWithLeftExpression:dateOfExpense
-                                                                       rightExpression:endDate
-                                                                              modifier:NSDirectPredicateModifier
-                                                                                  type:NSLessThanOrEqualToPredicateOperatorType
-                                                                               options:0];
-    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[predicateStartDate, predicateEndDate]];
+    NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
     fetchRequest.predicate = predicate;
 
-    NSSortDescriptor *categorySortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"category.title" ascending:YES];
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
                               initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
-    [fetchRequest setSortDescriptors:@[categorySortDescriptor, dateSortDescriptor]];
-
+    [fetchRequest setSortDescriptors:@[dateSortDescriptor]];
     [fetchRequest setFetchBatchSize:20];
 
     NSFetchedResultsController *theFetchedResultsController =
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext
-                                          sectionNameKeyPath:@"category.title"
+                                          sectionNameKeyPath:nil
                                                    cacheName:NSStringFromClass([Expense class])];
     self.fetchedResultsController = theFetchedResultsController;
 

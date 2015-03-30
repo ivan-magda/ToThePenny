@@ -7,7 +7,7 @@
 //
 
 #import "ExpenseData+Fetch.h"
-#import "NSDate+FirstAndLastDaysOfMonth.h"
+#import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 
 @implementation ExpenseData (Fetch)
 
@@ -21,12 +21,8 @@
     return idValue;
 }
 
-+ (NSArray *)expensesWithEqualDayWithDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context {
-    NSArray *dates = [NSDate getDatesFromDate:date sameDayOrFirstAndLastOfMonth:YES];
-
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO]];
-    request.fetchBatchSize = 10;
++ (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates {
+    NSAssert(dates.count == 2, @"Maximum 2 days.");
 
     NSExpression *dateExp = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
     NSExpression *dateStart = [NSExpression expressionForConstantValue:[dates firstObject]];
@@ -37,6 +33,17 @@
                                                                        modifier:NSDirectPredicateModifier
                                                                            type:NSBetweenPredicateOperatorType
                                                                         options:0];
+    return predicate;
+}
+
++ (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSArray *dates = [NSDate getStartAndEndDatesOfTheCurrentDate];
+
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO]];
+    request.fetchBatchSize = 10;
+
+    NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
     request.predicate = predicate;
 
     NSError *error;
