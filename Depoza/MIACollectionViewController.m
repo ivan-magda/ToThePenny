@@ -33,13 +33,17 @@
     NSParameterAssert(icon);
     icon.image = [UIImage imageNamed:iconName];
 
+    UIColor *airForceBlueColor = [UIColor colorWithRed:0.33 green:0.55 blue:0.68 alpha:0.2];
     if ([iconName isEqualToString:_selectedIconName]) {
-        [self.collectionView selectItemAtIndexPath:indexPath animated:NO scrollPosition:UICollectionViewScrollPositionCenteredVertically | UICollectionViewScrollPositionCenteredHorizontally];
-
             //Background with Air Force Blue Color and corner radius
-        cell.backgroundColor = [UIColor colorWithRed:0.33 green:0.55 blue:0.68 alpha:0.2];
+        cell.backgroundColor = airForceBlueColor;
         cell.layer.cornerRadius = icon.bounds.size.width / 3.0f;
         icon.clipsToBounds = YES;
+    } else if ([cell.backgroundColor isEqual:airForceBlueColor] &&
+               ![iconName isEqualToString:_selectedIconName]){
+        cell.backgroundColor = [UIColor whiteColor];
+        cell.layer.cornerRadius = 1;
+        icon.clipsToBounds = NO;
     }
 }
 
