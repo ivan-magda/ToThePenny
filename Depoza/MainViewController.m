@@ -239,10 +239,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CategoriesInfo *anInfo = obj;
             if (category.idValue == anInfo.idValue) {
-                for (ExpenseData *expense in category.expense) {
+                for (ExpenseData *anExpense in category.expense) {
                     CategoriesInfo *infoForUpdate = _categoriesInfo[idx];
-                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [expense.amount floatValue]);
-                    countForExpenditures += [expense.amount floatValue];
+                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [anExpense.amount floatValue]);
+                    countForExpenditures += [anExpense.amount floatValue];
                 }
                 *stop = YES;
             }
@@ -252,6 +252,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
+
+    [self.tableViewProtocolsImplementer.tableView reloadData];
 }
 
 #pragma mark - AddCategoryViewControllerDelegate

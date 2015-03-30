@@ -10,8 +10,10 @@
 
 @interface CollectionViewController : UICollectionViewController
 
-@property (nonatomic, copy) NSArray *iconNames;
-
 @property (nonatomic, copy) NSString *selectedIconName;
+
+@property (nonatomic, copy, readonly) NSArray *iconNames;
+
+@property (nonatomic, assign) BOOL isAddingNewCategoryMode;
 
 @end

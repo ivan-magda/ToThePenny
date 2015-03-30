@@ -42,29 +42,7 @@
     if (_iconName == nil) {
         _iconName = @"Puzzle";
     }
-
     self.iconImage.image = [UIImage imageNamed:_iconName];
-}
-
-#pragma mark - Public -
-
-- (NSArray *)iconNames {
-    NSArray *names = @[
-                       @"5StarHotel", @"Airplane", @"BabysRoom", @"Barbershop",
-                       @"Beer", @"Bicycle", @"CarRental", @"Cars", @"Children",
-                       @"Clinic", @"Clothes", @"Cocktail", @"CoffeeToGo",
-                       @"Controller", @"CookingPot", @"CreditCard", @"Cutlery",
-                       @"Documentary", @"Dumbbell", @"Exterior", @"GasStation",
-                       @"Gift", @"Grapes", @"GroundTransportation", @"Hanger",
-                       @"Hearts", @"Ingredients", @"Iphone", @"Jewelry",
-                       @"Kitchenwares", @"Laptop", @"Literature", @"LivingRoom",
-                       @"Mastercard", @"MoneyTransfer", @"Music", @"Puzzle",
-                       @"Sale", @"ShoppingBag", @"ShoppingCartLoaded", @"SimCard",
-                       @"SmartphoneTablet", @"Taxi", @"TheatreMask", @"Ticket",
-                       @"Tomato", @"Truck", @"University", @"Visa", @"Beach"
-                       ];
-
-    return [names sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
 }
 
 #pragma mark - IBActions -
@@ -153,8 +131,8 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ChooseIcon"]) {
         CollectionViewController *controller = segue.destinationViewController;
-        controller.iconNames = [self iconNames];
         controller.selectedIconName = _iconName;
+        controller.isAddingNewCategoryMode = YES;
     }
 }
 

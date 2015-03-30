@@ -252,7 +252,7 @@
             </objects>
             <point key="canvasLocation" x="1731" y="-363"/>
         </scene>
-        <!--Edit Expense Table View Controller-->
+        <!--Edit Expense-->
         <scene sceneID="5Sa-c7-MIX">
             <objects>
                 <tableViewController storyboardIdentifier="EditExpense" id="4eo-eH-MDa" customClass="EditExpenseTableViewController" sceneMemberID="viewController">
@@ -391,7 +391,7 @@
                             <outlet property="delegate" destination="4eo-eH-MDa" id="S6f-Ff-QdV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Qur-wg-iYa">
+                    <navigationItem key="navigationItem" title="Edit Expense" id="Qur-wg-iYa">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="vj3-ne-5Fl">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="4eo-eH-MDa" id="pe8-j1-oQr"/>
@@ -420,10 +420,10 @@
         <scene sceneID="27C-1R-Ltg">
             <objects>
                 <tableViewController title="Category" id="MpU-36-BsH" customClass="ChooseCategoryTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ium-A6-RAD">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Ium-A6-RAD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="14b-gs-KKC" style="IBUITableViewCellStyleDefault" id="qc9-ld-VlH">
                                 <autoresizingMask key="autoresizingMask"/>
@@ -445,7 +445,10 @@
                             <outlet property="delegate" destination="MpU-36-BsH" id="30s-1b-llj"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="THP-bm-8uL"/>
+                    <navigationItem key="navigationItem" title="Edit Category" id="THP-bm-8uL"/>
+                    <connections>
+                        <segue destination="K6k-wL-Ce8" kind="push" identifier="ChangeIcon" id="hGy-jW-v8B"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nOa-4O-XG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -571,7 +574,7 @@
                                                 <constraint firstItem="0BE-aA-fbK" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="z0X-xb-QME" secondAttribute="trailing" constant="8" symbolic="YES" id="86E-Us-l4b"/>
                                                 <constraint firstItem="0BE-aA-fbK" firstAttribute="top" secondItem="1vd-cw-xXd" secondAttribute="top" constant="11" id="DGN-Kr-2x3"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="z0X-xb-QME" secondAttribute="bottom" priority="999" constant="11" id="Ez4-6g-w1e"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0BE-aA-fbK" secondAttribute="bottom" constant="11" id="HC0-Ke-LFv"/>
+                                                <constraint firstAttribute="bottom" secondItem="0BE-aA-fbK" secondAttribute="bottom" constant="11" id="HC0-Ke-LFv"/>
                                                 <constraint firstItem="z0X-xb-QME" firstAttribute="leading" secondItem="1vd-cw-xXd" secondAttribute="leading" constant="15" id="Q24-9Y-G6Z"/>
                                                 <constraint firstItem="z0X-xb-QME" firstAttribute="top" secondItem="1vd-cw-xXd" secondAttribute="top" constant="11" id="vMX-7o-KnM"/>
                                                 <constraint firstAttribute="trailing" secondItem="0BE-aA-fbK" secondAttribute="trailing" constant="16" id="zVq-ea-Wwi"/>
@@ -586,7 +589,7 @@
                             <outlet property="delegate" destination="hVW-5R-IRp" id="BTy-8H-Tm6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="rYL-Y1-WBM">
+                    <navigationItem key="navigationItem" title="Detail" id="rYL-Y1-WBM">
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="clg-PT-9c5">
                             <connections>
                                 <segue destination="sM8-6r-2AZ" kind="modal" identifier="EditExpense" id="O44-bx-ku1"/>
@@ -604,11 +607,11 @@
             </objects>
             <point key="canvasLocation" x="975" y="-1079"/>
         </scene>
-        <!--Today-->
+        <!--Expenses-->
         <scene sceneID="9Bk-YW-U8l">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8zA-3A-IRG" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Today" image="Banknotes.png" id="HE9-VB-20J"/>
+                    <tabBarItem key="tabBarItem" title="Expenses" image="Banknotes.png" id="HE9-VB-20J"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="i28-j2-vsF">
@@ -873,9 +876,6 @@
                                     <constraint firstAttribute="centerX" secondItem="lf5-Jq-7c5" secondAttribute="centerX" id="HbG-4X-Qun"/>
                                     <constraint firstAttribute="centerY" secondItem="lf5-Jq-7c5" secondAttribute="centerY" id="PQ1-kW-LP7"/>
                                 </constraints>
-                                <connections>
-                                    <segue destination="5k2-di-jpr" kind="unwind" identifier="DidPickIcon" unwindAction="didPickIcon:" id="dx2-6q-2kp"/>
-                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -884,6 +884,10 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="6FR-go-Dg9"/>
+                    <connections>
+                        <segue destination="5k2-di-jpr" kind="unwind" identifier="IconChanged" unwindAction="didChangeIcon:" id="lSq-cz-CDQ"/>
+                        <segue destination="5k2-di-jpr" kind="unwind" identifier="IconPicked" unwindAction="didPickIcon:" id="4Fj-2S-Eym"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAL-4Q-dGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5k2-di-jpr" userLabel="Exit" sceneMemberID="exit"/>
@@ -1104,5 +1108,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="3er-JC-Cyy"/>
         <segue reference="Cd2-B6-5f6"/>
+        <segue reference="hGy-jW-v8B"/>
     </inferredMetricsTieBreakers>
 </document>

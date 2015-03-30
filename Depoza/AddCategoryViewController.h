@@ -18,9 +18,6 @@
 
 @property (nonatomic, strong) id<AddCategoryViewControllerDelegate> delegate;
 
-
-- (NSArray *)iconNames;
-
 - (IBAction)done:(id)sender;
 
 @end

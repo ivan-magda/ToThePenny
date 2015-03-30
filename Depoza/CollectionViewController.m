@@ -1,14 +1,16 @@
-//
-//  MIACollectionViewController.m
-//  Depoza
-//
-//  Created by Ivan Magda on 30.03.15.
-//  Copyright (c) 2015 Ivan Magda. All rights reserved.
-//
+    //
+    //  MIACollectionViewController.m
+    //  Depoza
+    //
+    //  Created by Ivan Magda on 30.03.15.
+    //  Copyright (c) 2015 Ivan Magda. All rights reserved.
+    //
 
 #import "CollectionViewController.h"
 
 @interface CollectionViewController ()
+
+@property (nonatomic, copy, readwrite) NSArray *iconNames;
 
 @end
 
@@ -17,17 +19,40 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    NSParameterAssert(_iconNames && _selectedIconName);
+    NSParameterAssert(_selectedIconName);
+}
+
+- (NSArray *)iconNames {
+    if (_iconNames) {
+        return _iconNames;
+    } else {
+        NSArray *names = @[
+                           @"5StarHotel", @"Airplane", @"BabysRoom", @"Barbershop",
+                           @"Beer", @"Bicycle", @"CarRental", @"Cars", @"Children",
+                           @"Clinic", @"Clothes", @"Cocktail", @"CoffeeToGo",
+                           @"Controller", @"CookingPot", @"CreditCard", @"Cutlery",
+                           @"Documentary", @"Dumbbell", @"Exterior", @"GasStation",
+                           @"Gift", @"Grapes", @"GroundTransportation", @"Hanger",
+                           @"Hearts", @"Ingredients", @"Iphone", @"Jewelry",
+                           @"Kitchenwares", @"Laptop", @"Literature", @"LivingRoom",
+                           @"Mastercard", @"MoneyTransfer", @"Music", @"Puzzle",
+                           @"Sale", @"ShoppingBag", @"ShoppingCartLoaded", @"SimCard",
+                           @"SmartphoneTablet", @"Taxi", @"TheatreMask", @"Ticket",
+                           @"Tomato", @"Truck", @"University", @"Visa", @"Beach"
+                           ];
+
+        return [names sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource -
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return _iconNames.count;
+    return self.iconNames.count;
 }
 
 - (void)configureCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NSString *iconName = _iconNames[indexPath.row];
+    NSString *iconName = self.iconNames[indexPath.row];
 
     UIImageView *icon = (UIImageView *)[cell viewWithTag:5000];
     NSParameterAssert(icon);
@@ -55,14 +80,23 @@
     return cell;
 }
 
+#pragma mark - UICollectionViewDelegate -
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if (_isAddingNewCategoryMode) {
+        [self performSegueWithIdentifier:@"IconPicked" sender:cell];
+    } else {
+        [self performSegueWithIdentifier:@"IconChanged" sender:cell];
+    }
+}
+
 #pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"DidPickIcon"]) {
-        UICollectionViewCell *cell = sender;
-        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-        self.selectedIconName = _iconNames[indexPath.row];
-    }
+    UICollectionViewCell *cell = sender;
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+    self.selectedIconName = self.iconNames[indexPath.row];
 }
 
 @end
