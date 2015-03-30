@@ -30,10 +30,16 @@
         navigationController = (UINavigationController *)tabBarController.viewControllers[0];
         MIAMainViewController *mainViewController = (MIAMainViewController *)navigationController.viewControllers[0];
 
-        MIAAddCategoryViewController *controller = (MIAAddCategoryViewController *)segue.destinationViewController;
+        UINavigationController *navC = segue.destinationViewController;
+        MIAAddCategoryViewController *controller = (MIAAddCategoryViewController *)navC.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
         controller.delegate = mainViewController;
+        controller.iconName = nil;
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 @end

@@ -11,11 +11,15 @@
 
 @class NSManagedObjectContext;
 
-@interface MIAAddCategoryViewController : UIViewController
+@interface MIAAddCategoryViewController : UITableViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, strong) id<MIAAddCategoryViewControllerDelegate> delegate;
+
+@property (nonatomic, copy) NSString *iconName;
+
+- (NSArray *)iconNames;
 
 - (IBAction)done:(id)sender;
 
