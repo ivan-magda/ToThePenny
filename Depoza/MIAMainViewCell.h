@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 /*!
- * The default constant value of category label top space layout constraint equal to 11.
+ * The default constant value of category label top space layout constraint equal to 6.
  */
 extern const CGFloat MIADefaultCategoryLabelTopSpaceValue;
 

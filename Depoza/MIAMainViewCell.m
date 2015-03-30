@@ -8,9 +8,9 @@
 
 #import "MIAMainViewCell.h"
 
-const CGFloat MIADefaultCategoryLabelTopSpaceValue = 11.0f;
+const CGFloat MIADefaultCategoryLabelTopSpaceValue = 6.0f;
 
-const CGFloat MIAIncreasedCategoryLabelTopSpaceValue = 21.0f;
+const CGFloat MIAIncreasedCategoryLabelTopSpaceValue = MIADefaultCategoryLabelTopSpaceValue + 10.0f;
 
 @implementation MIAMainViewCell
 
