@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) id<MainViewControllerDelegate> delegate;
 
+- (void)updateUI;
+
 @end

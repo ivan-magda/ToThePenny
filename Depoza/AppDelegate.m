@@ -1,11 +1,12 @@
-//
-//  AppDelegate.m
-//  Depoza
-//
-//  Created by Ivan Magda on 20.11.14.
-//  Copyright (c) 2014 Ivan Magda. All rights reserved.
-//
+    //
+    //  AppDelegate.m
+    //  Depoza
+    //
+    //  Created by Ivan Magda on 20.11.14.
+    //  Copyright (c) 2014 Ivan Magda. All rights reserved.
+    //
 
+    //ViewControllers
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "AllExpensesTableViewController.h"
@@ -14,8 +15,8 @@
 #import <KVNProgress/KVNProgress.h>
 
     //CoreData
-#import "Persistence.h"
 #import "ExpenseData+Fetch.h"
+#import "CategoryData+Fetch.h"
 
 @interface AppDelegate ()
 
@@ -26,6 +27,44 @@
 
 @implementation AppDelegate {
     MainViewController *_mainViewController;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.persistence = [Persistence sharedInstance];
+    self.persistence.delegate = self;
+    self.managedObjectContext = [self.persistence managedObjectContext];
+
+        //NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+        //[kvStore setBool:NO forKey:@"SEEDED_DATA"];
+        //NSLog(@"%@", ([kvStore boolForKey:@"SEEDED_DATA"] ? @"seed do not needed" : @"Need seed"));
+
+        //[_persistence seedDataIfNeeded];
+
+    [self spreadManagedObjectContext];
+    [self setKVNDisplayTime];
+
+    return YES;
+}
+
+- (void)storeDidChange:(NSNotification *)notification {
+    NSLog(@"Delegate did change notification");
+    NSArray *subViews = [_mainViewController.view subviews];
+    for (UIView *view in subViews) {
+        if ([view respondsToSelector:@selector(setUserInteractionEnabled:)]) {
+            view.userInteractionEnabled = YES;
+        }
+    }
+    [_mainViewController updateUI];
+}
+
+- (void)storeWillChange:(NSNotification *)notification {
+    NSLog(@"Delegate will change notification");
+    NSArray *subViews = [_mainViewController.view subviews];
+    for (UIView *view in subViews) {
+        if ([view respondsToSelector:@selector(setUserInteractionEnabled:)]) {
+            view.userInteractionEnabled = NO;
+        }
+    }
 }
 
 #pragma mark - Helper Methods -
@@ -45,9 +84,6 @@
     navigationController = (UINavigationController *)tabBarController.viewControllers[2];
     SettingsTableViewController *settingsViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
 
-    self.persistence = [Persistence sharedInstance];
-    self.managedObjectContext = [self.persistence managedObjectContext];
-
     NSParameterAssert(_managedObjectContext);
     _mainViewController.managedObjectContext = _managedObjectContext;
     allExpensesController.managedObjectContext = _managedObjectContext;
@@ -61,18 +97,11 @@
     [KVNProgress setConfiguration:configuration];
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [self spreadManagedObjectContext];
-    [self setKVNDisplayTime];
-
-    return YES;
-}
-
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     NSString *query = url.query;
     if (query != nil) {
         if ([query hasPrefix:@"q="]) {
-            // If we have a query string, strip out the "q=" part so we're just left with the identifier
+                // If we have a query string, strip out the "q=" part so we're just left with the identifier
             NSRange range = [query rangeOfString:@"q="];
             NSString *identifier = [query stringByReplacingOccurrencesOfString:@"^q=" withString:@"" options:NSRegularExpressionSearch range:range];
 
@@ -98,47 +127,28 @@
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
+        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+        // Saves changes in the application's managed object context before the application terminates.
     
     [_persistence saveContext];
 }
-
-/*
-- (void)createDataStore {
-    CategoryData *communication = [CategoryData categoryDataWithTitle:@"Связь" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *clothes = [CategoryData categoryDataWithTitle:@"Одежда" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *healthcare = [CategoryData categoryDataWithTitle:@"Здоровье" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *foodstuffs = [CategoryData categoryDataWithTitle:@"Продукты" iconName:@"Ingredients" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *eatingOut = [CategoryData categoryDataWithTitle:@"Еда вне дома" iconName:@"Cutlery" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *housing = [CategoryData categoryDataWithTitle:@"Жилье" iconName:@"Exterior" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *trip = [CategoryData categoryDataWithTitle:@"Поездки" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *electronics = [CategoryData categoryDataWithTitle:@"Электроника" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-    CategoryData *entertainment = [CategoryData categoryDataWithTitle:@"Развлечения" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-
-    NSError *error = nil;
-    if (![self.managedObjectContext save:&error]) {
-        NSLog(@"%@", [error localizedDescription]);
-    }
-}
-*/
 
 @end

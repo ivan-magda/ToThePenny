@@ -50,7 +50,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 
     NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
 
-    NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
+        //NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
 
     NSMutableSet *categoriesIds = [NSMutableSet setWithCapacity:fetchedCategories.count];
 

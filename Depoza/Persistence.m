@@ -1,10 +1,10 @@
-//
-//  SharedManagedObjectContext.m
-//  Depoza
-//
-//  Created by Ivan Magda on 22/12/14.
-//  Copyright (c) 2014 Ivan Magda. All rights reserved.
-//
+    //
+    //  SharedManagedObjectContext.m
+    //  Depoza
+    //
+    //  Created by Ivan Magda on 22/12/14.
+    //  Copyright (c) 2014 Ivan Magda. All rights reserved.
+    //
 
 #import "Persistence.h"
 #import "CategoryData+Fetch.h"
@@ -26,12 +26,13 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 - (instancetype)init {
     if (self = [super init]) {
         NSLog(@"Allocate SharedManagedObjectContext");
-        _persistentStoreCoordinator = [self persistentStoreCoordinator];
+        _managedObjectContext = [self managedObjectContext];
     }
     return self;
 }
 
 - (void)dealloc {
+    NSLog(@"Dealloc %@", self);
     NSParameterAssert(false);
 }
 
@@ -52,12 +53,10 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 }
 
 - (NSURL *)documentsDirectory {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *url = [[[NSFileManager defaultManager]URLsForDirectory:NSDocumentationDirectory inDomains:NSUserDomainMask]lastObject];
+    NSParameterAssert(url);
 
-    NSURL *sharedContainerURL = [fileManager containerURLForSecurityApplicationGroupIdentifier:kAppGroupSharedContainer];
-    NSParameterAssert(sharedContainerURL);
-
-    return sharedContainerURL;
+    return url;
 }
 
 - (NSURL *)dataStorePath {
@@ -69,45 +68,33 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     if (!_persistentStoreCoordinator) {
         NSURL *storeURL = [self dataStorePath];
 
-        [self initStore:storeURL];
-
         _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc]initWithManagedObjectModel:self.managedObjectModel];
 
+        NSDictionary *storeOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
         NSError *error;
-        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
+
+        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+        [notificationCenter addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+
+        [notificationCenter addObserver:self selector:@selector(storeWillChange:) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+
+        [[NSNotificationCenter defaultCenter]addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification
+                                                         object:self.managedObjectContext.persistentStoreCoordinator
+                                                          queue:[NSOperationQueue mainQueue]
+                                                     usingBlock:^(NSNotification *note) {
+                                                         [self.managedObjectContext performBlock:^{
+                                                             NSLog(@"DidImportUbiquitousContentChanges");
+                                                             [self.managedObjectContext mergeChangesFromContextDidSaveNotification:note];
+                                                         }];
+                                                     }];
+
+        if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:storeOptions error:&error]) {
             NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
             abort();
         }
     }
     return _persistentStoreCoordinator;
-}
-
-- (void)initStore:(NSURL *)storeURL {
-    if (![[NSFileManager defaultManager] fileExistsAtPath:[storeURL path]]) {
-        NSLocale *locale = [NSLocale currentLocale];
-        NSString *path = nil;
-        NSString *countryCode = [locale objectForKey: NSLocaleCountryCode];
-        if ([countryCode isEqualToString:@"US"]) {
-            path = @"seedUS";
-        } else if ([countryCode isEqualToString:@"RU"]){
-            path = @"seedRU";
-        }
-
-        NSURL *preloadURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:path ofType:@"sqlite"]];
-
-        NSError* err;
-        if (![[NSFileManager defaultManager] copyItemAtURL:preloadURL toURL:storeURL error:&err]) {
-            NSLog(@"Oops, could copy preloaded data");
-        } else {
-            NSLog(@"Store successfully initialized using the original seed");
-
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self setCategoryId];
-            });
-        }
-    } else {
-        NSLog(@"The original seed isn't needed. There is already a backing store.");
-    }
 }
 
 - (void)setCategoryId {
@@ -131,14 +118,6 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     return _managedObjectContext;
 }
 
-- (NSManagedObjectContext *)createManagedObjectContext {
-    NSManagedObjectContext *managedObjectContext = [[NSManagedObjectContext alloc] init];
-
-    [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
-
-    return managedObjectContext;
-}
-
 #pragma mark - Core Data Saving support
 
 - (void)saveContext {
@@ -151,6 +130,72 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
+    }
+}
+
+- (void)storeDidChange:(NSNotification*)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Store did change");
+        if ([self.delegate respondsToSelector:@selector(storeDidChange:)]) {
+            [self.delegate storeDidChange:notification];
+        }
+    });
+}
+
+- (void)storeWillChange:(NSNotification *)notification {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSLog(@"Will change");
+            // disable user interface with setEnabled: or an overlay
+            if ([self.managedObjectContext hasChanges]) {
+                NSError *saveError;
+                if (![self.managedObjectContext save:&saveError]) {
+                    NSLog(@"Save error: %@", saveError);
+                }
+            } else {
+                    // drop any managed object references
+                [self.managedObjectContext reset];
+                if ([self.delegate respondsToSelector:@selector(storeWillChange:)]) {
+                    [self.delegate storeWillChange:notification];
+                }
+            }
+    });
+}
+
+#pragma mark - Seed Data -
+
+- (void)seedDataIfNeeded {
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+
+    if (![kvStore boolForKey:@"SEEDED_DATA"]) {
+        NSString *countryCode = [[NSLocale currentLocale]objectForKey: NSLocaleCountryCode];
+        if ([countryCode isEqualToString:@"RU"]) {
+            [CategoryData categoryDataWithTitle:@"Связь" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Одежда" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Здоровье" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Продукты" iconName:@"Ingredients" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Еда вне дома" iconName:@"Cutlery" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Жилье" iconName:@"Exterior" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Поездки" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Электроника" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Развлечения" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+        } else if ([countryCode isEqualToString:@"US"]) {
+            [CategoryData categoryDataWithTitle:@"Communication" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Clothes" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Healthcare" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Foodstuffs" iconName:@"Ingredients" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"EatingOut" iconName:@"Cutlery" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Housing" iconName:@"Exterior" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Trip" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Electronics" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+            [CategoryData categoryDataWithTitle:@"Entertainment" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+        } else {
+            NSParameterAssert(NO);
+        }
+        [kvStore setBool:YES forKey:@"SEEDED_DATA"];
+        [kvStore synchronize];
+
+        [self saveContext];
+        [self setCategoryId];
     }
 }
 

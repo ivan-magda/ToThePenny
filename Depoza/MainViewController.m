@@ -52,10 +52,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self loadCategoriesData];
 
-    for (CategoriesInfo *anInfo in _categoriesInfo) {
-        NSParameterAssert(anInfo.title && anInfo.idValue && anInfo.amount);
-    }
-
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     [self customSetUp];
@@ -71,6 +67,15 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 #pragma mark - Helper methods -
+
+- (void)updateUI {
+    [self loadCategoriesData];
+
+    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
+    
+    [self performFetch];
+    [self updateLabels];
+}
 
 - (void)customSetUp {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
@@ -138,7 +143,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)contextDidChange:(NSNotification *)notification {
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
-    
+
     if ([setWithKeys member:@"deleted"]) {
         NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
         ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
@@ -277,7 +282,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     fetchRequest.predicate = predicate;
 
     NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
-                              initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
+                                            initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
     [fetchRequest setSortDescriptors:@[dateSortDescriptor]];
     [fetchRequest setFetchBatchSize:20];
 
