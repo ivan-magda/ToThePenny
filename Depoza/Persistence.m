@@ -73,21 +73,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
         NSDictionary *storeOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
         NSError *error;
 
-        NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-
-        [notificationCenter addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-
-        [notificationCenter addObserver:self selector:@selector(storeWillChange:) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-
-        [[NSNotificationCenter defaultCenter]addObserverForName:NSPersistentStoreDidImportUbiquitousContentChangesNotification
-                                                         object:self.managedObjectContext.persistentStoreCoordinator
-                                                          queue:[NSOperationQueue mainQueue]
-                                                     usingBlock:^(NSNotification *note) {
-                                                         [self.managedObjectContext performBlock:^{
-                                                             NSLog(@"DidImportUbiquitousContentChanges");
-                                                             [self.managedObjectContext mergeChangesFromContextDidSaveNotification:note];
-                                                         }];
-                                                     }];
+        [self addPersistentStoreNotificationSubscribes];
 
         if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:storeOptions error:&error]) {
             NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
@@ -133,40 +119,50 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     }
 }
 
-- (void)storeDidChange:(NSNotification*)notification {
+#pragma mark - Notifications -
+
+- (void)storeDidImportUbiquitousContentChanges:(NSNotification *)notification {
+    NSLog(@"Merging ubiquitous content changes");
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Store did change");
-        if ([self.delegate respondsToSelector:@selector(storeDidChange:)]) {
-            [self.delegate storeDidChange:notification];
+        [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
+        if ([self.delegate respondsToSelector:@selector(persistenceStore:didImportUbiquitousContentChanges:)]) {
+            [self.delegate persistenceStore:self didImportUbiquitousContentChanges:notification];
         }
     });
 }
 
 - (void)storeWillChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Will change");
-            // disable user interface with setEnabled: or an overlay
-            if ([self.managedObjectContext hasChanges]) {
-                NSError *saveError;
-                if (![self.managedObjectContext save:&saveError]) {
-                    NSLog(@"Save error: %@", saveError);
-                }
-            } else {
-                    // drop any managed object references
-                [self.managedObjectContext reset];
-                if ([self.delegate respondsToSelector:@selector(storeWillChange:)]) {
-                    [self.delegate storeWillChange:notification];
-                }
+        NSLog(@"Will change store");
+        if ([self.managedObjectContext hasChanges]) {
+            NSError *saveError;
+            if (![self.managedObjectContext save:&saveError]) {
+                NSLog(@"Save error: %@", [saveError localizedDescription]);
             }
+        }
+        [self.managedObjectContext reset];
     });
+}
+
+- (void)removePersistentStoreNotificationSubscribes {
+    NSLog(@"Persistence remove observers");
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
+}
+
+- (void)addPersistentStoreNotificationSubscribes {
+    NSLog(@"Persistence add observers");
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+
+    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    [notificationCenter addObserver:self selector:@selector(storeWillChange:) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
 }
 
 #pragma mark - Seed Data -
 
 - (void)seedDataIfNeeded {
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-
-    if (![kvStore boolForKey:@"SEEDED_DATA"]) {
+        //NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+        //![kvStore boolForKey:@"SEEDED_DATA"] ||
+    if (YES) {
         NSString *countryCode = [[NSLocale currentLocale]objectForKey: NSLocaleCountryCode];
         if ([countryCode isEqualToString:@"RU"]) {
             [CategoryData categoryDataWithTitle:@"Связь" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
@@ -191,8 +187,8 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
         } else {
             NSParameterAssert(NO);
         }
-        [kvStore setBool:YES forKey:@"SEEDED_DATA"];
-        [kvStore synchronize];
+            //[kvStore setBool:YES forKey:@"SEEDED_DATA"];
+            //[kvStore synchronize];
 
         [self saveContext];
         [self setCategoryId];

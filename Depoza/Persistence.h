@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@protocol PersistenceDelegate <NSObject>
+@class Persistence;
 
-- (void)storeDidChange:(NSNotification*)notification;
-- (void)storeWillChange:(NSNotification *)notification;
+@protocol PersistenceNotificationDelegate <NSObject>
+
+- (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification;
 
 @end
 
@@ -22,11 +23,14 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
-@property (nonatomic, strong) id<PersistenceDelegate> delegate;
+@property (nonatomic, strong) id<PersistenceNotificationDelegate>delegate;
 
 + (instancetype)sharedInstance;
 
 - (void)saveContext;
 - (void)seedDataIfNeeded;
+
+- (void)removePersistentStoreNotificationSubscribes;
+- (void)addPersistentStoreNotificationSubscribes;
 
 @end

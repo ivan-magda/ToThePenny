@@ -32,6 +32,7 @@
 		500541061AC56226007EF006 /* SettingsFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541021AC56226007EF006 /* SettingsFilled.png */; };
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
 		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
+		501160611ACA80EB004B141F /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501160601ACA80EB004B141F /* CloudKit.framework */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -147,6 +148,7 @@
 		5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerDelegate.h; sourceTree = "<group>"; };
 		50086E8C1AC6E7F600162677 /* MainViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewCell.h; sourceTree = "<group>"; };
 		50086E8D1AC6E7F600162677 /* MainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewCell.m; sourceTree = "<group>"; };
+		501160601ACA80EB004B141F /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -243,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A70581F20A7C1421A8099790 /* libPods.a in Frameworks */,
+				501160611ACA80EB004B141F /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +623,7 @@
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				501160601ACA80EB004B141F /* CloudKit.framework */,
 				583FFBE7D2D90CA3E7515346 /* libPods.a */,
 				5015A5641AC02C230056271A /* NotificationCenter.framework */,
 			);

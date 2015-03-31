@@ -54,10 +54,19 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
-    [self customSetUp];
+    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+    
     [self performFetch];
     [self updateLabels];
     [self addMotionEffectToViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
 }
 
 - (void)dealloc {
@@ -68,19 +77,22 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 #pragma mark - Helper methods -
 
-- (void)updateUI {
+- (void)storeDidChange:(NSNotification*)notification {
+    NSLog(@"Did change");
+    [self updateUiWithNewFetch:YES];
+}
+
+- (void)updateUiWithNewFetch:(BOOL)fetch {
     [self loadCategoriesData];
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
-    
-    [self performFetch];
+
+    if (fetch) {
+        [self performFetch];
+    }
     [self updateLabels];
-}
 
-- (void)customSetUp {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
-
-    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+    [self.tableView reloadData];
 }
 
 - (void)loadCategoriesData {

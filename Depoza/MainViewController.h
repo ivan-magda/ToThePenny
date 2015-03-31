@@ -13,6 +13,6 @@
 
 @property (strong, nonatomic) id<MainViewControllerDelegate> delegate;
 
-- (void)updateUI;
+- (void)updateUiWithNewFetch:(BOOL)fetch;
 
 @end

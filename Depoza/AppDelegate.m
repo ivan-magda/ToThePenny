@@ -17,6 +17,7 @@
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
+#import "Persistence.h"
 
 @interface AppDelegate ()
 
@@ -31,11 +32,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.persistence = [Persistence sharedInstance];
-    self.persistence.delegate = self;
     self.managedObjectContext = [self.persistence managedObjectContext];
 
         //NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-        //[kvStore setBool:NO forKey:@"SEEDED_DATA"];
+        //[kvStore setBool:YES forKey:@"SEEDED_DATA"];
         //NSLog(@"%@", ([kvStore boolForKey:@"SEEDED_DATA"] ? @"seed do not needed" : @"Need seed"));
 
         //[_persistence seedDataIfNeeded];
@@ -44,27 +44,6 @@
     [self setKVNDisplayTime];
 
     return YES;
-}
-
-- (void)storeDidChange:(NSNotification *)notification {
-    NSLog(@"Delegate did change notification");
-    NSArray *subViews = [_mainViewController.view subviews];
-    for (UIView *view in subViews) {
-        if ([view respondsToSelector:@selector(setUserInteractionEnabled:)]) {
-            view.userInteractionEnabled = YES;
-        }
-    }
-    [_mainViewController updateUI];
-}
-
-- (void)storeWillChange:(NSNotification *)notification {
-    NSLog(@"Delegate will change notification");
-    NSArray *subViews = [_mainViewController.view subviews];
-    for (UIView *view in subViews) {
-        if ([view respondsToSelector:@selector(setUserInteractionEnabled:)]) {
-            view.userInteractionEnabled = NO;
-        }
-    }
 }
 
 #pragma mark - Helper Methods -
@@ -126,9 +105,13 @@
     return NO;
 }
 
+- (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification {
+    [_mainViewController updateUiWithNewFetch:NO];
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [self.persistence removePersistentStoreNotificationSubscribes];
+    [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -137,7 +120,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [self.persistence addPersistentStoreNotificationSubscribes];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
