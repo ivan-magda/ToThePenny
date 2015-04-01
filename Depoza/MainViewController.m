@@ -78,11 +78,11 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark - Helper methods -
 
 - (void)storeDidChange:(NSNotification*)notification {
-    NSLog(@"Did change");
-    [self updateUiWithNewFetch:YES];
+    NSLog(@"MainVC PersistenceStore Did change");
+    [self updateUserInterfaceWithNewFetch:YES];
 }
 
-- (void)updateUiWithNewFetch:(BOOL)fetch {
+- (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
     [self loadCategoriesData];
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
@@ -113,7 +113,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     if (formatter == nil) {
         formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:@"MMMM"];
-        [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+        if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
+            [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+        }
     }
     return [formatter stringFromDate:theDate];
 }

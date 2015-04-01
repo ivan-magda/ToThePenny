@@ -122,7 +122,7 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 #pragma mark - Notifications -
 
 - (void)storeDidImportUbiquitousContentChanges:(NSNotification *)notification {
-    NSLog(@"Merging ubiquitous content changes");
+    NSLog(@"Persistence Merging ubiquitous content changes");
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
         if ([self.delegate respondsToSelector:@selector(persistenceStore:didImportUbiquitousContentChanges:)]) {
@@ -133,14 +133,40 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 
 - (void)storeWillChange:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"Will change store");
+        NSUInteger persistentStoreUbiquitousTransitionType = [[notification.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey]unsignedIntegerValue];
+        switch (persistentStoreUbiquitousTransitionType) {
+            case NSPersistentStoreUbiquitousTransitionTypeAccountAdded:
+                NSLog(@"NSPersistentStoreUbiquitousTransitionTypeAccountAdded");
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeAccountRemoved: {
+                NSLog(@"NSPersistentStoreUbiquitousTransitionTypeAccountRemoved");
+                NSError *saveError;
+                if (![self.managedObjectContext save:&saveError]) {
+                    NSLog(@"Save error: %@", [saveError localizedDescription]);
+                }
+                [self.managedObjectContext reset];
+                return ;
+            }
+            case NSPersistentStoreUbiquitousTransitionTypeContentRemoved:
+                NSLog(@"NSPersistentStoreUbiquitousTransitionTypeContentRemoved");
+                break;
+            case NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted:
+                NSLog(@"NSPersistentStoreUbiquitousTransitionTypeInitialImportCompleted");
+                break;
+            default:
+                NSParameterAssert(NO);
+                break;
+        }
+
+        NSLog(@"Persistence Will change store");
         if ([self.managedObjectContext hasChanges]) {
             NSError *saveError;
             if (![self.managedObjectContext save:&saveError]) {
                 NSLog(@"Save error: %@", [saveError localizedDescription]);
             }
+        } else {
+            [self.managedObjectContext reset];
         }
-        [self.managedObjectContext reset];
     });
 }
 
@@ -164,7 +190,6 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
         //![kvStore boolForKey:@"SEEDED_DATA"] ||
     if (YES) {
         NSString *countryCode = [[NSLocale currentLocale]objectForKey: NSLocaleCountryCode];
-        if ([countryCode isEqualToString:@"RU"]) {
             [CategoryData categoryDataWithTitle:@"Связь" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
             [CategoryData categoryDataWithTitle:@"Одежда" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
             [CategoryData categoryDataWithTitle:@"Здоровье" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
@@ -174,19 +199,19 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
             [CategoryData categoryDataWithTitle:@"Поездки" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
             [CategoryData categoryDataWithTitle:@"Электроника" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
             [CategoryData categoryDataWithTitle:@"Развлечения" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-        } else if ([countryCode isEqualToString:@"US"]) {
-            [CategoryData categoryDataWithTitle:@"Communication" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Clothes" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Healthcare" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Foodstuffs" iconName:@"Ingredients" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"EatingOut" iconName:@"Cutlery" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Housing" iconName:@"Exterior" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Trip" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Electronics" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-            [CategoryData categoryDataWithTitle:@"Entertainment" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
-        } else {
-            NSParameterAssert(NO);
-        }
+//        } else if ([countryCode isEqualToString:@"US"]) {
+//            [CategoryData categoryDataWithTitle:@"Communication" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Clothes" iconName:@"Clothes" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Healthcare" iconName:@"Hearts" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Foodstuffs" iconName:@"Ingredients" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"EatingOut" iconName:@"Cutlery" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Housing" iconName:@"Exterior" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Trip" iconName:@"Beach" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Electronics" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//            [CategoryData categoryDataWithTitle:@"Entertainment" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
+//        } else {
+//            NSParameterAssert(NO);
+//        }
             //[kvStore setBool:YES forKey:@"SEEDED_DATA"];
             //[kvStore synchronize];
 

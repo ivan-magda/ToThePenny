@@ -30,21 +30,6 @@
     MainViewController *_mainViewController;
 }
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.persistence = [Persistence sharedInstance];
-    self.managedObjectContext = [self.persistence managedObjectContext];
-
-        //NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-        //[kvStore setBool:YES forKey:@"SEEDED_DATA"];
-        //NSLog(@"%@", ([kvStore boolForKey:@"SEEDED_DATA"] ? @"seed do not needed" : @"Need seed"));
-
-        //[_persistence seedDataIfNeeded];
-
-    [self spreadManagedObjectContext];
-    [self setKVNDisplayTime];
-
-    return YES;
-}
 
 #pragma mark - Helper Methods -
 
@@ -76,6 +61,8 @@
     [KVNProgress setConfiguration:configuration];
 }
 
+#pragma mark - Handle Notifications -
+
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     NSString *query = url.query;
     if (query != nil) {
@@ -105,13 +92,31 @@
     return NO;
 }
 
+#pragma mark - PersistenceDelegate - 
+
 - (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification {
-    [_mainViewController updateUiWithNewFetch:NO];
+    [_mainViewController updateUserInterfaceWithNewFetch:NO];
+}
+
+#pragma mark - AppDelegate -
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.persistence = [Persistence sharedInstance];
+    self.managedObjectContext = [self.persistence managedObjectContext];
+
+        //NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+        //[kvStore setBool:YES forKey:@"SEEDED_DATA"];
+        //NSLog(@"%@", ([kvStore boolForKey:@"SEEDED_DATA"] ? @"seed do not needed" : @"Need seed"));
+
+        //[_persistence seedDataIfNeeded];
+
+    [self spreadManagedObjectContext];
+    [self setKVNDisplayTime];
+
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
-    [self.persistence removePersistentStoreNotificationSubscribes];
-    [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
@@ -120,7 +125,6 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    [self.persistence addPersistentStoreNotificationSubscribes];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -130,7 +134,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
-    
+
+    [self.persistence removePersistentStoreNotificationSubscribes];
+    [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController];
+
     [_persistence saveContext];
 }
 
