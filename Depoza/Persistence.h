@@ -28,9 +28,11 @@
 + (instancetype)sharedInstance;
 
 - (void)saveContext;
-- (void)seedDataIfNeeded;
 
 - (void)removePersistentStoreNotificationSubscribes;
-- (void)addPersistentStoreNotificationSubscribes;
+- (void)addPersistentStoreNotificationSubscribes:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+
+- (void)deduplication;
+- (NSInteger)findMaxIdValueInEntity:(NSString *)entityName;
 
 @end

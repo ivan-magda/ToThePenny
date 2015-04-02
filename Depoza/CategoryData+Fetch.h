@@ -14,7 +14,7 @@
 + (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context;
 
 + (NSInteger)countForCategoriesInContext:(NSManagedObjectContext *)context;
-+ (void)synchronizeUserDefaultsWithNumberCategories:(NSInteger)categories;
++ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)categories;
 
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;

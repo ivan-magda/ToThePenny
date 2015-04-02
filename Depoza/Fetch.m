@@ -5,19 +5,18 @@
 //  Created by Ivan Magda on 26.01.15.
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
-
 #import "Fetch.h"
 #import "CategoriesInfo.h"
 
     //CoreData
 #import "CategoryData.h"
 #import "ExpenseData+Fetch.h"
+#import "Persistence.h"
 
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 
-static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
-static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
+static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday";
 
 @implementation Fetch
 
@@ -45,7 +44,9 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
     return fetchedCategories;
 }
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(double *)totalExpeditures {
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures {
+    [[Persistence sharedInstance]deduplication];
+    
     NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
 
     NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
@@ -64,7 +65,8 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
         if (![categoriesIds containsObject:aData.idValue]) {
             [categoriesIds addObject:aData.idValue];
         } else {
-            NSAssert(NO, @"Categories must have a unique id values!!!");
+            NSLog(@"Categories must have a unique id values!!!");
+            [[Persistence sharedInstance]deduplication];
         }
     }
     categoriesIds = nil;
@@ -105,8 +107,8 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 
 + (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
         //Get info about todays expenses from user defaults
-    NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    NSDictionary *dictionaryInfo = [userDefaults dictionaryForKey:kTodayExpensesUserDefaultsKey];
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+    NSDictionary *dictionaryInfo = [kvStore dictionaryForKey:kTodayExpensesUbiquitousKeyValueStoreKey];
 
         //Get today components
     NSDictionary *dateComponents = [[NSDate date]getComponents];
@@ -117,8 +119,7 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
     NSArray *expenses = [ExpenseData getTodayExpensesInManagedObjectContext:context];
 
     if (dictionaryInfo == nil) {
-        [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
-
+        [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
         return YES;
     } else {
         NSInteger yearDict    = [dictionaryInfo[@"year"]integerValue];
@@ -129,13 +130,13 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
 
         if (yearDict == year && monthDict == month && dayDict == day) {
             if (numExpenses != expenses.count) {
-                [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
+                [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
                 return YES;
             } else {
                 return NO;
             }
         } else {
-            [self updateTodayExpensesCount:expenses day:day month:month year:year userDefaults:userDefaults];
+            [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
             return YES;
         }
     }
@@ -151,16 +152,15 @@ static NSString * const kTodayExpensesUserDefaultsKey = @"isNewToday";
     return dictionary;
 }
 
-+ (void)synchronizeUserDefaults:(NSUserDefaults *)userDefaults withDictionary:(NSDictionary *)dictionary {
-    [userDefaults setObject:dictionary forKey:kTodayExpensesUserDefaultsKey];
-    [userDefaults synchronize];
++ (void)synchronizeUbiquitousKeyValueStore:(NSUbiquitousKeyValueStore *)kvStore withDictionary:(NSDictionary *)dictionary {
+    [kvStore setDictionary:dictionary forKey:kTodayExpensesUbiquitousKeyValueStoreKey];
 }
 
-+ (void)updateTodayExpensesCount:(NSArray *)expenses day:(NSInteger)day month:(NSInteger)month year:(NSInteger)year userDefaults:(NSUserDefaults *)userDefaults
++ (void)updateTodayExpensesCount:(NSArray *)expenses day:(NSInteger)day month:(NSInteger)month year:(NSInteger)year ubiquitousKeyValueStore:(NSUbiquitousKeyValueStore *)kvStore
 {
     NSDictionary *dictionaryInfo;
     dictionaryInfo = [self setUpDictionaryWithYear:year month:month day:day andNumberExpenses:expenses.count];
-    [self synchronizeUserDefaults:userDefaults withDictionary:dictionaryInfo];
+    [self synchronizeUbiquitousKeyValueStore:kvStore withDictionary:dictionaryInfo];
 }
 
 @end

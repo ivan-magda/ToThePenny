@@ -41,6 +41,7 @@
 		5018A8C51AC9885600E75948 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50206E9C1AC8E097001A017E /* CollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50206E9B1AC8E097001A017E /* CollectionViewController.m */; };
 		502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseViewController.m */; };
+		5026FECF1ACD203D0015BBCE /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501160601ACA80EB004B141F /* CloudKit.framework */; };
 		502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502839121ACC11A700C97C99 /* CoreData.framework */; };
 		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
 		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
@@ -241,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */,
+				5026FECF1ACD203D0015BBCE /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +712,9 @@
 						DevelopmentTeam = 6UNHY8UY6E;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
 								enabled = 1;
 							};
 						};
@@ -719,7 +724,7 @@
 						DevelopmentTeam = 6UNHY8UY6E;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.iCloud = {
 								enabled = 1;

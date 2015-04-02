@@ -37,19 +37,16 @@
 }
 
 + (NSInteger)nextId {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    NSInteger idValue = [userDefaults integerForKey:@"categoryId"];
-    [userDefaults setInteger:idValue + 1 forKey:@"categoryId"];
-    [userDefaults synchronize];
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+    NSInteger idValue = [[kvStore objectForKey:@"categoryId"]integerValue];
+    [kvStore setObject:@(idValue + 1) forKey:@"categoryId"];
 
     return idValue;
 }
 
-+ (void)synchronizeUserDefaultsWithNumberCategories:(NSInteger)categories {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:categories forKey:@"categoryId"];
-    [defaults synchronize];
++ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)categories {
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+    [kvStore setObject:@(categories) forKey:@"categoryId"];
 }
 
 + (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context {
@@ -84,8 +81,12 @@
         NSLog(@"***Error: %@", [error localizedDescription]);
     }
 
-    NSParameterAssert([foundCategory count] == 1);
-    NSParameterAssert([[foundCategory firstObject]isKindOfClass:[CategoryData class]]);
+    NSInteger i = foundCategory.count - 1;
+    for (CategoryData *category in foundCategory) {
+        NSLog(@"%@ %@", category, category.title);
+        NSLog(@"%@", ([category isEqual:foundCategory[i]] ? @"Equal" : @"Not Equal, bad exception!!!"));
+        --i;
+    }
 
     return [foundCategory firstObject];
 }

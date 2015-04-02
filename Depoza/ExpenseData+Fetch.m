@@ -12,22 +12,26 @@
 @implementation ExpenseData (Fetch)
 
 + (NSInteger)nextId {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-
-    NSInteger idValue = [userDefaults integerForKey:@"idValue"];
-    [userDefaults setInteger:idValue + 1 forKey:@"idValue"];
-    [userDefaults synchronize];
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+    NSInteger idValue = [[kvStore objectForKey:@"idValue"]integerValue];
+    [kvStore setObject:@(idValue + 1) forKey:@"idValue"];
 
     return idValue;
+}
+
++ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)expenses {
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+    [kvStore setObject:@(expenses) forKey:@"idValue"];
 }
 
 + (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates {
     NSAssert(dates.count == 2, @"Maximum 2 days.");
 
-    NSExpression *dateExp = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
-    NSExpression *dateStart = [NSExpression expressionForConstantValue:[dates firstObject]];
-    NSExpression *dateEnd = [NSExpression expressionForConstantValue:[dates lastObject]];
+    NSExpression *dateExp    = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
+    NSExpression *dateStart  = [NSExpression expressionForConstantValue:[dates firstObject]];
+    NSExpression *dateEnd    = [NSExpression expressionForConstantValue:[dates lastObject]];
     NSExpression *expression = [NSExpression expressionForAggregate:@[dateStart, dateEnd]];
+
     NSPredicate *predicate = [NSComparisonPredicate predicateWithLeftExpression:dateExp
                                                                 rightExpression:expression
                                                                        modifier:NSDirectPredicateModifier
@@ -55,8 +59,7 @@
     return (expenses.count > 0 ? expenses : nil);
 }
 
-+ (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context
-{
++ (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([ExpenseData class])];
 
     NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];

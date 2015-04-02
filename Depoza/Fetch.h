@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGBase.h>
 
 @class NSManagedObjectContext;
 @class CategoryData;
@@ -15,7 +16,7 @@
 
 + (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key;
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(double *)totalExpeditures;
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(CGFloat *)totalExpeditures;
 
 + (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context;
 

@@ -159,23 +159,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
 
     if ([setWithKeys member:@"deleted"]) {
-        NSParameterAssert([[notification.userInfo[@"deleted"]allObjects]count] == 1);
-        ExpenseData *deletedExpense = [notification.userInfo[@"deleted"]anyObject];
-
-        if ([NSDate isDateBetweenCurrentMonth:deletedExpense.dateOfExpense]) {
-            _totalExpeditures -= [deletedExpense.amount floatValue];
-            [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                CategoriesInfo *info = obj;
-                if (info.idValue == deletedExpense.categoryId) {
-                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
-
-                    *stop = YES;
-                }
-            }];
-            [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
-            [self updateLabels];
-            return;
-        }
+        [self updateUserInterfaceWithNewFetch:NO];
     }
 }
 

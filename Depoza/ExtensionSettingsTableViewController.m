@@ -8,10 +8,6 @@
 
 #import "ExtensionSettingsTableViewController.h"
 
-
-static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
-
-
 @interface ExtensionSettingsTableViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
@@ -20,14 +16,14 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 
 @implementation ExtensionSettingsTableViewController {
     BOOL _pickerViewVisible;
-    NSUserDefaults *_defaults;
+    NSUbiquitousKeyValueStore *_kvStore;
     NSInteger _numberExpenseToShow;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self configurateUserDefaults];
+    [self configurateUbiquitousKeyValueStore];
 
     _pickerViewVisible = NO;
     self.pickerView.hidden = YES;
@@ -48,24 +44,22 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", (long)_numberExpenseToShow];
 }
 
-- (void)configurateUserDefaults {
-    _defaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    NSParameterAssert(_defaults);
+- (void)configurateUbiquitousKeyValueStore {
+    _kvStore = [NSUbiquitousKeyValueStore defaultStore];
 
-    BOOL isFirst = ([_defaults boolForKey:@"first"] == NO ? YES : NO);
+    BOOL isFirst = ([_kvStore boolForKey:@"first"] == NO ? YES : NO);
     if (isFirst) {
-        [_defaults setBool:YES forKey:@"first"];
+        [_kvStore setBool:YES forKey:@"first"];
         [self updateNumberExpenseToShowWithValue:5];
 
         _numberExpenseToShow = 5;
     } else {
-        _numberExpenseToShow = [_defaults integerForKey:@"numberExpenseToShow"];
+        _numberExpenseToShow = [[_kvStore objectForKey:@"numberExpenseToShow"]integerValue];
     }
 }
 
 - (void)updateNumberExpenseToShowWithValue:(NSInteger)value {
-    [_defaults setInteger:value forKey:@"numberExpenseToShow"];
-    [_defaults synchronize];
+    [_kvStore setObject:@(value) forKey:@"numberExpenseToShow"];
 }
 
 #pragma mark - UITableView -
@@ -88,7 +82,6 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
         }
         return;
     }
-
         // Also hide the date picker when tapped on any other row.
     [self hidePickerView];
 }

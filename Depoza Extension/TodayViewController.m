@@ -18,7 +18,6 @@
 #import "NSString+FormatAmount.h"
 
     //Declarations
-static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
 
 static const CGFloat kDefaultRowHeight = 44.0f;
@@ -40,7 +39,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
 @implementation TodayViewController {
     NSArray *_expenses;
-    NSUserDefaults *_userDefaults;
+    NSUbiquitousKeyValueStore *_kvStore;
     NSInteger _numberExpensesToShow;
 }
 
@@ -105,12 +104,12 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 #pragma mark Helpers
 
 - (void)configurateUserDefaults {
-    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+    _kvStore = [NSUbiquitousKeyValueStore defaultStore];
 
-    _numberExpensesToShow = [_userDefaults integerForKey:kNumberExpensesToShowUserDefaultsKey];
+    _numberExpensesToShow = [[_kvStore objectForKey:kNumberExpensesToShowUserDefaultsKey]integerValue];
     if (_numberExpensesToShow == 0) {
         _numberExpensesToShow = kDefaultNumberExpensesToShow;
-        [_userDefaults setInteger:_numberExpensesToShow forKey:kNumberExpensesToShowUserDefaultsKey];
+        [_kvStore setObject:@(_numberExpensesToShow) forKey:kNumberExpensesToShowUserDefaultsKey];
     }
 }
 
