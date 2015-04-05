@@ -74,6 +74,7 @@
                               type:NSEqualToPredicateOperatorType
                               options:0];
     fetchRequest.predicate = predicate;
+    fetchRequest.fetchLimit = 1;
 
     NSError *error;
     NSArray *foundCategory = [context executeFetchRequest:fetchRequest error:&error];
@@ -81,14 +82,7 @@
         NSLog(@"***Error: %@", [error localizedDescription]);
     }
 
-    NSInteger i = foundCategory.count - 1;
-    for (CategoryData *category in foundCategory) {
-        NSLog(@"%@ %@", category, category.title);
-        NSLog(@"%@", ([category isEqual:foundCategory[i]] ? @"Equal" : @"Not Equal, bad exception!!!"));
-        --i;
-    }
-
-    return [foundCategory firstObject];
+    return [foundCategory lastObject];
 }
 
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context {

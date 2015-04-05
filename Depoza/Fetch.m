@@ -46,12 +46,10 @@ static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday"
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures {
     [[Persistence sharedInstance]deduplication];
-    
+
     NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
 
     NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
-
-        //NSParameterAssert(fetchedCategories != nil && [fetchedCategories count] > 0);
 
     NSMutableSet *categoriesIds = [NSMutableSet setWithCapacity:fetchedCategories.count];
 
@@ -64,9 +62,10 @@ static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday"
             //Check for unique id values
         if (![categoriesIds containsObject:aData.idValue]) {
             [categoriesIds addObject:aData.idValue];
+
+            NSLog(@"%@ %@", aData.title, aData.idValue);
         } else {
             NSLog(@"Categories must have a unique id values!!!");
-            [[Persistence sharedInstance]deduplication];
         }
     }
     categoriesIds = nil;

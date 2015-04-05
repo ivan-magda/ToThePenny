@@ -15,6 +15,8 @@
 
 - (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification;
 
+- (void)persistenceStore:(Persistence *)persistence willChangeNotification:(NSNotification *)notification;
+
 @end
 
 @interface Persistence : NSObject
@@ -27,10 +29,14 @@
 
 + (instancetype)sharedInstance;
 
+- (id)initWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;
+
 - (void)saveContext;
 
 - (void)removePersistentStoreNotificationSubscribes;
-- (void)addPersistentStoreNotificationSubscribes:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
+- (void)addPersistentStoreNotificationSubscribes;
+
+- (void)insertNecessaryCategoryData;
 
 - (void)deduplication;
 - (NSInteger)findMaxIdValueInEntity:(NSString *)entityName;

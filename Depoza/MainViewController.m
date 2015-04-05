@@ -16,17 +16,19 @@
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
+#import "NSDate+FirstAndLastDaysOfMonth.m"
 #import "NSString+FormatAmount.h"
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
-@interface MainViewController ()
+@interface MainViewController () <NSFetchedResultsControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *todayFetchedResultsController;
+@property (nonatomic, strong) NSFetchedResultsController *monthFetchedResultsController;
 @property (nonatomic, strong) MainTableViewProtocolsImplementer *tableViewProtocolsImplementer;
 
 @end
@@ -44,19 +46,23 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
 
-    self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.fetchedResultsController];
-    self.fetchedResultsController.delegate = self.tableViewProtocolsImplementer;
+    self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.todayFetchedResultsController];
 
-    self.tableView.dataSource = self.tableViewProtocolsImplementer;
-    self.tableView.delegate = self.tableViewProtocolsImplementer;
+    self.todayFetchedResultsController.delegate = _tableViewProtocolsImplementer;
+    self.monthFetchedResultsController.delegate = self;
+
+    self.tableView.dataSource = _tableViewProtocolsImplementer;
+    self.tableView.delegate   = _tableViewProtocolsImplementer;
 
     [self loadCategoriesData];
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
-    [NSFetchedResultsController deleteCacheWithName:NSStringFromClass([Expense class])];
+    [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
+    [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
     
-    [self performFetch];
+    [self todayPerformFetch];
+    [self monthPerformFetch];
     [self updateLabels];
     [self addMotionEffectToViews];
 }
@@ -65,13 +71,11 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [super viewWillAppear:animated];
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(contextDidChange:) name:NSManagedObjectContextObjectsDidChangeNotification object:self.managedObjectContext];
 }
 
 - (void)dealloc {
     NSLog(@"Dealloc %@", self);
-    _fetchedResultsController.delegate = nil;
+    _todayFetchedResultsController.delegate = nil;
     [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
@@ -88,7 +92,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     if (fetch) {
-        [self performFetch];
+        [self todayPerformFetch];
+        [self monthPerformFetch];
     }
     [self updateLabels];
 
@@ -120,49 +125,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     return [formatter stringFromDate:theDate];
 }
 
-#pragma mark - MotionEffect -
-
-- (void)addMotionEffectToViews {
-    for (UIView *aView in self.view.subviews) {
-        if ([aView isKindOfClass:[UITableView class]]) {
-            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
-            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
-        }
-    }
-}
-
-- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
-    view.frame = CGRectInset(view.frame, -value, -value);
-}
-
-- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
-    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.x"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    xMotion.minimumRelativeValue = @(-magnitude);
-    xMotion.maximumRelativeValue = @(magnitude);
-
-    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.y"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-    yMotion.minimumRelativeValue = @(-magnitude);
-    yMotion.maximumRelativeValue = @(magnitude);
-
-    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
-    group.motionEffects = @[xMotion, yMotion];
-    [view addMotionEffect:group];
-}
-
-#pragma mark - Notifications -
-
-- (void)contextDidChange:(NSNotification *)notification {
-    NSSet *setWithKeys = [NSSet setWithArray:[notification.userInfo allKeys]];
-
-    if ([setWithKeys member:@"deleted"]) {
-        [self updateUserInterfaceWithNewFetch:NO];
-    }
-}
-
 #pragma mark - Segues -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -187,7 +149,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
-            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            ExpenseData *expense = [_todayFetchedResultsController objectAtIndexPath:indexPath];
             controller.expenseToShow = expense;
         } else if ([sender isKindOfClass:[ExpenseData class]]) {
             ExpenseData *expense = sender;
@@ -266,11 +228,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
 }
 
-#pragma mark - NSFetchedResultsController -
+#pragma mark - NSFetchedResultsController
+#pragma mark Today
 
-- (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController) {
-        return _fetchedResultsController;
+- (NSFetchedResultsController *)todayFetchedResultsController {
+    if (_todayFetchedResultsController) {
+        return _todayFetchedResultsController;
     }
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
 
@@ -288,18 +251,111 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
                                         managedObjectContext:_managedObjectContext
                                           sectionNameKeyPath:nil
-                                                   cacheName:NSStringFromClass([Expense class])];
-    self.fetchedResultsController = theFetchedResultsController;
+                                                   cacheName:@"todayFetchedResultsController"];
+    _todayFetchedResultsController = theFetchedResultsController;
 
-    return _fetchedResultsController;
+    return _todayFetchedResultsController;
 }
 
-- (void)performFetch {
-    NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+- (void)todayPerformFetch {
+    NSError *todayError;
+    if (![self.todayFetchedResultsController performFetch:&todayError]) {
+        NSLog(@"Unresolved error %@, %@", todayError, [todayError userInfo]);
         exit(-1);  // Fail
     }
+}
+
+#pragma mark Month
+
+- (NSFetchedResultsController *)monthFetchedResultsController {
+    if (_monthFetchedResultsController) {
+        return _monthFetchedResultsController;
+    }
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+        //Create compound predicate: dateOfExpense >= dates[0] AND dateOfExpense <= dates[1]
+    NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+    NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
+    fetchRequest.predicate = predicate;
+
+    NSSortDescriptor *dateSortDescriptor = [[NSSortDescriptor alloc]
+                                            initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
+    [fetchRequest setSortDescriptors:@[dateSortDescriptor]];
+    [fetchRequest setFetchBatchSize:20];
+
+    NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
+                                                   cacheName:@"monthFetchedResultsController"];
+    _monthFetchedResultsController = theFetchedResultsController;
+
+    return _monthFetchedResultsController;
+}
+
+- (void)monthPerformFetch {
+    NSError *monthError;
+    if (![self.monthFetchedResultsController performFetch:&monthError]) {
+        NSLog(@"Unresolved error %@, %@", monthError, [monthError userInfo]);
+        exit(-1);  // Fail
+    }
+}
+
+- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
+
+    switch(type) {
+        case NSFetchedResultsChangeInsert:
+        case NSFetchedResultsChangeUpdate:
+        case NSFetchedResultsChangeMove:
+            break;
+
+        case NSFetchedResultsChangeDelete: {
+            ExpenseData *deletedExpense = (ExpenseData *)anObject;
+            _totalExpeditures -= [deletedExpense.amount floatValue];
+
+            [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                CategoriesInfo *info = obj;
+                if (info.idValue == deletedExpense.categoryId) {
+                    [self updateCategoriesExpensesDataAtIndex:idx withValue:-deletedExpense.amount.floatValue];
+
+                    *stop = YES;
+                }
+            }];
+            [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+            [self updateLabels];
+            return;
+        }
+    }
+}
+
+#pragma mark - MotionEffect -
+
+- (void)addMotionEffectToViews {
+    for (UIView *aView in self.view.subviews) {
+        if ([aView isKindOfClass:[UITableView class]]) {
+            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
+            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
+        }
+    }
+}
+
+- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
+    view.frame = CGRectInset(view.frame, -value, -value);
+}
+
+- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
+    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.x"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+    xMotion.minimumRelativeValue = @(-magnitude);
+    xMotion.maximumRelativeValue = @(magnitude);
+
+    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
+                                            initWithKeyPath:@"center.y"
+                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+    yMotion.minimumRelativeValue = @(-magnitude);
+    yMotion.maximumRelativeValue = @(magnitude);
+
+    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
+    group.motionEffects = @[xMotion, yMotion];
+    [view addMotionEffect:group];
 }
 
 @end

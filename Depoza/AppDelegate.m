@@ -17,21 +17,18 @@
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
-#import "Persistence.h"
 
 @interface AppDelegate ()
-
-@property (strong, nonatomic) Persistence *persistence;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
 @end
 
 @implementation AppDelegate {
     MainViewController *_mainViewController;
+    AllExpensesTableViewController *_allExpensesTableViewController;
+    SettingsTableViewController *_settingsTableViewController;
 }
 
-
-#pragma mark - Helper Methods -
+#pragma mark - Persistent Stack
 
 - (void)spreadManagedObjectContext {
     UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
@@ -42,17 +39,41 @@
 
         //Get the AllExpensesViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[1];
-    AllExpensesTableViewController *allExpensesController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
+    _allExpensesTableViewController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
 
         //Get the SettingsTableViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[2];
-    SettingsTableViewController *settingsViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
+    _settingsTableViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
 
     NSParameterAssert(_managedObjectContext);
     _mainViewController.managedObjectContext = _managedObjectContext;
-    allExpensesController.managedObjectContext = _managedObjectContext;
-    settingsViewController.managedObjectContext = _managedObjectContext;
+    _allExpensesTableViewController.managedObjectContext = _managedObjectContext;
+    _settingsTableViewController.managedObjectContext = _managedObjectContext;
 }
+
+- (NSURL *)storeURL {
+    NSURL *documentsDirectory = [[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL];
+    return [documentsDirectory URLByAppendingPathComponent:@"DataStore.sqlite"];
+}
+
+- (NSURL*)modelURL {
+    return [[NSBundle mainBundle] URLForResource:@"DataModel" withExtension:@"momd"];
+}
+
+#pragma mark PersistenceDelegate
+
+- (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification {
+    [_mainViewController updateUserInterfaceWithNewFetch:NO];
+}
+
+- (void)persistenceStore:(Persistence *)persistence willChangeNotification:(NSNotification *)notification {
+    BOOL animated = YES;
+    [_mainViewController.navigationController popToRootViewControllerAnimated:animated];
+    [_allExpensesTableViewController.navigationController popToRootViewControllerAnimated:animated];
+    [_settingsTableViewController.navigationController popToRootViewControllerAnimated:animated];
+}
+
+#pragma mark - KVNProgress
 
 - (void)setKVNDisplayTime {
     KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
@@ -61,17 +82,17 @@
     [KVNProgress setConfiguration:configuration];
 }
 
-#pragma mark - PersistenceDelegate - 
-
-- (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification {
-    [_mainViewController updateUserInterfaceWithNewFetch:NO];
-}
-
 #pragma mark - AppDelegate -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    self.persistence = [Persistence sharedInstance];
-    self.managedObjectContext = [self.persistence managedObjectContext];
+    self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];
+    self.managedObjectContext = self.persistence.managedObjectContext;
+    self.persistence.delegate = self;
+
+//    NSInteger categoryMaxID = [_persistence findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
+//    if (categoryMaxID == 0) {
+//        [_persistence insertNecessaryCategoryData];
+//    }
 
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
@@ -113,7 +134,7 @@
     [self.persistence removePersistentStoreNotificationSubscribes];
     [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController];
 
-    [_persistence saveContext];
+    [self.persistence saveContext];
 }
 
 @end

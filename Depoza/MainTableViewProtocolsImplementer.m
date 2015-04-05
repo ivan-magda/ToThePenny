@@ -124,7 +124,7 @@
             break;
 
         case NSFetchedResultsChangeUpdate:
-            [self configureCell:(MainViewCell *)[tableView cellForRowAtIndexPath:indexPath] atIndexPath:indexPath];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
 
         case NSFetchedResultsChangeMove:

@@ -51,12 +51,12 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     self.tableView.hidden = YES;
     self.noExpensesLabel.hidden = YES;
 
-    _persistence = [Persistence sharedInstance];
-
-    _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
-
-    [self configurateUserDefaults];
-    [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
+//    _persistence = [Persistence sharedInstance];
+//
+//    _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
+//
+//    [self configurateUserDefaults];
+//    [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
 }
 
 - (void)updateUserInterfaceWithUpdateResult:(NCUpdateResult)updateResult {
@@ -122,14 +122,16 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     //A widget is not created every time you view the notification center so loadView won't be called every time it is displayed.
     //The notification center instead calls widgetPerformUpdateWithCompletionHandler when it thinks the widget information needs to be updated.
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
-    self.updateBlock = completionHandler;
-    if ([Fetch hasNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
-        [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
+//    self.updateBlock = completionHandler;
+//    if ([Fetch hasNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
+//        [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
+//
+//        self.updateBlock(NCUpdateResultNewData);
+//    } else {
+//        self.updateBlock(NCUpdateResultNoData);
+//    }
 
-        self.updateBlock(NCUpdateResultNewData);
-    } else {
-        self.updateBlock(NCUpdateResultNoData);
-    }
+    completionHandler(NCUpdateResultNewData);
 }
 
 #pragma mark - UITableView
