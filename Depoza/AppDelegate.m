@@ -62,6 +62,10 @@
 
 #pragma mark PersistenceDelegate
 
+- (void)persistenceStore:(Persistence *)persistence didChangeNotification:(NSNotification *)notification {
+    [_mainViewController updateUserInterfaceWithNewFetch:YES];
+}
+
 - (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification {
     [_mainViewController updateUserInterfaceWithNewFetch:NO];
 }
@@ -130,10 +134,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
-    
     [self.persistence removePersistentStoreNotificationSubscribes];
-    [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController];
-
     [self.persistence saveContext];
 }
 

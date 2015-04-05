@@ -1,4 +1,4 @@
-    //View
+    //ViewControllers
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
 #import "MoreInfoTableViewController.h"
@@ -15,7 +15,6 @@
 
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
-#import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSDate+FirstAndLastDaysOfMonth.m"
 #import "NSString+FormatAmount.h"
 
@@ -67,28 +66,15 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self addMotionEffectToViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
-}
-
 - (void)dealloc {
-    NSLog(@"Dealloc %@", self);
     _todayFetchedResultsController.delegate = nil;
-    [[NSNotificationCenter defaultCenter]removeObserver:self];
+    _monthFetchedResultsController.delegate = nil;
 }
 
 #pragma mark - Helper methods -
 
-- (void)storeDidChange:(NSNotification*)notification {
-    NSLog(@"MainVC PersistenceStore Did change");
-    [self updateUserInterfaceWithNewFetch:YES];
-}
-
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
     [self loadCategoriesData];
-
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     if (fetch) {
@@ -96,7 +82,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         [self monthPerformFetch];
     }
     [self updateLabels];
-
     [self.tableView reloadData];
 }
 
@@ -299,7 +284,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-
     switch(type) {
         case NSFetchedResultsChangeInsert:
         case NSFetchedResultsChangeUpdate:

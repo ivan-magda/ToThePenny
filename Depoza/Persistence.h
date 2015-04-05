@@ -13,6 +13,8 @@
 
 @protocol PersistenceNotificationDelegate <NSObject>
 
+- (void)persistenceStore:(Persistence *)persistence didChangeNotification:(NSNotification *)notification;
+
 - (void)persistenceStore:(Persistence *)persistence didImportUbiquitousContentChanges:(NSNotification *)notification;
 
 - (void)persistenceStore:(Persistence *)persistence willChangeNotification:(NSNotification *)notification;

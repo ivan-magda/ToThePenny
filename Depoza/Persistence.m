@@ -22,7 +22,9 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 
 @end
 
-@implementation Persistence
+@implementation Persistence {
+    NSDictionary *_iCloudOptions;
+}
 
 + (instancetype)sharedInstance {
     static Persistence *sharedInstance = nil;
@@ -40,6 +42,9 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         self.storeURL = storeURL;
         self.modelURL = modelURL;
         NSParameterAssert(_storeURL && _modelURL);
+
+        _iCloudOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
+
         [self managedObjectContext];
     }
     return self;
@@ -74,8 +79,7 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
             [self seedInitialData:_persistentStoreCoordinator];
         } else {
             NSError *error = nil;
-            NSDictionary *iCloudOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
-            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:iCloudOptions error:&error]) {
+            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:_iCloudOptions error:&error]) {
                 NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
                 abort();
             }
@@ -110,10 +114,8 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 
     NSPersistentStore *seedStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:seedStoreURL options:seedStoreOptions error:&seedStoreError];
 
-    NSDictionary *iCloudOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
-
     NSError *error = nil;
-    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:iCloudOptions withType:NSSQLiteStoreType error:&error]) {
+    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:_iCloudOptions withType:NSSQLiteStoreType error:&error]) {
         NSLog(@"Error adding seed persistent store %@, %@", error, [error userInfo]);
     }
     NSLog(@"Store succesfully initialized using the original seed");
@@ -160,15 +162,25 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
     NSLog(@"Persistence add observers");
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 
-    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:self.managedObjectContext.persistentStoreCoordinator];
-    [notificationCenter addObserver:self selector:@selector(storeWillChange:) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:self.managedObjectContext.persistentStoreCoordinator];
+    [notificationCenter addObserver:self selector:@selector(storeDidChange:) name:NSPersistentStoreCoordinatorStoresDidChangeNotification object:_persistentStoreCoordinator];
+    [notificationCenter addObserver:self selector:@selector(storeDidImportUbiquitousContentChanges:) name:NSPersistentStoreDidImportUbiquitousContentChangesNotification object:_persistentStoreCoordinator];
+    [notificationCenter addObserver:self selector:@selector(storeWillChange:) name:NSPersistentStoreCoordinatorStoresWillChangeNotification object:_persistentStoreCoordinator];
+}
+
+- (void)storeDidChange:(NSNotification *)notification {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, notification.userInfo.description);
+        // At this point it's official, the change has happened. Tell your
+        // user interface to refresh itself
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self.delegate respondsToSelector:@selector(persistenceStore:didChangeNotification:)]) {
+            [self.delegate persistenceStore:self didChangeNotification:notification];
+        }
+    });
 }
 
 - (void)storeDidImportUbiquitousContentChanges:(NSNotification *)notification {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, notification.userInfo.description);
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%s", __PRETTY_FUNCTION__);
-        NSLog(@"%@", notification.userInfo.description);
-
         [self.managedObjectContext mergeChangesFromContextDidSaveNotification:notification];
 
         if ([self.delegate respondsToSelector:@selector(persistenceStore:didImportUbiquitousContentChanges:)]) {
@@ -178,10 +190,8 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 }
 
 - (void)storeWillChange:(NSNotification *)notification {
+    NSLog(@"%s %@", __PRETTY_FUNCTION__, notification.description);
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%s", __PRETTY_FUNCTION__);
-        NSLog(@"%@", notification.description);
-
         NSUInteger persistentStoreUbiquitousTransitionType = [[notification.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey]unsignedIntegerValue];
         if (persistentStoreUbiquitousTransitionType == NSPersistentStoreUbiquitousTransitionTypeAccountRemoved) {
             NSLog(@"NSPersistentStoreUbiquitousTransitionTypeAccountRemoved");
@@ -201,6 +211,9 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         } else {
             [self.managedObjectContext reset];
         }
+            // This is a good place to let your UI know it needs to get ready
+            // to adjust to the change and deal with new data. This might include
+            // invalidating UI caches, reloading data, resetting views, etc...
 
         if ([self.delegate respondsToSelector:@selector(persistenceStore:willChangeNotification:)]) {
             [self.delegate persistenceStore:self willChangeNotification:notification];
