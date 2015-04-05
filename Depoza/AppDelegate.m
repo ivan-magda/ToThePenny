@@ -93,11 +93,6 @@
     self.managedObjectContext = self.persistence.managedObjectContext;
     self.persistence.delegate = self;
 
-//    NSInteger categoryMaxID = [_persistence findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
-//    if (categoryMaxID == 0) {
-//        [_persistence insertNecessaryCategoryData];
-//    }
-
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
 
@@ -125,7 +120,7 @@
                 }
             }
             [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
-
+            
             return YES;
         }
     }

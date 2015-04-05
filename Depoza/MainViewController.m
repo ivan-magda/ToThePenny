@@ -45,6 +45,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
 
+    self.monthLabel.text = @"";
+    self.totalAmountLabel.text = @"";
+
     self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.todayFetchedResultsController];
 
     self.todayFetchedResultsController.delegate = _tableViewProtocolsImplementer;
@@ -53,17 +56,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     self.tableView.dataSource = _tableViewProtocolsImplementer;
     self.tableView.delegate   = _tableViewProtocolsImplementer;
 
-    [self loadCategoriesData];
-
-    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
-
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
-    
-    [self todayPerformFetch];
-    [self monthPerformFetch];
-    [self updateLabels];
-    [self addMotionEffectToViews];
 }
 
 - (void)dealloc {
@@ -78,11 +72,15 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     if (fetch) {
-        [self todayPerformFetch];
-        [self monthPerformFetch];
+        [self performFetches];
     }
     [self updateLabels];
     [self.tableView reloadData];
+}
+
+- (void)performFetches {
+    [self todayPerformFetch];
+    [self monthPerformFetch];
 }
 
 - (void)loadCategoriesData {

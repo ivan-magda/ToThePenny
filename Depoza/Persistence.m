@@ -224,40 +224,22 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 #pragma mark - Deduplication -
 
 - (void)deduplication {
-        //Choose a property or a hash of multiple properties to use as a unique ID for each record.
+    [self deduplicationCategories];
+    [self deduplicationExpenses];
+
+    NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
+    NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
+
+    [CategoryData setNextIdValueToUbiquitousKeyValueStore:categoryMaxID + 1];
+    [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
+}
+
+- (void)deduplicationCategories {
     NSString *uniquePropertyKey = NSStringFromSelector(@selector(title));
-    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:uniquePropertyKey];
-    NSExpression *countExpression = [NSExpression expressionForFunction: @"count:" arguments:@[keyPathExpression]];
-    NSExpressionDescription *countExpressionDescription = [NSExpressionDescription new];
-
-    [countExpressionDescription setName:@"count"];
-    [countExpressionDescription setExpression:countExpression];
-    [countExpressionDescription setExpressionResultType:NSInteger64AttributeType];
-
-    NSManagedObjectContext *context = self.managedObjectContext;
-    NSEntityDescription *entity = [NSEntityDescription entityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
-
-    NSAttributeDescription *uniqueAttribute = [[entity attributesByName]objectForKey:uniquePropertyKey];
-
-        //Fetch the number of times each unique value appears in the store.
-        //The context returns an array of dictionaries, each containing a unique value and the number of times that value appeared in the store.
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
-    [fetchRequest setPropertiesToFetch:@[uniqueAttribute, countExpressionDescription]];
-    [fetchRequest setPropertiesToGroupBy:@[uniqueAttribute]];
-    [fetchRequest setResultType:NSDictionaryResultType];
-    NSArray *fetchedDictionaries = [context executeFetchRequest:fetchRequest error:nil];
-
-        //Filter out unique values that have no duplicates.
-    NSMutableArray *valuesWithDupes = [NSMutableArray array];
-    for (NSDictionary *dict in fetchedDictionaries) {
-        NSNumber *count = dict[@"count"];
-        if ([count integerValue] > 1) {
-            [valuesWithDupes addObject:dict[uniquePropertyKey]]; }
-    }
+    NSArray *valuesWithDupes = [self valuesWithDupesInEntity:NSStringFromClass([CategoryData class]) uniquePropertyKey:uniquePropertyKey];
 
     if (valuesWithDupes.count > 0) {
-        NSLog(@"%s", __PRETTY_FUNCTION__);
-        NSLog(@"Duplications found");
+        NSLog(@"%s duplications found in categories", __PRETTY_FUNCTION__);
             //Use a predicate to fetch all of the records with duplicates.
             //Use a sort descriptor to properly order the results for the winner algorithm in the next step.
         NSFetchRequest *dupeFetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
@@ -268,29 +250,27 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:uniquePropertyKey ascending:NO];
         [dupeFetchRequest setSortDescriptors:@[sortDescriptor]];
 
-        NSArray *dupes = [context executeFetchRequest:dupeFetchRequest error:nil];
+        NSManagedObjectContext *context = self.managedObjectContext;
 
+        NSArray *dupes = [context executeFetchRequest:dupeFetchRequest error:nil];
             //Choose the winner.
             //After retrieving all of the duplicates, your app decides which ones to keep. This decision must be deterministic, meaning that every peer should always choose the same winner. Among other methods, your app could store a created or last-changed timestamp for each record and then decide based on that.
         CategoryData *prevObject;
         for (CategoryData *duplicate in dupes) {
             if (prevObject) {
-
                 if ([duplicate.title isEqualToString:prevObject.title]) {
                     if (duplicate.expense.count < prevObject.expense.count) {
-//                        if (duplicate.expense.count > 0) {
-//                            [self moveExpensesToCategory:prevObject fromCategory:duplicate];
-//                        }
+                        if (duplicate.expense.count > 0) {
+                            [self moveExpensesToCategory:prevObject fromCategory:duplicate];
+                        }
                         [context deleteObject:duplicate];
-
                     } else {
-//                        if (prevObject.expense.count > 0) {
-//                            [self moveExpensesToCategory:duplicate fromCategory:prevObject];
-//                        }
+                        if (prevObject.expense.count > 0) {
+                            [self moveExpensesToCategory:duplicate fromCategory:prevObject];
+                        }
                         [context deleteObject:prevObject];
                         prevObject = duplicate;
                     }
-
                 } else {
                     prevObject = duplicate;
                 }
@@ -298,12 +278,42 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
                 prevObject = duplicate;
             }
         }
-        NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
-        NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
-
-        [CategoryData setNextIdValueToUbiquitousKeyValueStore:categoryMaxID + 1];
-        [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
     }
+}
+
+- (NSArray *)valuesWithDupesInEntity:(NSString *)entityName uniquePropertyKey:(NSString *)uniqueProperty {
+        //Choose a property or a hash of multiple properties to use as a unique ID for each record.
+    NSString *uniquePropertyKey = uniqueProperty;
+    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:uniquePropertyKey];
+    NSExpression *countExpression = [NSExpression expressionForFunction: @"count:" arguments:@[keyPathExpression]];
+    NSExpressionDescription *countExpressionDescription = [NSExpressionDescription new];
+
+    [countExpressionDescription setName:@"count"];
+    [countExpressionDescription setExpression:countExpression];
+    [countExpressionDescription setExpressionResultType:NSInteger64AttributeType];
+
+    NSManagedObjectContext *context = self.managedObjectContext;
+    NSEntityDescription *entity = [NSEntityDescription entityForName:entityName inManagedObjectContext:context];
+
+    NSAttributeDescription *uniqueAttribute = [[entity attributesByName]objectForKey:uniquePropertyKey];
+
+        //Fetch the number of times each unique value appears in the store.
+        //The context returns an array of dictionaries, each containing a unique value and the number of times that value appeared in the store.
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    [fetchRequest setPropertiesToFetch:@[uniqueAttribute, countExpressionDescription]];
+    [fetchRequest setPropertiesToGroupBy:@[uniqueAttribute]];
+    [fetchRequest setResultType:NSDictionaryResultType];
+    NSArray *fetchedDictionaries = [context executeFetchRequest:fetchRequest error:nil];
+
+        //Filter out unique values that have no duplicates.
+    NSMutableArray *valuesWithDupes = [NSMutableArray array];
+    for (NSDictionary *dict in fetchedDictionaries) {
+        NSNumber *count = dict[@"count"];
+        if ([count integerValue] > 1) {
+            [valuesWithDupes addObject:dict[uniquePropertyKey]];
+        }
+    }
+    return [valuesWithDupes copy];
 }
 
 - (void)moveExpensesToCategory:(CategoryData *)toCategory fromCategory:(CategoryData *)fromCategory {
@@ -313,6 +323,51 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         expense.category = toCategory;
         expense.categoryId = toCategory.idValue;
         [toCategory addExpenseObject:expense];
+    }
+}
+
+- (void)deduplicationExpenses {
+    NSString *uniquePropertyKey = NSStringFromSelector(@selector(idValue));
+    NSArray *valuesWithDupes = [self valuesWithDupesInEntity:NSStringFromClass([ExpenseData class]) uniquePropertyKey:uniquePropertyKey];
+
+    if (valuesWithDupes.count > 0) {
+        NSLog(@"%s duplications found in expenses", __PRETTY_FUNCTION__);
+            //Use a predicate to fetch all of the records with duplicates.
+            //Use a sort descriptor to properly order the results for the winner algorithm in the next step.
+        NSFetchRequest *dupeFetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+        [dupeFetchRequest setIncludesPendingChanges:NO];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"idValue IN (%@)", valuesWithDupes];
+        [dupeFetchRequest setPredicate:predicate];
+
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:uniquePropertyKey ascending:NO];
+        [dupeFetchRequest setSortDescriptors:@[sortDescriptor]];
+
+        NSManagedObjectContext *context = self.managedObjectContext;
+
+        NSArray *dupes = [context executeFetchRequest:dupeFetchRequest error:nil];
+            //Choose the winner.
+            //After retrieving all of the duplicates, your app decides which ones to keep. This decision must be deterministic, meaning that every peer should always choose the same winner. Among other methods, your app could store a created or last-changed timestamp for each record and then decide based on that.
+        ExpenseData *prevObject;
+        for (ExpenseData *duplicate in dupes) {
+            if (prevObject) {
+                if (duplicate.idValue == prevObject.idValue) {
+                    if ([duplicate.categoryId integerValue] == [prevObject.categoryId integerValue] &&
+                        [duplicate.amount floatValue] == [prevObject.amount floatValue] &&
+                        [duplicate.descriptionOfExpense isEqualToString:prevObject.descriptionOfExpense]) {
+                        [context deleteObject:duplicate];
+                    } else {
+                        NSInteger expenseNextId  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])] + 1;
+                        prevObject.idValue = @(expenseNextId);
+
+                        prevObject = duplicate;
+                    }
+                } else {
+                    prevObject = duplicate;
+                }
+            } else {
+                prevObject = duplicate;
+            }
+        }
     }
 }
 
