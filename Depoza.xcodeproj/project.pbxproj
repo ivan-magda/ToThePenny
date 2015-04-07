@@ -349,7 +349,8 @@
 		504C43601A9F57DF007D6D4B /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				50B3574E1A48597300168958 /* CoreData */,
+				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
+				50B3574E1A48597300168958 /* PersistenceStack */,
 				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
 				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
 			);
@@ -555,17 +556,16 @@
 			name = AllExpensesView;
 			sourceTree = "<group>";
 		};
-		50B3574E1A48597300168958 /* CoreData */ = {
+		50B3574E1A48597300168958 /* PersistenceStack */ = {
 			isa = PBXGroup;
 			children = (
-				506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */,
 				50B3574B1A48596000168958 /* Persistence.h */,
 				50B3574C1A48596000168958 /* Persistence.m */,
 				50A6C05E1A92C99700699862 /* Expense */,
 				50A6C05F1A92C9A000699862 /* Category */,
 				504C43611A9F580B007D6D4B /* Fetch */,
 			);
-			name = CoreData;
+			name = PersistenceStack;
 			sourceTree = "<group>";
 		};
 		50D4E0F71A92253A0040C260 /* ChooseCategoryView */ = {

@@ -93,6 +93,10 @@
     self.managedObjectContext = self.persistence.managedObjectContext;
     self.persistence.delegate = self;
 
+    if ([CategoryData countForCategoriesInContext:self.managedObjectContext] == 0) {
+        [self.persistence insertNecessaryCategoryData];
+    }
+
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
 

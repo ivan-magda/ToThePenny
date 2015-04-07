@@ -147,7 +147,7 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         [CategoryData categoryDataWithTitle:@"Electronics" iconName:@"SmartphoneTablet" andExpenses:nil inManagedObjectContext:_managedObjectContext];
         [CategoryData categoryDataWithTitle:@"Entertainment" iconName:@"Controller" andExpenses:nil inManagedObjectContext:_managedObjectContext];
     }
-    [CategoryData setNextIdValueToUbiquitousKeyValueStore:9];
+    [self updateNextIdValues];
     [self saveContext];
 }
 
@@ -171,11 +171,13 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
     NSLog(@"%s %@", __PRETTY_FUNCTION__, notification.userInfo.description);
         // At this point it's official, the change has happened. Tell your
         // user interface to refresh itself
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if ([self.delegate respondsToSelector:@selector(persistenceStore:didChangeNotification:)]) {
-            [self.delegate persistenceStore:self didChangeNotification:notification];
-        }
-    });
+    if (notification) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([self.delegate respondsToSelector:@selector(persistenceStore:didChangeNotification:)]) {
+                [self.delegate persistenceStore:self didChangeNotification:notification];
+            }
+        });
+    }
 }
 
 - (void)storeDidImportUbiquitousContentChanges:(NSNotification *)notification {
@@ -227,6 +229,10 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
     [self deduplicationCategories];
     [self deduplicationExpenses];
 
+    [self updateNextIdValues];
+}
+
+- (void)updateNextIdValues {
     NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
     NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
 
