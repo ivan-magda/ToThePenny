@@ -30,7 +30,6 @@
 @property (nonatomic, strong) id<PersistenceNotificationDelegate>delegate;
 
 + (instancetype)sharedInstance;
-
 - (id)initWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;
 
 - (void)saveContext;
@@ -42,5 +41,7 @@
 
 - (void)deduplication;
 - (NSInteger)findMaxIdValueInEntity:(NSString *)entityName;
+
+- (void)deviceListChanged:(NSNotification *)notification;
 
 @end

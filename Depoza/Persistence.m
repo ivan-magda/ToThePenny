@@ -10,9 +10,17 @@
 #import "AppDelegate.h"
 #import "CategoryData+Fetch.h"
 #import "ExpenseData+Fetch.h"
+#import "CoreDataDeviceList.h"
+
+#import "NSURL+InternalExtensions.h"
+
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
+static NSString * const kURLForUbiquityContainerIdentifier = @"iCloud.com.MagdaIvan.Depoza";
+
+NSString* Setting_iCloudUUID = @"iCloud.UUID";
+NSString* iCloudDeviceListName = @"KnownDevices.plist";
 
 @interface Persistence ()
 
@@ -24,6 +32,13 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 
 @implementation Persistence {
     NSDictionary *_iCloudOptions;
+    BOOL _iCloudStoreExists;
+
+    NSMetadataQuery* _deviceListMetadataQuery;
+    CoreDataDeviceList* _deviceList;
+    NSArray* _knownDeviceUUIDs;
+
+    dispatch_queue_t _backgroundQueue;
 }
 
 + (instancetype)sharedInstance {
@@ -44,6 +59,24 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         NSParameterAssert(_storeURL && _modelURL);
 
         _iCloudOptions = @{NSPersistentStoreUbiquitousContentNameKey: @"DepozaCloudStore"};
+        _deviceList = nil;
+
+        _backgroundQueue = dispatch_queue_create("Persistence.BackgroundQueue", NULL);
+
+            // create the iCloud UUID if it is missing
+        NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+        if (![userDefaults objectForKey:Setting_iCloudUUID]) {
+            [userDefaults setObject:[[NSUUID UUID] UUIDString] forKey:Setting_iCloudUUID];
+            [userDefaults synchronize];
+        }
+
+        [self setupDeviceList];
+
+        dispatch_sync(_backgroundQueue, ^{
+            [self refreshDeviceList:NO completionHandler:^(BOOL deviceListExisted, BOOL currentDevicePresent) {
+                _iCloudStoreExists = deviceListExisted;
+            }];
+        });
 
         [self managedObjectContext];
     }
@@ -74,8 +107,7 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
 
         [self addPersistentStoreNotificationSubscribes];
 
-        NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-        if (![kvStore boolForKey:kUbiquitousKeyValueStoreSeedDataKey]) {
+        if (!_iCloudStoreExists ) {
             [self seedInitialData:_persistentStoreCoordinator];
         } else {
             NSError *error = nil;
@@ -95,6 +127,11 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         if (coordinator) {
             _managedObjectContext = [[NSManagedObjectContext alloc]init];
             [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+
+            dispatch_async(_backgroundQueue, ^{
+                [self refreshDeviceList:YES completionHandler:^(BOOL deviceListExisted, BOOL currentDevicePresent) {
+                }];
+            });
         }
     }
     return _managedObjectContext;
@@ -197,6 +234,13 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
         NSUInteger persistentStoreUbiquitousTransitionType = [[notification.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey]unsignedIntegerValue];
         if (persistentStoreUbiquitousTransitionType == NSPersistentStoreUbiquitousTransitionTypeAccountRemoved) {
             NSLog(@"NSPersistentStoreUbiquitousTransitionTypeAccountRemoved");
+                // If the iCloud account changes then the device list path will be invalid.
+                // Force it to update by tearing it down and recreating it.
+
+            [self teardownDeviceList];
+            
+            [self setupDeviceList];
+
             NSError *saveError;
             if (![self.managedObjectContext save:&saveError]) {
                 NSLog(@"Save error: %@", [saveError localizedDescription]);
@@ -221,6 +265,119 @@ static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
             [self.delegate persistenceStore:self willChangeNotification:notification];
         }
     });
+}
+
+#pragma mark Device List Handling
+
+- (NSURL *)deviceListURL {
+    NSURL *iCloudURLBase = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:kURLForUbiquityContainerIdentifier];
+
+    NSString *deviceList = [[iCloudURLBase path] stringByAppendingPathComponent:@"KnownDevices.plist"];
+
+    return [NSURL fileURLWithPath:deviceList];
+}
+
+- (void)setupDeviceList {
+    _knownDeviceUUIDs = nil;
+
+        // setup the device list document
+    _deviceList = [[CoreDataDeviceList alloc] initWithURLAndQueue:[self deviceListURL] queue:[[NSOperationQueue alloc] init]];
+
+        // add the device list document as a file presenter
+    [NSFileCoordinator addFilePresenter:_deviceList];
+
+        // monitor for any changes to the file on iCloud
+    _deviceListMetadataQuery = [[NSMetadataQuery alloc] init];
+    _deviceListMetadataQuery.searchScopes = [NSArray arrayWithObject:NSMetadataQueryUbiquitousDataScope];
+    _deviceListMetadataQuery.predicate = [NSPredicate predicateWithFormat:@"%K like %@", NSMetadataItemFSNameKey, iCloudDeviceListName];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deviceListChanged:)
+                                                 name:NSMetadataQueryDidUpdateNotification
+                                               object:_deviceListMetadataQuery];
+
+        // metadata queries must be started on the main thread
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_deviceListMetadataQuery startQuery];
+    });
+}
+
+- (void)teardownDeviceList {
+    if (_deviceList) {
+        [NSFileCoordinator removeFilePresenter:_deviceList];
+        _deviceList = nil;
+
+        _knownDeviceUUIDs = nil;
+
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSMetadataQueryDidUpdateNotification object:_deviceListMetadataQuery];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_deviceListMetadataQuery stopQuery];
+            _deviceListMetadataQuery = nil;
+        });
+    }
+}
+
+- (void)deviceListChanged:(NSNotification *)notification {
+    dispatch_async(_backgroundQueue, ^{
+        @synchronized(_backgroundQueue) {
+                // prevent any other change notifications while we are processing the updated list
+            [_deviceListMetadataQuery disableUpdates];
+
+                // force the device list to refresh
+            [self refreshDeviceList:NO completionHandler:^(BOOL deviceListExisted, BOOL currentDevicePresent) {
+                    // allow change notifications again
+                [_deviceListMetadataQuery enableUpdates];
+            }];
+        }
+    });
+}
+
+//Refreshing the device list handles forcing the synchronisation, checking if the current device is known and updating the device list.
+- (void)refreshDeviceList:(BOOL)canAddCurrentDevice completionHandler:(void (^)(BOOL deviceListExisted, BOOL currentDevicePresent))completionHandler {
+    _knownDeviceUUIDs = nil;
+
+    NSString* iCloudUUID = [[NSUserDefaults standardUserDefaults] stringForKey:Setting_iCloudUUID];
+
+        // force synchronise the device list document
+    NSURL* fileURL = [self deviceListURL];
+    [fileURL forceSyncFile:_backgroundQueue completion:^(BOOL syncCompleted, NSError* error) {
+        NSFileCoordinator *coordinator = [[NSFileCoordinator alloc] initWithFilePresenter:_deviceList];
+        error = nil;
+
+        __block BOOL deviceListExisted = NO;
+        __block BOOL currentDevicePresent = NO;
+
+            // attempt to read the device list
+        [coordinator coordinateReadingItemAtURL:fileURL options:0 error:&error byAccessor:^(NSURL *readURL) {
+            NSDictionary* deviceList = [NSDictionary dictionaryWithContentsOfURL:readURL];
+            _knownDeviceUUIDs = [deviceList objectForKey:@"DeviceUUIDs"];
+
+            deviceListExisted = _knownDeviceUUIDs && ([_knownDeviceUUIDs count] > 0);
+            currentDevicePresent = deviceListExisted && [_knownDeviceUUIDs containsObject:iCloudUUID];
+        }];
+
+            // if the current device isn't present in the file then add it
+        if (!currentDevicePresent && canAddCurrentDevice) {
+                // create the updated list of UUIDs
+            NSMutableArray* newKnownDeviceUUIDs = _knownDeviceUUIDs ? [_knownDeviceUUIDs mutableCopy] : [[NSMutableArray alloc] init];
+            [newKnownDeviceUUIDs addObject:iCloudUUID];
+
+                // generate the dictionary for the plist
+            NSDictionary* newDeviceList = @{@"DeviceUUIDs" : newKnownDeviceUUIDs};
+
+                // make sure the remote location exists
+            NSURL* iCloudURLBase = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:nil];
+            [coordinator coordinateWritingItemAtURL:iCloudURLBase options:0 error:NULL byAccessor:^(NSURL *newURL) {
+                [[NSFileManager defaultManager] createDirectoryAtURL:newURL withIntermediateDirectories:YES attributes:nil error:NULL];
+            }];
+
+                // write the updated file
+            [coordinator coordinateWritingItemAtURL:fileURL options:NSFileCoordinatorWritingForReplacing error:NULL byAccessor:^(NSURL *writeURL) {
+                [newDeviceList writeToURL:writeURL atomically:NO];
+            }];
+        }
+        completionHandler(deviceListExisted, currentDevicePresent);
+    }];
 }
 
 #pragma mark - Deduplication -
