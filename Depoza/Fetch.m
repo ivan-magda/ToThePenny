@@ -12,11 +12,13 @@
 #import "CategoryData.h"
 #import "ExpenseData+Fetch.h"
 #import "Persistence.h"
+#import "Expense.h"
 
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 
-static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday";
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kTodayExpensesKey = @"todayExpenses";
 
 @implementation Fetch
 
@@ -104,10 +106,9 @@ static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday"
     return categoriesInfo;
 }
 
-+ (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context {
++ (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context {
         //Get info about todays expenses from user defaults
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    NSDictionary *dictionaryInfo = [kvStore dictionaryForKey:kTodayExpensesUbiquitousKeyValueStoreKey];
+    NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
 
         //Get today components
     NSDictionary *dateComponents = [[NSDate date]getComponents];
@@ -115,51 +116,35 @@ static NSString * const kTodayExpensesUbiquitousKeyValueStoreKey = @"isNewToday"
     NSInteger month = [dateComponents[@"month"]integerValue];
     NSInteger day   = [dateComponents[@"day"]integerValue];
 
-    NSArray *expenses = [ExpenseData getTodayExpensesInManagedObjectContext:context];
-
-    if (dictionaryInfo == nil) {
-        [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
-        return YES;
-    } else {
-        NSInteger yearDict    = [dictionaryInfo[@"year"]integerValue];
-        NSInteger monthDict   = [dictionaryInfo[@"month"]integerValue];
-        NSInteger dayDict     = [dictionaryInfo[@"day"]integerValue];
-        NSInteger numExpenses = [dictionaryInfo[@"expenses"]integerValue];
-        NSParameterAssert(numExpenses >= 0);
-
-        if (yearDict == year && monthDict == month && dayDict == day) {
-            if (numExpenses != expenses.count) {
-                [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
-                return YES;
-            } else {
-                return NO;
-            }
-        } else {
-            [self updateTodayExpensesCount:expenses day:day month:month year:year ubiquitousKeyValueStore:kvStore];
-            return YES;
-        }
+    NSArray *expensesData = [ExpenseData getTodayExpensesInManagedObjectContext:context];
+    NSMutableArray *expenses = [NSMutableArray arrayWithCapacity:expensesData.count];
+    for (ExpenseData *expenseData in expensesData) {
+        Expense *expense = [Expense expenseFromExpenseData:expenseData];
+        [expenses addObject:expense];
     }
+    [self updateTodayExpenses:[expenses copy] day:day month:month year:year userDefaults:userDefaults];
 }
 
-+ (NSDictionary *)setUpDictionaryWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day andNumberExpenses:(NSInteger)expenses {
++ (NSDictionary *)setUpDictionaryWithYear:(NSInteger)year month:(NSInteger)month day:(NSInteger)day andExpenses:(NSArray *)expenses {
     NSDictionary *dictionary = @{
                                  @"year"     : @(year),
                                  @"month"    : @(month),
                                  @"day"      : @(day),
-                                 @"expenses" : @(expenses)
+                                 @"expenses" : expenses
                                  };
     return dictionary;
 }
 
-+ (void)synchronizeUbiquitousKeyValueStore:(NSUbiquitousKeyValueStore *)kvStore withDictionary:(NSDictionary *)dictionary {
-    [kvStore setDictionary:dictionary forKey:kTodayExpensesUbiquitousKeyValueStoreKey];
++ (void)synchronizeUserDefaults:(NSUserDefaults *)userDefaults withDictionary:(NSDictionary *)dictionary {
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:dictionary];
+    [userDefaults setObject:data forKey:kTodayExpensesKey];
+    [userDefaults synchronize];
 }
 
-+ (void)updateTodayExpensesCount:(NSArray *)expenses day:(NSInteger)day month:(NSInteger)month year:(NSInteger)year ubiquitousKeyValueStore:(NSUbiquitousKeyValueStore *)kvStore
-{
++ (void)updateTodayExpenses:(NSArray *)expenses day:(NSInteger)day month:(NSInteger)month year:(NSInteger)year userDefaults:(NSUserDefaults *)userDefaults {
     NSDictionary *dictionaryInfo;
-    dictionaryInfo = [self setUpDictionaryWithYear:year month:month day:day andNumberExpenses:expenses.count];
-    [self synchronizeUbiquitousKeyValueStore:kvStore withDictionary:dictionaryInfo];
+    dictionaryInfo = [self setUpDictionaryWithYear:year month:month day:day andExpenses:expenses];
+    [self synchronizeUserDefaults:userDefaults withDictionary:dictionaryInfo];
 }
 
 @end

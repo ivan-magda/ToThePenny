@@ -9,15 +9,16 @@
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
 
-    //CoreData
-#import "Persistence.h"
-#import "ExpenseData+Fetch.h"
-#import "CategoryData.h"
-#import "Fetch.h"
+    //Data
+#import "Expense.h"
 
+    //Categories
 #import "NSString+FormatAmount.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
     //Declarations
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kTodayExpensesKey = @"todayExpenses";
 static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
 
 static const CGFloat kDefaultRowHeight = 44.0f;
@@ -32,15 +33,16 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UILabel *noExpensesLabel;
 
-@property (nonatomic, strong) Persistence *persistence;
 @property (nonatomic, copy) UpdateBlock updateBlock;
 
 @end
 
 @implementation TodayViewController {
     NSArray *_expenses;
-    NSUbiquitousKeyValueStore *_kvStore;
+    NSUserDefaults *_userDefaults;
     NSInteger _numberExpensesToShow;
+
+    Expense *_mostRecentExpense;
 }
 
 #pragma mark - ViewController Life Cycle
@@ -51,17 +53,17 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     self.tableView.hidden = YES;
     self.noExpensesLabel.hidden = YES;
 
-//    _persistence = [Persistence sharedInstance];
-//
-//    _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
-//
-//    [self configurateUserDefaults];
-//    [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
+    [self configurateUserDefaults];
+
+    _expenses = [self getTodayExpenses];
+    _mostRecentExpense = [_expenses firstObject];
+
+    [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
 }
 
 - (void)updateUserInterfaceWithUpdateResult:(NCUpdateResult)updateResult {
     if (_expenses == nil) {
-        _expenses = [ExpenseData getTodayExpensesInManagedObjectContext:_persistence.managedObjectContext];
+        _expenses = [self getTodayExpenses];
     }
 
     if (_expenses.count > 0 && updateResult == NCUpdateResultNewData) {
@@ -103,13 +105,36 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
 #pragma mark Helpers
 
-- (void)configurateUserDefaults {
-    _kvStore = [NSUbiquitousKeyValueStore defaultStore];
+- (NSArray *)getTodayExpenses {
+    NSData *data = [_userDefaults objectForKey:kTodayExpensesKey];
+    NSDictionary *expenseDictionary = [NSKeyedUnarchiver unarchiveObjectWithData:data];
 
-    _numberExpensesToShow = [[_kvStore objectForKey:kNumberExpensesToShowUserDefaultsKey]integerValue];
+        //Get today components
+    NSDictionary *dateComponents = [[NSDate date]getComponents];
+    NSInteger year  = [dateComponents[@"year"]integerValue];
+    NSInteger month = [dateComponents[@"month"]integerValue];
+    NSInteger day   = [dateComponents[@"day"]integerValue];
+
+    if ([expenseDictionary[@"day"]integerValue]   == day &&
+        [expenseDictionary[@"month"]integerValue] == month &&
+        [expenseDictionary[@"year"]integerValue]  == year) {
+        NSArray *expenses = expenseDictionary[@"expenses"];
+
+        NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
+
+        return [expenses sortedArrayUsingDescriptors:@[sortDescriptor]];
+    }
+    return nil;
+}
+
+- (void)configurateUserDefaults {
+    _userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+
+    _numberExpensesToShow = [_userDefaults integerForKey:kNumberExpensesToShowUserDefaultsKey];
     if (_numberExpensesToShow == 0) {
         _numberExpensesToShow = kDefaultNumberExpensesToShow;
-        [_kvStore setObject:@(_numberExpensesToShow) forKey:kNumberExpensesToShowUserDefaultsKey];
+        [_userDefaults setInteger:_numberExpensesToShow forKey:kNumberExpensesToShowUserDefaultsKey];
+        [_userDefaults synchronize];
     }
 }
 
@@ -122,16 +147,16 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     //A widget is not created every time you view the notification center so loadView won't be called every time it is displayed.
     //The notification center instead calls widgetPerformUpdateWithCompletionHandler when it thinks the widget information needs to be updated.
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
-//    self.updateBlock = completionHandler;
-//    if ([Fetch hasNewExpensesForTodayInManagedObjectContext:self.persistence.managedObjectContext]) {
-//        [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
-//
-//        self.updateBlock(NCUpdateResultNewData);
-//    } else {
-//        self.updateBlock(NCUpdateResultNoData);
-//    }
+    self.updateBlock = completionHandler;
 
-    completionHandler(NCUpdateResultNewData);
+    _expenses = [self getTodayExpenses];
+    if (![_mostRecentExpense isEqual:_expenses.firstObject]) {
+        [self updateUserInterfaceWithUpdateResult:NCUpdateResultNewData];
+
+        self.updateBlock(NCUpdateResultNewData);
+    } else {
+        self.updateBlock(NCUpdateResultNoData);
+    }
 }
 
 #pragma mark - UITableView
@@ -155,8 +180,8 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
         // Call the app and pass in a query string with the expense identifier
     NSParameterAssert(_expenses != nil);
-    ExpenseData *selectedExpense = _expenses[indexPath.row];
-    NSString *idValue = [NSString stringWithFormat:@"%@", selectedExpense.idValue];
+    Expense *selectedExpense = _expenses[indexPath.row];
+    NSString *idValue = [NSString stringWithFormat:@"%@", @(selectedExpense.idValue)];
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"depoza://expense/?q=%@", idValue]];
     NSParameterAssert(url);
@@ -177,9 +202,9 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ExpenseData *expense = _expenses[indexPath.row];
+    Expense *expense = _expenses[indexPath.row];
 
-    cell.textLabel.text = expense.category.title;
+    cell.textLabel.text = expense.category;
     cell.textLabel.textColor = [UIColor whiteColor];
 
     NSString *amount = [NSString formatAmount:expense.amount];

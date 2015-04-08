@@ -17,6 +17,7 @@
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
+#import "Fetch.h"
 
 @interface AppDelegate ()
 
@@ -114,6 +115,10 @@
     [self checkForMinimalData];
 
     return YES;
+}
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    [Fetch updateTodayExpensesDictionary:self.managedObjectContext];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

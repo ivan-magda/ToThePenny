@@ -58,6 +58,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
+
+    [self addMotionEffectToViews];
 }
 
 - (void)dealloc {
@@ -73,9 +75,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     if (fetch) {
         [self performFetches];
+        [self.tableView reloadData];
     }
     [self updateLabels];
-    [self.tableView reloadData];
 }
 
 - (void)performFetches {

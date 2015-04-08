@@ -18,6 +18,6 @@
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(CGFloat *)totalExpeditures;
 
-+ (BOOL)hasNewExpensesForTodayInManagedObjectContext:(NSManagedObjectContext *)context;
++ (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context;
 
 @end

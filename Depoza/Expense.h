@@ -2,7 +2,7 @@
 
 @class ExpenseData;
 
-@interface Expense : NSObject
+@interface Expense : NSObject <NSCoding>
 
 @property (nonatomic, strong) NSNumber *amount;
 @property (nonatomic, copy) NSString *category;
