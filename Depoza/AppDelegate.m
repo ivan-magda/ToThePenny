@@ -60,6 +60,21 @@
     return [[NSBundle mainBundle] URLForResource:@"DataModel" withExtension:@"momd"];
 }
 
+- (void)checkForMinimalData {
+    __weak NSManagedObjectContext *context = self.managedObjectContext;
+    __weak Persistence *persistence = self.persistence;
+    __weak MainViewController *controller = _mainViewController;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSInteger categoriesCount = [CategoryData countForCategoriesInContext:context];
+        NSInteger expensesCount = [ExpenseData countForExpensesInContext:context];
+        if (categoriesCount + expensesCount == 0) {
+            NSLog(@"%s insert categories Data", __PRETTY_FUNCTION__);
+            [persistence insertNecessaryCategoryData];
+            [controller updateUserInterfaceWithNewFetch:NO];
+        }
+    });
+}
+
 #pragma mark PersistenceDelegate
 
 - (void)persistenceStore:(Persistence *)persistence didChangeNotification:(NSNotification *)notification {
@@ -96,18 +111,7 @@
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
 
-    __weak NSManagedObjectContext *context = self.managedObjectContext;
-    __weak Persistence *persist = self.persistence;
-    __weak MainViewController *controller = _mainViewController;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSInteger categoriesCount = [CategoryData countForCategoriesInContext:context];
-        NSInteger expensesCount = [ExpenseData countForExpensesInContext:context];
-        if (categoriesCount + expensesCount == 0) {
-            NSLog(@"%s insert categories Data", __PRETTY_FUNCTION__);
-            [persist insertNecessaryCategoryData];
-            [controller updateUserInterfaceWithNewFetch:NO];
-        }
-    });
+    [self checkForMinimalData];
 
     return YES;
 }
