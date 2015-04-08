@@ -14,6 +14,7 @@
 
 #import "NSURL+InternalExtensions.h"
 
+typedef void(^DeduplicationsCompletionHandlerBlock)(BOOL deduplicationsFound);
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
@@ -162,6 +163,9 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 }
 
 - (void)insertNecessaryCategoryData {
+    [CategoryData setNextIdValueToUbiquitousKeyValueStore:0];
+    [ExpenseData setNextIdValueToUbiquitousKeyValueStore:0];
+
     NSString *countryCode = [[NSLocale currentLocale]objectForKey: NSLocaleCountryCode];
     if ([countryCode isEqualToString:@"RU"]) {
         [CategoryData categoryDataWithTitle:@"Связь" iconName:@"SimCard" andExpenses:nil inManagedObjectContext:_managedObjectContext];
@@ -383,10 +387,18 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 #pragma mark - Deduplication -
 
 - (void)deduplication {
-    [self deduplicationCategories];
-    [self deduplicationExpenses];
-
-    [self updateNextIdValues];
+    [self deduplicationCategoriesWithCompletionHandler:^(BOOL deduplicationsFound) {
+        if (deduplicationsFound) {
+            NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
+            [CategoryData setNextIdValueToUbiquitousKeyValueStore:categoryMaxID + 1];
+        }
+    }];
+    [self deduplicationExpensesWithCompletionHandler:^(BOOL deduplicationsFound) {
+        if (deduplicationsFound) {
+            NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
+            [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
+        }
+    }];
 }
 
 - (void)updateNextIdValues {
@@ -397,12 +409,17 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
 }
 
-- (void)deduplicationCategories {
+- (void)deduplicationCategoriesWithCompletionHandler:(DeduplicationsCompletionHandlerBlock)completionHandler {
     NSString *uniquePropertyKey = NSStringFromSelector(@selector(title));
     NSArray *valuesWithDupes = [self valuesWithDupesInEntity:NSStringFromClass([CategoryData class]) uniquePropertyKey:uniquePropertyKey];
 
+    BOOL deduplicationsFound = NO;
+
     if (valuesWithDupes.count > 0) {
         NSLog(@"%s duplications found in categories", __PRETTY_FUNCTION__);
+
+        deduplicationsFound = YES;
+
             //Use a predicate to fetch all of the records with duplicates.
             //Use a sort descriptor to properly order the results for the winner algorithm in the next step.
         NSFetchRequest *dupeFetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
@@ -442,6 +459,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             }
         }
     }
+    completionHandler(deduplicationsFound);
 }
 
 - (NSArray *)valuesWithDupesInEntity:(NSString *)entityName uniquePropertyKey:(NSString *)uniqueProperty {
@@ -489,12 +507,17 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     }
 }
 
-- (void)deduplicationExpenses {
+- (void)deduplicationExpensesWithCompletionHandler:(DeduplicationsCompletionHandlerBlock)completionHandler {
     NSString *uniquePropertyKey = NSStringFromSelector(@selector(idValue));
     NSArray *valuesWithDupes = [self valuesWithDupesInEntity:NSStringFromClass([ExpenseData class]) uniquePropertyKey:uniquePropertyKey];
 
+    BOOL deduplicationsFound = NO;
+
     if (valuesWithDupes.count > 0) {
         NSLog(@"%s duplications found in expenses", __PRETTY_FUNCTION__);
+
+        deduplicationsFound = YES;
+
             //Use a predicate to fetch all of the records with duplicates.
             //Use a sort descriptor to properly order the results for the winner algorithm in the next step.
         NSFetchRequest *dupeFetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
@@ -532,6 +555,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             }
         }
     }
+    completionHandler(deduplicationsFound);
 }
 
 - (NSInteger)findMaxIdValueInEntity:(NSString *)entityName {

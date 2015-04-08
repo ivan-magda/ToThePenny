@@ -16,6 +16,8 @@
 
 + (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)expenses;
 
++ (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context;
+
 + (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (ExpenseData *)getExpenseFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;

@@ -82,4 +82,15 @@
     return [expense firstObject];
 }
 
++ (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    NSError *error = nil;
+    NSUInteger count = [context countForFetchRequest:fetch error:&error];
+    if (error) {
+        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
+    }
+    return count;
+}
+
 @end
