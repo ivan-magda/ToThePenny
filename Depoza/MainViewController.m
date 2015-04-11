@@ -4,6 +4,9 @@
 #import "MoreInfoTableViewController.h"
 #import "CategoriesContainerViewController.h"
 #import "MainTableViewProtocolsImplementer.h"
+#import "SelectMonthViewController.h"
+    //View
+#import "TitleViewButton.h"
 
     //CoreData
 #import "Expense.h"
@@ -35,6 +38,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 @implementation MainViewController {
     CGFloat _totalExpeditures;
     NSMutableArray *_categoriesInfo;
+
+    TitleViewButton *_titleViewButton;
+    BOOL _showMonthView;
 }
 
 #pragma mark - ViewController life cycle -
@@ -59,6 +65,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
 
+    [self configurateTitleViewButton];
     [self addMotionEffectToViews];
 }
 
@@ -108,6 +115,43 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
     }
     return [formatter stringFromDate:theDate];
+}
+
+#pragma mark - TitleViewButton -
+
+- (void)configurateTitleViewButton {
+    _titleViewButton = [TitleViewButton buttonWithType:UIButtonTypeCustom];
+
+    NSString *text = [NSString stringWithFormat:@"%@ ",[self formatDateForMonthLabel:[NSDate date]]];
+    [_titleViewButton setTitle:text forState:UIControlStateNormal];
+    _titleViewButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
+    _titleViewButton.titleLabel.textAlignment = NSTextAlignmentCenter;
+    [_titleViewButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+
+    _showMonthView = NO;
+    UIImage *image = [UIImage imageNamed:@"Down.png"];
+    [_titleViewButton setImage:image forState:UIControlStateNormal];
+    [_titleViewButton sizeToFit];
+
+    [_titleViewButton addTarget:self action:@selector(titleViewButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.titleView = _titleViewButton;
+}
+
+- (void)titleViewButtonPressed:(UIButton *)button {
+    _showMonthView = !_showMonthView ? YES : NO;
+
+    if (_showMonthView) {
+        SelectMonthViewController *selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
+
+        selectMonthViewController.managedObjectContext = self.managedObjectContext;
+        [selectMonthViewController presentInParentViewController:self.tabBarController];
+
+        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
+
+        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation(0);
+    } else {
+        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation(0);
+    }
 }
 
 #pragma mark - Segues -

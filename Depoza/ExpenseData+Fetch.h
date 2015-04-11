@@ -24,4 +24,9 @@
 
 + (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates;
 
++ (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (NSArray *)getEachMonthWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
+
 @end

@@ -399,6 +399,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
         }
     }];
+    [self saveContext];
 }
 
 - (void)updateNextIdValues {

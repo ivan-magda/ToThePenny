@@ -7,7 +7,10 @@
 //
 
 #import "ExpenseData+Fetch.h"
+    //Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
+#import "NSDate+NextMonthFirstDate.h"
 
 @implementation ExpenseData (Fetch)
 
@@ -91,6 +94,116 @@
         NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
     }
     return count;
+}
+
++ (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    [request setResultType:NSDictionaryResultType];
+
+        // Create an expression for the key path.
+    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
+
+        // Create an expression to represent the minimum value at the key path 'creationDate'
+    NSExpression *minExpression = [NSExpression expressionForFunction:@"min:" arguments:@[keyPathExpression]];
+
+        // Create an expression description using the maxExpression and returning a date.
+    NSExpressionDescription *expressionDescription = [NSExpressionDescription new];
+
+        // The name is the key that will be used in the dictionary for the return value.
+    [expressionDescription setName:@"minDate"];
+    [expressionDescription setExpression:minExpression];
+    [expressionDescription setExpressionResultType:NSDateAttributeType];
+
+        // Set the request's properties to fetch just the property represented by the expressions.
+    [request setPropertiesToFetch:@[expressionDescription]];
+
+        // Execute the fetch.
+    NSDate *minDate = nil;
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    if (objects == nil) {
+        NSAssert(NO, @"Must be at least one object");
+    } else {
+        minDate = [[objects objectAtIndex:0] valueForKey:@"minDate"];
+    }
+    return minDate;
+}
+
++ (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    [request setResultType:NSDictionaryResultType];
+
+        // Create an expression for the key path.
+    NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
+
+        // Create an expression to represent the minimum value at the key path 'creationDate'
+    NSExpression *maxExpression = [NSExpression expressionForFunction:@"max:" arguments:@[keyPathExpression]];
+
+        // Create an expression description using the maxExpression and returning a date.
+    NSExpressionDescription *expressionDescription = [NSExpressionDescription new];
+
+        // The name is the key that will be used in the dictionary for the return value.
+    [expressionDescription setName:@"maxDate"];
+    [expressionDescription setExpression:maxExpression];
+    [expressionDescription setExpressionResultType:NSDateAttributeType];
+
+        // Set the request's properties to fetch just the property represented by the expressions.
+    [request setPropertiesToFetch:@[expressionDescription]];
+
+        // Execute the fetch.
+    NSDate *maxDate = nil;
+    NSError *error = nil;
+    NSArray *objects = [context executeFetchRequest:request error:&error];
+    if (objects == nil) {
+        NSAssert(NO, @"Must be at least one object");
+    } else {
+        maxDate = [[objects objectAtIndex:0] valueForKey:@"maxDate"];
+    }
+    return maxDate;
+}
+
++ (NSArray *)getEachMonthWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context {
+    NSDate *oldestDate = [self oldestDateExpenseInManagedObjectContext:context];
+    NSDate *mostRecentDate = [self mostRecentDateExpenseInManagedObjectContext:context];
+
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    [request setReturnsObjectsAsFaults:NO];
+
+    NSMutableArray *countOnMonth = [NSMutableArray new];
+
+    while ([oldestDate compare:mostRecentDate] != NSOrderedDescending) {
+        NSArray *dates = [oldestDate getFirstAndLastDaysInTheCurrentMonth];
+
+        NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
+        request.predicate = predicate;
+
+        NSError *error = nil;
+        NSArray *objects = [context executeFetchRequest:request error:&error];
+        if (error) {
+            NSLog(@"Error %s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+            return nil;
+        }
+
+        if (objects.count > 0) {
+            float amount = 0.0f;
+            for (ExpenseData *expense in objects) {
+                amount += [expense.amount floatValue];
+                [context refreshObject:expense mergeChanges:NO];
+            }
+
+            NSDictionary *components = [oldestDate getComponents];
+
+            NSDictionary *month = @{@"year"   : components[@"year"],
+                                    @"month"  : components[@"month"],
+                                    @"amount" : @(amount)};
+            
+            [countOnMonth addObject:month];
+        }
+        oldestDate = [oldestDate nextMonthFirstDate];
+    }
+    return [[countOnMonth reverseObjectEnumerator]allObjects];
 }
 
 @end
