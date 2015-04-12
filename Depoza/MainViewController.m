@@ -25,7 +25,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
@@ -51,7 +50,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
 
-    self.monthLabel.text = @"";
     self.totalAmountLabel.text = @"";
 
     self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.todayFetchedResultsController];
@@ -98,11 +96,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)updateLabels {
     self.totalAmountLabel.text = [NSString formatAmount:@(_totalExpeditures)];
-
-    NSString *monthString = [self formatDateForMonthLabel:[NSDate date]];
-    if (![self.monthLabel.text isEqualToString:monthString]) {
-        self.monthLabel.text = monthString;
-    }
 }
 
 - (NSString *)formatDateForMonthLabel:(NSDate *)theDate {
@@ -232,6 +225,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CategoriesInfo *anInfo = obj;
             if (category.idValue == anInfo.idValue) {
+                anInfo.iconName = category.iconName;
+
                 for (ExpenseData *anExpense in category.expense) {
                     CategoriesInfo *infoForUpdate = _categoriesInfo[idx];
                     infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [anExpense.amount floatValue]);
@@ -240,6 +235,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                 *stop = YES;
             }
         }];
+        [_managedObjectContext refreshObject:category mergeChanges:NO];
     }
     _totalExpeditures = countForExpenditures;
 

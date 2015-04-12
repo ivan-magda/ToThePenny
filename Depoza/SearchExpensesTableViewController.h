@@ -10,7 +10,7 @@
 
 @class NSManagedObjectContext;
 
-@interface AllExpensesTableViewController : UITableViewController
+@interface SearchExpensesTableViewController : UITableViewController
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

@@ -7,7 +7,7 @@
 //
 
     //View
-#import "AllExpensesTableViewController.h"
+#import "SearchExpensesTableViewController.h"
 #import "MoreInfoTableViewController.h"
 #import "EditExpenseTableViewController.h"
 #import "MainViewController.h"
@@ -18,7 +18,7 @@
     //Categories
 #import "NSString+FormatAmount.h"
 
-@interface AllExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+@interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation AllExpensesTableViewController
+@implementation SearchExpensesTableViewController
 
 #pragma mark - ViewControllerLifeCycle -
 

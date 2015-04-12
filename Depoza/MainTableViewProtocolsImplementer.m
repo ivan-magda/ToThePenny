@@ -53,6 +53,15 @@
     return [sectionInfo numberOfObjects];
 }
 
+//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+//    if (section == 0) {
+//        u_int32_t number = arc4random_uniform(1000);
+//
+//        return [NSString stringWithFormat:@"Потрачено сегодня: %i", number];
+//    }
+//    return nil;
+//}
+
 - (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.categoryIcon.image = [UIImage imageNamed:expense.category.iconName];

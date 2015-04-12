@@ -8,11 +8,12 @@
 
 #import "ChooseCategoryTableViewController.h"
 #import "CollectionViewController.h"
-#import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 
 @implementation ChooseCategoryTableViewController {
     BOOL _isChangeIconPressed;
     NSString *_selectedCategoryName;
+    NSDictionary *_categoriesIcons;
 }
 
 #pragma mark - ViewController life cycle -
@@ -21,6 +22,8 @@
     [super viewDidLoad];
 
     NSParameterAssert(_titles && _iconName);
+
+    _categoriesIcons = [CategoryData getIconsNamesAllCategoriesInContext:_context];
 
     _selectedCategoryName = self.originalCategoryName;
 }
@@ -58,12 +61,14 @@
     if (indexPath.section == 0) {
         NSString *identifier = @"IconCell";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-            cell.imageView.image = [UIImage imageNamed:_iconName];
-            cell.textLabel.text = NSLocalizedString(@"Icon", @"ChooseCategoryVC icon label");
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
+        cell.imageView.image = [UIImage imageNamed:_iconName];
+        cell.textLabel.text = NSLocalizedString(@"Icon", @"ChooseCategoryVC icon label");
+
         return cell;
     } else {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CategoryCell"];
@@ -100,6 +105,7 @@
     if (indexPath.section == 1) {
         _isChangeIconPressed  = NO;
         _selectedCategoryName = _titles[indexPath.row];
+        _iconName = _categoriesIcons[_selectedCategoryName];
 
         [tableView reloadData];
     } else if (indexPath.section == 0) {

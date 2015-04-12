@@ -69,7 +69,7 @@
 		50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
 		50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50A6E5611ACFB9110042BA6E /* seedRU.sqlite */; };
 		50A6E5641ACFB9110042BA6E /* seedUS.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50A6E5621ACFB9110042BA6E /* seedUS.sqlite */; };
-		50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */; };
+		50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50B195D71A4A66FB00E0F0B8 /* MoreInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B195D61A4A66FB00E0F0B8 /* MoreInfoTableViewController.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
@@ -212,8 +212,8 @@
 		50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ExpenseData+Fetch.m"; sourceTree = "<group>"; };
 		50A6E5611ACFB9110042BA6E /* seedRU.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seedRU.sqlite; sourceTree = "<group>"; };
 		50A6E5621ACFB9110042BA6E /* seedUS.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seedUS.sqlite; sourceTree = "<group>"; };
-		50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllExpensesTableViewController.h; sourceTree = "<group>"; };
-		50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllExpensesTableViewController.m; sourceTree = "<group>"; };
+		50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExpensesTableViewController.h; sourceTree = "<group>"; };
+		50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchExpensesTableViewController.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B195D51A4A66FB00E0F0B8 /* MoreInfoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoreInfoTableViewController.h; sourceTree = "<group>"; };
@@ -597,8 +597,8 @@
 		50AA42EC1A87A2310019CB55 /* AllExpensesView */ = {
 			isa = PBXGroup;
 			children = (
-				50AA42E91A87A22A0019CB55 /* AllExpensesTableViewController.h */,
-				50AA42EA1A87A22A0019CB55 /* AllExpensesTableViewController.m */,
+				50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */,
+				50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */,
 			);
 			name = AllExpensesView;
 			sourceTree = "<group>";
@@ -966,7 +966,7 @@
 				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
 				50206E9C1AC8E097001A017E /* CollectionViewController.m in Sources */,
 				5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
-				50AA42EB1A87A22A0019CB55 /* AllExpensesTableViewController.m in Sources */,
+				50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				505AF9341A91577000E0CB28 /* EditExpenseTableViewController.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,

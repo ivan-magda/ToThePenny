@@ -11,8 +11,7 @@
 #import "CategoryInfoCollectionViewCell.h"
     //CoreData
 #import "CategoriesInfo.h"
-
-static const CGFloat kCellHeight = 46.0f;
+#import "NSString+FormatAmount.h"
 
 @interface CategoriesContainerViewController ()
 
@@ -56,8 +55,8 @@ static const CGFloat kCellHeight = 46.0f;
 - (void)configureCell:(CategoryInfoCollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     CategoriesInfo *categoryInfo = _categories[indexPath.row];
 
-    cell.categoryNameLabel.text = categoryInfo.title;
-    cell.amountLabel.text = [NSString stringWithFormat:@"%@", categoryInfo.amount];
+    cell.categoryImage.image = [UIImage imageNamed:categoryInfo.iconName];
+    cell.amountLabel.text = [NSString formatAmount:categoryInfo.amount];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,20 +65,6 @@ static const CGFloat kCellHeight = 46.0f;
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
-}
-
-#pragma mark - UICollectionViewDelegateFlowLayout - 
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CategoriesInfo *categoryInfo = _categories[indexPath.row];
-    NSString *categoryName = categoryInfo.title;
-    NSString *amount = [NSString stringWithFormat:@"%@", categoryInfo.amount];
-
-    CGSize size = [((categoryName.length > amount.length) ? categoryName : amount) sizeWithAttributes:@{NSFontAttributeName : [UIFont systemFontOfSize:17]}];
-    size.width = roundf(size.width + 1.0f);
-    size.height = kCellHeight;
-
-    return size;
 }
 
 #pragma mark - UICollectionViewDelegate -

@@ -17,6 +17,8 @@
 + (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)categories;
 
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
++ (NSDictionary *)getIconsNamesAllCategoriesInContext:(NSManagedObjectContext *)context;
+
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 
 @end

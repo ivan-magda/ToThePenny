@@ -95,6 +95,7 @@
         NSArray *allCategoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
 
         controller.delegate = self;
+        controller.context = _managedObjectContext;
         controller.titles = allCategoriesTitles;
         controller.iconName = _iconName;
         controller.originalCategoryName = self.categoryNameLabel.text;

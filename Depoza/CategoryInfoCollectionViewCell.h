@@ -10,7 +10,7 @@
 
 @interface CategoryInfoCollectionViewCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *categoryNameLabel;
+@property (nonatomic, weak) IBOutlet UIImageView *categoryImage;
 @property (nonatomic, weak) IBOutlet UILabel *amountLabel;
 
 @end

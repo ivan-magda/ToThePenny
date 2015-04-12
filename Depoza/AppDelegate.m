@@ -9,7 +9,7 @@
     //ViewControllers
 #import "AppDelegate.h"
 #import "MainViewController.h"
-#import "AllExpensesTableViewController.h"
+#import "SearchExpensesTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "MoreInfoTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
@@ -25,7 +25,7 @@
 
 @implementation AppDelegate {
     MainViewController *_mainViewController;
-    AllExpensesTableViewController *_allExpensesTableViewController;
+    SearchExpensesTableViewController *_allExpensesTableViewController;
     SettingsTableViewController *_settingsTableViewController;
 }
 
@@ -40,7 +40,7 @@
 
         //Get the AllExpensesViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[1];
-    _allExpensesTableViewController = (AllExpensesTableViewController *)navigationController.viewControllers[0];
+    _allExpensesTableViewController = (SearchExpensesTableViewController *)navigationController.viewControllers[0];
 
         //Get the SettingsTableViewController
     navigationController = (UINavigationController *)tabBarController.viewControllers[2];

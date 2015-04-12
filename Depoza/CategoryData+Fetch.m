@@ -91,6 +91,7 @@
 
     for (CategoryData *category in categories) {
         [titles addObject:category.title];
+        [context refreshObject:category mergeChanges:NO];
     }
     return [NSArray arrayWithArray:titles];
 }
@@ -107,6 +108,17 @@
         NSLog(@"Error occured %@", [error localizedDescription]);
     }
     return categories;
+}
+
++ (NSDictionary *)getIconsNamesAllCategoriesInContext:(NSManagedObjectContext *)context {
+    NSArray *categories = [CategoryData getAllCategoriesInContext:context];
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:[categories count]];
+
+    for (CategoryData *category in categories) {
+        [dictionary setValue:category.iconName forKey:category.title];
+        [context refreshObject:category mergeChanges:NO];
+    }
+    return [dictionary copy];
 }
 
 @end
