@@ -172,9 +172,15 @@
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
-            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
             detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
-            detailsViewController.expenseToShow = expense;
+            if (self.searchPredicate == nil) {
+                ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+                detailsViewController.expenseToShow = expense;
+            } else {
+                NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_searchPredicate];
+                ExpenseData *expense = filteredExpenses[indexPath.row];
+                detailsViewController.expenseToShow = expense;
+            }
         }
     } else if ([segue.identifier isEqualToString:@"AddExpense"]) {
         NSArray *categoriesTitles = sender;
