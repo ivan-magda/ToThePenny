@@ -14,6 +14,7 @@
 
 @end
 
+#warning Remove ubiquitousKeyValueStore
 @implementation ExtensionSettingsTableViewController {
     BOOL _pickerViewVisible;
     NSUbiquitousKeyValueStore *_kvStore;

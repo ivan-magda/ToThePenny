@@ -8,6 +8,7 @@
 
 #import "CategoryData+Fetch.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+#import "Persistence.h"
 
 @implementation CategoryData (Fetch)
 
@@ -37,16 +38,24 @@
 }
 
 + (NSInteger)nextId {
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    NSInteger idValue = [[kvStore objectForKey:@"categoryId"]integerValue];
-    [kvStore setObject:@(idValue + 1) forKey:@"categoryId"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger idValue = [defaults integerForKey:@"categoryId"];
+    [defaults setInteger:idValue + 1 forKey:@"categoryId"];
+    [defaults synchronize];
 
-    return idValue;
+    Persistence *persistence = [Persistence sharedInstance];
+    NSInteger count = [CategoryData countForIdValue:idValue inManagedObjectContext:persistence.managedObjectContext];
+    if (count == 0) {
+        return idValue;
+    } else {
+        return [self nextId];
+    }
 }
 
-+ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)categories {
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    [kvStore setObject:@(categories) forKey:@"categoryId"];
++ (void)setNextIdValueToUserDefaults:(NSInteger)categories {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:categories forKey:@"categoryId"];
+    [defaults synchronize];
 }
 
 + (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context {
@@ -119,6 +128,49 @@
         [context refreshObject:category mergeChanges:NO];
     }
     return [dictionary copy];
+}
+
++ (NSArray *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CategoryData class])];
+    [request setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];
+
+    NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];
+    NSExpression *idToFind  = [NSExpression expressionForConstantValue:@(idValue)];
+    NSPredicate *predicate  = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath
+                                                                 rightExpression:idToFind
+                                                                        modifier:NSDirectPredicateModifier
+                                                                            type:NSEqualToPredicateOperatorType
+                                                                         options:0];
+    request.predicate = predicate;
+
+    NSError *error = nil;
+    NSArray *category = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
+    return category;
+}
+
++ (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CategoryData class])];
+
+    NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];
+    NSExpression *idToFind  = [NSExpression expressionForConstantValue:@(idValue)];
+    NSPredicate *predicate  = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath
+                                                                 rightExpression:idToFind
+                                                                        modifier:NSDirectPredicateModifier
+                                                                            type:NSEqualToPredicateOperatorType
+                                                                         options:0];
+    request.predicate = predicate;
+
+    NSError *error = nil;
+    NSInteger count = [context countForFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
+    return count;
 }
 
 @end

@@ -163,8 +163,8 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 }
 
 - (void)insertNecessaryCategoryData {
-    [CategoryData setNextIdValueToUbiquitousKeyValueStore:0];
-    [ExpenseData setNextIdValueToUbiquitousKeyValueStore:0];
+    [CategoryData setNextIdValueToUserDefaults:0];
+    [ExpenseData setNextIdValueToUserDefaults:0];
 
     NSString *countryCode = [[NSLocale currentLocale]objectForKey: NSLocaleCountryCode];
     if ([countryCode isEqualToString:@"RU"]) {
@@ -390,13 +390,13 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     [self deduplicationCategoriesWithCompletionHandler:^(BOOL deduplicationsFound) {
         if (deduplicationsFound) {
             NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
-            [CategoryData setNextIdValueToUbiquitousKeyValueStore:categoryMaxID + 1];
+            [CategoryData setNextIdValueToUserDefaults:categoryMaxID + 1];
         }
     }];
     [self deduplicationExpensesWithCompletionHandler:^(BOOL deduplicationsFound) {
         if (deduplicationsFound) {
             NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
-            [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
+            [ExpenseData setNextIdValueToUserDefaults:expenseMaxID + 1];
         }
     }];
     [self saveContext];
@@ -406,8 +406,8 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     NSInteger categoryMaxID = [self findMaxIdValueInEntity:NSStringFromClass([CategoryData class])];
     NSInteger expenseMaxID  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])];
 
-    [CategoryData setNextIdValueToUbiquitousKeyValueStore:categoryMaxID + 1];
-    [ExpenseData setNextIdValueToUbiquitousKeyValueStore:expenseMaxID + 1];
+    [CategoryData setNextIdValueToUserDefaults:categoryMaxID + 1];
+    [ExpenseData setNextIdValueToUserDefaults:expenseMaxID + 1];
 }
 
 - (void)deduplicationCategoriesWithCompletionHandler:(DeduplicationsCompletionHandlerBlock)completionHandler {

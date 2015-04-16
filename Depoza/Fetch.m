@@ -9,7 +9,7 @@
 #import "CategoriesInfo.h"
 
     //CoreData
-#import "CategoryData.h"
+#import "CategoryData+Fetch.h"
 #import "ExpenseData+Fetch.h"
 #import "Persistence.h"
 #import "Expense.h"
@@ -68,6 +68,13 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
             NSLog(@"%@ %@", aData.title, aData.idValue);
         } else {
             NSLog(@"Categories must have a unique id values!!!");
+
+            NSInteger newId = [CategoryData nextId];
+            aData.idValue = @(newId);
+            for (ExpenseData *expense in aData.expense) {
+                expense.categoryId = @(newId);
+                [managedObjectContext refreshObject:expense mergeChanges:YES];
+            }
         }
     }
     categoriesIds = nil;
@@ -101,7 +108,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     *totalExpeditures = countForExpenditures;
 
     NSDate *end = [NSDate date];
-    NSLog(@"Second version with subquery and prefetching time execution: %f", [end timeIntervalSinceDate:start]);
+    NSLog(@"Load categories data time execution: %f", [end timeIntervalSinceDate:start]);
 
     return categoriesInfo;
 }

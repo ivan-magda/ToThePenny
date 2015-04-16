@@ -62,8 +62,6 @@
 		50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
 		50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
-		50A1D4DA1AC0434600E56EB1 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
-		50A1D4DC1AC0435000E56EB1 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
 		50A1D4DF1AC0438C00E56EB1 /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
 		50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
@@ -941,8 +939,6 @@
 				50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */,
 				5015A56B1AC02C230056271A /* TodayViewController.m in Sources */,
 				50A1D4DF1AC0438C00E56EB1 /* CategoriesInfo.m in Sources */,
-				50A1D4DC1AC0435000E56EB1 /* CategoryData+Fetch.m in Sources */,
-				50A1D4DA1AC0434600E56EB1 /* ExpenseData+Fetch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

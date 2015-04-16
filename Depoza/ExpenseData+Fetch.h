@@ -13,10 +13,10 @@
 @interface ExpenseData (Fetch)
 
 + (NSInteger)nextId;
-
-+ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)expenses;
++ (void)setNextIdValueToUserDefaults:(NSInteger)expenses;
 
 + (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context;
++ (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 

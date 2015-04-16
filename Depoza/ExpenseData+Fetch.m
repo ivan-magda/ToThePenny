@@ -7,6 +7,7 @@
 //
 
 #import "ExpenseData+Fetch.h"
+#import "Persistence.h"
     //Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -15,16 +16,24 @@
 @implementation ExpenseData (Fetch)
 
 + (NSInteger)nextId {
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    NSInteger idValue = [[kvStore objectForKey:@"idValue"]integerValue];
-    [kvStore setObject:@(idValue + 1) forKey:@"idValue"];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSInteger idValue = [defaults integerForKey:@"idValue"];
+    [defaults setInteger:idValue + 1 forKey:@"idValue"];
+    [defaults synchronize];
 
-    return idValue;
+    Persistence *persistence = [Persistence sharedInstance];
+    NSInteger count = [ExpenseData countForIdValue:idValue inManagedObjectContext:persistence.managedObjectContext];
+    if (count == 0) {
+        return idValue;
+    } else {
+        return [self nextId];
+    }
 }
 
-+ (void)setNextIdValueToUbiquitousKeyValueStore:(NSInteger)expenses {
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    [kvStore setObject:@(expenses) forKey:@"idValue"];
++ (void)setNextIdValueToUserDefaults:(NSInteger)expenses {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:expenses forKey:@"idValue"];
+    [defaults synchronize];
 }
 
 + (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates {
@@ -205,5 +214,27 @@
     }
     return [[countOnMonth reverseObjectEnumerator]allObjects];
 }
+
++ (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];
+    NSExpression *idToFind  = [NSExpression expressionForConstantValue:@(idValue)];
+    NSPredicate *predicate  = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath
+                                                                 rightExpression:idToFind
+                                                                        modifier:NSDirectPredicateModifier
+                                                                            type:NSEqualToPredicateOperatorType
+                                                                         options:0];
+    request.predicate = predicate;
+
+    NSError *error = nil;
+    NSInteger count = [context countForFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"%@", [error localizedDescription]);
+    }
+
+    return count;
+}
+
 
 @end

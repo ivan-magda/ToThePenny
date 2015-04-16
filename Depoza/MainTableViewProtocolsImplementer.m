@@ -53,6 +53,7 @@
     return [sectionInfo numberOfObjects];
 }
 
+#warning Show today amount of expenses in header view
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 //    if (section == 0) {
 //        u_int32_t number = arc4random_uniform(1000);
