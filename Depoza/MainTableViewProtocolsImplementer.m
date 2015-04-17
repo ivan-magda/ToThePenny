@@ -21,12 +21,15 @@
 
 @end
 
-@implementation MainTableViewProtocolsImplementer
+@implementation MainTableViewProtocolsImplementer {
+    UILabel *_tableViewHeaderLabel;
+}
 
 - (instancetype)initWithTableView:(UITableView *)tableView fetchedResultsController:(NSFetchedResultsController *)fetchedResultsController {
     if (self = [super init]) {
         _tableView = tableView;
         _fetchedResultsController = fetchedResultsController;
+        _tableViewHeaderLabel = nil;
     }
     return self;
 }
@@ -53,15 +56,17 @@
     return [sectionInfo numberOfObjects];
 }
 
-#warning Show today amount of expenses in header view
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    if (section == 0) {
-//        u_int32_t number = arc4random_uniform(1000);
-//
-//        return [NSString stringWithFormat:@"Потрачено сегодня: %i", number];
-//    }
-//    return nil;
-//}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        NSArray *expenses = self.fetchedResultsController.fetchedObjects;
+        CGFloat amount = 0.0f;
+        for (ExpenseData *anExpense in expenses) {
+            amount += [anExpense.amount floatValue];
+        }
+        return [NSString stringWithFormat:@"Сегодня: %@", [NSString formatAmount:@(amount)]];
+    }
+    return nil;
+}
 
 - (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -108,6 +113,32 @@
 }
 
 #pragma mark - UITableViewDelegate -
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
+        label.font = [UIFont systemFontOfSize:17.0f];
+        label.shadowOffset = CGSizeMake(0, 1);
+        label.shadowColor = [UIColor whiteColor];
+        label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+        label.textAlignment = NSTextAlignmentCenter;
+        label.backgroundColor = [UIColor clearColor];
+
+        _tableViewHeaderLabel = label;
+
+        UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, tableView.sectionHeaderHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
+        separator.backgroundColor = tableView.separatorColor;
+
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width,tableView.sectionHeaderHeight)];
+        view.backgroundColor = tableView.backgroundColor;
+
+        [view addSubview:label];
+        [view addSubview:separator];
+
+        return view;
+    }
+    return nil;
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -165,6 +196,8 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
         // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    _tableViewHeaderLabel.text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+
     [self.tableView endUpdates];
 }
 
