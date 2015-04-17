@@ -141,7 +141,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 #pragma mark - NCWidgetProviding -
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
-    return UIEdgeInsetsZero;
+    return UIEdgeInsetsMake(defaultMarginInsets.top, 0, 0, 0);
 }
 
     //A widget is not created every time you view the notification center so loadView won't be called every time it is displayed.

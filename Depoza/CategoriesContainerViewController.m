@@ -16,6 +16,7 @@
 @interface CategoriesContainerViewController ()
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
 @end
 
@@ -64,6 +65,9 @@
 
     [self configureCell:cell atIndexPath:indexPath];
 
+    int pages = floor(_collectionView.contentSize.width / _collectionView.frame.size.width) + 1;
+    [self.pageControl setNumberOfPages:pages];
+
     return cell;
 }
 
@@ -71,6 +75,28 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"Select %ld", (long)indexPath.row);
+}
+
+#pragma mark - UIScrollVewDelegate for UIPageControl
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CGFloat pageWidth = _collectionView.frame.size.width;
+    float currentPage = _collectionView.contentOffset.x / pageWidth;
+
+    if (0.0f != fmodf(currentPage, 1.0f)) {
+        _pageControl.currentPage = currentPage + 1;
+    } else {
+        _pageControl.currentPage = currentPage;
+    }
+}
+
+#pragma mark - IBActions -
+
+- (IBAction)pageControlDidChangeValue:(UIPageControl *)sender {
+    UIPageControl *pageControl = sender;
+    CGFloat pageWidth = CGRectGetWidth(_collectionView.frame);
+    CGPoint scrollTo = CGPointMake(pageWidth * pageControl.currentPage, 0);
+    [self.collectionView setContentOffset:scrollTo animated:YES];
 }
 
 
