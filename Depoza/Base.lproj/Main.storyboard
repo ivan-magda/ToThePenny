@@ -600,6 +600,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8zA-3A-IRG" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Expenses" image="Banknotes.png" id="HE9-VB-20J"/>
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="i28-j2-vsF">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -906,6 +907,7 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wwr-sZ-vet" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="svY-F1-J0j">
                         <autoresizingMask key="autoresizingMask"/>
@@ -998,11 +1000,11 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="138" id="8VD-Gg-mhy"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="0.0" id="gdR-1Z-62z">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="15" minimumInteritemSpacing="0.0" id="YGS-aN-QWW">
                                     <size key="itemSize" width="64" height="64"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="15" minY="3" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CollectionCell" id="7Q8-bJ-Hyt" customClass="CategoryInfoCollectionViewCell">

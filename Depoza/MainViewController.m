@@ -134,6 +134,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _showMonthView = !_showMonthView ? YES : NO;
 
     if (_showMonthView) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
         SelectMonthViewController *selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
 
         selectMonthViewController.managedObjectContext = self.managedObjectContext;

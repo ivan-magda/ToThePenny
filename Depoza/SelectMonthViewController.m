@@ -50,6 +50,8 @@
 #pragma mark - Embed -
 
 - (void)dismissFromParentViewController {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+
     [self willMoveToParentViewController:nil];
 
     [UIView animateWithDuration:0.3 animations:^ {
