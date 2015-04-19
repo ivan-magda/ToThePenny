@@ -16,7 +16,7 @@
 
 + (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key;
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)context totalExpeditures:(CGFloat *)totalExpeditures;
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date;
 
 + (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context;
 

@@ -19,6 +19,8 @@
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.m"
+#import "NSDate+IsDateBetweenCurrentMonth.h"
+#import "NSDate+IsDatesWithEqualMonth.h"
 #import "NSString+FormatAmount.h"
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
@@ -40,6 +42,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     TitleViewButton *_titleViewButton;
     BOOL _showMonthView;
+    NSDate *_dateToShow;
 }
 
 #pragma mark - ViewController life cycle -
@@ -49,6 +52,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
+
+    _dateToShow = [NSDate date];
 
     self.totalAmountLabel.text = @"";
 
@@ -65,6 +70,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self configurateTitleViewButton];
     [self addMotionEffectToViews];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
 }
 
 - (void)dealloc {
@@ -75,7 +82,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark - Helper methods -
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
-    [self loadCategoriesData];
+    [self loadCategoriesDataBetweenDate:[NSDate date]];
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
     if (fetch) {
@@ -90,8 +97,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self monthPerformFetch];
 }
 
-- (void)loadCategoriesData {
-    _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpeditures:& _totalExpeditures];
+- (void)loadCategoriesDataBetweenDate:(NSDate *)date {
+    _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpeditures:& _totalExpeditures andBetweenMonthDate:date];
 }
 
 - (void)updateLabels {
@@ -110,12 +117,67 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     return [formatter stringFromDate:theDate];
 }
 
+- (void)changeMonthToShowFromDate:(NSDate *)date {
+    if ([_dateToShow isDatesWithEqualMonth:date]) {
+        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation(0);
+        return;
+    }
+
+    _dateToShow = date;
+
+    [self loadCategoriesDataBetweenDate:_dateToShow];
+    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
+
+    [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
+    [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
+
+    NSArray *todayDates = nil;
+    NSPredicate *todayPredicate = nil;
+    NSArray *monthDates = [_dateToShow getFirstAndLastDaysInTheCurrentMonth];
+    NSPredicate *monthPredicate = [ExpenseData compoundPredicateBetweenDates:monthDates];
+
+    if ([NSDate isDateBetweenCurrentMonth:_dateToShow]) {
+        todayDates = [NSDate getStartAndEndDatesOfTheCurrentDate];
+        todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
+    } else {
+        todayDates = [_dateToShow getFirstAndLastDaysInTheCurrentMonth];
+        todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
+    }
+
+    self.todayFetchedResultsController.fetchRequest.predicate = todayPredicate;
+    self.monthFetchedResultsController.fetchRequest.predicate = monthPredicate;
+    [self performFetches];
+
+    [self.tableView reloadData];
+
+    [self updateLabels];
+
+    _titleViewButton = nil;
+    [self configurateTitleViewButton];
+}
+
+- (NSDate *)dateFromMonthInfo:(NSDictionary *)monthInfo {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+
+    NSDateComponents *dayComponents = [NSDateComponents new];
+    dayComponents.year = [monthInfo[@"year"]integerValue];
+    dayComponents.month = [monthInfo[@"month"]integerValue];
+    dayComponents.day = 10;
+    NSDate *date = [calendar dateFromComponents:dayComponents];
+    
+    return date;
+}
+
+- (void)applicationWillResignActive {
+    [self changeMonthToShowFromDate:[NSDate date]];
+}
+
 #pragma mark - TitleViewButton -
 
 - (void)configurateTitleViewButton {
     _titleViewButton = [TitleViewButton buttonWithType:UIButtonTypeCustom];
 
-    NSString *text = [NSString stringWithFormat:@"%@ ",[self formatDateForMonthLabel:[NSDate date]]];
+    NSString *text = [NSString stringWithFormat:@"%@ ",[self formatDateForMonthLabel:_dateToShow]];
     [_titleViewButton setTitle:text forState:UIControlStateNormal];
     _titleViewButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
     _titleViewButton.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -134,18 +196,18 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _showMonthView = !_showMonthView ? YES : NO;
 
     if (_showMonthView) {
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
+        } completion:nil];
+
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
         SelectMonthViewController *selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
 
         selectMonthViewController.managedObjectContext = self.managedObjectContext;
+        selectMonthViewController.delegate = self;
+
         [selectMonthViewController presentInParentViewController:self.tabBarController];
-
-        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
-
-        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation(0);
-    } else {
-        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation(0);
     }
 }
 
@@ -185,14 +247,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }
 }
 
-#pragma mark - AddExpenseViewControllerDelegate
-
-- (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
-    CategoriesInfo *info = _categoriesInfo[index];
-    CGFloat value = [[info amount] floatValue] + amount;
-
-    info.amount = @(value);
-}
+#pragma mark - Delegate -
+#pragma mark AddExpenseViewControllerDelegate
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _totalExpeditures += [expense.amount floatValue];
@@ -212,10 +268,17 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self updateLabels];
 }
 
-#pragma mark - EditExpenseTableViewControllerDelegate
+- (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
+    CategoriesInfo *info = _categoriesInfo[index];
+    CGFloat value = [[info amount] floatValue] + amount;
+
+    info.amount = @(value);
+}
+
+#pragma mark EditExpenseTableViewControllerDelegate
 
 - (void)editExpenseTableViewControllerDelegate:(EditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
-    NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:[NSDate date]managedObjectContext:_managedObjectContext];
+    NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:_dateToShow managedObjectContext:_managedObjectContext];
 
     for (CategoriesInfo *anInfo in _categoriesInfo) {
         anInfo.amount = @0;
@@ -247,7 +310,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.tableViewProtocolsImplementer.tableView reloadData];
 }
 
-#pragma mark - AddCategoryViewControllerDelegate
+#pragma mark AddCategoryViewControllerDelegate
 
 - (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
     CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
@@ -255,7 +318,15 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
 }
 
-#pragma mark - NSFetchedResultsController
+#pragma mark SelectMonthViewControllerDelegate
+
+- (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
+    NSDate *date = [self dateFromMonthInfo:monthInfo];
+
+    [self changeMonthToShowFromDate:date];
+}
+
+#pragma mark - NSFetchedResultsController -
 #pragma mark Today
 
 - (NSFetchedResultsController *)todayFetchedResultsController {

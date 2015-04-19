@@ -46,7 +46,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     return fetchedCategories;
 }
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures {
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date {
     [[Persistence sharedInstance]deduplication];
 
     NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
@@ -79,7 +79,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     }
     categoriesIds = nil;
     
-    NSArray *days = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *days = [date getFirstAndLastDaysInTheCurrentMonth];
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];

@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SelectMonthViewControllerDelegate.h"
 
 @class NSManagedObjectContext;
 
 @interface SelectMonthViewController : UIViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic, strong) id <SelectMonthViewControllerDelegate>delegate;
 
 - (void)presentInParentViewController:(UIViewController *)parentViewController;
 - (void)dismissFromParentViewController;

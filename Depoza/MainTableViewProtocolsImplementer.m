@@ -16,6 +16,7 @@
 #import "CategoryData.h"
     //Categories
 #import "NSString+FormatAmount.h"
+#import "NSDate+IsDateBetweenCurrentMonth.h"
 
 @interface MainTableViewProtocolsImplementer ()
 
@@ -44,6 +45,11 @@
     return [formatter stringFromDate:theDate];
 }
 
+- (BOOL)isCurrentMonthShowing {
+    ExpenseData *anExpense = [_fetchedResultsController.fetchedObjects firstObject];
+    return [NSDate isDateBetweenCurrentMonth:anExpense.dateOfExpense];
+}
+
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -57,6 +63,9 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (![self isCurrentMonthShowing]) {
+        return nil;
+    }
     if (section == 0) {
         NSArray *expenses = self.fetchedResultsController.fetchedObjects;
         CGFloat amount = 0.0f;
@@ -112,9 +121,21 @@
     }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (![self isCurrentMonthShowing]) {
+        return 0.0f;
+    } else {
+        return self.tableView.sectionHeaderHeight;
+    }
+}
+
 #pragma mark - UITableViewDelegate -
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (![self isCurrentMonthShowing]) {
+        return nil;
+    }
+
     if (section == 0) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
         label.font = [UIFont systemFontOfSize:17.0f];
@@ -196,7 +217,9 @@
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
         // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
-    _tableViewHeaderLabel.text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+    if ([self isCurrentMonthShowing]) {
+        _tableViewHeaderLabel.text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+    }
 
     [self.tableView endUpdates];
 }
