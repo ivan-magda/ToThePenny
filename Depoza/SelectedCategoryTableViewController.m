@@ -13,7 +13,7 @@
 #import "ExpenseData+Fetch.h"
 #import "CategoriesInfo.h"
     //View
-#import "MainViewCell.h"
+#import "SelectedCategoryCell.h"
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -38,11 +38,10 @@
 }
 
 - (NSString *)formatDate:(NSDate *)theDate {
-
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"HH:mm"];
+        formatter = [NSDateFormatter new];
+        [formatter setDateFormat:@"dd.MM.YY"];
     }
     return [formatter stringFromDate:theDate];
 }
@@ -59,27 +58,20 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(SelectedCategoryCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.categoryIcon.image = [UIImage imageNamed:expense.category.iconName];
-    cell.categoryLabel.text = expense.category.title;
-
     if (expense.descriptionOfExpense.length == 0) {
-        cell.descriptionLabel.hidden = YES;
-
-        cell.categoryLabelTopSpaceConstraint.constant = IncreasedCategoryLabelTopSpaceValue;
+        cell.leftLabel.text = NSLocalizedString(@"(No Description)", @"SelectedCategoryVC when expenseDescription.length == 0 show (No description)");
     } else {
-        cell.categoryLabelTopSpaceConstraint.constant = DefaultCategoryLabelTopSpaceValue;
-
-        cell.descriptionLabel.hidden = NO;
-        cell.descriptionLabel.text = expense.descriptionOfExpense;
+        cell.leftLabel.text = expense.descriptionOfExpense;
     }
 
-    cell.amountLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
+    cell.subtitleLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
+    cell.rightDetailLabel.text = [self formatDate:expense.dateOfExpense];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    MainViewCell *cell = (MainViewCell *)[tableView dequeueReusableCellWithIdentifier:@"SelectedCell"];
+    SelectedCategoryCell *cell = (SelectedCategoryCell *)[tableView dequeueReusableCellWithIdentifier:@"SelectedCell"];
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;

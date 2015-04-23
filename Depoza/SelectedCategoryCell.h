@@ -10,8 +10,8 @@
 
 @interface SelectedCategoryCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *categoryNameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *descriptionLabel;
-@property (nonatomic, weak) IBOutlet UILabel *amountLabel;
+@property (nonatomic, weak) IBOutlet UILabel *leftLabel;
+@property (nonatomic, weak) IBOutlet UILabel *rightDetailLabel;
+@property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
 
 @end
