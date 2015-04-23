@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "MainViewControllerDelegate.h"
+#import "CategoriesContainerViewControllerDelegate.h"
 
 @interface CategoriesContainerViewController : UIViewController <MainViewControllerDelegate>
 
 @property (nonatomic, copy) NSArray *categories;
+
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic, strong) NSDate *timePeriod;
+
+@property (nonatomic, strong) id <CategoriesContainerViewControllerDelegate>delegate;
 
 @end

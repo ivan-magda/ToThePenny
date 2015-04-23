@@ -8,23 +8,25 @@
 
 #import "ExtensionSettingsTableViewController.h"
 
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
+
 @interface ExtensionSettingsTableViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIPickerView *pickerView;
 
 @end
 
-#warning Remove ubiquitousKeyValueStore
 @implementation ExtensionSettingsTableViewController {
     BOOL _pickerViewVisible;
-    NSUbiquitousKeyValueStore *_kvStore;
+    NSUserDefaults *_defaults;
     NSInteger _numberExpenseToShow;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self configurateUbiquitousKeyValueStore];
+    [self configurateUserDefaults];
 
     _pickerViewVisible = NO;
     self.pickerView.hidden = YES;
@@ -45,22 +47,26 @@
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%ld", (long)_numberExpenseToShow];
 }
 
-- (void)configurateUbiquitousKeyValueStore {
-    _kvStore = [NSUbiquitousKeyValueStore defaultStore];
+- (void)configurateUserDefaults {
+    _defaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
 
-    BOOL isFirst = ([_kvStore boolForKey:@"first"] == NO ? YES : NO);
+    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
+
+    BOOL isFirst = ([kvStore boolForKey:@"first"] == NO ? YES : NO);
     if (isFirst) {
-        [_kvStore setBool:YES forKey:@"first"];
+        [kvStore setBool:YES forKey:@"first"];
+        
         [self updateNumberExpenseToShowWithValue:5];
 
         _numberExpenseToShow = 5;
     } else {
-        _numberExpenseToShow = [[_kvStore objectForKey:@"numberExpenseToShow"]integerValue];
+        _numberExpenseToShow = [_defaults integerForKey:kNumberExpensesToShowUserDefaultsKey];
     }
 }
 
 - (void)updateNumberExpenseToShowWithValue:(NSInteger)value {
-    [_kvStore setObject:@(value) forKey:@"numberExpenseToShow"];
+    [_defaults setInteger:value forKey:kNumberExpensesToShowUserDefaultsKey];
+    [_defaults synchronize];
 }
 
 #pragma mark - UITableView -

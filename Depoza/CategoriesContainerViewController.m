@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-    //View
+    //ViewController's
 #import "CategoriesContainerViewController.h"
+#import "SelectedCategoryTableViewController.h"
+    //View
 #import "CategoryInfoCollectionViewCell.h"
     //CoreData
 #import "CategoriesInfo.h"
@@ -25,6 +27,26 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    NSParameterAssert(_managedObjectContext);
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"CategorySelected"]) {
+        SelectedCategoryTableViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
+
+        CategoriesInfo *category = nil;
+        if ([sender isKindOfClass:[CategoryInfoCollectionViewCell class]]) {
+            NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
+
+            category = _categories[indexPath.row];
+
+            [self.delegate categoriesContainerViewController:self didChooseCategory:category];
+        }
+        controller.selectedCategory = category;
+        controller.timePeriod = _timePeriod;
+    }
 }
 
 #pragma mark - MainViewControllerDelegate -
@@ -69,12 +91,6 @@
     [self.pageControl setNumberOfPages:pages];
 
     return cell;
-}
-
-#pragma mark - UICollectionViewDelegate -
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Select %ld", (long)indexPath.row);
 }
 
 #pragma mark - UIScrollVewDelegate for UIPageControl

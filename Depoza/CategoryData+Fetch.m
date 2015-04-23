@@ -149,6 +149,8 @@
         NSLog(@"%@", [error localizedDescription]);
     }
 
+    NSParameterAssert(category.count == 1);
+
     return category;
 }
 

@@ -32,6 +32,8 @@
 		500541061AC56226007EF006 /* SettingsFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541021AC56226007EF006 /* SettingsFilled.png */; };
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
 		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
+		5009809E1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */; };
+		500980A21AE3908B007DFCEA /* SelectedCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* SelectedCategoryCell.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -159,6 +161,11 @@
 		5005F2251A9C58DB008E59D4 /* MainViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerDelegate.h; sourceTree = "<group>"; };
 		50086E8C1AC6E7F600162677 /* MainViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewCell.h; sourceTree = "<group>"; };
 		50086E8D1AC6E7F600162677 /* MainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewCell.m; sourceTree = "<group>"; };
+		5009809C1AE38FF6007DFCEA /* SelectedCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedCategoryTableViewController.h; sourceTree = "<group>"; };
+		5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedCategoryTableViewController.m; sourceTree = "<group>"; };
+		500980A01AE3908B007DFCEA /* SelectedCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedCategoryCell.h; sourceTree = "<group>"; };
+		500980A11AE3908B007DFCEA /* SelectedCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedCategoryCell.m; sourceTree = "<group>"; };
+		500980A31AE4B2DC007DFCEA /* CategoriesContainerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesContainerViewControllerDelegate.h; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -329,6 +336,17 @@
 			name = TabBarIcons;
 			sourceTree = "<group>";
 		};
+		5009809F1AE3906B007DFCEA /* SelectedCategoryTableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5009809C1AE38FF6007DFCEA /* SelectedCategoryTableViewController.h */,
+				5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */,
+				500980A01AE3908B007DFCEA /* SelectedCategoryCell.h */,
+				500980A11AE3908B007DFCEA /* SelectedCategoryCell.m */,
+			);
+			name = SelectedCategoryTableViewController;
+			sourceTree = "<group>";
+		};
 		5015A5661AC02C230056271A /* Depoza Extension */ = {
 			isa = PBXGroup;
 			children = (
@@ -439,7 +457,7 @@
 				50E021E11AD8E3F4008489DA /* SelectMonth */,
 				50E021DB1AD8C9EC008489DA /* View */,
 				503BF6F91A9F08DF00791B90 /* TableViewProtocolsImplementer */,
-				50FDE3B21A9B5A95007C9FC0 /* ContainerView */,
+				50FDE3B21A9B5A95007C9FC0 /* CategoriesContainerView */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -563,7 +581,7 @@
 			isa = PBXGroup;
 			children = (
 				5063D1991A85F0C2006168D3 /* MainView */,
-				50AA42EC1A87A2310019CB55 /* AllExpensesView */,
+				50AA42EC1A87A2310019CB55 /* SearchExpense */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
 				5063D19C1A85F0FE006168D3 /* MoreInfoView */,
 				506803DC1A91E273002A3DA0 /* EditView */,
@@ -598,13 +616,13 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
-		50AA42EC1A87A2310019CB55 /* AllExpensesView */ = {
+		50AA42EC1A87A2310019CB55 /* SearchExpense */ = {
 			isa = PBXGroup;
 			children = (
 				50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */,
 				50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */,
 			);
-			name = AllExpensesView;
+			name = SearchExpense;
 			sourceTree = "<group>";
 		};
 		50B3574E1A48597300168958 /* PersistenceStack */ = {
@@ -674,14 +692,16 @@
 			name = Extension;
 			sourceTree = "<group>";
 		};
-		50FDE3B21A9B5A95007C9FC0 /* ContainerView */ = {
+		50FDE3B21A9B5A95007C9FC0 /* CategoriesContainerView */ = {
 			isa = PBXGroup;
 			children = (
 				50FDE3AF1A9B5A8D007C9FC0 /* CategoriesContainerViewController.h */,
 				50FDE3B01A9B5A8D007C9FC0 /* CategoriesContainerViewController.m */,
+				500980A31AE4B2DC007DFCEA /* CategoriesContainerViewControllerDelegate.h */,
+				5009809F1AE3906B007DFCEA /* SelectedCategoryTableViewController */,
 				503BF6FA1A9F1B9C00791B90 /* UICollectionViewCell */,
 			);
-			name = ContainerView;
+			name = CategoriesContainerView;
 			sourceTree = "<group>";
 		};
 		50FEF8341A96030E007BC483 /* AddCategoryView */ = {
@@ -981,6 +1001,7 @@
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
 				503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */,
 				50E021FB1AD942F5008489DA /* NSDate+TomorrowDate.m in Sources */,
+				5009809E1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m in Sources */,
 				50E021FE1AD944DF008489DA /* NSDate+NextMonthFirstDate.m in Sources */,
 				50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */,
 				506E72861A1E0B450006F2DF /* main.m in Sources */,
@@ -989,6 +1010,7 @@
 				50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */,
 				50E021DF1AD8E3EE008489DA /* SelectMonthViewController.m in Sources */,
 				50FEF8331A960309007BC483 /* AddCategoryViewController.m in Sources */,
+				500980A21AE3908B007DFCEA /* SelectedCategoryCell.m in Sources */,
 				505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

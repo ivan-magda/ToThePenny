@@ -243,6 +243,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
     } else if ([segue.identifier isEqualToString:@"CategoriesInfo"]) {
         CategoriesContainerViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = self.managedObjectContext;
+        controller.timePeriod = _dateToShow;
+        controller.delegate = self;
+        
         self.delegate = controller;
     }
 }
@@ -324,6 +328,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSDate *date = [self dateFromMonthInfo:monthInfo];
 
     [self changeMonthToShowFromDate:date];
+}
+
+#pragma mark CategoriesContainerViewControllerDelegate
+
+- (void)categoriesContainerViewController:(CategoriesContainerViewController *)controller didChooseCategory:(CategoriesInfo *)category {
+    controller.timePeriod = _dateToShow;
 }
 
 #pragma mark - NSFetchedResultsController -

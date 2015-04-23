@@ -119,6 +119,7 @@
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     [Fetch updateTodayExpensesDictionary:self.managedObjectContext];
+    [[NSUbiquitousKeyValueStore defaultStore]synchronize];
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
