@@ -1,7 +1,7 @@
     //ViewControllers
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
-#import "MoreInfoTableViewController.h"
+#import "DetailExpenseTableViewController.h"
 #import "CategoriesContainerViewController.h"
 #import "MainTableViewProtocolsImplementer.h"
 #import "SelectMonthViewController.h"
@@ -228,8 +228,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         controller.categories = categoriesTitles;
 
     } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        MoreInfoTableViewController *controller = (MoreInfoTableViewController *)segue.destinationViewController;
+        DetailExpenseTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
+        controller.delegate = self;
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -279,9 +280,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     info.amount = @(value);
 }
 
-#pragma mark EditExpenseTableViewControllerDelegate
+#pragma mark DetailExpenseTableViewControllerDelegate
 
-- (void)editExpenseTableViewControllerDelegate:(EditExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
+- (void)detailExpenseTableViewControllerDelegate:(DetailExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
     NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:_dateToShow managedObjectContext:_managedObjectContext];
 
     for (CategoriesInfo *anInfo in _categoriesInfo) {

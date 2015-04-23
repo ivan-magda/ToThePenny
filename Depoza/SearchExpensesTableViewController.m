@@ -8,8 +8,8 @@
 
     //View
 #import "SearchExpensesTableViewController.h"
-#import "MoreInfoTableViewController.h"
-#import "EditExpenseTableViewController.h"
+#import "DetailExpenseTableViewController.h"
+#import "DetailExpenseTableViewController.h"
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
     //CoreData
@@ -113,7 +113,7 @@
 
 #pragma mark UISearchBarDelegate
 
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     CGRect frame = self.navigationItem.titleView.frame;
     frame.size.width = 0.0f;
     [UIView animateWithDuration:0.3f
@@ -167,7 +167,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        MoreInfoTableViewController *detailsViewController = (MoreInfoTableViewController *)[segue destinationViewController];
+        DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -309,9 +309,9 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditNavigationController"];
 
-    EditExpenseTableViewController *editExpenseViewController = [navigationController.viewControllers firstObject];
+    DetailExpenseTableViewController *editExpenseViewController = [navigationController.viewControllers firstObject];
     editExpenseViewController.managedObjectContext = _managedObjectContext;
-    editExpenseViewController.expenseToEdit = [_fetchedResultsController objectAtIndexPath:indexPath];
+    editExpenseViewController.expenseToShow = [_fetchedResultsController objectAtIndexPath:indexPath];
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }

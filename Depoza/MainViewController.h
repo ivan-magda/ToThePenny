@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
     //Delegate
 #import "AddExpenseViewControllerDelegate.h"
-#import "EditExpenseTableViewControllerDelegate.h"
+#import "DetailExpenseTableViewControllerDelegate.h"
 #import "AddCategoryViewControllerDelegate.h"
 #import "MainViewControllerDelegate.h"
 #import "SelectMonthViewControllerDelegate.h"
@@ -10,7 +10,7 @@
 
 @class NSManagedObjectContext;
 
-@interface MainViewController : UIViewController <AddExpenseViewControllerDelegate, EditExpenseTableViewControllerDelegate, AddCategoryViewControllerDelegate, SelectMonthViewControllerDelegate, CategoriesContainerViewControllerDelegate>
+@interface MainViewController : UIViewController <AddExpenseViewControllerDelegate, DetailExpenseTableViewControllerDelegate, AddCategoryViewControllerDelegate, SelectMonthViewControllerDelegate, CategoriesContainerViewControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

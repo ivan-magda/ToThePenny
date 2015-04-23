@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "ChooseCategoryTableViewControllerDelegate.h"
-#import "EditExpenseTableViewControllerDelegate.h"
+#import "DetailExpenseTableViewControllerDelegate.h"
 
 @class ExpenseData;
 
-@interface EditExpenseTableViewController : UITableViewController <ChooseCategoryTableViewControllerDelegate>
+@interface DetailExpenseTableViewController : UITableViewController <ChooseCategoryTableViewControllerDelegate>
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, strong) ExpenseData *expenseToEdit;
+@property (nonatomic, strong) ExpenseData *expenseToShow;
+
+@property (nonatomic, strong) id<DetailExpenseTableViewControllerDelegate> delegate;
 
 @end

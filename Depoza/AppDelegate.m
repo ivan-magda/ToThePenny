@@ -10,8 +10,8 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "SearchExpensesTableViewController.h"
+#import "DetailExpenseTableViewController.h"
 #import "SettingsTableViewController.h"
-#import "MoreInfoTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
 
     //CoreData
@@ -135,8 +135,8 @@
                 //Manage navigation stack of MainViewControler navigationController
             NSInteger numberControllers = [_mainViewController.navigationController viewControllers].count;
             if (numberControllers > 1) {
-                MoreInfoTableViewController *moreInfoController = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
-                if ([moreInfoController.expenseToShow isEqual:selectedExpense]) {
+                DetailExpenseTableViewController *controller = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
+                if ([controller.expenseToShow isEqual:selectedExpense]) {
                     return YES;
                 } else {
                     [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
