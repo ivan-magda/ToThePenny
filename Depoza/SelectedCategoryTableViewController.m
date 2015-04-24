@@ -8,6 +8,7 @@
 
     //ViewController
 #import "SelectedCategoryTableViewController.h"
+#import "DetailExpenseTableViewController.h"
     //CoreDate
 #import "CategoryData+Fetch.h"
 #import "ExpenseData+Fetch.h"
@@ -75,6 +76,22 @@
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
+}
+
+#pragma mark - Navigation -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"MoreInfo"]) {
+        DetailExpenseTableViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            UITableViewCell *cell = (UITableViewCell *)sender;
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+
+            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            controller.expenseToShow = expense;
+        }
+    }
 }
 
 #pragma mark - NSFetchedResultsController -

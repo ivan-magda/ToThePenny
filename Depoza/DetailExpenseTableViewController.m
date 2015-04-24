@@ -406,7 +406,7 @@
     }
 
     if (isChanged) {
-        [self.delegate detailExpenseTableViewControllerDelegate:self didFinishUpdateExpense:_expenseToShow];
+        [[NSNotificationCenter defaultCenter]postNotificationName:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
 
         [KVNProgress showSuccessWithStatus:@"Updated" completion:nil];
     }

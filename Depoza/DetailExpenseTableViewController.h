@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "ChooseCategoryTableViewControllerDelegate.h"
-#import "DetailExpenseTableViewControllerDelegate.h"
 
 @class ExpenseData;
 
@@ -16,7 +15,5 @@
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, strong) ExpenseData *expenseToShow;
-
-@property (nonatomic, strong) id<DetailExpenseTableViewControllerDelegate> delegate;
 
 @end

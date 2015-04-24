@@ -257,7 +257,6 @@
 		50E021FD1AD944DF008489DA /* NSDate+NextMonthFirstDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NextMonthFirstDate.m"; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
-		50E50B241A96C7B20025D0E1 /* DetailExpenseTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailExpenseTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E50B251A96CAF30025D0E1 /* AddCategoryViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddCategoryViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E54FAC1AE2645E00D6E609 /* SelectMonthViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMonthViewControllerDelegate.h; sourceTree = "<group>"; };
 		50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionSettingsTableViewController.h; sourceTree = "<group>"; };
@@ -493,7 +492,6 @@
 			children = (
 				505AF9321A91577000E0CB28 /* DetailExpenseTableViewController.h */,
 				505AF9331A91577000E0CB28 /* DetailExpenseTableViewController.m */,
-				50E50B241A96C7B20025D0E1 /* DetailExpenseTableViewControllerDelegate.h */,
 			);
 			name = DetailView;
 			sourceTree = "<group>";

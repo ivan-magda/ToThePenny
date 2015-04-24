@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
     </dependencies>
     <scenes>
         <!--Search-->
@@ -952,6 +952,7 @@
                                     <outlet property="leftLabel" destination="WDI-1N-8eL" id="fUk-cV-158"/>
                                     <outlet property="rightDetailLabel" destination="jGb-u9-8Qt" id="bSg-3a-0ew"/>
                                     <outlet property="subtitleLabel" destination="jN8-UA-sp2" id="O52-bf-lbK"/>
+                                    <segue destination="4eo-eH-MDa" kind="push" identifier="MoreInfo" id="tqp-JB-Yta"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1001,8 +1002,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="hGy-jW-v8B"/>
-        <segue reference="aXq-Y4-KyP"/>
         <segue reference="lzb-VO-Adi"/>
+        <segue reference="tqp-JB-Yta"/>
+        <segue reference="hGy-jW-v8B"/>
     </inferredMetricsTieBreakers>
 </document>

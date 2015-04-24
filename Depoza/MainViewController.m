@@ -72,6 +72,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self addMotionEffectToViews];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
 }
 
 - (void)dealloc {
@@ -230,7 +231,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
-        controller.delegate = self;
 
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -280,9 +280,31 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     info.amount = @(value);
 }
 
-#pragma mark DetailExpenseTableViewControllerDelegate
+#pragma mark AddCategoryViewControllerDelegate
 
-- (void)detailExpenseTableViewControllerDelegate:(DetailExpenseTableViewController *)controller didFinishUpdateExpense:(ExpenseData *)expense {
+- (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
+    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
+    [_categoriesInfo addObject:info];
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+}
+
+#pragma mark SelectMonthViewControllerDelegate
+
+- (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
+    NSDate *date = [self dateFromMonthInfo:monthInfo];
+
+    [self changeMonthToShowFromDate:date];
+}
+
+#pragma mark CategoriesContainerViewControllerDelegate
+
+- (void)categoriesContainerViewController:(CategoriesContainerViewController *)controller didChooseCategory:(CategoriesInfo *)category {
+    controller.timePeriod = _dateToShow;
+}
+
+#pragma mark - DetailExpenseTableViewControllerNotification -
+
+- (void)detailExpenseTableViewControllerDidFinishUpdateExpense:(NSNotification *)notification {
     NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:_dateToShow managedObjectContext:_managedObjectContext];
 
     for (CategoriesInfo *anInfo in _categoriesInfo) {
@@ -313,28 +335,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self updateLabels];
 
     [self.tableViewProtocolsImplementer.tableView reloadData];
-}
-
-#pragma mark AddCategoryViewControllerDelegate
-
-- (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
-    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
-    [_categoriesInfo addObject:info];
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
-}
-
-#pragma mark SelectMonthViewControllerDelegate
-
-- (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
-    NSDate *date = [self dateFromMonthInfo:monthInfo];
-
-    [self changeMonthToShowFromDate:date];
-}
-
-#pragma mark CategoriesContainerViewControllerDelegate
-
-- (void)categoriesContainerViewController:(CategoriesContainerViewController *)controller didChooseCategory:(CategoriesInfo *)category {
-    controller.timePeriod = _dateToShow;
 }
 
 #pragma mark - NSFetchedResultsController -
