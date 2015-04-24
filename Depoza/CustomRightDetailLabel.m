@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-#import "SelectedCategoryCell.h"
+#import "CustomRightDetailLabel.h"
 
-@implementation SelectedCategoryCell
+@implementation CustomRightDetailLabel
 
 
 @end

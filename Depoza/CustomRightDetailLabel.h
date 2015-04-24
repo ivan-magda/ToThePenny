@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SelectedCategoryCell : UITableViewCell
+@interface CustomRightDetailLabel : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *leftLabel;
 @property (nonatomic, weak) IBOutlet UILabel *rightDetailLabel;
-@property (nonatomic, weak) IBOutlet UILabel *subtitleLabel;
 
 @end

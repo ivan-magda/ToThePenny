@@ -6,12 +6,14 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-    //View
+    //ViewController
 #import "SearchExpensesTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "MainViewController.h"
 #import "AddExpenseViewController.h"
+    //View
+#import "CustomRightDetailLabel.h"
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
@@ -217,7 +219,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AllCell"];
+    CustomRightDetailLabel *cell = (CustomRightDetailLabel *)[tableView dequeueReusableCellWithIdentifier:@"AllCell"];
     [self configureCell:cell atIndexPath:indexPath];
 
     return cell;
@@ -273,7 +275,7 @@
     return [formatter stringFromDate:theDate];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(CustomRightDetailLabel *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = nil;
 
     id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
@@ -285,12 +287,12 @@
     }
 
     if (self.searchPredicate == nil && indexPath.row >= [sectionInfo numberOfObjects] && [self isEditing]) {
-        cell.textLabel.text = @"Add Expense";
-        cell.detailTextLabel.text = nil;
+        cell.leftLabel.text = @"Add Expense";
+        cell.rightDetailLabel.text = nil;
         cell.editingAccessoryType = UITableViewCellAccessoryNone;
     } else {
-        cell.textLabel.text = expense.category.title;
-        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
+        cell.leftLabel.text = expense.category.title;
+        cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
     }
 }
 

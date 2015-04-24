@@ -14,7 +14,7 @@
 #import "ExpenseData+Fetch.h"
 #import "CategoriesInfo.h"
     //View
-#import "SelectedCategoryCell.h"
+#import "CustomRightDetailLabel.h"
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -42,7 +42,7 @@
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [NSDateFormatter new];
-        [formatter setDateFormat:@"dd.MM.YY"];
+        [formatter setDateFormat:@"dd.MM"];
     }
     return [formatter stringFromDate:theDate];
 }
@@ -59,7 +59,7 @@
     return [sectionInfo numberOfObjects];
 }
 
-- (void)configureCell:(SelectedCategoryCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(CustomRightDetailLabel *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
     if (expense.descriptionOfExpense.length == 0) {
         cell.leftLabel.text = NSLocalizedString(@"(No Description)", @"SelectedCategoryVC when expenseDescription.length == 0 show (No description)");
@@ -67,12 +67,11 @@
         cell.leftLabel.text = expense.descriptionOfExpense;
     }
 
-    cell.subtitleLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
-    cell.rightDetailLabel.text = [self formatDate:expense.dateOfExpense];
+    cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount],[self formatDate:expense.dateOfExpense]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    SelectedCategoryCell *cell = (SelectedCategoryCell *)[tableView dequeueReusableCellWithIdentifier:@"SelectedCell"];
+    CustomRightDetailLabel *cell = (CustomRightDetailLabel *)[tableView dequeueReusableCellWithIdentifier:@"SelectedCell"];
     [self configureCell:cell atIndexPath:indexPath];
     
     return cell;
