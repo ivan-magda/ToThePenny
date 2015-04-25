@@ -15,6 +15,9 @@
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
 
+    //Categories
+#import "NSString+FormatAmount.h"
+
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
@@ -75,7 +78,7 @@
 #pragma mark - Helper Methods -
 
 - (void)updateText {
-    self.amountTextView.text = [NSString stringWithFormat:@"%.2f", _expenseToShow.amount.floatValue];
+    self.amountTextView.text = [NSString formatAmount:_expenseToShow.amount];
     self.categoryNameLabel.text = _expenseToShow.category.title;
     self.descriptionLabel.text = (_expenseToShow.descriptionOfExpense.length > 0) ? _expenseToShow.descriptionOfExpense : NSLocalizedString(@"(No Description)", @"EditExpenseVC text for description label");
     [self updateDateLabel];
@@ -114,6 +117,7 @@
     _isEditMode = NO;
 
     self.amountTextView.selectable = NO;
+    self.amountTextView.text = [NSString formatAmount:_expenseToShow.amount];
 
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     [self.navigationItem setRightBarButtonItem:nil animated:YES];
@@ -146,6 +150,15 @@
 
     self.amountTextView.selectable = YES;
     self.amountTextView.editable = YES;
+
+    NSMutableCharacterSet *charactersToKeep = [NSMutableCharacterSet decimalDigitCharacterSet];
+    [charactersToKeep addCharactersInString:@","];
+
+    NSCharacterSet *charactersToRemove = [charactersToKeep invertedSet];
+
+    NSString *newString = [[_amountTextView.text componentsSeparatedByCharactersInSet:charactersToRemove]
+                           componentsJoinedByString:@""];
+    self.amountTextView.text = newString;
 
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [self.navigationItem setRightBarButtonItem:nil animated:YES];
@@ -365,8 +378,9 @@
 
     BOOL isChanged = NO;
 
-    if (_expenseToShow.amount.floatValue != [_amountTextView.text floatValue]) {
-        self.expenseToShow.amount = @([_amountTextView.text floatValue]);
+    NSString *amountString = [_amountTextView.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    if (_expenseToShow.amount.floatValue != [amountString floatValue]) {
+        self.expenseToShow.amount = @([amountString floatValue]);
         isChanged = YES;
     }
 

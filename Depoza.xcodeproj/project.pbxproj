@@ -558,7 +558,7 @@
 			isa = PBXGroup;
 			children = (
 				5063D1991A85F0C2006168D3 /* MainView */,
-				50AA42EC1A87A2310019CB55 /* SearchExpense */,
+				50AA42EC1A87A2310019CB55 /* SearchExpenseView */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
 				506803DC1A91E273002A3DA0 /* DetailView */,
 				50D4E0F71A92253A0040C260 /* ChooseCategoryView */,
@@ -592,13 +592,13 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
-		50AA42EC1A87A2310019CB55 /* SearchExpense */ = {
+		50AA42EC1A87A2310019CB55 /* SearchExpenseView */ = {
 			isa = PBXGroup;
 			children = (
 				50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */,
 				50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */,
 			);
-			name = SearchExpense;
+			name = SearchExpenseView;
 			sourceTree = "<group>";
 		};
 		50B3574E1A48597300168958 /* PersistenceStack */ = {

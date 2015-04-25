@@ -231,8 +231,7 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
 #pragma mark - UITextFieldDelegate -
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-
-    NSString *stringFromTextField = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSString *stringFromTextField = stringFromTextField = [[textField.text stringByReplacingCharactersInRange:range withString:string]stringByReplacingOccurrencesOfString:@"," withString:@"."];
 
     if (stringFromTextField.length > 0) {
         _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
@@ -245,7 +244,7 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    _expenseFromTextField = [NSNumber numberWithFloat:[textField.text floatValue]];
+    _expenseFromTextField = [NSNumber numberWithFloat:[[textField.text stringByReplacingOccurrencesOfString:@"," withString:@"." ]floatValue]];
 }
 
 #pragma mark - IBAction -
