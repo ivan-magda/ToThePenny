@@ -17,4 +17,8 @@
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch;
 
+- (void)performAddExpense;
+
+- (BOOL)isAddExpensePresenting;
+
 @end

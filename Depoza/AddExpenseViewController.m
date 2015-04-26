@@ -29,6 +29,8 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
     NSNumber *_expenseFromTextField;
     NSIndexPath *_selectedRow;
     BOOL _isChosenCategory;
+
+    BOOL _isDelegateNotified;
 }
 
 #pragma mark - ViewController life cycle -
@@ -36,6 +38,18 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self customSetUp];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    if (!_isDelegateNotified) {
+        [self resignActiveTextField];
+
+        [self.delegate addExpenseViewControllerDidCancel:self];
+
+        _isDelegateNotified = YES;
+    }
 }
 
 - (void)dealloc {
@@ -50,6 +64,8 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
     self.expenseTextField.delegate = self;
 
     self.descriptionTextField.hidden = YES;
+
+    _isDelegateNotified = NO;
 }
 
 #pragma mark - UITableView
@@ -186,6 +202,8 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
         if ([self.delegate respondsToSelector:@selector(addExpenseViewController:didFinishAddingExpense:)]) {
             [self.delegate addExpenseViewController:self didFinishAddingExpense:expense];
 
+            _isDelegateNotified = YES;
+
             [KVNProgress showSuccessWithStatus:@"Added" completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -251,6 +269,10 @@ static const CGFloat kDefaultTableViewCellHeight = 44.0f;
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     [self resignActiveTextField];
+
+    [self.delegate addExpenseViewControllerDidCancel:self];
+
+    _isDelegateNotified = YES;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:nil];

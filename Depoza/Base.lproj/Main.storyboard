@@ -566,6 +566,39 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="Allows you to add expense when you open application." id="qTa-8P-aGy" userLabel="StartupViewController">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Oej-r5-xpT" userLabel="StartupScreen">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oej-r5-xpT" id="XPk-aP-X1y">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Add expense on startup" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwa-Ip-Gee">
+                                                    <rect key="frame" x="15" y="11" width="184" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nJY-OX-oOW">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="startupSwitchDidChangeValue:" destination="Dv6-6c-FEv" eventType="valueChanged" id="KGa-3k-rA7"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="Gwa-Ip-Gee" secondAttribute="bottom" constant="11" id="4M5-87-x6r"/>
+                                                <constraint firstItem="Gwa-Ip-Gee" firstAttribute="leading" secondItem="XPk-aP-X1y" secondAttribute="leading" constant="15" id="4yE-sZ-8Sh"/>
+                                                <constraint firstAttribute="bottom" secondItem="nJY-OX-oOW" secondAttribute="bottom" constant="6" id="BYZ-Tx-oQO"/>
+                                                <constraint firstItem="Gwa-Ip-Gee" firstAttribute="top" secondItem="XPk-aP-X1y" secondAttribute="top" constant="11" id="bbQ-v9-hm9"/>
+                                                <constraint firstAttribute="trailing" secondItem="nJY-OX-oOW" secondAttribute="trailing" constant="8" id="df8-Ca-jaS"/>
+                                                <constraint firstItem="nJY-OX-oOW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gwa-Ip-Gee" secondAttribute="trailing" constant="8" symbolic="YES" id="for-Gd-LLw"/>
+                                                <constraint firstItem="nJY-OX-oOW" firstAttribute="top" secondItem="XPk-aP-X1y" secondAttribute="top" constant="6" id="ndP-6W-iTr"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Dv6-6c-FEv" id="hkS-AJ-vvg"/>
@@ -574,6 +607,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="6oE-Pz-2cz"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="startupScreenSwitch" destination="nJY-OX-oOW" id="nut-pn-RzT"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4Y-gS-7h3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1053,8 +1089,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="lzb-VO-Adi"/>
-        <segue reference="off-yt-H5u"/>
+        <segue reference="qiW-IC-btw"/>
+        <segue reference="3er-JC-Cyy"/>
         <segue reference="hGy-jW-v8B"/>
     </inferredMetricsTieBreakers>
 </document>

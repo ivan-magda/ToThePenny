@@ -23,6 +23,8 @@
     //Transition
 #import "ZFModalTransitionAnimator.h"
 
+static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -45,6 +47,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     TitleViewButton *_titleViewButton;
     BOOL _showMonthView;
     NSDate *_dateToShow;
+
+    BOOL _isFirstTimeViewDidAppear;
+    BOOL _isAddExpensePresenting;
 }
 
 #pragma mark - ViewController life cycle -
@@ -54,6 +59,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
+
+    _isAddExpensePresenting = NO;
+    _isFirstTimeViewDidAppear = YES;
 
     _dateToShow = [NSDate date];
 
@@ -75,6 +83,17 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        if (_isFirstTimeViewDidAppear) {
+            _isFirstTimeViewDidAppear = NO;
+            [self performAddExpense];
+        }
+    }
 }
 
 - (void)dealloc {
@@ -175,6 +194,20 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self changeMonthToShowFromDate:[NSDate date]];
 }
 
+- (void)performAddExpense {
+    if (_categoriesInfo.count == 0) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self performAddExpense];
+        });
+    } else {
+        [self performSegueWithIdentifier:@"AddExpense" sender:nil];
+    }
+}
+
+- (BOOL)isAddExpensePresenting {
+    return _isAddExpensePresenting;
+}
+
 #pragma mark - TitleViewButton -
 
 - (void)configurateTitleViewButton {
@@ -221,6 +254,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self changeMonthToShowFromDate:[NSDate date]];
         });
+
+        _isAddExpensePresenting = YES;
         
         UINavigationController *navigationController = segue.destinationViewController;
 
@@ -275,6 +310,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark AddExpenseViewControllerDelegate
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
+    _isAddExpensePresenting = NO;
+    
     _totalExpeditures += [expense.amount floatValue];
 
     [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -297,6 +334,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     CGFloat value = [[info amount] floatValue] + amount;
 
     info.amount = @(value);
+}
+
+- (void)addExpenseViewControllerDidCancel:(AddExpenseViewController *)controller {
+    _isAddExpensePresenting = NO;
 }
 
 #pragma mark AddCategoryViewControllerDelegate

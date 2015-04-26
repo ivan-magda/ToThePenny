@@ -7,4 +7,6 @@
 
 - (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense;
 
+- (void)addExpenseViewControllerDidCancel:(AddExpenseViewController *)controller;
+
 @end

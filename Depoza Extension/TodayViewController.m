@@ -20,6 +20,7 @@
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kTodayExpensesKey = @"todayExpenses";
 static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
+static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 
 static const CGFloat kDefaultRowHeight = 44.0f;
 
@@ -65,6 +66,9 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     if (_expenses == nil) {
         _expenses = [self getTodayExpenses];
     }
+
+    [_userDefaults setBool:NO forKey:kDetailViewControllerPresentingFromExtensionKey];
+    [_userDefaults synchronize];
 
     if (_expenses.count > 0 && updateResult == NCUpdateResultNewData) {
         self.tableView.hidden = NO;
@@ -177,6 +181,9 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    [_userDefaults setBool:YES forKey:kDetailViewControllerPresentingFromExtensionKey];
+    [_userDefaults synchronize];
 
         // Call the app and pass in a query string with the expense identifier
     NSParameterAssert(_expenses != nil);

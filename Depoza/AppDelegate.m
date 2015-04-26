@@ -13,37 +13,39 @@
 #import "DetailExpenseTableViewController.h"
 #import "SettingsTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
-
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
 
-@interface AppDelegate ()
-
-@end
+static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
+static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 
 @implementation AppDelegate {
+    UITabBarController *_tabBarController;
     MainViewController *_mainViewController;
     SearchExpensesTableViewController *_allExpensesTableViewController;
     SettingsTableViewController *_settingsTableViewController;
+
+    NSUserDefaults *_appGroupUserDefaults;
 }
 
 #pragma mark - Persistent Stack
 
 - (void)spreadManagedObjectContext {
-    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    _tabBarController = (UITabBarController *)self.window.rootViewController;
 
         //Get the MainViewController and set it's as a observer for creating context
-    UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
+    UINavigationController *navigationController = (UINavigationController *)_tabBarController.viewControllers[0];
     _mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
         //Get the AllExpensesViewController
-    navigationController = (UINavigationController *)tabBarController.viewControllers[1];
+    navigationController = (UINavigationController *)_tabBarController.viewControllers[1];
     _allExpensesTableViewController = (SearchExpensesTableViewController *)navigationController.viewControllers[0];
 
         //Get the SettingsTableViewController
-    navigationController = (UINavigationController *)tabBarController.viewControllers[2];
+    navigationController = (UINavigationController *)_tabBarController.viewControllers[2];
     _settingsTableViewController = (SettingsTableViewController *)navigationController.viewControllers[0];
 
     NSParameterAssert(_managedObjectContext);
@@ -114,12 +116,35 @@
 
     [self checkForMinimalData];
 
+    _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
+
     return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     [Fetch updateTodayExpensesDictionary:self.managedObjectContext];
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    if (![_appGroupUserDefaults boolForKey:kDetailViewControllerPresentingFromExtensionKey]) {
+        if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+            _tabBarController.selectedIndex = 0;
+            if (!_mainViewController.isAddExpensePresenting) {
+                [_mainViewController.navigationController popToRootViewControllerAnimated:YES];
+                [_mainViewController performAddExpense];
+            }
+        }
+    } else {
+        _tabBarController.selectedIndex = 0;
+        
+        [_appGroupUserDefaults setBool:NO forKey:kDetailViewControllerPresentingFromExtensionKey];
+        [_appGroupUserDefaults synchronize];
+
+        if (_mainViewController.isAddExpensePresenting) {
+            [_mainViewController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
 }
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
@@ -130,18 +155,34 @@
             NSRange range = [query rangeOfString:@"q="];
             NSString *identifier = [query stringByReplacingOccurrencesOfString:@"^q=" withString:@"" options:NSRegularExpressionSearch range:range];
 
+            _tabBarController.selectedIndex = 0;
+
+            [_appGroupUserDefaults setBool:NO forKey:kDetailViewControllerPresentingFromExtensionKey];
+            [_appGroupUserDefaults synchronize];
+
             ExpenseData *selectedExpense = [ExpenseData getExpenseFromIdValue:identifier.integerValue inManagedObjectContext:_managedObjectContext];
 
                 //Manage navigation stack of MainViewControler navigationController
             NSInteger numberControllers = [_mainViewController.navigationController viewControllers].count;
             if (numberControllers > 1) {
-                DetailExpenseTableViewController *controller = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
-                if ([controller.expenseToShow isEqual:selectedExpense]) {
-                    return YES;
-                } else {
-                    [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
+                UIViewController *viewController = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
+                if ([viewController isKindOfClass:[DetailExpenseTableViewController class]]) {
+                    DetailExpenseTableViewController *controller = [[_mainViewController.navigationController viewControllers]objectAtIndex:1];
+                    if ([controller.expenseToShow isEqual:selectedExpense]) {
+                        return YES;
+                    }
                 }
+                [_mainViewController.navigationController popToRootViewControllerAnimated:YES];
             }
+
+            __weak MainViewController *weakMainVC = _mainViewController;
+            if (_mainViewController.isAddExpensePresenting) {
+                [_mainViewController dismissViewControllerAnimated:YES completion:^{
+                    [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                }];
+                return YES;
+            }
+
             [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
             
             return YES;
@@ -152,6 +193,8 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
+    [_appGroupUserDefaults synchronize];
+    
     [self.persistence removePersistentStoreNotificationSubscribes];
     [self.persistence saveContext];
 }
