@@ -7,7 +7,7 @@
 //
 
 #import "SettingsTableViewController.h"
-#import "AddCategoryViewController.h"
+#import "AddCategoryTableViewController.h"
 #import "MainViewController.h"
 
 @implementation SettingsTableViewController
@@ -31,12 +31,14 @@
         MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
 
         UINavigationController *navC = segue.destinationViewController;
-        AddCategoryViewController *controller = (AddCategoryViewController *)navC.topViewController;
+        AddCategoryTableViewController *controller = (AddCategoryTableViewController *)navC.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
         controller.delegate = mainViewController;
         controller.iconName = nil;
     }
 }
+
+#pragma mark - UITableViewDelegate -
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

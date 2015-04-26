@@ -140,6 +140,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if ([self.delegate respondsToSelector:@selector(selectMonthViewController:didSelectMonth:)]) {
         [_delegate selectMonthViewController:self didSelectMonth:_monthInfo[indexPath.section]];
     }

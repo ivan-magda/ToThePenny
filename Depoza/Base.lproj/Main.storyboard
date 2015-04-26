@@ -646,7 +646,7 @@
         <!--Add Category-->
         <scene sceneID="K5y-dP-7gO">
             <objects>
-                <tableViewController id="wV7-2g-efQ" customClass="AddCategoryViewController" sceneMemberID="viewController">
+                <tableViewController id="wV7-2g-efQ" customClass="AddCategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="k9C-xs-eUv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -730,10 +730,10 @@
             </objects>
             <point key="canvasLocation" x="1367" y="615"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Categories Icons Collection View Controller-->
         <scene sceneID="rzo-AG-MXw">
             <objects>
-                <collectionViewController id="K6k-wL-Ce8" customClass="CollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="K6k-wL-Ce8" customClass="CategoriesIconsCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Scn-oM-ZUx">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

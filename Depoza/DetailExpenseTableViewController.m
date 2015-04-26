@@ -291,6 +291,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     [self.amountTextView resignFirstResponder];
 
     if (indexPath.row == 1) {

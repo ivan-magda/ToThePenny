@@ -7,7 +7,7 @@
     //
 
 #import "ChooseCategoryTableViewController.h"
-#import "CollectionViewController.h"
+#import "CategoriesIconsCollectionViewController.h"
 #import "CategoryData+Fetch.h"
 
 @implementation ChooseCategoryTableViewController {
@@ -102,6 +102,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 1) {
         _isChangeIconPressed  = NO;
         _selectedCategoryName = _titles[indexPath.row];
@@ -118,15 +119,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ChangeIcon"]) {
-        CollectionViewController *controller = segue.destinationViewController;
+        CategoriesIconsCollectionViewController *controller = segue.destinationViewController;
         controller.selectedIconName = _iconName;
     }
 }
 
 - (IBAction)didChangeIcon:(UIStoryboardSegue *)unwindSegue {
     UIViewController *sourceVC = unwindSegue.sourceViewController;
-    if ([sourceVC isKindOfClass:[CollectionViewController class]]) {
-        CollectionViewController *controller = (CollectionViewController *)sourceVC;
+    if ([sourceVC isKindOfClass:[CategoriesIconsCollectionViewController class]]) {
+        CategoriesIconsCollectionViewController *controller = (CategoriesIconsCollectionViewController *)sourceVC;
         self.iconName = controller.selectedIconName;
 
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];

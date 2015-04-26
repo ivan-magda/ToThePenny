@@ -6,15 +6,15 @@
     //  Copyright (c) 2015 Ivan Magda. All rights reserved.
     //
 
-#import "CollectionViewController.h"
+#import "CategoriesIconsCollectionViewController.h"
 
-@interface CollectionViewController ()
+@interface CategoriesIconsCollectionViewController ()
 
 @property (nonatomic, copy, readwrite) NSArray *iconNames;
 
 @end
 
-@implementation CollectionViewController
+@implementation CategoriesIconsCollectionViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

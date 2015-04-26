@@ -301,7 +301,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 #pragma mark AddCategoryViewControllerDelegate
 
-- (void)addCategoryViewController:(AddCategoryViewController *)controller didFinishAddingCategory:(CategoryData *)category {
+- (void)addCategoryViewController:(AddCategoryTableViewController *)controller didFinishAddingCategory:(CategoryData *)category {
     CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
     [_categoriesInfo addObject:info];
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];

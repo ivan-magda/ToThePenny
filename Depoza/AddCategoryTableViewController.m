@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-#import "AddCategoryViewController.h"
-#import "CollectionViewController.h"
+#import "AddCategoryTableViewController.h"
+#import "CategoriesIconsCollectionViewController.h"
 
     //CoreData
 #import "CategoryData+Fetch.h"
@@ -15,7 +15,7 @@
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
-@interface AddCategoryViewController () <UITextFieldDelegate>
+@interface AddCategoryTableViewController () <UITextFieldDelegate>
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation AddCategoryViewController {
+@implementation AddCategoryTableViewController {
     NSString *_categoryName;
 }
 
@@ -130,7 +130,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ChooseIcon"]) {
-        CollectionViewController *controller = segue.destinationViewController;
+        CategoriesIconsCollectionViewController *controller = segue.destinationViewController;
         controller.selectedIconName = _iconName;
         controller.isAddingNewCategoryMode = YES;
     }
@@ -138,8 +138,8 @@
 
 - (IBAction)didPickIcon:(UIStoryboardSegue *)unwindSegue {
     UIViewController *sourceVC = unwindSegue.sourceViewController;
-    if ([sourceVC isKindOfClass:[CollectionViewController class]]) {
-        CollectionViewController *controller = (CollectionViewController *)sourceVC;
+    if ([sourceVC isKindOfClass:[CategoriesIconsCollectionViewController class]]) {
+        CategoriesIconsCollectionViewController *controller = (CategoriesIconsCollectionViewController *)sourceVC;
         NSString *iconName = controller.selectedIconName;
         self.iconImage.image = [UIImage imageNamed:iconName];
         _iconName = iconName;
