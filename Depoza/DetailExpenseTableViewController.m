@@ -204,7 +204,9 @@
     } else if ([segue.identifier isEqualToString:@"EditDescription"]) {
         EditDescriptionViewController *controller = segue.destinationViewController;
 
-        [controller setExpenseDescription:_descriptionLabel.text withDidSaveCompletionHandler:^(NSString *text) {
+        NSString *text = ([_descriptionLabel.text isEqualToString:NSLocalizedString(@"(No Description)", @"EditExpenseVC check for no description text in prepare for segue")] ? @"" : _descriptionLabel.text);
+
+        [controller setExpenseDescription:text withDidSaveCompletionHandler:^(NSString *text) {
             self.descriptionLabel.text = text;
         }];
     }
@@ -425,7 +427,9 @@
     if (isChanged) {
         [[NSNotificationCenter defaultCenter]postNotificationName:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
 
-        [KVNProgress showSuccessWithStatus:@"Updated" completion:nil];
+        [KVNProgress showSuccessWithStatus:@"Updated" completion:^{
+            [self.navigationController popViewControllerAnimated:YES];
+        }];
     }
 
     [self updateText];

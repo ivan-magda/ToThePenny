@@ -422,7 +422,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Description" translatesAutoresizingMaskIntoConstraints="NO" id="PKs-ba-HLP">
-                                <rect key="frame" x="11" y="0.0" width="309" height="568"/>
+                                <rect key="frame" x="5" y="0.0" width="315" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
@@ -431,7 +431,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="PKs-ba-HLP" firstAttribute="top" secondItem="AGq-ok-cNn" secondAttribute="top" id="8nj-25-R5x"/>
-                            <constraint firstItem="PKs-ba-HLP" firstAttribute="leading" secondItem="AGq-ok-cNn" secondAttribute="leading" constant="11" id="d6y-A8-82r"/>
+                            <constraint firstItem="PKs-ba-HLP" firstAttribute="leading" secondItem="AGq-ok-cNn" secondAttribute="leading" constant="5" id="d6y-A8-82r"/>
                             <constraint firstAttribute="trailing" secondItem="PKs-ba-HLP" secondAttribute="trailing" id="un7-2f-TrB"/>
                             <constraint firstAttribute="bottom" secondItem="PKs-ba-HLP" secondAttribute="bottom" id="yHo-Mq-aFi"/>
                         </constraints>
