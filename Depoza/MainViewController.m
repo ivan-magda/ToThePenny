@@ -7,7 +7,6 @@
 #import "SelectMonthViewController.h"
     //View
 #import "TitleViewButton.h"
-
     //CoreData
 #import "Expense.h"
 #import "ExpenseData+Fetch.h"
@@ -15,13 +14,14 @@
 #import "Fetch.h"
     //Data
 #import "CategoriesInfo.h"
-
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.m"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSDate+IsDatesWithEqualMonth.h"
 #import "NSString+FormatAmount.h"
+    //Transition
+#import "ZFModalTransitionAnimator.h"
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
@@ -33,6 +33,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 @property (nonatomic, strong) NSFetchedResultsController *todayFetchedResultsController;
 @property (nonatomic, strong) NSFetchedResultsController *monthFetchedResultsController;
 @property (nonatomic, strong) MainTableViewProtocolsImplementer *tableViewProtocolsImplementer;
+
+@property (nonatomic, strong) ZFModalTransitionAnimator *transitionAnimator;
 
 @end
 
@@ -216,6 +218,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"AddExpense"]) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self changeMonthToShowFromDate:[NSDate date]];
+        });
+        
         UINavigationController *navigationController = segue.destinationViewController;
 
         AddExpenseViewController *controller = (AddExpenseViewController *)navigationController.topViewController;
@@ -227,6 +233,19 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             [categoriesTitles addObject:anInfo.title];
         }
         controller.categories = categoriesTitles;
+
+            // create animator object with instance of modal view controller
+            // we need to keep it in property with strong reference so it will not get release
+        self.transitionAnimator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:navigationController];
+        self.transitionAnimator.transitionDuration = 0.7f;
+        self.transitionAnimator.bounces = NO;
+        self.transitionAnimator.behindViewAlpha = 0.5f;
+        self.transitionAnimator.behindViewScale = 0.7f;
+        self.transitionAnimator.direction = ZFModalTransitonDirectionRight;
+
+            // set transition delegate of modal view controller to our object
+        navigationController.transitioningDelegate = _transitionAnimator;
+        navigationController.modalPresentationStyle = UIModalPresentationCustom;
 
     } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *controller = segue.destinationViewController;

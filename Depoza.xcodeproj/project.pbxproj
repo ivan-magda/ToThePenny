@@ -34,6 +34,7 @@
 		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
 		5009809E1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */; };
 		500980A21AE3908B007DFCEA /* CustomRightDetailLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailLabel.m */; };
+		500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -165,6 +166,8 @@
 		500980A01AE3908B007DFCEA /* CustomRightDetailLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRightDetailLabel.h; sourceTree = "<group>"; };
 		500980A11AE3908B007DFCEA /* CustomRightDetailLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRightDetailLabel.m; sourceTree = "<group>"; };
 		500980A31AE4B2DC007DFCEA /* CategoriesContainerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesContainerViewControllerDelegate.h; sourceTree = "<group>"; };
+		500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
+		500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -339,6 +342,15 @@
 				5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */,
 			);
 			name = SelectedCategoryTableViewController;
+			sourceTree = "<group>";
+		};
+		500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */,
+				500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */,
+			);
+			name = ThirdParty;
 			sourceTree = "<group>";
 		};
 		5015A5661AC02C230056271A /* Depoza Extension */ = {
@@ -521,6 +533,7 @@
 				50A1D4D21AC03ECA00E56EB1 /* Depoza.entitlements */,
 				505CA13F1A762653009CA7B1 /* Categories */,
 				5025479B1A1ED27600DCB8FB /* Resources */,
+				500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
 			);
 			path = Depoza;
@@ -970,6 +983,7 @@
 				505AF9341A91577000E0CB28 /* DetailExpenseTableViewController.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
 				50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */,
+				500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */,
 				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */,
