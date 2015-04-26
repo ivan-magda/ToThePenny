@@ -6,18 +6,15 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-    //View
+    //ViewControllers
 #import "DetailExpenseTableViewController.h"
 #import "ChooseCategoryTableViewController.h"
-#import "MainViewController.h"
-
+#import "EditDescriptionViewController.h"
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
-
     //Categories
 #import "NSString+FormatAmount.h"
-
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
@@ -204,6 +201,12 @@
         controller.titles = allCategoriesTitles;
         controller.iconName = _iconName;
         controller.originalCategoryName = self.categoryNameLabel.text;
+    } else if ([segue.identifier isEqualToString:@"EditDescription"]) {
+        EditDescriptionViewController *controller = segue.destinationViewController;
+
+        [controller setExpenseDescription:_descriptionLabel.text withDidSaveCompletionHandler:^(NSString *text) {
+            self.descriptionLabel.text = text;
+        }];
     }
 }
 

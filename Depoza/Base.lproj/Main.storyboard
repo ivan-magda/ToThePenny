@@ -22,7 +22,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0f-08-eaF">
                                             <rect key="frame" x="15" y="12" width="83" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCq-IQ-RA1">
@@ -380,6 +380,9 @@
                                                 <constraint firstAttribute="trailing" secondItem="zHA-Av-m7y" secondAttribute="trailing" constant="20" symbolic="YES" id="wV1-l9-009"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="95x-nD-XVy" kind="push" identifier="EditDescription" id="i2k-4g-MHV"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -405,6 +408,53 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fqm-uv-xqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1077" y="-1357"/>
+        </scene>
+        <!--Edit Description-->
+        <scene sceneID="ILK-6D-sak">
+            <objects>
+                <viewController id="95x-nD-XVy" customClass="EditDescriptionViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="liK-h8-7Tp"/>
+                        <viewControllerLayoutGuide type="bottom" id="en6-oe-NBQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AGq-ok-cNn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Description" translatesAutoresizingMaskIntoConstraints="NO" id="PKs-ba-HLP">
+                                <rect key="frame" x="11" y="0.0" width="309" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PKs-ba-HLP" firstAttribute="top" secondItem="AGq-ok-cNn" secondAttribute="top" id="8nj-25-R5x"/>
+                            <constraint firstItem="PKs-ba-HLP" firstAttribute="leading" secondItem="AGq-ok-cNn" secondAttribute="leading" constant="11" id="d6y-A8-82r"/>
+                            <constraint firstAttribute="trailing" secondItem="PKs-ba-HLP" secondAttribute="trailing" id="un7-2f-TrB"/>
+                            <constraint firstAttribute="bottom" secondItem="PKs-ba-HLP" secondAttribute="bottom" id="yHo-Mq-aFi"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Description" id="zQn-Be-5l1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="KHh-Qq-xCR">
+                            <connections>
+                                <action selector="cancelBarButtonPressed:" destination="95x-nD-XVy" id="XdQ-JQ-QWf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="UZS-Vh-ocA">
+                            <connections>
+                                <action selector="saveBarButtonPressed:" destination="95x-nD-XVy" id="MAg-dj-c1n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="textView" destination="PKs-ba-HLP" id="R6q-ZW-sZx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HkN-AP-pdU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1496" y="-2005"/>
         </scene>
         <!--Category-->
         <scene sceneID="27C-1R-Ltg">
@@ -442,7 +492,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nOa-4O-XG5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1562" y="-1357"/>
+            <point key="canvasLocation" x="1496" y="-1357"/>
         </scene>
         <!--Expenses-->
         <scene sceneID="9Bk-YW-U8l">
@@ -930,7 +980,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WDI-1N-8eL">
                                             <rect key="frame" x="15" y="12" width="83" height="20"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jGb-u9-8Qt">

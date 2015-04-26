@@ -63,6 +63,7 @@
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
 		5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */; };
+		509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */; };
 		50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
 		50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
@@ -216,6 +217,8 @@
 		5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+Fetch.m"; sourceTree = "<group>"; };
 		5097DACE1A922294006DB197 /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
 		5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
+		509CDD111AEC9BA300A6A5E9 /* EditDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDescriptionViewController.h; sourceTree = "<group>"; };
+		509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDescriptionViewController.m; sourceTree = "<group>"; };
 		50A1D4D21AC03ECA00E56EB1 /* Depoza.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Depoza.entitlements; sourceTree = "<group>"; };
 		50A1D4D31AC03F2200E56EB1 /* Depoza Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Depoza Extension.entitlements"; sourceTree = "<group>"; };
 		50A6C05B1A92C71800699862 /* ExpenseData+Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ExpenseData+Fetch.h"; sourceTree = "<group>"; };
@@ -575,10 +578,20 @@
 				5063D19B1A85F0EF006168D3 /* AddExpenseView */,
 				506803DC1A91E273002A3DA0 /* DetailView */,
 				50D4E0F71A92253A0040C260 /* ChooseCategoryView */,
+				509CDD141AEC9BAB00A6A5E9 /* EditDescriptionView */,
 				502589B41A961B4200918017 /* SettingsView */,
 				50FEF8341A96030E007BC483 /* AddCategoryView */,
 			);
 			name = UserInterface;
+			sourceTree = "<group>";
+		};
+		509CDD141AEC9BAB00A6A5E9 /* EditDescriptionView */ = {
+			isa = PBXGroup;
+			children = (
+				509CDD111AEC9BA300A6A5E9 /* EditDescriptionViewController.h */,
+				509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */,
+			);
+			name = EditDescriptionView;
 			sourceTree = "<group>";
 		};
 		50A6C05E1A92C99700699862 /* Expense */ = {
@@ -974,6 +987,7 @@
 				502547961A1EC86600DCB8FB /* AddExpenseViewController.m in Sources */,
 				50CD56551AD402480093CE4F /* CoreDataDeviceList.m in Sources */,
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
+				509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
 				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
 				50206E9C1AC8E097001A017E /* CollectionViewController.m in Sources */,
