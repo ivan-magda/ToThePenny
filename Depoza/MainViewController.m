@@ -44,12 +44,13 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     CGFloat _totalExpeditures;
     NSMutableArray *_categoriesInfo;
 
+    SelectMonthViewController *_selectMonthViewController;
     TitleViewButton *_titleViewButton;
-    BOOL _showMonthView;
     NSDate *_dateToShow;
 
     BOOL _isFirstTimeViewDidAppear;
     BOOL _isAddExpensePresenting;
+    BOOL _selectMonthIsVisible;
 }
 
 #pragma mark - ViewController life cycle -
@@ -61,6 +62,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     NSParameterAssert(self.delegate);
 
     _isAddExpensePresenting = NO;
+    _selectMonthIsVisible = NO;
     _isFirstTimeViewDidAppear = YES;
 
     _dateToShow = [NSDate date];
@@ -89,11 +91,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [super viewDidAppear:animated];
 
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-        if (_isFirstTimeViewDidAppear) {
-            _isFirstTimeViewDidAppear = NO;
+        if (_isFirstTimeViewDidAppear && !_isShowExpenseDetailFromExtension) {
             [self performAddExpense];
+            self.isShowExpenseDetailFromExtension = NO;
         }
     }
+    _isFirstTimeViewDidAppear = NO;
 }
 
 - (void)dealloc {
@@ -200,12 +203,31 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             [self performAddExpense];
         });
     } else {
+        if (_selectMonthIsVisible) {
+            NSParameterAssert(_selectMonthViewController != nil);
+
+            _selectMonthIsVisible = NO;
+
+            [_selectMonthViewController dismissFromParentViewController];
+            [self changeMonthToShowFromDate:[NSDate date]];
+        }
         [self performSegueWithIdentifier:@"AddExpense" sender:nil];
     }
 }
 
 - (BOOL)isAddExpensePresenting {
     return _isAddExpensePresenting;
+}
+
+- (BOOL)isSelectMonthIsPresenting {
+    return _selectMonthIsVisible;
+}
+
+- (void)dismissSelectMonthViewController {
+    NSParameterAssert(_selectMonthViewController != nil);
+
+    [_selectMonthViewController dismissFromParentViewController];
+    _selectMonthIsVisible = NO;
 }
 
 #pragma mark - TitleViewButton -
@@ -219,7 +241,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _titleViewButton.titleLabel.textAlignment = NSTextAlignmentCenter;
     [_titleViewButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 
-    _showMonthView = NO;
     UIImage *image = [UIImage imageNamed:@"Down.png"];
     [_titleViewButton setImage:image forState:UIControlStateNormal];
     [_titleViewButton sizeToFit];
@@ -229,22 +250,20 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 - (void)titleViewButtonPressed:(UIButton *)button {
-    _showMonthView = !_showMonthView ? YES : NO;
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
+    } completion:nil];
 
-    if (_showMonthView) {
-        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-            _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
-        } completion:nil];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    _selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
 
-        SelectMonthViewController *selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
+    _selectMonthViewController.managedObjectContext = self.managedObjectContext;
+    _selectMonthViewController.delegate = self;
 
-        selectMonthViewController.managedObjectContext = self.managedObjectContext;
-        selectMonthViewController.delegate = self;
+    [_selectMonthViewController presentInParentViewController:self.tabBarController];
 
-        [selectMonthViewController presentInParentViewController:self.tabBarController];
-    }
+    _selectMonthIsVisible = YES;
 }
 
 #pragma mark - Segues -
@@ -296,6 +315,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
             ExpenseData *expense = sender;
             controller.expenseToShow = expense;
         }
+        _isAddExpensePresenting = NO;
     } else if ([segue.identifier isEqualToString:@"CategoriesInfo"]) {
         CategoriesContainerViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = self.managedObjectContext;
@@ -351,6 +371,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark SelectMonthViewControllerDelegate
 
 - (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
+    _selectMonthIsVisible = NO;
+
     NSDate *date = [self dateFromMonthInfo:monthInfo];
 
     [self changeMonthToShowFromDate:date];

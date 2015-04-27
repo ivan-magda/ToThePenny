@@ -183,6 +183,11 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
                 return YES;
             }
 
+            if (_mainViewController.isSelectMonthIsPresenting) {
+                [_mainViewController dismissSelectMonthViewController];
+            }
+
+            _mainViewController.isShowExpenseDetailFromExtension = YES;
             [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
             
             return YES;

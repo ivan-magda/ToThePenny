@@ -273,6 +273,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 
 #pragma mark Device List Handling
 
+#warning if iCloud don't enabled then app crash
 - (NSURL *)deviceListURL {
     NSURL *iCloudURLBase = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:kURLForUbiquityContainerIdentifier];
 

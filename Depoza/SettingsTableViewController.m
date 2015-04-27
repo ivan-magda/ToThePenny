@@ -57,6 +57,13 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        return nil;
+    }
+    return indexPath;
+}
+
 #pragma mark - IBAction -
 
 - (IBAction)startupSwitchDidChangeValue:(UISwitch *)sender {
