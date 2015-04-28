@@ -62,7 +62,6 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="tableView" destination="sTV-hZ-UKe" id="aJs-3J-j88"/>
-                        <segue destination="JNE-qc-fiL" kind="modal" identifier="AddExpense" id="lzb-VO-Adi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GQh-BI-Fho" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -367,7 +366,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" text="Description" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
                                                     <rect key="frame" x="217" y="11" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -375,11 +374,11 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="zHA-Av-m7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="trailing" constant="8" symbolic="YES" id="2PI-zu-PIG"/>
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="66D-2f-6LI"/>
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="leading" secondItem="aiL-cy-r5o" secondAttribute="leading" constant="15" id="6he-mT-uCR"/>
+                                                <constraint firstItem="zHA-Av-m7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="trailing" constant="8" symbolic="YES" id="LLP-Gy-u5p"/>
                                                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="bottom" priority="999" constant="11" id="Wqx-sy-fhe"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="bTy-Oi-ibG"/>
+                                                <constraint firstAttribute="bottom" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="bTy-Oi-ibG"/>
                                                 <constraint firstItem="zHA-Av-m7y" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="h5O-Qe-rx0"/>
                                                 <constraint firstAttribute="trailing" secondItem="zHA-Av-m7y" secondAttribute="trailing" constant="20" symbolic="YES" id="wV1-l9-009"/>
                                             </constraints>
@@ -1093,9 +1092,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="off-yt-H5u"/>
+        <segue reference="qiW-IC-btw"/>
         <segue reference="eiF-x1-yp8"/>
-        <segue reference="lzb-VO-Adi"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -72,6 +72,7 @@
         for (ExpenseData *anExpense in expenses) {
             amount += [anExpense.amount floatValue];
         }
+
         return [NSString stringWithFormat:@"Сегодня: %@", [NSString formatAmount:@(amount)]];
     }
     return nil;
@@ -141,7 +142,17 @@
         label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
         label.shadowOffset = CGSizeMake(0, 1);
         label.shadowColor = [UIColor whiteColor];
-        label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+
+        NSString *text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc]initWithString:text];
+
+        NSRange range = [text rangeOfString:@":"];
+        NSInteger length = text.length;
+        range.location += 1;
+        range.length = length - range.location;
+        [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
+
+        label.attributedText = attributedText;
         label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
 

@@ -9,9 +9,6 @@
     //ViewController
 #import "SearchExpensesTableViewController.h"
 #import "DetailExpenseTableViewController.h"
-#import "DetailExpenseTableViewController.h"
-#import "MainViewController.h"
-#import "AddExpenseViewController.h"
     //View
 #import "CustomRightDetailLabel.h"
     //CoreData
@@ -33,7 +30,9 @@
 
 @end
 
-@implementation SearchExpensesTableViewController
+@implementation SearchExpensesTableViewController {
+    BOOL _isSearchBarFirstResponder;
+}
 
 #pragma mark - ViewControllerLifeCycle -
 
@@ -42,16 +41,26 @@
 
     NSParameterAssert(_managedObjectContext);
 
-    [self createSearchBarButtonItem];
-    [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
-    [self createSearchController];
+    _isSearchBarFirstResponder = NO;
 
-    self.definesPresentationContext = YES;
+    _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
+
+    [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
+    [self configurateSearchController];
+
     self.tableView.allowsSelectionDuringEditing = YES;
 
     [NSFetchedResultsController deleteCacheWithName:@"All"];
 
     [self performFetch];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    if (_isSearchBarFirstResponder) {
+        [self.searchController.searchBar becomeFirstResponder];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -64,10 +73,6 @@
 
 #pragma mark - Search -
 
-- (void)createSearchBarButtonItem {
-    _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
-}
-
 - (void)addRightBarButtonItemsToNavigationItem:(NSArray *)items {
     [self.navigationItem setRightBarButtonItems:items animated:YES];
 }
@@ -76,10 +81,10 @@
     [self addRightBarButtonItemsToNavigationItem:nil];
 
     self.navigationItem.titleView = _searchController.searchBar;
-    [self.navigationItem.titleView becomeFirstResponder];
+    [self.searchController.searchBar becomeFirstResponder];
 }
 
-- (void)createSearchController {
+- (void)configurateSearchController {
         // Create the search controller with this controller displaying the search results
     self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
     self.searchController.dimsBackgroundDuringPresentation = NO;
@@ -87,6 +92,7 @@
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
     self.searchController.searchBar.tintColor = UIColorFromRGB(0x067AB5);
+    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search for expense", @"Placeholder text in search bar of SearchVC");
     [self.searchController.searchBar sizeToFit];
 }
 
@@ -97,22 +103,8 @@
 
     if (editing) {
         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem]];
-
-        [self.tableView beginUpdates];
-        for (int i = 0; i < [[self.fetchedResultsController sections]count]; ++i) {
-            id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
-            [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[sectionInfo numberOfObjects] inSection:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-        [self.tableView endUpdates];
     } else {
         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
-
-        [self.tableView beginUpdates];
-        for (int i = 0; i < [[self.fetchedResultsController sections]count]; ++i) {
-            id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][i];
-            [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:[sectionInfo numberOfObjects] inSection:i]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        }
-        [self.tableView endUpdates];
     }
 }
 
@@ -172,6 +164,8 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
+        [self.searchController.searchBar resignFirstResponder];
+
         DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -181,26 +175,16 @@
             if (self.searchPredicate == nil) {
                 ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
                 detailsViewController.expenseToShow = expense;
+
+                _isSearchBarFirstResponder = NO;
             } else {
                 NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_searchPredicate];
                 ExpenseData *expense = filteredExpenses[indexPath.row];
                 detailsViewController.expenseToShow = expense;
+
+                _isSearchBarFirstResponder = YES;
             }
         }
-    } else if ([segue.identifier isEqualToString:@"AddExpense"]) {
-        NSArray *categoriesTitles = sender;
-
-            //Get MainVC and set it as delegate of AddExpenseVC
-        NSArray *windows = [[UIApplication sharedApplication]windows];
-        UITabBarController *tabBarController = (UITabBarController *)[[windows firstObject] rootViewController];
-        UINavigationController *navigationController = (UINavigationController *)tabBarController.viewControllers[0];
-        MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
-
-        UINavigationController *segueNavigationController = segue.destinationViewController;
-        AddExpenseViewController *controller = (AddExpenseViewController *)segueNavigationController.topViewController;
-        controller.delegate = mainViewController;
-        controller.managedObjectContext = _managedObjectContext;
-        controller.categories = categoriesTitles;
     }
 }
 
@@ -213,9 +197,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (self.searchPredicate == nil) {
-        int adjustment = [self isEditing] ? 1 : 0;
         id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
-        return [sectionInfo numberOfObjects] + adjustment;
+        return [sectionInfo numberOfObjects];
     } else {
         return [[self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate]count];
     }
@@ -244,18 +227,6 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        NSArray *categoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
-        [self performSegueWithIdentifier:@"AddExpense" sender:categoriesTitles];
-    }
-}
-
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
-    if (indexPath.row >= [sectionInfo numberOfObjects]) {
-        return UITableViewCellEditingStyleInsert;
-    } else {
-        return UITableViewCellEditingStyleDelete;
     }
 }
 
@@ -280,35 +251,20 @@
 
 - (void)configureCell:(CustomRightDetailLabel *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = nil;
-
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
-
-    if (self.searchPredicate == nil && indexPath.row < [sectionInfo numberOfObjects]) {
+    if (self.searchPredicate == nil) {
         expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    } else if (indexPath.row < [sectionInfo numberOfObjects]){
+    } else {
         expense = [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:self.searchPredicate][indexPath.row];
     }
 
-    if (self.searchPredicate == nil && indexPath.row >= [sectionInfo numberOfObjects] && [self isEditing]) {
-        cell.leftLabel.text = @"Add Expense";
-        cell.rightDetailLabel.text = nil;
-        cell.editingAccessoryType = UITableViewCellAccessoryNone;
-    } else {
-        cell.leftLabel.text = expense.category.title;
-        cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
-    }
+    cell.leftLabel.text = expense.category.title;
+    cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
 }
 
 #pragma mark UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][indexPath.section];
-    if (indexPath.row >= [sectionInfo numberOfObjects] && [self isEditing]) {
-        NSArray *categoriesTitles = [CategoryData getAllTitlesInContext:_managedObjectContext];
-        [self performSegueWithIdentifier:@"AddExpense" sender:categoriesTitles];
-    }
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {

@@ -271,9 +271,11 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2 && _datePickerVisible) {
         return 217.0f;
-    } else if (indexPath.row == 4) {
+    } else if (indexPath.row == 4 && _datePickerVisible) {
         NSIndexPath *correctIndex = [NSIndexPath indexPathForRow:3 inSection:0];
         return [super tableView:tableView heightForRowAtIndexPath:correctIndex];
+    } else if (indexPath.row == 3 && !_datePickerVisible) {
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }

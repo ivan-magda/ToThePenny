@@ -132,7 +132,7 @@
 
     cell.textLabel.text = [text uppercaseString];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
-    cell.textLabel.textColor = UIColorFromRGB(0x067AB5);
+    cell.textLabel.textColor = [UIColor blackColor];
 
     cell.detailTextLabel.text = [NSString formatAmount:dictionary[@"amount"]];
     cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
