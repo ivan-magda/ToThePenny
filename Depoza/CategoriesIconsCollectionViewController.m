@@ -8,6 +8,8 @@
 
 #import "CategoriesIconsCollectionViewController.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface CategoriesIconsCollectionViewController ()
 
 @property (nonatomic, copy, readwrite) NSArray *iconNames;
@@ -58,13 +60,13 @@
     NSParameterAssert(icon);
     icon.image = [UIImage imageNamed:iconName];
 
-    UIColor *airForceBlueColor = [UIColor colorWithRed:0.33 green:0.55 blue:0.68 alpha:0.2];
+    UIColor *color = [UIColorFromRGB(0x067AB5) colorWithAlphaComponent:0.5f];
     if ([iconName isEqualToString:_selectedIconName]) {
             //Background with Air Force Blue Color and corner radius
-        cell.backgroundColor = airForceBlueColor;
+        cell.backgroundColor = color;
         cell.layer.cornerRadius = icon.bounds.size.width / 3.0f;
         icon.clipsToBounds = YES;
-    } else if ([cell.backgroundColor isEqual:airForceBlueColor] &&
+    } else if ([cell.backgroundColor isEqual:color] &&
                ![iconName isEqualToString:_selectedIconName]){
         cell.backgroundColor = [UIColor whiteColor];
         cell.layer.cornerRadius = 1;

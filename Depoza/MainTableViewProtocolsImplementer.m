@@ -138,7 +138,7 @@
 
     if (section == 0) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
-        label.font = [UIFont systemFontOfSize:17.0f];
+        label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
         label.shadowOffset = CGSizeMake(0, 1);
         label.shadowColor = [UIColor whiteColor];
         label.text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];

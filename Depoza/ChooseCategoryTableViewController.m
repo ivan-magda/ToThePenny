@@ -68,6 +68,7 @@
         }
         cell.imageView.image = [UIImage imageNamed:_iconName];
         cell.textLabel.text = NSLocalizedString(@"Icon", @"ChooseCategoryVC icon label");
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
 
         return cell;
     } else {

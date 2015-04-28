@@ -237,9 +237,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     NSString *text = [NSString stringWithFormat:@"%@ ",[self formatDateForMonthLabel:_dateToShow]];
     [_titleViewButton setTitle:text forState:UIControlStateNormal];
-    _titleViewButton.titleLabel.font = [UIFont boldSystemFontOfSize:18.0];
+    _titleViewButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-CondensedBlack" size:21];
     _titleViewButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    [_titleViewButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_titleViewButton setTitleColor:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0] forState:UIControlStateNormal];
 
     UIImage *image = [UIImage imageNamed:@"Down.png"];
     [_titleViewButton setImage:image forState:UIControlStateNormal];
@@ -253,8 +253,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
     } completion:nil];
-
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
     _selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
 

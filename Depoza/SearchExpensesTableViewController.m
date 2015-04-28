@@ -20,6 +20,8 @@
     //Categories
 #import "NSString+FormatAmount.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
@@ -84,6 +86,7 @@
     self.searchController.hidesNavigationBarDuringPresentation = NO;
     self.searchController.searchResultsUpdater = self;
     self.searchController.searchBar.delegate = self;
+    self.searchController.searchBar.tintColor = UIColorFromRGB(0x067AB5);
     [self.searchController.searchBar sizeToFit];
 }
 

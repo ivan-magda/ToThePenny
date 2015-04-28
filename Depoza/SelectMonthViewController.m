@@ -15,6 +15,8 @@
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSString+FormatAmount.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface SelectMonthViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -50,8 +52,6 @@
 #pragma mark - Embed -
 
 - (void)dismissFromParentViewController {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-
     [self willMoveToParentViewController:nil];
 
     [UIView animateWithDuration:0.3 animations:^ {
@@ -131,10 +131,12 @@
     }
 
     cell.textLabel.text = [text uppercaseString];
-    cell.textLabel.textColor = [UIColor blackColor];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    cell.textLabel.textColor = UIColorFromRGB(0x067AB5);
 
     cell.detailTextLabel.text = [NSString formatAmount:dictionary[@"amount"]];
-    cell.detailTextLabel.textColor = [UIColor grayColor];
+    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    cell.detailTextLabel.textColor = UIColorFromRGB(0xFF3333);
 
     return cell;
 }
