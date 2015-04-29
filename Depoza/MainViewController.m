@@ -1,6 +1,6 @@
     //ViewControllers
 #import "MainViewController.h"
-#import "AddExpenseViewController.h"
+#import "AddExpenseTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "CategoriesContainerViewController.h"
 #import "MainTableViewProtocolsImplementer.h"
@@ -276,15 +276,11 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         
         UINavigationController *navigationController = segue.destinationViewController;
 
-        AddExpenseViewController *controller = (AddExpenseViewController *)navigationController.topViewController;
+        AddExpenseTableViewController *controller = (AddExpenseTableViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.managedObjectContext = _managedObjectContext;
 
-        NSMutableArray *categoriesTitles = [NSMutableArray arrayWithCapacity:[_categoriesInfo count]];
-        for (CategoriesInfo *anInfo in _categoriesInfo) {
-            [categoriesTitles addObject:anInfo.title];
-        }
-        controller.categories = categoriesTitles;
+        controller.categoriesInfo = _categoriesInfo;
 
             // create animator object with instance of modal view controller
             // we need to keep it in property with strong reference so it will not get release
@@ -325,9 +321,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 #pragma mark - Delegate -
-#pragma mark AddExpenseViewControllerDelegate
+#pragma mark AddExpenseTableViewControllerDelegate
 
-- (void)addExpenseViewController:(AddExpenseViewController *)controller didFinishAddingExpense:(Expense *)expense {
+- (void)addExpenseTableViewController:(AddExpenseTableViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _isAddExpensePresenting = NO;
     
     _totalExpeditures += [expense.amount floatValue];
@@ -354,7 +350,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     info.amount = @(value);
 }
 
-- (void)addExpenseViewControllerDidCancel:(AddExpenseViewController *)controller {
+- (void)addExpenseTableViewControllerDidCancel:(AddExpenseTableViewController *)controller {
     _isAddExpensePresenting = NO;
 }
 

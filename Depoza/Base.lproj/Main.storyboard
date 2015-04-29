@@ -194,64 +194,90 @@
             <point key="canvasLocation" x="490" y="-363"/>
         </scene>
         <!--Add Expense-->
-        <scene sceneID="uxQ-Dh-Vwa">
+        <scene sceneID="6ay-zP-VgH">
             <objects>
-                <viewController id="Xcd-an-bxR" customClass="AddExpenseViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="uDg-4G-nOg"/>
-                        <viewControllerLayoutGuide type="bottom" id="1b6-pT-yEg"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Yfz-Ja-pBD">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                <tableViewController id="G42-sP-2k6" customClass="AddExpenseTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="swf-OB-1xm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0,00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5cZ-te-IuN">
-                                <rect key="frame" x="16" y="72" width="288" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="aYD-lE-7za"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="42"/>
-                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OUB-bU-H45">
-                                <rect key="frame" x="16" y="182" width="288" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="1uD-qQ-cKm"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" returnKeyType="done"/>
-                                <connections>
-                                    <action selector="descriptionTextFieldDidEndOnExit:" destination="Xcd-an-bxR" eventType="editingDidEndOnExit" id="1GE-gH-8y4"/>
-                                </connections>
-                            </textField>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="5cZ-te-IuN" firstAttribute="leading" secondItem="Yfz-Ja-pBD" secondAttribute="leading" constant="16" id="T07-Vh-tnb"/>
-                            <constraint firstItem="OUB-bU-H45" firstAttribute="top" secondItem="5cZ-te-IuN" secondAttribute="bottom" constant="50" id="UKe-va-nKu"/>
-                            <constraint firstAttribute="trailing" secondItem="OUB-bU-H45" secondAttribute="trailing" constant="16" id="Xp3-x4-yU1"/>
-                            <constraint firstItem="OUB-bU-H45" firstAttribute="leading" secondItem="Yfz-Ja-pBD" secondAttribute="leading" constant="16" id="b6N-6I-Ror"/>
-                            <constraint firstItem="5cZ-te-IuN" firstAttribute="top" secondItem="uDg-4G-nOg" secondAttribute="bottom" constant="8" id="h8v-fv-QNP"/>
-                            <constraint firstAttribute="trailing" secondItem="5cZ-te-IuN" secondAttribute="trailing" constant="16" id="tQb-5Q-ERO"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Add Expense" id="4en-0w-yeL">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="epa-nb-SnK">
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExpenseTextFieldCell" rowHeight="64" id="7yv-A3-Wli" userLabel="TextFieldCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7yv-A3-Wli" id="lZZ-5G-egb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="555" contentMode="scaleToFill" placeholderIntrinsicWidth="97" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0,00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Wm-gp-gc6">
+                                            <rect key="frame" x="15" y="7" width="285" height="50"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="igZ-kS-flK"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="42"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="7Wm-gp-gc6" secondAttribute="trailing" constant="20" symbolic="YES" id="Dvk-QK-0Ha"/>
+                                        <constraint firstAttribute="centerY" secondItem="7Wm-gp-gc6" secondAttribute="centerY" id="TcJ-yY-MW2"/>
+                                        <constraint firstItem="7Wm-gp-gc6" firstAttribute="leading" secondItem="lZZ-5G-egb" secondAttribute="leading" constant="15" id="jdF-sK-QWE"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="9oH-d4-e2k" imageView="QLc-LB-xH5" rowHeight="54" style="IBUITableViewCellStyleDefault" id="Fxh-JW-hJ0" userLabel="CategoryCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fxh-JW-hJ0" id="d5B-JR-GYu">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9oH-d4-e2k">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Airplane" id="QLc-LB-xH5">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionFieldCell" id="czC-mm-fiz" userLabel="DescriptionFieldCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="czC-mm-fiz" id="f8z-xw-Fs3">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="777" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter a description" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hHk-PM-Xa0">
+                                            <rect key="frame" x="15" y="11" width="285" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" returnKeyType="done"/>
+                                            <connections>
+                                                <action selector="descriptionTextFieldDidEndOnExit:" destination="G42-sP-2k6" eventType="editingDidEndOnExit" id="Laz-G9-hbY"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="hHk-PM-Xa0" secondAttribute="centerY" id="tBJ-kG-fSp"/>
+                                        <constraint firstItem="hHk-PM-Xa0" firstAttribute="leading" secondItem="f8z-xw-Fs3" secondAttribute="leading" constant="15" id="uSX-M0-DPn"/>
+                                        <constraint firstAttribute="trailing" secondItem="hHk-PM-Xa0" secondAttribute="trailing" constant="20" symbolic="YES" id="yIq-ma-cUR"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="G42-sP-2k6" id="8nU-Ek-tfV"/>
+                            <outlet property="delegate" destination="G42-sP-2k6" id="hpA-7L-7mS"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Add Expense" id="4gu-5P-d8u">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="q5Y-Wk-Tf6">
                             <connections>
-                                <action selector="cancelButtonPressed:" destination="Xcd-an-bxR" id="vWI-Rc-o0l"/>
+                                <action selector="cancelButtonPressed:" destination="G42-sP-2k6" id="ZCJ-Qj-DA5"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="descriptionTextField" destination="OUB-bU-H45" id="aUS-2c-kfz"/>
-                        <outlet property="expenseTextField" destination="5cZ-te-IuN" id="zgH-sH-2Sq"/>
-                        <outlet property="expenseTextFieldConstraintTop" destination="h8v-fv-QNP" id="KAO-sd-EQu"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VKY-Ma-HRB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lLl-6s-gWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="-685"/>
+            <point key="canvasLocation" x="1812" y="-685"/>
         </scene>
         <!--Expense-->
         <scene sceneID="5Sa-c7-MIX">
@@ -827,13 +853,13 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JNE-qc-fiL" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ro9-vb-NAz">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Ro9-vb-NAz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Xcd-an-bxR" kind="relationship" relationship="rootViewController" id="V1H-LI-UUc"/>
+                        <segue destination="G42-sP-2k6" kind="relationship" relationship="rootViewController" id="74X-zI-ooc"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4V-79-vgx" userLabel="First Responder" sceneMemberID="firstResponder"/>
