@@ -96,10 +96,13 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
             CategoriesInfo *anInfo = obj;
             if (category.idValue == anInfo.idValue) {
                 for (ExpenseData *expense in category.expense) {
-                    anInfo.amount = @([anInfo.amount floatValue] + [expense.amount floatValue]);
-                    countForExpenditures += [expense.amount floatValue];
+                    if ([expense.dateOfExpense compare:[days firstObject]] != NSOrderedAscending &&
+                        [expense.dateOfExpense compare:[days lastObject]]  != NSOrderedDescending) {
+                        anInfo.amount = @([anInfo.amount floatValue] + [expense.amount floatValue]);
+                        countForExpenditures += [expense.amount floatValue];
 
-                [managedObjectContext refreshObject:expense mergeChanges:NO];
+                        [managedObjectContext refreshObject:expense mergeChanges:NO];
+                    }
                 }
                 *stop = YES;
             }
