@@ -18,6 +18,8 @@
 #import "NSString+FormatAmount.h"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 @interface MainTableViewProtocolsImplementer ()
 
 @end
@@ -35,6 +37,8 @@
     return self;
 }
 
+#pragma mark - Helpers -
+
 - (NSString *)formatDate:(NSDate *)theDate {
 
     static NSDateFormatter *formatter = nil;
@@ -48,6 +52,19 @@
 - (BOOL)isCurrentMonthShowing {
     ExpenseData *anExpense = [_fetchedResultsController.fetchedObjects firstObject];
     return [NSDate isDateBetweenCurrentMonth:anExpense.dateOfExpense];
+}
+
+- (NSAttributedString *)colorAttributedStringForTableHeaderView {
+    NSString *text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc]initWithString:text];
+
+    NSRange range = [text rangeOfString:@":"];
+    NSInteger length = text.length;
+    range.location += 1;
+    range.length = length - range.location;
+    [attributedText addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xFF3333) range:range];
+
+    return attributedText;
 }
 
 #pragma mark - UITableViewDataSource -
@@ -143,16 +160,7 @@
         label.shadowOffset = CGSizeMake(0, 1);
         label.shadowColor = [UIColor whiteColor];
 
-        NSString *text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
-        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc]initWithString:text];
-
-        NSRange range = [text rangeOfString:@":"];
-        NSInteger length = text.length;
-        range.location += 1;
-        range.length = length - range.location;
-        [attributedText addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:range];
-
-        label.attributedText = attributedText;
+        label.attributedText = [self colorAttributedStringForTableHeaderView];
         label.textAlignment = NSTextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
 
@@ -229,7 +237,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
         // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
     if ([self isCurrentMonthShowing]) {
-        _tableViewHeaderLabel.text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+        _tableViewHeaderLabel.attributedText = [self colorAttributedStringForTableHeaderView];
     }
 
     [self.tableView endUpdates];
