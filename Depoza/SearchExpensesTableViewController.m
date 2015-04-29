@@ -19,11 +19,11 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate>
+@interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
-@property (strong, nonatomic) UISearchController *searchController;
+@property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) NSPredicate *searchPredicate;
 
 @property (strong, nonatomic) UIBarButtonItem *searchButton;
@@ -41,13 +41,13 @@
 
     NSParameterAssert(_managedObjectContext);
 
+    [self configurateSearchBar];
     _isSearchBarFirstResponder = NO;
 
     _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
-
     [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
-    [self configurateSearchController];
 
+    self.definesPresentationContext = YES;
     self.tableView.allowsSelectionDuringEditing = YES;
 
     [NSFetchedResultsController deleteCacheWithName:@"All"];
@@ -59,7 +59,7 @@
     [super viewWillAppear:animated];
 
     if (_isSearchBarFirstResponder) {
-        [self.searchController.searchBar becomeFirstResponder];
+        [_searchBar becomeFirstResponder];
     }
 }
 
@@ -73,6 +73,15 @@
 
 #pragma mark - Search -
 
+- (void)configurateSearchBar {
+    _searchBar = [UISearchBar new];
+    _searchBar.delegate = self;
+    _searchBar.showsCancelButton = YES;
+    _searchBar.tintColor = UIColorFromRGB(0x067AB5);
+    _searchBar.placeholder = NSLocalizedString(@"Search for expense", @"Placeholder text in search bar of SearchVC");
+    [_searchBar sizeToFit];
+}
+
 - (void)addRightBarButtonItemsToNavigationItem:(NSArray *)items {
     [self.navigationItem setRightBarButtonItems:items animated:YES];
 }
@@ -80,20 +89,8 @@
 - (void)searchBarButtonPressed:(UIBarButtonItem *)sender {
     [self addRightBarButtonItemsToNavigationItem:nil];
 
-    self.navigationItem.titleView = _searchController.searchBar;
-    [self.searchController.searchBar becomeFirstResponder];
-}
-
-- (void)configurateSearchController {
-        // Create the search controller with this controller displaying the search results
-    self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    self.searchController.dimsBackgroundDuringPresentation = NO;
-    self.searchController.hidesNavigationBarDuringPresentation = NO;
-    self.searchController.searchResultsUpdater = self;
-    self.searchController.searchBar.delegate = self;
-    self.searchController.searchBar.tintColor = UIColorFromRGB(0x067AB5);
-    self.searchController.searchBar.placeholder = NSLocalizedString(@"Search for expense", @"Placeholder text in search bar of SearchVC");
-    [self.searchController.searchBar sizeToFit];
+    self.navigationItem.titleView = _searchBar;
+    [_searchBar becomeFirstResponder];
 }
 
 #pragma mark SetEditig
@@ -111,6 +108,8 @@
 #pragma mark UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [self.searchBar resignFirstResponder];
+
     CGRect frame = self.navigationItem.titleView.frame;
     frame.size.width = 0.0f;
     [UIView animateWithDuration:0.3f
@@ -123,13 +122,25 @@
                          self.navigationItem.titleView = nil;
                          [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
                      }];
-     }
+    self.searchBar.text = nil;
+    self.searchPredicate = nil;
+    [self.tableView reloadData];
+}
 
-#pragma mark SearchResultsUpdater
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    NSString *newText = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
+    [self updateSearchResultsWithSearchText:newText];
 
-- (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
-    NSString *searchText = self.searchController.searchBar.text;
+    return YES;
+}
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    if (searchText.length == 0) {
+        [self updateSearchResultsWithSearchText:searchText];
+    }
+}
+
+- (void)updateSearchResultsWithSearchText:(NSString *)searchText {
     if (searchText.length > 0) {
         NSExpression *categoryTitle = [NSExpression expressionForKeyPath:@"category.title"];
         NSExpression *text = [NSExpression expressionForConstantValue:searchText];
@@ -149,7 +160,6 @@
     } else if (searchText.length == 0) {
         self.searchPredicate = nil;
     }
-    
     [self.tableView reloadData];
 }
 
@@ -164,8 +174,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
-        [self.searchController.searchBar resignFirstResponder];
-
         DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
@@ -183,6 +191,7 @@
                 detailsViewController.expenseToShow = expense;
 
                 _isSearchBarFirstResponder = YES;
+                [_searchBar resignFirstResponder];
             }
         }
     }

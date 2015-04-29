@@ -118,7 +118,7 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
 
     [[UITabBar appearance]setTintColor:UIColorFromRGB(0x067AB5)];
 
-    [[UIBarButtonItem appearanceWhenContainedIn: [UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil]setDefaultTextAttributes:@{                  NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
 }
 
