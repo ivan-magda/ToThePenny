@@ -1,20 +1,28 @@
+    //ViewControllers
 #import "AddExpenseTableViewController.h"
-
+    //View
+#import "SelectedCategoryCell.h"
     //CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData.h"
 #import "CategoryData+Fetch.h"
 #import "CategoriesInfo.h"
+    //Categories
+#import "NSString+FormatAmount.h"
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
 static NSString * const kExpenseTextFieldCellIdentifier     = @"ExpenseTextFieldCell";
 static NSString * const kCategoryCellIdentifier             = @"CategoryCell";
 static NSString * const kDescriptionTextFieldCellIdentifier = @"DescriptionFieldCell";
+static NSString * const kSelectedCategoryCellIdentifier     = @"SelectedCategoryCell";
 
 static const NSInteger kExpenseTextFieldTag = 555;
 static const NSInteger kDescriptionTextFieldTag = 777;
+
+static const CGFloat kExpenseTextFieldHeight = 64.0f;
+static const CGFloat kCustomTableViewCellHeight = 54.0f;
 
 @interface AddExpenseTableViewController () <UITextFieldDelegate>
 
@@ -44,10 +52,10 @@ static const NSInteger kDescriptionTextFieldTag = 777;
     _isDelegateNotified = NO;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
 
-    [self.expenseTextField becomeFirstResponder];
+    [self expenseTextFieldBecomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -79,27 +87,35 @@ static const NSInteger kDescriptionTextFieldTag = 777;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat y = (indexPath.section == 0 ? (kExpenseTextFieldHeight - 0.5f) : (kCustomTableViewCellHeight - 0.5f));
+    CGRect separatorFrame = CGRectMake(15.0f, y, CGRectGetWidth(tableView.bounds), 0.5f);
+    UIView *separatorLineView = [[UIView alloc]initWithFrame:separatorFrame];
+    separatorLineView.backgroundColor = tableView.separatorColor;
+
     if (indexPath.section == 0) {
         UITableViewCell *expenseTextFieldCell = [tableView dequeueReusableCellWithIdentifier:kExpenseTextFieldCellIdentifier];
 
         self.expenseTextField = (UITextField *)[expenseTextFieldCell viewWithTag:kExpenseTextFieldTag];
         self.expenseTextField.delegate = self;
+        self.expenseTextField.placeholder = [NSString formatAmount:@0];
+
+        [expenseTextFieldCell.contentView addSubview:separatorLineView];
 
         return expenseTextFieldCell;
     } else if (indexPath.section == 1) {
-        NSString *selectedIdentifier = @"SelectedCell";
-
         if (_isChosenCategory) {
-            UITableViewCell *selectedCategoryCell = [tableView dequeueReusableCellWithIdentifier:selectedIdentifier];
-            if (selectedCategoryCell == nil) {
-                selectedCategoryCell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:selectedIdentifier];
-            }
+            SelectedCategoryCell *selectedCategoryCell = (SelectedCategoryCell *)[tableView dequeueReusableCellWithIdentifier:kSelectedCategoryCellIdentifier];
+
             [self configurateCell:selectedCategoryCell indexPath:indexPath];
+
+            [selectedCategoryCell.contentView addSubview:separatorLineView];
 
             return selectedCategoryCell;
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCategoryCellIdentifier];
             [self configurateCell:cell indexPath:indexPath];
+
+            [cell.contentView addSubview:separatorLineView];
 
             return cell;
         }
@@ -107,6 +123,8 @@ static const NSInteger kDescriptionTextFieldTag = 777;
         UITableViewCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:kDescriptionTextFieldCellIdentifier];
 
         self.descriptionTextField = (UITextField *)[descriptionCell viewWithTag:kDescriptionTextFieldTag];
+
+        [descriptionCell.contentView addSubview:separatorLineView];
 
         return descriptionCell;
     }
@@ -123,8 +141,9 @@ static const NSInteger kDescriptionTextFieldTag = 777;
         } else {
             CategoriesInfo *category = _categoriesInfo[_selectedRow.row];
 
-            cell.textLabel.text = category.title;
-            cell.detailTextLabel.text = @"X";
+            SelectedCategoryCell *selectedCell = (SelectedCategoryCell *)cell;
+            selectedCell.categoryTitle.text = category.title;
+            selectedCell.categoryIcon.image = [UIImage imageNamed:category.iconName];
         }
     }
 }
@@ -138,6 +157,7 @@ static const NSInteger kDescriptionTextFieldTag = 777;
     }
     if (indexPath.section == 2) {
         [self.descriptionTextField becomeFirstResponder];
+        return;
     }
     [self.expenseTextField resignFirstResponder];
 
@@ -145,34 +165,57 @@ static const NSInteger kDescriptionTextFieldTag = 777;
         _isChosenCategory = YES;
         _selectedRow = indexPath;
 
-        self.tableView.scrollEnabled = NO;
-        [self.tableView reloadData];
+        tableView.scrollEnabled = NO;
+        [self reloadTableViewSections];
 
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.descriptionTextField becomeFirstResponder];
-        });
+        [self descriptionTextFieldBecomeFirstResponder];
     } else {
         _isChosenCategory = NO;
         _selectedRow = nil;
 
+        self.descriptionTextField.text = nil;
         [self.descriptionTextField resignFirstResponder];
 
         self.tableView.scrollEnabled = YES;
-        [self.tableView reloadData];
+        [self reloadTableViewSections];
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return 64.0f;
-    } else if (indexPath.section == 1) {
-        return 54.0f;
+        return kExpenseTextFieldHeight;
     } else {
-        return 44.0f;
+        return kCustomTableViewCellHeight;
     }
 }
 
 #pragma mark - Helper Methods -
+
+- (void)reloadTableViewSections {
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(1, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+- (void)expenseTextFieldBecomeFirstResponder {
+    if (_expenseTextField != nil) {
+        [self.expenseTextField becomeFirstResponder];
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self expenseTextFieldBecomeFirstResponder];
+        });
+    }
+}
+
+- (void)descriptionTextFieldBecomeFirstResponder {
+    if (_descriptionTextField != nil) {
+        [self.descriptionTextField becomeFirstResponder];
+    } else {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.descriptionTextField becomeFirstResponder];
+        });
+    }
+}
 
 - (void)resignActiveTextField {
     [self.expenseTextField resignFirstResponder];
@@ -245,6 +288,20 @@ static const NSInteger kDescriptionTextFieldTag = 777;
 
 #pragma mark - UITextFieldDelegate -
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    NSString *text = textField.text;
+    if (text.length > 0) {
+        NSMutableCharacterSet *charactersToKeep = [NSMutableCharacterSet decimalDigitCharacterSet];
+        [charactersToKeep addCharactersInString:@","];
+
+        NSCharacterSet *charactersToRemove = [charactersToKeep invertedSet];
+
+        NSString *newString = [[text componentsSeparatedByCharactersInSet:charactersToRemove]
+                               componentsJoinedByString:@""];
+        textField.text = newString;
+    }
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *stringFromTextField = stringFromTextField = [[textField.text stringByReplacingCharactersInRange:range withString:string]stringByReplacingOccurrencesOfString:@"," withString:@"."];
 
@@ -260,6 +317,12 @@ static const NSInteger kDescriptionTextFieldTag = 777;
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     _expenseFromTextField = [NSNumber numberWithFloat:[[textField.text stringByReplacingOccurrencesOfString:@"," withString:@"." ]floatValue]];
+
+    if (_expenseFromTextField.floatValue > 0) {
+        textField.text = [NSString formatAmount:_expenseFromTextField];
+    } else {
+        textField.text = nil;
+    }
 }
 
 #pragma mark - IBAction -
