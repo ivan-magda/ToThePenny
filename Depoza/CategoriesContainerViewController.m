@@ -54,7 +54,8 @@
 - (void)updateCategories:(NSArray *)categoriesData {
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"amount" ascending:NO];
     self.categories = [categoriesData sortedArrayUsingDescriptors:@[sortDescriptor]];
-    [self.collectionView reloadData];
+
+    [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 
 - (void)mainViewController:(MainViewController *)mainViewController didLoadCategoriesInfo:(NSArray *)categoriesData {
