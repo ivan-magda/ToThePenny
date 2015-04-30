@@ -84,7 +84,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self addMotionEffectToViews];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -409,8 +410,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
-
-    [self.tableViewProtocolsImplementer.tableView reloadData];
 }
 
 #pragma mark - NSFetchedResultsController -

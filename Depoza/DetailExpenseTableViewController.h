@@ -11,6 +11,8 @@
 
 @class ExpenseData;
 
+extern NSString * const DetailExpenseTableViewControllerDidUpdateNotification;
+
 @interface DetailExpenseTableViewController : UITableViewController <ChooseCategoryTableViewControllerDelegate>
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;

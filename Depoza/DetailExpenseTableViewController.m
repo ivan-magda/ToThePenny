@@ -13,12 +13,17 @@
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
+#import "Expense.h"
     //Categories
 #import "NSString+FormatAmount.h"
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
+NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"DetailExpenseTableViewControllerDidUpdateNotification";
+NSString * const DetailExpenseTableViewControllerDidRemoveNotification = @"DetailExpenseTableViewControllerDidRemoveNotification";
+
 @interface DetailExpenseTableViewController () <UITextViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextView *amountTextView;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
@@ -39,6 +44,7 @@
     UIBarButtonItem *_editBarButton;
     UIBarButtonItem *_doneBarButton;
     UIBarButtonItem *_cancelBatButton;
+    UIBarButtonItem *_deleteBarButton;
 
     BOOL _isEditMode;
 
@@ -60,8 +66,9 @@
     _editBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
     _doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     _cancelBatButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
+    _deleteBarButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Trash"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteButtonPressed:)];
 
-    self.navigationItem.rightBarButtonItem = _editBarButton;
+    self.navigationItem.rightBarButtonItems = @[_deleteBarButton, _editBarButton];
 
     _isEditMode = NO;
 
@@ -117,25 +124,20 @@
     self.amountTextView.text = [NSString formatAmount:_expenseToShow.amount];
 
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    [self.navigationItem setRightBarButtonItem:nil animated:YES];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.navigationItem setRightBarButtonItem:_editBarButton animated:YES];
-        [self.navigationItem setHidesBackButton:NO animated:YES];
-    });
+    [self.navigationItem setHidesBackButton:NO animated:YES];
+    [self.navigationItem setRightBarButtonItems:@[_deleteBarButton, _editBarButton] animated:YES];
 
     [self hideDatePicker];
 
     [self setAlpha:0];
-    [UIView animateWithDuration:0.85 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self setAlpha:1];
 
         self.amountTextViewTrailingSpace.constant = 16.0f;
         self.dateLabelTrailingSpace.constant = _originalTrailingSpace;
         self.categoryLabelTrailingSpace.constant = _originalTrailingSpace;
         self.descriptionLabelTrailingSpace.constant = _originalTrailingSpace;
-    } completion:^(BOOL finished) {
-    }];
+    } completion:nil];
 
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -158,23 +160,18 @@
     self.amountTextView.text = newString;
 
     [self.navigationItem setHidesBackButton:YES animated:YES];
-    [self.navigationItem setRightBarButtonItem:nil animated:YES];
-
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.navigationItem setRightBarButtonItem:_doneBarButton animated:YES];
-        [self.navigationItem setLeftBarButtonItem:_cancelBatButton animated:YES];
-    });
+    [self.navigationItem setRightBarButtonItems:@[_doneBarButton] animated:YES];
+    [self.navigationItem setLeftBarButtonItem:_cancelBatButton animated:YES];
 
     [self setAlpha:0.0f];
-    [UIView animateWithDuration:0.85 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self setAlpha:1.0f];
 
         self.amountTextViewTrailingSpace.constant = 29.0f;
         self.dateLabelTrailingSpace.constant = 33.0f;
         self.categoryLabelTrailingSpace.constant = 0.0f;
         self.descriptionLabelTrailingSpace.constant = 0.0f;
-    } completion:^(BOOL finished) {
-    }];
+    } completion:nil];
 
     [self.tableView beginUpdates];
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
@@ -380,6 +377,20 @@
     [self setDetailMode];
 }
 
+- (void)deleteButtonPressed:(UIBarButtonItem *)sender {
+    [self.managedObjectContext deleteObject:_expenseToShow];
+
+    NSError *error = nil;
+    if (![self.managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+
+    [KVNProgress showSuccessWithStatus:@"Removed" completion:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+}
+
 - (void)doneButtonPressed:(UIBarButtonItem *)sender {
     [self.amountTextView resignFirstResponder];
     [self hideDatePicker];
@@ -428,7 +439,7 @@
     }
 
     if (isChanged) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:@"DetailExpenseTableViewControllerDidUpdateNotification" object:nil];
+        [[NSNotificationCenter defaultCenter]postNotificationName:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
 
         [KVNProgress showSuccessWithStatus:@"Updated" completion:^{
             [self.navigationController popViewControllerAnimated:YES];

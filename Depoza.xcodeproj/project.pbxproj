@@ -75,6 +75,9 @@
 		50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */; };
 		50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50A6E5611ACFB9110042BA6E /* seedRU.sqlite */; };
 		50A6E5641ACFB9110042BA6E /* seedUS.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 50A6E5621ACFB9110042BA6E /* seedUS.sqlite */; };
+		50AA306E1AF2241300A60DCB /* Trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306B1AF2241300A60DCB /* Trash.png */; };
+		50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306C1AF2241300A60DCB /* Trash@2x.png */; };
+		50AA30701AF2241300A60DCB /* Trash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306D1AF2241300A60DCB /* Trash@3x.png */; };
 		50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
@@ -229,6 +232,9 @@
 		50A6C05C1A92C71800699862 /* ExpenseData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ExpenseData+Fetch.m"; sourceTree = "<group>"; };
 		50A6E5611ACFB9110042BA6E /* seedRU.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seedRU.sqlite; sourceTree = "<group>"; };
 		50A6E5621ACFB9110042BA6E /* seedUS.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = seedUS.sqlite; sourceTree = "<group>"; };
+		50AA306B1AF2241300A60DCB /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trash.png; sourceTree = "<group>"; };
+		50AA306C1AF2241300A60DCB /* Trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trash@2x.png"; sourceTree = "<group>"; };
+		50AA306D1AF2241300A60DCB /* Trash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trash@3x.png"; sourceTree = "<group>"; };
 		50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExpensesTableViewController.h; sourceTree = "<group>"; };
 		50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchExpensesTableViewController.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
@@ -385,6 +391,9 @@
 				509CDD161AECB53300A6A5E9 /* InitialSeedData */,
 				50E021DA1AD8C9C5008489DA /* TitleButtonImages */,
 				500540D71AC560A5007EF006 /* TabBarIcons */,
+				50AA306B1AF2241300A60DCB /* Trash.png */,
+				50AA306C1AF2241300A60DCB /* Trash@2x.png */,
+				50AA306D1AF2241300A60DCB /* Trash@3x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -893,6 +902,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50AA306E1AF2241300A60DCB /* Trash.png in Resources */,
 				500540F31AC560CC007EF006 /* BillFilled@2x.png in Resources */,
 				500541061AC56226007EF006 /* SettingsFilled.png in Resources */,
 				500540F91AC560CC007EF006 /* MoneyBox@2x.png in Resources */,
@@ -917,6 +927,7 @@
 				50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */,
 				500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */,
 				50A2AB271AEF4C0300463BBB /* Down@3x.png in Resources */,
+				50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */,
 				500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */,
 				500540EF1AC560CC007EF006 /* BanknotesFilled@2x.png in Resources */,
 				500540F01AC560CC007EF006 /* Bill.png in Resources */,
@@ -924,6 +935,7 @@
 				500540F11AC560CC007EF006 /* Bill@2x.png in Resources */,
 				50A2AB251AEF4C0300463BBB /* Down.png in Resources */,
 				500540FB1AC560CC007EF006 /* MoneyBoxFilled@2x.png in Resources */,
+				50AA30701AF2241300A60DCB /* Trash@3x.png in Resources */,
 				500540EC1AC560CC007EF006 /* Banknotes.png in Resources */,
 				500540F41AC560CC007EF006 /* MoneyBag.png in Resources */,
 				50E021D81AD8C7BE008489DA /* Up@2x.png in Resources */,

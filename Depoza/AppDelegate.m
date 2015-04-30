@@ -102,8 +102,13 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
 
 - (void)setKVNDisplayTime {
     KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
-    configuration.minimumSuccessDisplayTime = 0.55f;
+    configuration.minimumSuccessDisplayTime = 0.75f;
     configuration.minimumErrorDisplayTime   = 0.75f;
+
+    configuration.statusFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
+    configuration.circleSize = 100.0f;
+    configuration.lineWidth = 1.0f;
+
     [KVNProgress setConfiguration:configuration];
 }
 
