@@ -12,6 +12,7 @@
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+NextMonthFirstDate.h"
+#import "NSDate+IsDatesWithEqualMonth.h"
 
 @implementation ExpenseData (Fetch)
 
@@ -182,6 +183,7 @@
 
     NSMutableArray *countOnMonth = [NSMutableArray new];
 
+    BOOL currentMonthAdded = NO;
     while ([oldestDate compare:mostRecentDate] != NSOrderedDescending) {
         NSArray *dates = [oldestDate getFirstAndLastDaysInTheCurrentMonth];
 
@@ -193,6 +195,10 @@
         if (error) {
             NSLog(@"Error %s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
             return nil;
+        }
+
+        if ([[NSDate date]isDatesWithEqualMonth:dates.firstObject]) {
+            currentMonthAdded = YES;
         }
 
         if (objects.count > 0) {
@@ -212,6 +218,19 @@
         }
         oldestDate = [oldestDate nextMonthFirstDate];
     }
+
+    if (!currentMonthAdded) {
+        NSDictionary *components = [[NSDate date] getComponents];
+        NSInteger currentYear = [components[@"year"]integerValue];
+        NSInteger currentMonth = [components[@"month"]integerValue];
+        
+        NSDictionary *month = @{@"year"   : @(currentYear),
+                                @"month"  : @(currentMonth),
+                                @"amount" : @0};
+
+        [countOnMonth addObject:month];
+    }
+
     return [[countOnMonth reverseObjectEnumerator]allObjects];
 }
 
