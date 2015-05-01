@@ -223,7 +223,7 @@
         NSDictionary *components = [[NSDate date] getComponents];
         NSInteger currentYear = [components[@"year"]integerValue];
         NSInteger currentMonth = [components[@"month"]integerValue];
-        
+
         NSDictionary *month = @{@"year"   : @(currentYear),
                                 @"month"  : @(currentMonth),
                                 @"amount" : @0};

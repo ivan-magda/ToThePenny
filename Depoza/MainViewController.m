@@ -382,33 +382,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 #pragma mark - DetailExpenseTableViewControllerNotification -
 
 - (void)detailExpenseTableViewControllerDidFinishUpdateExpense:(NSNotification *)notification {
-    NSArray *categories = [CategoryData getCategoriesWithExpensesBetweenMonthOfDate:_dateToShow managedObjectContext:_managedObjectContext];
+    [self loadCategoriesDataBetweenDate:_dateToShow];
+    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
-    for (CategoriesInfo *anInfo in _categoriesInfo) {
-        anInfo.amount = @0;
-    }
-
-    float __block countForExpenditures = 0.0f;
-
-    for (CategoryData *category in categories) {
-        [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            CategoriesInfo *anInfo = obj;
-            if (category.idValue == anInfo.idValue) {
-                anInfo.iconName = category.iconName;
-
-                for (ExpenseData *anExpense in category.expense) {
-                    CategoriesInfo *infoForUpdate = _categoriesInfo[idx];
-                    infoForUpdate.amount = @([infoForUpdate.amount floatValue] + [anExpense.amount floatValue]);
-                    countForExpenditures += [anExpense.amount floatValue];
-                }
-                *stop = YES;
-            }
-        }];
-        [_managedObjectContext refreshObject:category mergeChanges:NO];
-    }
-    _totalExpeditures = countForExpenditures;
-
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
     [self updateLabels];
 }
 
