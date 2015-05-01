@@ -8,6 +8,7 @@
 
     //ViewControllers
 #import "AppDelegate.h"
+#import "CustomTabBarController.h"
 #import "MainViewController.h"
 #import "SearchExpensesTableViewController.h"
 #import "DetailExpenseTableViewController.h"
@@ -26,7 +27,7 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 
 @implementation AppDelegate {
-    UITabBarController *_tabBarController;
+    CustomTabBarController *_tabBarController;
     MainViewController *_mainViewController;
     SearchExpensesTableViewController *_allExpensesTableViewController;
     SettingsTableViewController *_settingsTableViewController;
@@ -37,7 +38,7 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
 #pragma mark - Persistent Stack
 
 - (void)spreadManagedObjectContext {
-    _tabBarController = (UITabBarController *)self.window.rootViewController;
+    _tabBarController = (CustomTabBarController *)self.window.rootViewController;
 
         //Get the MainViewController and set it's as a observer for creating context
     UINavigationController *navigationController = (UINavigationController *)_tabBarController.viewControllers[0];

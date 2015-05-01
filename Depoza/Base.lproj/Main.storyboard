@@ -426,18 +426,18 @@
                                             <segue destination="MpU-36-BsH" kind="push" identifier="ChooseCategory" id="SRl-6e-kUn"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="dgE-tI-zX7" userLabel="DescriptionCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DescriptionCell" id="dgE-tI-zX7" userLabel="DescriptionCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dgE-tI-zX7" id="aiL-cy-r5o">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWO-k2-EMN">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TWO-k2-EMN">
                                                     <rect key="frame" x="15" y="11" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="751" text="Description" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Description" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHA-Av-m7y">
                                                     <rect key="frame" x="217" y="11" width="83" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -448,9 +448,9 @@
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="66D-2f-6LI"/>
                                                 <constraint firstItem="TWO-k2-EMN" firstAttribute="leading" secondItem="aiL-cy-r5o" secondAttribute="leading" constant="15" id="6he-mT-uCR"/>
                                                 <constraint firstItem="zHA-Av-m7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="trailing" constant="8" symbolic="YES" id="LLP-Gy-u5p"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="TWO-k2-EMN" secondAttribute="bottom" priority="999" constant="11" id="Wqx-sy-fhe"/>
-                                                <constraint firstAttribute="bottom" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="bTy-Oi-ibG"/>
+                                                <constraint firstAttribute="bottom" secondItem="TWO-k2-EMN" secondAttribute="bottom" priority="999" constant="11" id="Wqx-sy-fhe"/>
                                                 <constraint firstItem="zHA-Av-m7y" firstAttribute="top" secondItem="aiL-cy-r5o" secondAttribute="top" constant="11" id="h5O-Qe-rx0"/>
+                                                <constraint firstAttribute="bottom" secondItem="zHA-Av-m7y" secondAttribute="bottom" constant="11" id="joM-Uc-0Yo"/>
                                                 <constraint firstAttribute="trailing" secondItem="zHA-Av-m7y" secondAttribute="trailing" constant="20" symbolic="YES" id="wV1-l9-009"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -912,10 +912,10 @@
             </objects>
             <point key="canvasLocation" x="1367" y="-685"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar Controller-->
         <scene sceneID="pMZ-VW-iFP">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wwr-sZ-vet" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Wwr-sZ-vet" customClass="CustomTabBarController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>

@@ -81,6 +81,7 @@
 		50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
+		50B3E7211AF3ADA60080C04F /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */; };
 		50B4DE471AF1E5C2008CCC45 /* SelectedCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B4DE461AF1E5C2008CCC45 /* SelectedCategoryCell.m */; };
 		50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */; };
 		50BB50431AC6391C001AE915 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BB50421AC6391C001AE915 /* CategoryData.m */; };
@@ -241,6 +242,8 @@
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
 		50B3574C1A48596000168958 /* Persistence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Persistence.m; sourceTree = "<group>"; };
+		50B3E71F1AF3ADA60080C04F /* CustomTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomTabBarController.h; sourceTree = "<group>"; };
+		50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomTabBarController.m; sourceTree = "<group>"; };
 		50B4DE451AF1E5C2008CCC45 /* SelectedCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedCategoryCell.h; sourceTree = "<group>"; };
 		50B4DE461AF1E5C2008CCC45 /* SelectedCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectedCategoryCell.m; sourceTree = "<group>"; };
 		50BA1B991A960FB10091644D /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
@@ -579,6 +582,8 @@
 		508774881A1F0C2A002D1A9E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				50B3E71F1AF3ADA60080C04F /* CustomTabBarController.h */,
+				50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */,
 				5063D1991A85F0C2006168D3 /* MainVC */,
 				50E021E11AD8E3F4008489DA /* SelectMonthVC */,
 				50FDE3B21A9B5A95007C9FC0 /* CategoriesContainerVC */,
@@ -1011,6 +1016,7 @@
 			files = (
 				506E728C1A1E0B450006F2DF /* DataModel.xcdatamodeld in Sources */,
 				506E72891A1E0B450006F2DF /* AppDelegate.m in Sources */,
+				50B3E7211AF3ADA60080C04F /* CustomTabBarController.m in Sources */,
 				50E021F81AD90838008489DA /* GradientView.m in Sources */,
 				504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */,
 				50B4DE471AF1E5C2008CCC45 /* SelectedCategoryCell.m in Sources */,

@@ -20,7 +20,6 @@
 #import <KVNProgress/KVNProgress.h>
 
 NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"DetailExpenseTableViewControllerDidUpdateNotification";
-NSString * const DetailExpenseTableViewControllerDidRemoveNotification = @"DetailExpenseTableViewControllerDidRemoveNotification";
 
 @interface DetailExpenseTableViewController () <UITextViewDelegate>
 
@@ -271,8 +270,6 @@ NSString * const DetailExpenseTableViewControllerDidRemoveNotification = @"Detai
     } else if (indexPath.row == 4 && _datePickerVisible) {
         NSIndexPath *correctIndex = [NSIndexPath indexPathForRow:3 inSection:0];
         return [super tableView:tableView heightForRowAtIndexPath:correctIndex];
-    } else if (indexPath.row == 3 && !_datePickerVisible) {
-        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
