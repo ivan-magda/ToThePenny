@@ -178,52 +178,54 @@
     NSDate *oldestDate = [self oldestDateExpenseInManagedObjectContext:context];
     NSDate *mostRecentDate = [self mostRecentDateExpenseInManagedObjectContext:context];
 
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
-    [request setReturnsObjectsAsFaults:NO];
-
+    BOOL currentMonthAdded = NO;
     NSMutableArray *countOnMonth = [NSMutableArray new];
 
-    BOOL currentMonthAdded = NO;
-    while ([oldestDate compare:mostRecentDate] != NSOrderedDescending) {
-        NSArray *dates = [oldestDate getFirstAndLastDaysInTheCurrentMonth];
+    if (oldestDate && mostRecentDate) {
+        NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+        [request setReturnsObjectsAsFaults:NO];
 
-        NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
-        request.predicate = predicate;
+        while ([oldestDate compare:mostRecentDate] != NSOrderedDescending) {
+            NSArray *dates = [oldestDate getFirstAndLastDaysInTheCurrentMonth];
 
-        NSError *error = nil;
-        NSArray *objects = [context executeFetchRequest:request error:&error];
-        if (error) {
-            NSLog(@"Error %s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
-            return nil;
-        }
+            NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
+            request.predicate = predicate;
 
-        if ([[NSDate date]isDatesWithEqualMonth:dates.firstObject]) {
-            currentMonthAdded = YES;
-        }
-
-        if (objects.count > 0) {
-            float amount = 0.0f;
-            for (ExpenseData *expense in objects) {
-                amount += [expense.amount floatValue];
-                [context refreshObject:expense mergeChanges:NO];
+            NSError *error = nil;
+            NSArray *objects = [context executeFetchRequest:request error:&error];
+            if (error) {
+                NSLog(@"Error %s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+                return nil;
             }
 
-            NSDictionary *components = [oldestDate getComponents];
+            if ([[NSDate date]isDatesWithEqualMonth:dates.firstObject]) {
+                currentMonthAdded = YES;
+            }
 
-            NSDictionary *month = @{@"year"   : components[@"year"],
-                                    @"month"  : components[@"month"],
-                                    @"amount" : @(amount)};
-            
-            [countOnMonth addObject:month];
+            if (objects.count > 0) {
+                float amount = 0.0f;
+                for (ExpenseData *expense in objects) {
+                    amount += [expense.amount floatValue];
+                    [context refreshObject:expense mergeChanges:NO];
+                }
+
+                NSDictionary *components = [oldestDate getComponents];
+
+                NSDictionary *month = @{@"year"   : components[@"year"],
+                                        @"month"  : components[@"month"],
+                                        @"amount" : @(amount)};
+
+                [countOnMonth addObject:month];
+            }
+            oldestDate = [oldestDate nextMonthFirstDate];
         }
-        oldestDate = [oldestDate nextMonthFirstDate];
     }
 
     if (!currentMonthAdded) {
         NSDictionary *components = [[NSDate date] getComponents];
         NSInteger currentYear = [components[@"year"]integerValue];
         NSInteger currentMonth = [components[@"month"]integerValue];
-
+        
         NSDictionary *month = @{@"year"   : @(currentYear),
                                 @"month"  : @(currentMonth),
                                 @"amount" : @0};

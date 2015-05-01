@@ -582,8 +582,7 @@
 		508774881A1F0C2A002D1A9E /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				50B3E71F1AF3ADA60080C04F /* CustomTabBarController.h */,
-				50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */,
+				50B3E7221AF3B5E60080C04F /* TabBarController */,
 				5063D1991A85F0C2006168D3 /* MainVC */,
 				50E021E11AD8E3F4008489DA /* SelectMonthVC */,
 				50FDE3B21A9B5A95007C9FC0 /* CategoriesContainerVC */,
@@ -670,6 +669,15 @@
 				50CD56541AD402480093CE4F /* CoreDataDeviceList.m */,
 			);
 			name = PersistenceStack;
+			sourceTree = "<group>";
+		};
+		50B3E7221AF3B5E60080C04F /* TabBarController */ = {
+			isa = PBXGroup;
+			children = (
+				50B3E71F1AF3ADA60080C04F /* CustomTabBarController.h */,
+				50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */,
+			);
+			name = TabBarController;
 			sourceTree = "<group>";
 		};
 		50D4E0F71A92253A0040C260 /* ChooseCategoryVC */ = {
