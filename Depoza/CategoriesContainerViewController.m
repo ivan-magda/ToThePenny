@@ -9,6 +9,7 @@
     //ViewController's
 #import "CategoriesContainerViewController.h"
 #import "SelectedCategoryTableViewController.h"
+#import "ExpandedCollectionViewFlowLayout.h"
     //View
 #import "CategoryInfoCollectionViewCell.h"
     //CoreData
@@ -88,7 +89,8 @@
 
     [self configureCell:cell atIndexPath:indexPath];
 
-    int pages = floor(_collectionView.contentSize.width / _collectionView.frame.size.width) + 1;
+    NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
+    NSInteger pages = ceil(itemCount / 8.0);
     [self.pageControl setNumberOfPages:pages];
 
     return cell;
@@ -115,6 +117,5 @@
     CGPoint scrollTo = CGPointMake(pageWidth * pageControl.currentPage, 0);
     [self.collectionView setContentOffset:scrollTo animated:YES];
 }
-
 
 @end
