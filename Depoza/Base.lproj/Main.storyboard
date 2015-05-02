@@ -82,7 +82,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="LcM-Rm-VQk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="wje-QN-dOA" userLabel="InfoView">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="227"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -598,14 +597,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection id="dyv-25-eoq" userLabel="AddCategorySection">
+                            <tableViewSection footerTitle="Manage categories. Add or change the category." id="dyv-25-eoq" userLabel="CategorySection">
                                 <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="e0U-Ne-J04" style="IBUITableViewCellStyleDefault" id="ndQ-Ny-pkq" userLabel="Category">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ndQ-Ny-pkq" id="3rX-WK-b1B">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Categories" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="e0U-Ne-J04">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="uP3-aB-RxQ" kind="push" identifier="Categories" id="qge-y3-6o4"/>
+                                        </connections>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="1mw-1W-tE6" style="IBUITableViewCellStyleDefault" id="3bN-uE-5y0" userLabel="AddCategory">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3bN-uE-5y0" id="ciw-bD-b2A">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Add Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1mw-1W-tE6">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Add category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1mw-1W-tE6">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -751,12 +767,53 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSd-78-ZIx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="1320"/>
+            <point key="canvasLocation" x="490" y="1402"/>
+        </scene>
+        <!--Categories-->
+        <scene sceneID="igg-f7-Ed1">
+            <objects>
+                <tableViewController id="uP3-aB-RxQ" customClass="CategoriesTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="54" sectionHeaderHeight="22" sectionFooterHeight="22" id="oMf-CP-KeD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="4SO-cW-Pyo" imageView="WQZ-qa-c5T" style="IBUITableViewCellStyleDefault" id="B8J-eY-GyZ">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="B8J-eY-GyZ" id="Tow-vL-hb5">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4SO-cW-Pyo">
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Cocktail" id="WQZ-qa-c5T">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="7gY-Sl-Zzc" kind="modal" identifier="EditCategory" id="Ke7-wc-ErB"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="uP3-aB-RxQ" id="pUt-X8-vWa"/>
+                            <outlet property="delegate" destination="uP3-aB-RxQ" id="p2A-d7-6cW"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Categories" id="LGP-N2-8Y0"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tRy-B5-kx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="925" y="976"/>
         </scene>
         <!--Add Category-->
         <scene sceneID="K5y-dP-7gO">
             <objects>
-                <tableViewController id="wV7-2g-efQ" customClass="AddCategoryTableViewController" sceneMemberID="viewController">
+                <tableViewController id="wV7-2g-efQ" customClass="ManageCategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="k9C-xs-eUv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -775,7 +832,7 @@
                                                         <constraint firstAttribute="height" constant="30" id="LPx-A9-kgg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" autocorrectionType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" autocorrectionType="yes" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -838,12 +895,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="woX-nx-Vaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1367" y="615"/>
+            <point key="canvasLocation" x="1759" y="615"/>
         </scene>
-        <!--Categories Icons Collection View Controller-->
+        <!--Category Icons Collection View Controller-->
         <scene sceneID="rzo-AG-MXw">
             <objects>
-                <collectionViewController id="K6k-wL-Ce8" customClass="CategoriesIconsCollectionViewController" sceneMemberID="viewController">
+                <collectionViewController id="K6k-wL-Ce8" customClass="CategoryIconsCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Scn-oM-ZUx">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -892,7 +949,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HAL-4Q-dGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="5k2-di-jpr" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="615"/>
+            <point key="canvasLocation" x="2169" y="615"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Lbj-aB-Pak">
@@ -1145,7 +1202,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="09G-6D-QKq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="975" y="615"/>
+            <point key="canvasLocation" x="1367" y="615"/>
         </scene>
     </scenes>
     <resources>
@@ -1153,6 +1210,7 @@
         <image name="Banknotes.png" width="32" height="32"/>
         <image name="Beach" width="42" height="42"/>
         <image name="Clothes" width="42" height="42"/>
+        <image name="Cocktail" width="42" height="42"/>
         <image name="Search.png" width="32" height="32"/>
         <image name="Settings.png" width="32" height="32"/>
         <image name="Tomato" width="42" height="42"/>
@@ -1164,6 +1222,7 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="qiW-IC-btw"/>
+        <segue reference="Ke7-wc-ErB"/>
         <segue reference="eiF-x1-yp8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -6,9 +6,12 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //CoreData
 #import "CategoryData+Fetch.h"
-#import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "Persistence.h"
+#import "CategoriesInfo.h"
+    //Categories
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 @implementation CategoryData (Fetch)
 
@@ -105,6 +108,21 @@
     return [NSArray arrayWithArray:titles];
 }
 
++ (NSArray *)getCategoriesTitleAndIconNameInContext:(NSManagedObjectContext *)context {
+    NSArray *categories = [CategoryData getAllCategoriesInContext:context];
+    NSMutableArray *infos = [NSMutableArray arrayWithCapacity:[categories count]];
+
+    for (CategoryData *category in categories) {
+        CategoriesInfo *anInfo = [CategoriesInfo new];
+        anInfo.title = category.title;
+        anInfo.iconName = category.iconName;
+
+        [infos addObject:anInfo];
+        [context refreshObject:category mergeChanges:NO];
+    }
+    return [infos copy];
+}
+
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context {
     NSArray *days = [date getFirstAndLastDaysInTheCurrentMonth];
 
@@ -119,7 +137,7 @@
     return categories;
 }
 
-+ (NSDictionary *)getIconsNamesAllCategoriesInContext:(NSManagedObjectContext *)context {
++ (NSDictionary *)getAllIconsNameInContext:(NSManagedObjectContext *)context {
     NSArray *categories = [CategoryData getAllCategoriesInContext:context];
     NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithCapacity:[categories count]];
 

@@ -17,9 +17,11 @@
 + (void)setNextIdValueToUserDefaults:(NSInteger)categories;
 + (NSInteger)countForCategoriesInContext:(NSManagedObjectContext *)context;
 
++ (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context;
 
++ (NSArray *)getCategoriesTitleAndIconNameInContext:(NSManagedObjectContext *)context;
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
-+ (NSDictionary *)getIconsNamesAllCategoriesInContext:(NSManagedObjectContext *)context;
++ (NSDictionary *)getAllIconsNameInContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 

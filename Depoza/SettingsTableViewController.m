@@ -6,9 +6,13 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    //ViewControllers
 #import "SettingsTableViewController.h"
-#import "AddCategoryTableViewController.h"
-#import "MainViewController.h"
+#import "CategoriesTableViewController.h"
+#import "ManageCategoryTableViewController.h"
+#import "ZFModalTransitionAnimator.h"
+    //CoreData
+#import "CategoryData+Fetch.h"
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 
@@ -20,6 +24,8 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 
 @implementation SettingsTableViewController {
     BOOL _addExpenseOnStartup;
+
+    ZFModalTransitionAnimator *_transitionAnimator;
 }
 
 - (void)viewDidLoad {
@@ -31,23 +37,33 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
     [self.startupScreenSwitch setOn:_addExpenseOnStartup];
 }
 
-#pragma mark - Segues -
+#pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSParameterAssert(self.managedObjectContext != nil);
 
     if ([segue.identifier isEqualToString:@"AddCategory"]) {
-        UINavigationController *navigationController = self.navigationController;
-
-        UITabBarController *tabBarController = (UITabBarController *)navigationController.parentViewController;
-        navigationController = (UINavigationController *)tabBarController.viewControllers[0];
-        MainViewController *mainViewController = (MainViewController *)navigationController.viewControllers[0];
-
         UINavigationController *navC = segue.destinationViewController;
-        AddCategoryTableViewController *controller = (AddCategoryTableViewController *)navC.topViewController;
+        ManageCategoryTableViewController *controller = (ManageCategoryTableViewController *)navC.topViewController;
         controller.managedObjectContext = self.managedObjectContext;
-        controller.delegate = mainViewController;
-        controller.iconName = nil;
+        controller.categoryToEdit = nil;
+
+            // create animator object with instance of modal view controller
+            // we need to keep it in property with strong reference so it will not get release
+        _transitionAnimator = [[ZFModalTransitionAnimator alloc] initWithModalViewController:navC];
+        _transitionAnimator.transitionDuration = 0.7f;
+        _transitionAnimator.bounces = NO;
+        _transitionAnimator.behindViewAlpha = 0.5f;
+        _transitionAnimator.behindViewScale = 0.7f;
+        _transitionAnimator.direction = ZFModalTransitonDirectionRight;
+
+            // set transition delegate of modal view controller to our object
+        navC.transitioningDelegate = _transitionAnimator;
+        navC.modalPresentationStyle = UIModalPresentationCustom;
+
+    } else if ([segue.identifier isEqualToString:@"Categories"]) {
+        CategoriesTableViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
     }
 }
 
@@ -62,6 +78,12 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
         return nil;
     }
     return indexPath;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
+        // Set the text color of our header/footer text.
+    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
 }
 
 #pragma mark - IBAction -

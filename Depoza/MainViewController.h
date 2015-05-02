@@ -2,14 +2,13 @@
 #import <UIKit/UIKit.h>
     //Delegate
 #import "AddExpenseTableViewControllerDelegate.h"
-#import "AddCategoryViewControllerDelegate.h"
 #import "MainViewControllerDelegate.h"
 #import "SelectMonthViewControllerDelegate.h"
 #import "CategoriesContainerViewControllerDelegate.h"
 
 @class NSManagedObjectContext;
 
-@interface MainViewController : UIViewController <AddExpenseTableViewControllerDelegate, AddCategoryViewControllerDelegate, SelectMonthViewControllerDelegate, CategoriesContainerViewControllerDelegate>
+@interface MainViewController : UIViewController <AddExpenseTableViewControllerDelegate, SelectMonthViewControllerDelegate, CategoriesContainerViewControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

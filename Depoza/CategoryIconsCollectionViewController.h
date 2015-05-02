@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CategoriesIconsCollectionViewController : UICollectionViewController
+@interface CategoryIconsCollectionViewController : UICollectionViewController
 
 @property (nonatomic, copy) NSString *selectedIconName;
 

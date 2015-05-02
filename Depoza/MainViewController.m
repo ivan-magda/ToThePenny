@@ -5,6 +5,8 @@
 #import "CategoriesContainerViewController.h"
 #import "MainTableViewProtocolsImplementer.h"
 #import "SelectMonthViewController.h"
+#import "ManageCategoryTableViewController.h"
+#import "CategoriesTableViewController.h"
     //View
 #import "TitleViewButton.h"
     //CoreData
@@ -83,9 +85,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self configurateTitleViewButton];
     [self addMotionEffectToViews];
 
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
+    [self addNotificationSubscribes];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -103,6 +103,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (void)dealloc {
     _todayFetchedResultsController.delegate = nil;
     _monthFetchedResultsController.delegate = nil;
+
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 #pragma mark - Helper methods -
@@ -141,6 +143,17 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
     }
     return [formatter stringFromDate:theDate];
+}
+
+- (void)addNotificationSubscribes {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidAddCategory:) name:ManageCategoryTableViewControllerDidAddCategoryNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidUpdateCategory:) name:ManageCategoryTableViewControllerDidUpdateCategoryNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(categoriesTableViewControllerDidRemoveCategory:) name:CategoriesTableViewControllerDidRemoveCategoryNotification object:nil];
 }
 
 - (void)changeMonthToShowFromDate:(NSDate *)date {
@@ -355,14 +368,6 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _isAddExpensePresenting = NO;
 }
 
-#pragma mark AddCategoryViewControllerDelegate
-
-- (void)addCategoryViewController:(AddCategoryTableViewController *)controller didFinishAddingCategory:(CategoryData *)category {
-    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
-    [_categoriesInfo addObject:info];
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
-}
-
 #pragma mark SelectMonthViewControllerDelegate
 
 - (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
@@ -379,9 +384,48 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     controller.timePeriod = _dateToShow;
 }
 
-#pragma mark - DetailExpenseTableViewControllerNotification -
+#pragma mark - NSNotificationCenter
+#pragma mark DetailExpenseTableViewControllerNotification
 
 - (void)detailExpenseTableViewControllerDidFinishUpdateExpense:(NSNotification *)notification {
+    [self loadCategoriesDataBetweenDate:_dateToShow];
+    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
+
+    [self updateLabels];
+}
+
+#pragma mark ManageCategoryTableViewControllerNotification
+
+- (void)manageCategoryTableViewControllerDidAddCategory:(NSNotification *)notification {
+    CategoryData *category = notification.object;
+
+    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
+    [_categoriesInfo addObject:info];
+
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+}
+
+- (void)manageCategoryTableViewControllerDidUpdateCategory:(NSNotification *)notification {
+    CategoryData *updatedCategory = notification.object;
+
+    [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CategoriesInfo *anInfo = obj;
+        if (anInfo.idValue == updatedCategory.idValue) {
+            anInfo.title = updatedCategory.title;
+            anInfo.iconName = updatedCategory.iconName;
+
+            *stop = YES;
+        }
+    }];
+
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
+    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+}
+
+#pragma mark - CategoriesTableViewControllerDidRemoveCategoryNotification -
+
+- (void)categoriesTableViewControllerDidRemoveCategory:(NSNotification *)notification {
     [self loadCategoriesDataBetweenDate:_dateToShow];
     [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 

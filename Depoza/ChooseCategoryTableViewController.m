@@ -7,7 +7,7 @@
     //
 
 #import "ChooseCategoryTableViewController.h"
-#import "CategoriesIconsCollectionViewController.h"
+#import "CategoryIconsCollectionViewController.h"
 #import "CategoryData+Fetch.h"
 
 @implementation ChooseCategoryTableViewController {
@@ -23,7 +23,7 @@
 
     NSParameterAssert(_titles && _iconName);
 
-    _categoriesIcons = [CategoryData getIconsNamesAllCategoriesInContext:_context];
+    _categoriesIcons = [CategoryData getAllIconsNameInContext:_context];
 
     _selectedCategoryName = self.originalCategoryName;
 }
@@ -120,15 +120,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ChangeIcon"]) {
-        CategoriesIconsCollectionViewController *controller = segue.destinationViewController;
+        CategoryIconsCollectionViewController *controller = segue.destinationViewController;
         controller.selectedIconName = _iconName;
     }
 }
 
 - (IBAction)didChangeIcon:(UIStoryboardSegue *)unwindSegue {
     UIViewController *sourceVC = unwindSegue.sourceViewController;
-    if ([sourceVC isKindOfClass:[CategoriesIconsCollectionViewController class]]) {
-        CategoriesIconsCollectionViewController *controller = (CategoriesIconsCollectionViewController *)sourceVC;
+    if ([sourceVC isKindOfClass:[CategoryIconsCollectionViewController class]]) {
+        CategoryIconsCollectionViewController *controller = (CategoryIconsCollectionViewController *)sourceVC;
         self.iconName = controller.selectedIconName;
 
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
