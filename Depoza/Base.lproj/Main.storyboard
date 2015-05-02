@@ -1046,7 +1046,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="37" id="0Vu-D2-3D5"/>
                                 </constraints>
-                                <color key="pageIndicatorTintColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="pageIndicatorTintColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <color key="currentPageIndicatorTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <action selector="pageControlDidChangeValue:" destination="Iim-03-1Nc" eventType="valueChanged" id="MaH-VG-JO7"/>
