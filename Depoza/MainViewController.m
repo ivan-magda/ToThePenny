@@ -7,6 +7,7 @@
 #import "SelectMonthViewController.h"
 #import "ManageCategoryTableViewController.h"
 #import "CategoriesTableViewController.h"
+#import "PieChartViewController.h"
     //View
 #import "TitleViewButton.h"
     //CoreData
@@ -331,6 +332,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         controller.delegate = self;
         
         self.delegate = controller;
+    } else if ([segue.identifier isEqualToString:@"PieChart"]) {
+        PieChartViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
+        controller.dateToShow = _dateToShow;
     }
 }
 

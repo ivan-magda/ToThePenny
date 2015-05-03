@@ -157,4 +157,50 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     [self synchronizeUserDefaults:userDefaults withDictionary:dictionaryInfo];
 }
 
++ (void)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext betweenDates:(NSArray *)dates withCompletionHandler:(FetchCompletionHandler)completionHandler {
+    NSAssert(dates.count == 2, @"Number of dates must be 2");
+    NSAssert(managedObjectContext != nil, @"NSManagedObjectContext must be not nil");
+
+    NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
+
+    NSMutableArray *categoriesInfo = [NSMutableArray arrayWithCapacity:[fetchedCategories count]];
+
+        //Create array of categories infos
+    for (CategoryData *category in fetchedCategories) {
+        CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
+
+        [categoriesInfo addObject:info];
+    }
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];
+    fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(expense, $x, ($x.dateOfExpense >= %@) AND ($x.dateOfExpense <= %@)).@count > 0)", [dates firstObject], [dates lastObject]];
+
+    NSArray *categories = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
+
+    float __block countForTotalAmount = 0.0f;
+
+    for (CategoryData *category in categories) {
+        [categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CategoriesInfo *anInfo = obj;
+            if (category.idValue == anInfo.idValue) {
+                for (ExpenseData *expense in category.expense) {
+                    if ([expense.dateOfExpense compare:[dates firstObject]] != NSOrderedAscending &&
+                        [expense.dateOfExpense compare:[dates lastObject]]  != NSOrderedDescending) {
+                        anInfo.amount = @([anInfo.amount floatValue] + [expense.amount floatValue]);
+                        countForTotalAmount += [expense.amount floatValue];
+                    }
+                    [managedObjectContext refreshObject:expense mergeChanges:NO];
+                }
+                *stop = YES;
+            }
+        }];
+        [managedObjectContext refreshObject:category mergeChanges:NO];
+    }
+
+    if (completionHandler) {
+        completionHandler([categoriesInfo copy], @(countForTotalAmount));
+    }
+}
+
 @end

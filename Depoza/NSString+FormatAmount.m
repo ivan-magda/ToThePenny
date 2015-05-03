@@ -14,10 +14,12 @@
     static NSNumberFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [NSNumberFormatter new];
-        formatter.numberStyle = NSNumberFormatterCurrencyStyle;
-        formatter.currencyCode = [[NSLocale currentLocale]objectForKey:NSLocaleCurrencyCode];
+        formatter.numberStyle = kCFNumberFormatterDecimalStyle;
+        formatter.minimumFractionDigits = 2;
     }
-    return [formatter stringFromNumber:amount];
+    NSString *formattedString = [formatter stringFromNumber:amount];
+
+    return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
 }
 
 @end

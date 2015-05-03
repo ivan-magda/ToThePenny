@@ -68,6 +68,25 @@
             </objects>
             <point key="canvasLocation" x="490" y="-1357"/>
         </scene>
+        <!--Pie Chart View Controller-->
+        <scene sceneID="fwu-x9-Q1O">
+            <objects>
+                <viewController id="1Gu-Al-Idk" customClass="PieChartViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SyF-VQ-Xhz"/>
+                        <viewControllerLayoutGuide type="bottom" id="8bk-iy-Uxz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IIq-1H-zGX">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QeJ-oK-Opm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qch-6P-CnI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="487" y="-753"/>
+        </scene>
         <!--Expenses-->
         <scene sceneID="uaz-hx-xfG">
             <objects>
@@ -177,6 +196,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Expenses" id="H7q-K3-3GL">
+                        <barButtonItem key="leftBarButtonItem" title="Chart" id="YiM-GO-dM4">
+                            <connections>
+                                <segue destination="1Gu-Al-Idk" kind="push" identifier="PieChart" id="18Y-dP-37v"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="tTU-ch-4YA">
                             <connections>
                                 <segue destination="JNE-qc-fiL" kind="modal" identifier="AddExpense" id="3er-JC-Cyy"/>
@@ -190,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nh9-BY-Rd1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="-363"/>
+            <point key="canvasLocation" x="490" y="-149"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="6ay-zP-VgH">
@@ -586,7 +610,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asx-3q-bNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="-363"/>
+            <point key="canvasLocation" x="82" y="-149"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nIb-Z6-984">

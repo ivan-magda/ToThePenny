@@ -12,11 +12,15 @@
 @class NSManagedObjectContext;
 @class CategoryData;
 
+typedef void(^FetchCompletionHandler)(NSArray *fetchedCategories, NSNumber *totalAmount);
+
 @interface Fetch : NSObject
 
 + (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key;
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date;
+
++ (void)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext betweenDates:(NSArray *)dates withCompletionHandler:(FetchCompletionHandler)completionHandler;
 
 + (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context;
 
