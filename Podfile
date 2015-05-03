@@ -1,3 +1,6 @@
 platform :ios, "7.0"
 
-pod "KVNProgress"
+source 'https://github.com/CocoaPods/Specs.git'
+
+pod 'KVNProgress', '~> 2.2'
+pod 'CorePlot', '~> 1.5'

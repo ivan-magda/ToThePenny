@@ -13,6 +13,7 @@
 
 #import "UIImage+KVNImageEffects.h"
 #import "UIImage+KVNEmpty.h"
+#import "UIColor+KVNContrast.h"
 
 #define KVNBlockSelf __blockSelf
 #define KVNPrepareBlockSelf() __weak typeof(self) KVNBlockSelf = self
@@ -75,6 +76,8 @@ static KVNProgressConfiguration *configuration;
 @property (nonatomic, strong) CAShapeLayer *crossLayer;
 @property (nonatomic, strong) CAShapeLayer *circleProgressLineLayer;
 @property (nonatomic, strong) CAShapeLayer *circleBackgroundLineLayer;
+
+@property (nonatomic) UIStatusBarStyle rootControllerStatusBarStyle;
 
 // Constraints
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *circleProgressViewWidthConstraint;
@@ -517,11 +520,7 @@ static KVNProgressConfiguration *configuration;
 		
 		UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, nil);
 		
-		// Tell the rootViewController to update the StatusBar appearance
-		UIViewController *rootController = [[UIApplication sharedApplication] keyWindow].rootViewController;
-		if ([rootController respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
-			[rootController setNeedsStatusBarAppearanceUpdate];
-		}
+		[UIApplication sharedApplication].statusBarStyle = [self sharedView].rootControllerStatusBarStyle;
 	}
 	
 	if (completion) {
@@ -535,11 +534,35 @@ static KVNProgressConfiguration *configuration;
 
 - (void)setupUI
 {
+	[self setupStatusBar];
 	[self setupGestures];
 	[self setupConstraints];
 	[self setupCircleProgressView];
 	[self setupStatus:self.status];
 	[self setupBackground];
+}
+
+- (void)setupStatusBar
+{
+	self.rootControllerStatusBarStyle = [UIApplication sharedApplication].statusBarStyle;
+	
+	if (![self isFullScreen]) {
+		return;
+	}
+	
+	UIColor *backgroundColor;
+	switch (self.backgroundType) {
+		case KVNProgressBackgroundTypeBlurred: {
+			backgroundColor = self.configuration.backgroundTintColor;
+			break;
+		}
+		case KVNProgressBackgroundTypeSolid: {
+			backgroundColor = self.configuration.backgroundFillColor;
+			break;
+		}
+	}
+	
+	[UIApplication sharedApplication].statusBarStyle = [backgroundColor statusBarStyleConstrastStyle];
 }
 
 - (void)setupGestures
@@ -756,6 +779,9 @@ static KVNProgressConfiguration *configuration;
 - (void)setupBackground
 {
 	if ([self.class isVisible]) {
+		[self updateBackgroundConstraints];
+		[self layoutIfNeeded];
+		
 		return; // No reload of background when view is showing
 	}
 	
@@ -782,14 +808,16 @@ static KVNProgressConfiguration *configuration;
 
 - (void)addToCurrentWindow
 {
-	UIWindow *currentWindow = nil;
+	UIWindow *currentWindow = [UIApplication sharedApplication].keyWindow;
 	
-	NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication] windows] reverseObjectEnumerator];
-	
-	for (UIWindow *window in frontToBackWindows) {
-		if (window.windowLevel == UIWindowLevelNormal) {
-			currentWindow = window;
-			break;
+	if (!currentWindow) {
+		NSEnumerator *frontToBackWindows = [[[UIApplication sharedApplication] windows] reverseObjectEnumerator];
+		
+		for (UIWindow *window in frontToBackWindows) {
+			if (window.windowLevel == UIWindowLevelNormal) {
+				currentWindow = window;
+				break;
+			}
 		}
 	}
 	
@@ -826,6 +854,9 @@ static KVNProgressConfiguration *configuration;
 	[self layoutIfNeeded];
 	
 	self.alpha = 0.0f;
+	
+	// Fix for non autolayout project
+	self.frame = superview.bounds;
 }
 
 #pragma mark - Update
@@ -1160,33 +1191,10 @@ static KVNProgressConfiguration *configuration;
 - (UIImage *)applyTintEffectWithColor:(UIColor *)tintColor
 								image:(UIImage *)image
 {
-	const CGFloat EffectColorAlpha = 0.6;
-	UIColor *effectColor = tintColor;
-	int componentCount = (int)CGColorGetNumberOfComponents(tintColor.CGColor);
 	CGFloat tintAlpha = CGColorGetAlpha(tintColor.CGColor);
 	
-	if (tintAlpha == 0.0f) {
-		return [image applyBlurWithRadius:10.0f
-								tintColor:nil
-					saturationDeltaFactor:1.0f
-								maskImage:nil];
-	}
-	
-	if (componentCount == 2) {
-		CGFloat b;
-		if ([tintColor getWhite:&b alpha:NULL]) {
-			effectColor = [UIColor colorWithWhite:b alpha:EffectColorAlpha];
-		}
-	}
-	else {
-		CGFloat r, g, b;
-		if ([tintColor getRed:&r green:&g blue:&b alpha:NULL]) {
-			effectColor = [UIColor colorWithRed:r green:g blue:b alpha:EffectColorAlpha];
-		}
-	}
-	
 	return [image applyBlurWithRadius:10.0f
-							tintColor:effectColor
+							tintColor:(tintAlpha > 0.0f)? tintColor : nil
 				saturationDeltaFactor:1.0f
 							maskImage:nil];
 }

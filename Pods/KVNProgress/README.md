@@ -2,7 +2,7 @@
 
 [![Twitter: @kevinh6113](http://img.shields.io/badge/contact-%40kevinh6113-70a1fb.svg?style=flat)](https://twitter.com/kevinh6113)
 [![License: MIT](http://img.shields.io/badge/license-MIT-70a1fb.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress/blob/master/README.md)
-[![Version](http://img.shields.io/badge/version-2.1.9-green.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress)
+[![Version](http://img.shields.io/badge/version-2.2.1-green.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress)
 [![Cocoapods](http://img.shields.io/badge/Cocoapods-available-green.svg?style=flat)](http://cocoadocs.org/docsets/KVNProgress/)
 
 KVNProgress is a fully customizable progress HUD that can be full screen or not.
@@ -48,7 +48,7 @@ If you want to try it yourself, just download/checkout this repository and launc
 
 ## Requirements
 
-* Xcode 5
+* Xcode 6
 * iOS 7
 * ARC
 * Frameworks:

@@ -1,10 +1,13 @@
 PODS:
-  - KVNProgress (2.1.9)
+  - CorePlot (1.5.1)
+  - KVNProgress (2.2.1)
 
 DEPENDENCIES:
-  - KVNProgress
+  - CorePlot (~> 1.5)
+  - KVNProgress (~> 2.2)
 
 SPEC CHECKSUMS:
-  KVNProgress: 9c9a3686a3eac347dc88753eed44bae5ebee1b83
+  CorePlot: 53d823a4de5e4e662311cae4cdcb230e146c5c90
+  KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
 
 COCOAPODS: 0.34.4
