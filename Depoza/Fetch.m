@@ -75,6 +75,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
                 expense.categoryId = @(newId);
                 [managedObjectContext refreshObject:expense mergeChanges:YES];
             }
+            [managedObjectContext save:nil];
         }
     }
     categoriesIds = nil;

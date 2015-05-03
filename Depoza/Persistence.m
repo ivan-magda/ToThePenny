@@ -446,11 +446,14 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
                             [self moveExpensesToCategory:prevObject fromCategory:duplicate];
                         }
                         [context deleteObject:duplicate];
+                        [context save:nil];
                     } else {
                         if (prevObject.expense.count > 0) {
                             [self moveExpensesToCategory:duplicate fromCategory:prevObject];
                         }
                         [context deleteObject:prevObject];
+                        [context save:nil];
+
                         prevObject = duplicate;
                     }
                 } else {
@@ -542,7 +545,9 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
                     if ([duplicate.categoryId integerValue] == [prevObject.categoryId integerValue] &&
                         [duplicate.amount floatValue] == [prevObject.amount floatValue] &&
                         [duplicate.descriptionOfExpense isEqualToString:prevObject.descriptionOfExpense]) {
+
                         [context deleteObject:duplicate];
+                        [context save:nil];
                     } else {
                         NSInteger expenseNextId  = [self findMaxIdValueInEntity:NSStringFromClass([ExpenseData class])] + 1;
                         prevObject.idValue = @(expenseNextId);

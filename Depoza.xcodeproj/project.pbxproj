@@ -367,8 +367,8 @@
 		500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */,
-				500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */,
+				5062EE051AF5AB8D00704185 /* ZFModalTransitionAnimator */,
+				5062EE041AF5AB7100704185 /* CorePlot */,
 			);
 			name = ThirdParty;
 			sourceTree = "<group>";
@@ -457,6 +457,22 @@
 				5064C6D81AC5491B00979BF0 /* NSDate */,
 			);
 			name = Categories;
+			sourceTree = "<group>";
+		};
+		5062EE041AF5AB7100704185 /* CorePlot */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CorePlot;
+			sourceTree = "<group>";
+		};
+		5062EE051AF5AB8D00704185 /* ZFModalTransitionAnimator */ = {
+			isa = PBXGroup;
+			children = (
+				500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */,
+				500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */,
+			);
+			name = ZFModalTransitionAnimator;
 			sourceTree = "<group>";
 		};
 		5063D1981A85F0B3006168D3 /* AppDelegate */ = {
