@@ -112,10 +112,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
             self.tableView.alpha = 1.0f;
         }];
     }
-
-    [self presentAddExpenseViewControllerIfNeeded];
-
-    _isFirstTimeViewDidAppear = NO;
 }
 
 - (void)dealloc {
@@ -160,12 +156,12 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     return (_totalExpeditures == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
 }
 
-- (BOOL)isNeedForcedToShowAddExpenseViewController {
+- (BOOL)ifNeedForcedToShowAddExpenseViewController {
     return (_isFirstTimeViewDidAppear && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
 }
 
 - (void)presentAddExpenseViewControllerIfNeeded {
-    if ([self isNeedForcedToShowAddExpenseViewController]) {
+    if ([self ifNeedForcedToShowAddExpenseViewController]) {
         [self performAddExpense];
         self.isShowExpenseDetailFromExtension = NO;
     } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
@@ -180,6 +176,9 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
     [self loadCategoriesDataBetweenDate:[NSDate date]];
+
+    [self presentAddExpenseViewControllerIfNeeded];
+    _isFirstTimeViewDidAppear = NO;
 
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
