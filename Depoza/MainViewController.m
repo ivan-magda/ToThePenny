@@ -16,7 +16,6 @@
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
-    //Data
 #import "CategoriesInfo.h"
     //Caategories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
@@ -50,7 +49,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 @property (weak, nonatomic) CategoriesContainerViewController *containerView;
 
-@property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *totalExpensesLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
@@ -66,14 +65,14 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 #pragma mark - Implementation -
 
 @implementation MainViewController {
-    CGFloat _totalExpeditures;
+    CGFloat _totalExpenses;
     NSMutableArray *_categoriesInfo;
 
     SelectMonthViewController *_selectMonthViewController;
     TitleViewButton *_titleViewButton;
     NSDate *_dateToShow;
 
-    BOOL _isFirstTimeFetchForCategoriesData;
+    BOOL _isFirstTimeFetchForCategoriesInfo;
     BOOL _isAddExpensePresenting;
     BOOL _selectMonthIsVisible;
 }
@@ -132,11 +131,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)initializeLocalVariables {
     _isAddExpensePresenting = NO;
     _selectMonthIsVisible = NO;
-    _isFirstTimeFetchForCategoriesData = YES;
+    _isFirstTimeFetchForCategoriesInfo = YES;
 
     _dateToShow = [NSDate date];
 
-    self.totalAmountLabel.text = @"";
+    self.totalExpensesLabel.text = @"";
 }
 
 - (void)configurateTableAndFetchedControllers {
@@ -153,18 +152,18 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (BOOL)isCurrentMonthWithNoExpenses {
-    return (_totalExpeditures == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
+    return (_totalExpenses == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
 }
 
 - (BOOL)ifNeedForcedToShowAddExpenseViewController {
-    return (_isFirstTimeFetchForCategoriesData && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
+    return (_isFirstTimeFetchForCategoriesInfo && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
 }
 
 - (void)presentAddExpenseViewControllerIfNeeded {
     if ([self ifNeedForcedToShowAddExpenseViewController]) {
         [self performAddExpense];
         self.isShowExpenseDetailFromExtension = NO;
-    } else if (_isFirstTimeFetchForCategoriesData && [[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+    } else if (_isFirstTimeFetchForCategoriesInfo && [[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
         if (!_isShowExpenseDetailFromExtension) {
             [self performAddExpense];
             self.isShowExpenseDetailFromExtension = NO;
@@ -178,7 +177,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self loadCategoriesDataBetweenDate:[NSDate date]];
 
     [self presentAddExpenseViewControllerIfNeeded];
-    _isFirstTimeFetchForCategoriesData = NO;
+    _isFirstTimeFetchForCategoriesInfo = NO;
 
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
@@ -196,7 +195,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)loadCategoriesDataBetweenDate:(NSDate *)date {
-    _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpeditures:& _totalExpeditures andBetweenMonthDate:date];
+    _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpenses:& _totalExpenses andBetweenMonthDate:date];
 }
 
 - (void)notificateCategoriesContainerViewControllerWithNewCategoriesInfo:(NSArray *)categoriesInfo {
@@ -226,7 +225,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 #pragma mark UIUpdates
 
 - (void)updateAmountLabel {
-    self.totalAmountLabel.text = [NSString formatAmount:@(_totalExpeditures)];
+    self.totalExpensesLabel.text = [NSString formatAmount:@(_totalExpenses)];
 }
 
 - (void)updateTableHeaderViewIfNeededFromNumberOfCategories:(NSInteger)categoriesCount{
@@ -482,7 +481,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)addExpenseTableViewController:(AddExpenseTableViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _isAddExpensePresenting = NO;
 
-    _totalExpeditures += [expense.amount floatValue];
+    _totalExpenses += [expense.amount floatValue];
 
     [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSParameterAssert([obj isKindOfClass:[CategoriesInfo class]]);
@@ -686,7 +685,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
         case NSFetchedResultsChangeDelete: {
             ExpenseData *deletedExpense = (ExpenseData *)anObject;
-            _totalExpeditures -= [deletedExpense.amount floatValue];
+            _totalExpenses -= [deletedExpense.amount floatValue];
 
             [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                 CategoriesInfo *info = obj;

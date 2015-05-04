@@ -46,7 +46,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     return fetchedCategories;
 }
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date {
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpenses:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date {
     [[Persistence sharedInstance]deduplication];
 
     NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];

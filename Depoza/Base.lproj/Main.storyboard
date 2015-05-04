@@ -207,7 +207,7 @@
                     <connections>
                         <outlet property="containerViewHeightConstraint" destination="0sj-Na-8SW" id="Ehc-L6-v4h"/>
                         <outlet property="tableView" destination="LcM-Rm-VQk" id="rCs-nx-4dA"/>
-                        <outlet property="totalAmountLabel" destination="kxL-xl-ePS" id="7Ab-vg-ieE"/>
+                        <outlet property="totalExpensesLabel" destination="kxL-xl-ePS" id="bHk-oc-csJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nh9-BY-Rd1" userLabel="First Responder" sceneMemberID="firstResponder"/>

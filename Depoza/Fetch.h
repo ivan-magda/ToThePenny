@@ -18,7 +18,7 @@ typedef void(^FetchCompletionHandler)(NSArray *fetchedCategories, NSNumber *tota
 
 + (NSArray *)getObjectsWithEntity:(NSString *)entityName predicate:(NSPredicate *)predicate context:(NSManagedObjectContext *)context sortKey:(NSString *)key;
 
-+ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpeditures:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date;
++ (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpenses:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date;
 
 + (void)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext betweenDates:(NSArray *)dates withCompletionHandler:(FetchCompletionHandler)completionHandler;
 
