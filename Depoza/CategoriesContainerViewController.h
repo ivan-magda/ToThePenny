@@ -10,7 +10,30 @@
 #import "MainViewControllerDelegate.h"
 #import "CategoriesContainerViewControllerDelegate.h"
 
+/*!
+ * The default constant value of container view height constant equal to 175.0f.
+ */
+extern const CGFloat DefaultContainerViewHeightValue;
+
+/*!
+ * The reduced constant value of container view height constant equal to 106.0f.
+ */
+extern const CGFloat ReducedContainerViewHeightValue;
+
+/*!
+ * The default constant value of collection view height constant equal to 138.0f.
+ */
+extern const CGFloat DefaultCollectionViewHeightValue;
+
+/*!
+ * The reduced constant value of collection view height constant equal to 69.0f.
+ */
+extern const CGFloat ReducedCollectionViewHeightValue;
+
 @interface CategoriesContainerViewController : UIViewController <MainViewControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *collectionViewHeightConstraint;
 
 @property (nonatomic, copy) NSArray *categories;
 

@@ -16,9 +16,14 @@
 #import "CategoriesInfo.h"
 #import "NSString+FormatAmount.h"
 
+const CGFloat DefaultContainerViewHeightValue = 175.0f;
+const CGFloat ReducedContainerViewHeightValue = 106.0f;
+
+const CGFloat DefaultCollectionViewHeightValue = 138.0f;
+const CGFloat ReducedCollectionViewHeightValue = 69.0f;
+
 @interface CategoriesContainerViewController ()
 
-@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
 
 @end

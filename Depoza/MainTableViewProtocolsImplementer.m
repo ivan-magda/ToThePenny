@@ -20,7 +20,7 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface MainTableViewProtocolsImplementer ()
+@interface MainTableViewProtocolsImplementer () <UIScrollViewDelegate>
 
 @end
 
@@ -56,13 +56,18 @@
 
 - (NSAttributedString *)colorAttributedStringForTableHeaderView {
     NSString *text = [self.tableView.dataSource tableView:self.tableView titleForHeaderInSection:0];
+    if (!text) {
+        return nil;
+    }
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc]initWithString:text];
 
     NSRange range = [text rangeOfString:@":"];
-    NSInteger length = text.length;
-    range.location += 1;
-    range.length = length - range.location;
-    [attributedText addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xFF3333) range:range];
+    if (range.location != NSNotFound) {
+        NSInteger length = text.length;
+        range.location += 1;
+        range.length = length - range.location;
+        [attributedText addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xFF3333) range:range];
+    }
 
     return attributedText;
 }
@@ -80,37 +85,29 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (![self isCurrentMonthShowing]) {
-        return nil;
+    if (![self isCurrentMonthShowing] && self.fetchedResultsController.fetchedObjects.count > 0) {
+        return NSLocalizedString(@"All expenses for month", @"Title for header, when show all expenses for month");
     }
-    if (section == 0) {
-        NSArray *expenses = self.fetchedResultsController.fetchedObjects;
-        CGFloat amount = 0.0f;
-        for (ExpenseData *anExpense in expenses) {
-            amount += [anExpense.amount floatValue];
-        }
 
-        return [NSString stringWithFormat:@"Сегодня: %@", [NSString formatAmount:@(amount)]];
+    NSArray *expenses = self.fetchedResultsController.fetchedObjects;
+    CGFloat amount = 0.0f;
+    for (ExpenseData *anExpense in expenses) {
+        amount += [anExpense.amount floatValue];
     }
-    return nil;
+
+    if (amount == 0) {
+        return NSLocalizedString(@"No new transactions found", @"Title for header, when amount of expenses is zero");
+    }
+
+    NSString *today = NSLocalizedString(@"Today", @"Today in title for header ins section");
+
+    return [NSString stringWithFormat:@"%@: %@", today, [NSString formatAmount:@(amount)]];
 }
 
 - (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.categoryIcon.image = [UIImage imageNamed:expense.category.iconName];
-    cell.categoryLabel.text = expense.category.title;
 
-    if (expense.descriptionOfExpense.length == 0) {
-        cell.descriptionLabel.hidden = YES;
-
-        cell.categoryLabelTopSpaceConstraint.constant = IncreasedCategoryLabelTopSpaceValue;
-    } else {
-        cell.categoryLabelTopSpaceConstraint.constant = DefaultCategoryLabelTopSpaceValue;
-        
-        cell.descriptionLabel.hidden = NO;
-        cell.descriptionLabel.text = expense.descriptionOfExpense;
-    }
-
+    cell.categoryLabel.text = (expense.descriptionOfExpense.length == 0 ? expense.category.title : expense.descriptionOfExpense);
     cell.amountLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
 }
 
@@ -123,7 +120,7 @@
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return (self.fetchedResultsController.fetchedObjects.count > 0);
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -141,48 +138,53 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (![self isCurrentMonthShowing]) {
-        return 0.0f;
-    } else {
-        return self.tableView.sectionHeaderHeight;
-    }
+    return self.tableView.sectionHeaderHeight;
 }
 
 #pragma mark - UITableViewDelegate -
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (![self isCurrentMonthShowing]) {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
+    label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor whiteColor];
+
+    NSAttributedString *attributedText = [self colorAttributedStringForTableHeaderView];
+    if (!attributedText) {
         return nil;
     }
+    label.attributedText = attributedText;
+    label.textAlignment = NSTextAlignmentCenter;
+    label.backgroundColor = [UIColor clearColor];
 
-    if (section == 0) {
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
-        label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
-        label.shadowOffset = CGSizeMake(0, 1);
-        label.shadowColor = [UIColor whiteColor];
+    _tableViewHeaderLabel = label;
 
-        label.attributedText = [self colorAttributedStringForTableHeaderView];
-        label.textAlignment = NSTextAlignmentCenter;
-        label.backgroundColor = [UIColor clearColor];
+    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, tableView.sectionHeaderHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
+    separator.backgroundColor = tableView.separatorColor;
 
-        _tableViewHeaderLabel = label;
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width,tableView.sectionHeaderHeight)];
+    view.backgroundColor = tableView.backgroundColor;
 
-        UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, tableView.sectionHeaderHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
-        separator.backgroundColor = tableView.separatorColor;
+    [view addSubview:label];
+    [view addSubview:separator];
 
-        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0.0f, 0.0f, tableView.bounds.size.width,tableView.sectionHeaderHeight)];
-        view.backgroundColor = tableView.backgroundColor;
-
-        [view addSubview:label];
-        [view addSubview:separator];
-
-        return view;
-    }
-    return nil;
+    return view;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate -
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = self.tableView.sectionHeaderHeight;
+
+    if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0.0f) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0.0f, 0.0f, 0.0f);
+    } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0.0f, 0.0f, 0.0f);
+    }
 }
 
 #pragma mark NSFetchedResultsControllerDelegate
@@ -197,13 +199,24 @@
     UITableView *tableView = self.tableView;
 
     switch(type) {
-        case NSFetchedResultsChangeInsert:
+        case NSFetchedResultsChangeInsert: {
+//            if (self.fetchedResultsController.fetchedObjects.count == 1 &&
+//                [tableView visibleCells].count == 1) {
+//                [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//                return;
+//            }
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
+        }
 
-        case NSFetchedResultsChangeDelete:
+        case NSFetchedResultsChangeDelete: {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+//            if (self.fetchedResultsController.fetchedObjects.count == 0) {
+//                [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+//            }
             break;
+        }
 
         case NSFetchedResultsChangeUpdate:
             [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];

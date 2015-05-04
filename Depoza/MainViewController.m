@@ -7,6 +7,7 @@
 #import "SelectMonthViewController.h"
 #import "ManageCategoryTableViewController.h"
 #import "CategoriesTableViewController.h"
+#import "CategoriesContainerViewController.h"
 #import "PieChartViewController.h"
     //View
 #import "TitleViewButton.h"
@@ -26,14 +27,33 @@
     //Transition
 #import "ZFModalTransitionAnimator.h"
 
+#pragma mark - Defenitions -
+
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
+/*!
+ * The default constant value of info view height equals to 227.0f.
+ */
+static const CGFloat kDefaultInfoViewHeightValue = 227.0f;
+
+/*!
+ * The reduced constant value of info view height equals to 158.0f. 
+ * This value uses when categories count <= 4.
+ */
+static const CGFloat kReducedInfoViewHeightValue = 158.0f;
+
+#pragma mark - Extension -
+
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
+
+@property (weak, nonatomic) CategoriesContainerViewController *containerView;
 
 @property (weak, nonatomic) IBOutlet UILabel *totalAmountLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
 
 @property (nonatomic, strong) NSFetchedResultsController *todayFetchedResultsController;
 @property (nonatomic, strong) NSFetchedResultsController *monthFetchedResultsController;
@@ -42,6 +62,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 @property (nonatomic, strong) ZFModalTransitionAnimator *transitionAnimator;
 
 @end
+
+#pragma mark - Implementation -
 
 @implementation MainViewController {
     CGFloat _totalExpeditures;
@@ -61,8 +83,12 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self.navigationItem setLeftBarButtonItem:nil];
+
     NSParameterAssert(_managedObjectContext);
     NSParameterAssert(self.delegate);
+
+    self.tableView.alpha = 0.0f;
 
     _isAddExpensePresenting = NO;
     _selectMonthIsVisible = NO;
@@ -92,6 +118,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
+    [UIView animateWithDuration:1.0 animations:^{
+        self.tableView.alpha = 1.0f;
+    }];
+
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
         if (_isFirstTimeViewDidAppear && !_isShowExpenseDetailFromExtension) {
             [self performAddExpense];
@@ -109,16 +139,19 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 }
 
 #pragma mark - Helper methods -
+#pragma mark FetchCategoriesData
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
     [self loadCategoriesDataBetweenDate:[NSDate date]];
-    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
+
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
     if (fetch) {
         [self performFetches];
         [self.tableView reloadData];
     }
-    [self updateLabels];
+
+    [self updateAmountLabel];
 }
 
 - (void)performFetches {
@@ -130,8 +163,101 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _categoriesInfo = [Fetch loadCategoriesInfoInContext:self.managedObjectContext totalExpeditures:& _totalExpeditures andBetweenMonthDate:date];
 }
 
-- (void)updateLabels {
+- (void)notificateCategoriesContainerViewControllerWithNewCategoriesInfo:(NSArray *)categoriesInfo {
+    NSArray *categories = [self cleanUpCategoriesInfoWithInfo:categoriesInfo];
+
+    [self updateTableHeaderViewIfNeededFromNumberOfCategories:categories.count];
+
+    [self.delegate mainViewController:self didLoadCategoriesInfo:categories];
+}
+
+- (NSArray *)cleanUpCategoriesInfoWithInfo:(NSArray *)categories {
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"amount" ascending:NO];
+    NSMutableArray *categoriesInfo = [[categories sortedArrayUsingDescriptors:@[sortDescriptor]]mutableCopy];
+
+    NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+    for (CategoriesInfo *anInfo in categoriesInfo) {
+        if ([anInfo.amount floatValue] == 0) {
+            [indexSet addIndex:[categoriesInfo indexOfObject:anInfo]];
+        }
+    }
+
+    [categoriesInfo removeObjectsAtIndexes:indexSet];
+
+    return [categoriesInfo copy];
+}
+
+#pragma mark UIUpdates
+
+- (void)updateAmountLabel {
     self.totalAmountLabel.text = [NSString formatAmount:@(_totalExpeditures)];
+}
+
+- (void)updateTableHeaderViewIfNeededFromNumberOfCategories:(NSInteger)categoriesCount{
+    [self.view layoutIfNeeded];
+
+    BOOL isTwoCollumns = categoriesCount >= 5;
+    BOOL isEmpty = categoriesCount == 0;
+
+    if (isEmpty) {
+        if (self.containerViewHeightConstraint.constant != 0.0f) {
+            self.containerViewHeightConstraint.constant = 0.0f;
+            self.containerView.collectionViewHeightConstraint.constant = 0.0f;
+        }
+    } else if (isTwoCollumns) {
+        if (self.containerViewHeightConstraint.constant != DefaultContainerViewHeightValue) {
+            self.containerViewHeightConstraint.constant = DefaultContainerViewHeightValue;
+            self.containerView.collectionViewHeightConstraint.constant = DefaultCollectionViewHeightValue;
+        }
+    } else {
+        if (self.containerViewHeightConstraint.constant != ReducedContainerViewHeightValue) {
+            self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
+            self.containerView.collectionViewHeightConstraint.constant = ReducedCollectionViewHeightValue;
+        }
+    }
+    
+    [self.view layoutIfNeeded];
+    self.containerView.collectionView.alpha = 0.0f;
+
+    if (isEmpty) {
+        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kDefaultInfoViewHeightValue - DefaultContainerViewHeightValue) {
+            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), (kDefaultInfoViewHeightValue - DefaultContainerViewHeightValue));
+            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
+        } else {
+            self.containerView.collectionView.alpha = 1.0f;
+        }
+    } else if (isTwoCollumns) {
+        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kDefaultInfoViewHeightValue) {
+            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kDefaultInfoViewHeightValue);
+            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
+        } else {
+            self.containerView.collectionView.alpha = 1.0f;
+        }
+    } else {
+        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kReducedInfoViewHeightValue) {
+            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kReducedInfoViewHeightValue);
+            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
+        } else {
+            self.containerView.collectionView.alpha = 1.0f;
+        }
+    }
+}
+
+- (void)changeHeightTableHeaderViewWithAnimationFromFrame:(CGRect)frame {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.25];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        self.tableView.tableHeaderView.frame = frame;
+        self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+        [UIView commitAnimations];
+
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.5f];
+        [UIView setAnimationCurve:UIViewAnimationCurveLinear];
+        self.containerView.collectionView.alpha = 1.0f;
+        [UIView commitAnimations];
+    });
 }
 
 - (NSString *)formatDateForMonthLabel:(NSDate *)theDate {
@@ -146,16 +272,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     return [formatter stringFromDate:theDate];
 }
 
-- (void)addNotificationSubscribes {
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidAddCategory:) name:ManageCategoryTableViewControllerDidAddCategoryNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidUpdateCategory:) name:ManageCategoryTableViewControllerDidUpdateCategoryNotification object:nil];
-
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(categoriesTableViewControllerDidRemoveCategory:) name:CategoriesTableViewControllerDidRemoveCategoryNotification object:nil];
-}
+#pragma mark ChangeMonth
 
 - (void)changeMonthToShowFromDate:(NSDate *)date {
     if ([_dateToShow isDatesWithEqualMonth:date]) {
@@ -166,7 +283,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     _dateToShow = date;
 
     [self loadCategoriesDataBetweenDate:_dateToShow];
-    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
+
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
@@ -190,27 +308,13 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
     [self.tableView reloadData];
 
-    [self updateLabels];
+    [self updateAmountLabel];
 
     _titleViewButton = nil;
     [self configurateTitleViewButton];
 }
 
-- (NSDate *)dateFromMonthInfo:(NSDictionary *)monthInfo {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDateComponents *dayComponents = [NSDateComponents new];
-    dayComponents.year = [monthInfo[@"year"]integerValue];
-    dayComponents.month = [monthInfo[@"month"]integerValue];
-    dayComponents.day = 10;
-    NSDate *date = [calendar dateFromComponents:dayComponents];
-    
-    return date;
-}
-
-- (void)applicationWillResignActive {
-    [self changeMonthToShowFromDate:[NSDate date]];
-}
+#pragma mark Public
 
 - (void)performAddExpense {
     if (_categoriesInfo.count == 0) {
@@ -288,7 +392,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         });
 
         _isAddExpensePresenting = YES;
-        
+
         UINavigationController *navigationController = segue.destinationViewController;
 
         AddExpenseTableViewController *controller = (AddExpenseTableViewController *)navigationController.topViewController;
@@ -330,8 +434,9 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         controller.managedObjectContext = self.managedObjectContext;
         controller.timePeriod = _dateToShow;
         controller.delegate = self;
-        
+
         self.delegate = controller;
+        self.containerView = controller;
     } else if ([segue.identifier isEqualToString:@"PieChart"]) {
         PieChartViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
@@ -344,7 +449,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 - (void)addExpenseTableViewController:(AddExpenseTableViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _isAddExpensePresenting = NO;
-    
+
     _totalExpeditures += [expense.amount floatValue];
 
     [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -358,8 +463,10 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
         }
 
     }];
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
-    [self updateLabels];
+
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+
+    [self updateAmountLabel];
 }
 
 - (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
@@ -383,20 +490,52 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [self changeMonthToShowFromDate:date];
 }
 
+- (NSDate *)dateFromMonthInfo:(NSDictionary *)monthInfo {
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+
+    NSDateComponents *dayComponents = [NSDateComponents new];
+    dayComponents.year = [monthInfo[@"year"]integerValue];
+    dayComponents.month = [monthInfo[@"month"]integerValue];
+    dayComponents.day = 10;
+    NSDate *date = [calendar dateFromComponents:dayComponents];
+
+    return date;
+}
+
 #pragma mark CategoriesContainerViewControllerDelegate
 
 - (void)categoriesContainerViewController:(CategoriesContainerViewController *)controller didChooseCategory:(CategoriesInfo *)category {
     controller.timePeriod = _dateToShow;
 }
 
-#pragma mark - NSNotificationCenter
+#pragma mark - NSNotificationCenter -
+#pragma mark AddSubscribes
+
+- (void)addNotificationSubscribes {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(applicationWillResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(detailExpenseTableViewControllerDidFinishUpdateExpense:) name:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidAddCategory:) name:ManageCategoryTableViewControllerDidAddCategoryNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidUpdateCategory:) name:ManageCategoryTableViewControllerDidUpdateCategoryNotification object:nil];
+
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(categoriesTableViewControllerDidRemoveCategory:) name:CategoriesTableViewControllerDidRemoveCategoryNotification object:nil];
+}
+
+#pragma mark - HandleNotifications
+
+- (void)applicationWillResignActive {
+    [self changeMonthToShowFromDate:[NSDate date]];
+}
+
 #pragma mark DetailExpenseTableViewControllerNotification
 
 - (void)detailExpenseTableViewControllerDidFinishUpdateExpense:(NSNotification *)notification {
     [self loadCategoriesDataBetweenDate:_dateToShow];
-    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
 
-    [self updateLabels];
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+
+    [self updateAmountLabel];
 }
 
 #pragma mark ManageCategoryTableViewControllerNotification
@@ -407,7 +546,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
     [_categoriesInfo addObject:info];
 
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 }
 
 - (void)manageCategoryTableViewControllerDidUpdateCategory:(NSNotification *)notification {
@@ -424,17 +563,16 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     }];
 
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
+
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 }
 
-#pragma mark - CategoriesTableViewControllerDidRemoveCategoryNotification -
+#pragma mark CategoriesTableViewControllerDidRemoveCategoryNotification
 
 - (void)categoriesTableViewControllerDidRemoveCategory:(NSNotification *)notification {
     [self loadCategoriesDataBetweenDate:_dateToShow];
-    [self.delegate mainViewController:self didLoadCategoriesInfo:_categoriesInfo];
-
-    [self updateLabels];
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+    [self updateAmountLabel];
 }
 
 #pragma mark - NSFetchedResultsController -
@@ -493,7 +631,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
     [fetchRequest setFetchBatchSize:20];
 
     NSFetchedResultsController *theFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:_managedObjectContext sectionNameKeyPath:nil
-                                                   cacheName:@"monthFetchedResultsController"];
+                                                                                                             cacheName:@"monthFetchedResultsController"];
     _monthFetchedResultsController = theFetchedResultsController;
 
     return _monthFetchedResultsController;
@@ -526,8 +664,8 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                     *stop = YES;
                 }
             }];
-            [self.delegate mainViewController:self didUpdateCategoriesInfo:_categoriesInfo];
-            [self updateLabels];
+            [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+            [self updateAmountLabel];
             return;
         }
     }
@@ -560,7 +698,7 @@ static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
                                             type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
     yMotion.minimumRelativeValue = @(-magnitude);
     yMotion.maximumRelativeValue = @(magnitude);
-
+    
     UIMotionEffectGroup *group = [UIMotionEffectGroup new];
     group.motionEffects = @[xMotion, yMotion];
     [view addMotionEffect:group];
