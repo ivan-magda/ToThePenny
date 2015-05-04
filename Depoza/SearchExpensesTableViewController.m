@@ -173,6 +173,10 @@
     [self updateSearchResultsWithSearchText:_searchBar.text];
 }
 
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+    [self searchBarSearchButtonClicked];
+}
+
 #pragma mark - Segues
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
