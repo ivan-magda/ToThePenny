@@ -58,6 +58,8 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
 #pragma mark - MainViewControllerDelegate -
 
 - (void)updateCategories:(NSArray *)categoriesData {
+    self.pageControl.hidden = (self.collectionViewHeightConstraint.constant == 0.0f);
+
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]initWithKey:@"amount" ascending:NO];
     self.categories = [categoriesData sortedArrayUsingDescriptors:@[sortDescriptor]];
 

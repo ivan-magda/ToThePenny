@@ -83,31 +83,20 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [self assertionCheck];
+
+        //hide pie chart bar button item
     [self.navigationItem setLeftBarButtonItem:nil];
 
-    NSParameterAssert(_managedObjectContext);
-    NSParameterAssert(self.delegate);
+        //Present table view with smooth animation at start up
+    if (!_isShowExpenseDetailFromExtension &&
+        ![[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        self.tableView.alpha = 0.0f;
+    }
 
-    self.tableView.alpha = 0.0f;
+    [self initializeLocalVariables];
 
-    _isAddExpensePresenting = NO;
-    _selectMonthIsVisible = NO;
-    _isFirstTimeViewDidAppear = YES;
-
-    _dateToShow = [NSDate date];
-
-    self.totalAmountLabel.text = @"";
-
-    self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.todayFetchedResultsController];
-
-    self.todayFetchedResultsController.delegate = _tableViewProtocolsImplementer;
-    self.monthFetchedResultsController.delegate = self;
-
-    self.tableView.dataSource = _tableViewProtocolsImplementer;
-    self.tableView.delegate   = _tableViewProtocolsImplementer;
-
-    [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
-    [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
+    [self configurateTableAndFetchedControllers];
 
     [self configurateTitleViewButton];
     [self addMotionEffectToViews];
@@ -118,16 +107,14 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
-    [UIView animateWithDuration:1.0 animations:^{
-        self.tableView.alpha = 1.0f;
-    }];
-
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-        if (_isFirstTimeViewDidAppear && !_isShowExpenseDetailFromExtension) {
-            [self performAddExpense];
-            self.isShowExpenseDetailFromExtension = NO;
-        }
+    if (self.tableView.alpha == 0.0f) {
+        [UIView animateWithDuration:1.0 animations:^{
+            self.tableView.alpha = 1.0f;
+        }];
     }
+
+    [self presentAddExpenseViewControllerIfNeeded];
+
     _isFirstTimeViewDidAppear = NO;
 }
 
@@ -139,6 +126,56 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 #pragma mark - Helper methods -
+#pragma mark Private
+
+- (void)assertionCheck {
+    NSParameterAssert(_managedObjectContext);
+    NSParameterAssert(self.delegate);
+}
+
+- (void)initializeLocalVariables {
+    _isAddExpensePresenting = NO;
+    _selectMonthIsVisible = NO;
+    _isFirstTimeViewDidAppear = YES;
+
+    _dateToShow = [NSDate date];
+
+    self.totalAmountLabel.text = @"";
+}
+
+- (void)configurateTableAndFetchedControllers {
+    self.tableViewProtocolsImplementer = [[MainTableViewProtocolsImplementer alloc]initWithTableView:self.tableView fetchedResultsController:self.todayFetchedResultsController];
+
+    self.todayFetchedResultsController.delegate = _tableViewProtocolsImplementer;
+    self.monthFetchedResultsController.delegate = self;
+
+    self.tableView.dataSource = _tableViewProtocolsImplementer;
+    self.tableView.delegate   = _tableViewProtocolsImplementer;
+
+    [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
+    [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
+}
+
+- (BOOL)isCurrentMonthWithNoExpenses {
+    return (_totalExpeditures == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
+}
+
+- (BOOL)isNeedForcedToShowAddExpenseViewController {
+    return (_isFirstTimeViewDidAppear && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
+}
+
+- (void)presentAddExpenseViewControllerIfNeeded {
+    if ([self isNeedForcedToShowAddExpenseViewController]) {
+        [self performAddExpense];
+        self.isShowExpenseDetailFromExtension = NO;
+    } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        if (_isFirstTimeViewDidAppear && !_isShowExpenseDetailFromExtension) {
+            [self performAddExpense];
+            self.isShowExpenseDetailFromExtension = NO;
+        }
+    }
+}
+
 #pragma mark FetchCategoriesData
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch {
@@ -200,17 +237,20 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     BOOL isEmpty = categoriesCount == 0;
 
     if (isEmpty) {
-        if (self.containerViewHeightConstraint.constant != 0.0f) {
-            self.containerViewHeightConstraint.constant = 0.0f;
+        if (_containerViewHeightConstraint.constant != ReducedContainerViewHeightValue ||
+            _containerView.collectionViewHeightConstraint.constant != 0.0f) {
+            self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
             self.containerView.collectionViewHeightConstraint.constant = 0.0f;
         }
     } else if (isTwoCollumns) {
-        if (self.containerViewHeightConstraint.constant != DefaultContainerViewHeightValue) {
+        if (_containerViewHeightConstraint.constant != DefaultContainerViewHeightValue ||
+            _containerView.collectionViewHeightConstraint.constant != DefaultCollectionViewHeightValue) {
             self.containerViewHeightConstraint.constant = DefaultContainerViewHeightValue;
             self.containerView.collectionViewHeightConstraint.constant = DefaultCollectionViewHeightValue;
         }
     } else {
-        if (self.containerViewHeightConstraint.constant != ReducedContainerViewHeightValue) {
+        if (_containerViewHeightConstraint.constant != ReducedContainerViewHeightValue ||
+            _containerView.collectionViewHeightConstraint.constant != ReducedContainerViewHeightValue) {
             self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
             self.containerView.collectionViewHeightConstraint.constant = ReducedCollectionViewHeightValue;
         }
@@ -219,14 +259,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self.view layoutIfNeeded];
     self.containerView.collectionView.alpha = 0.0f;
 
-    if (isEmpty) {
-        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kDefaultInfoViewHeightValue - DefaultContainerViewHeightValue) {
-            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), (kDefaultInfoViewHeightValue - DefaultContainerViewHeightValue));
-            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
-        } else {
-            self.containerView.collectionView.alpha = 1.0f;
-        }
-    } else if (isTwoCollumns) {
+    if (isTwoCollumns) {
         if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kDefaultInfoViewHeightValue) {
             CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kDefaultInfoViewHeightValue);
             [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
