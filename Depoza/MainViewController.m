@@ -73,7 +73,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     TitleViewButton *_titleViewButton;
     NSDate *_dateToShow;
 
-    BOOL _isFirstTimeViewDidAppear;
+    BOOL _isFirstTimeFetchForCategoriesData;
     BOOL _isAddExpensePresenting;
     BOOL _selectMonthIsVisible;
 }
@@ -132,7 +132,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)initializeLocalVariables {
     _isAddExpensePresenting = NO;
     _selectMonthIsVisible = NO;
-    _isFirstTimeViewDidAppear = YES;
+    _isFirstTimeFetchForCategoriesData = YES;
 
     _dateToShow = [NSDate date];
 
@@ -157,15 +157,15 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (BOOL)ifNeedForcedToShowAddExpenseViewController {
-    return (_isFirstTimeViewDidAppear && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
+    return (_isFirstTimeFetchForCategoriesData && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
 }
 
 - (void)presentAddExpenseViewControllerIfNeeded {
     if ([self ifNeedForcedToShowAddExpenseViewController]) {
         [self performAddExpense];
         self.isShowExpenseDetailFromExtension = NO;
-    } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-        if (_isFirstTimeViewDidAppear && !_isShowExpenseDetailFromExtension) {
+    } else if (_isFirstTimeFetchForCategoriesData && [[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        if (!_isShowExpenseDetailFromExtension) {
             [self performAddExpense];
             self.isShowExpenseDetailFromExtension = NO;
         }
@@ -178,7 +178,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self loadCategoriesDataBetweenDate:[NSDate date]];
 
     [self presentAddExpenseViewControllerIfNeeded];
-    _isFirstTimeViewDidAppear = NO;
+    _isFirstTimeFetchForCategoriesData = NO;
 
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
