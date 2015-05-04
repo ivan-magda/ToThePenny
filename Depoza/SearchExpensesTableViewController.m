@@ -128,6 +128,10 @@
 }
 
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if ([text isEqualToString:@"\n"]) {
+        [self searchBarSearchButtonClicked];
+        return NO;
+    }
     NSString *newText = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
     [self updateSearchResultsWithSearchText:newText];
 
@@ -161,6 +165,12 @@
         self.searchPredicate = nil;
     }
     [self.tableView reloadData];
+}
+
+- (void)searchBarSearchButtonClicked {
+    [self.searchBar resignFirstResponder];
+
+    [self updateSearchResultsWithSearchText:_searchBar.text];
 }
 
 #pragma mark - Segues
@@ -288,8 +298,7 @@
 
 #pragma mark - NSFetchedResultsController -
 
-- (NSFetchedResultsController *)fetchedResultsController
-{
+- (NSFetchedResultsController *)fetchedResultsController {
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
     }
