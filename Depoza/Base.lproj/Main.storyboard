@@ -357,32 +357,31 @@
                         <sections>
                             <tableViewSection id="vRU-SG-zVK">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="hBK-TX-1iC" userLabel="AmountCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="hBK-TX-1iC" userLabel="AmountCell">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hBK-TX-1iC" id="Tt5-ql-GW7">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="Amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVu-Kj-yFl">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Amount" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IVu-Kj-yFl">
                                                     <rect key="frame" x="15" y="11" width="58" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="250" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" text="Amount" textAlignment="right" translatesAutoresizingMaskIntoConstraints="NO" id="2ze-pl-Daz">
-                                                    <rect key="frame" x="236" y="3" width="68" height="37"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="evm-gb-Pzi">
+                                                    <rect key="frame" x="81" y="11" width="219" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardType="decimalPad"/>
-                                                </textView>
+                                                    <textInputTraits key="textInputTraits" keyboardType="decimalPad" enablesReturnKeyAutomatically="YES"/>
+                                                </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="2ze-pl-Daz" secondAttribute="trailing" constant="16" id="1MH-My-mPK"/>
+                                                <constraint firstItem="evm-gb-Pzi" firstAttribute="leading" secondItem="IVu-Kj-yFl" secondAttribute="trailing" constant="8" symbolic="YES" id="A8u-QS-qV3"/>
+                                                <constraint firstAttribute="trailing" secondItem="evm-gb-Pzi" secondAttribute="trailing" constant="20" symbolic="YES" id="El2-xM-mh0"/>
                                                 <constraint firstAttribute="bottom" secondItem="IVu-Kj-yFl" secondAttribute="bottom" constant="11" id="JyQ-4e-85o"/>
+                                                <constraint firstAttribute="bottom" secondItem="evm-gb-Pzi" secondAttribute="bottom" constant="11" id="UCq-0i-7PP"/>
                                                 <constraint firstItem="IVu-Kj-yFl" firstAttribute="top" secondItem="Tt5-ql-GW7" secondAttribute="top" constant="11" id="Urr-8e-qGB"/>
-                                                <constraint firstItem="2ze-pl-Daz" firstAttribute="top" secondItem="Tt5-ql-GW7" secondAttribute="top" constant="3" id="WKh-Z8-cjy"/>
-                                                <constraint firstAttribute="bottom" secondItem="2ze-pl-Daz" secondAttribute="bottom" constant="3" id="YFm-pl-d0S"/>
+                                                <constraint firstItem="evm-gb-Pzi" firstAttribute="top" secondItem="Tt5-ql-GW7" secondAttribute="top" constant="11" id="XdP-XA-2PL"/>
                                                 <constraint firstItem="IVu-Kj-yFl" firstAttribute="leading" secondItem="Tt5-ql-GW7" secondAttribute="leading" constant="15" id="cCm-Am-8hv"/>
-                                                <constraint firstItem="2ze-pl-Daz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IVu-Kj-yFl" secondAttribute="trailing" constant="8" symbolic="YES" id="oP1-Tp-2jM"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -490,8 +489,8 @@
                     <navigationItem key="navigationItem" title="Expense" id="Qur-wg-iYa"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
-                        <outlet property="amountTextView" destination="2ze-pl-Daz" id="SqX-Ba-nue"/>
-                        <outlet property="amountTextViewTrailingSpace" destination="1MH-My-mPK" id="KxZ-6o-gif"/>
+                        <outlet property="amountTextField" destination="evm-gb-Pzi" id="67y-ba-DrQ"/>
+                        <outlet property="amountTextFieldTrailingSpace" destination="El2-xM-mh0" id="h0G-h0-arI"/>
                         <outlet property="categoryLabelTrailingSpace" destination="S3e-lV-bmg" id="Cgy-VS-eVV"/>
                         <outlet property="categoryNameLabel" destination="uxS-mc-hf3" id="dS6-Vr-bYD"/>
                         <outlet property="dateLabel" destination="jkK-n9-121" id="Ggd-hp-xPC"/>

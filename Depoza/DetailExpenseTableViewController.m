@@ -21,14 +21,16 @@
 
 NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"DetailExpenseTableViewControllerDidUpdateNotification";
 
-@interface DetailExpenseTableViewController () <UITextViewDelegate>
+static const CGFloat kExtendedTrailingSpaceConstantValue = 33.0f;
 
-@property (weak, nonatomic) IBOutlet UITextView *amountTextView;
+@interface DetailExpenseTableViewController () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *categoryNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *amountTextViewTrailingSpace;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *amountTextFieldTrailingSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dateLabelTrailingSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryLabelTrailingSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelTrailingSpace;
@@ -58,7 +60,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
     NSParameterAssert(self.managedObjectContext);
     NSParameterAssert(self.expenseToShow);
 
-    _amountTextView.delegate = self;
+    _amountTextField.delegate = self;
     _dateOfExpense = _expenseToShow.dateOfExpense;
     _iconName = _expenseToShow.category.iconName;
 
@@ -71,9 +73,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 
     _isEditMode = NO;
 
-    self.amountTextView.selectable = NO;
-
-    _originalTrailingSpace = [self.descriptionLabelTrailingSpace constant];
+    _originalTrailingSpace = self.descriptionLabelTrailingSpace.constant;
 
     [self updateText];
 }
@@ -81,7 +81,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 #pragma mark - Helper Methods -
 
 - (void)updateText {
-    self.amountTextView.text = [NSString formatAmount:_expenseToShow.amount];
+    self.amountTextField.text = [NSString formatAmount:_expenseToShow.amount];
     self.categoryNameLabel.text = _expenseToShow.category.title;
     self.descriptionLabel.text = (_expenseToShow.descriptionOfExpense.length > 0) ? _expenseToShow.descriptionOfExpense : NSLocalizedString(@"(No Description)", @"EditExpenseVC text for description label");
     [self updateDateLabel];
@@ -119,8 +119,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 - (void)setDetailMode {
     _isEditMode = NO;
 
-    self.amountTextView.selectable = NO;
-    self.amountTextView.text = [NSString formatAmount:_expenseToShow.amount];
+    self.amountTextField.text = [NSString formatAmount:_expenseToShow.amount];
 
     [self.navigationItem setLeftBarButtonItem:nil animated:YES];
     [self.navigationItem setHidesBackButton:NO animated:YES];
@@ -132,7 +131,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self setAlpha:1];
 
-        self.amountTextViewTrailingSpace.constant = 16.0f;
+        self.amountTextFieldTrailingSpace.constant = _originalTrailingSpace;
         self.dateLabelTrailingSpace.constant = _originalTrailingSpace;
         self.categoryLabelTrailingSpace.constant = _originalTrailingSpace;
         self.descriptionLabelTrailingSpace.constant = _originalTrailingSpace;
@@ -146,17 +145,14 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 - (void)setEditMode {
     _isEditMode = YES;
 
-    self.amountTextView.selectable = YES;
-    self.amountTextView.editable = YES;
-
     NSMutableCharacterSet *charactersToKeep = [NSMutableCharacterSet decimalDigitCharacterSet];
     [charactersToKeep addCharactersInString:@","];
 
     NSCharacterSet *charactersToRemove = [charactersToKeep invertedSet];
 
-    NSString *newString = [[_amountTextView.text componentsSeparatedByCharactersInSet:charactersToRemove]
+    NSString *newString = [[_amountTextField.text componentsSeparatedByCharactersInSet:charactersToRemove]
                            componentsJoinedByString:@""];
-    self.amountTextView.text = newString;
+    self.amountTextField.text = newString;
 
     [self.navigationItem setHidesBackButton:YES animated:YES];
     [self.navigationItem setRightBarButtonItems:@[_doneBarButton] animated:YES];
@@ -166,8 +162,8 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [self setAlpha:1.0f];
 
-        self.amountTextViewTrailingSpace.constant = 29.0f;
-        self.dateLabelTrailingSpace.constant = 33.0f;
+        self.amountTextFieldTrailingSpace.constant = kExtendedTrailingSpaceConstantValue;
+        self.dateLabelTrailingSpace.constant = kExtendedTrailingSpaceConstantValue;
         self.categoryLabelTrailingSpace.constant = 0.0f;
         self.descriptionLabelTrailingSpace.constant = 0.0f;
     } completion:nil];
@@ -178,7 +174,7 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 }
 
 - (void)setAlpha:(CGFloat)alpha {
-    self.amountTextView.alpha = alpha;
+    self.amountTextField.alpha = alpha;
     self.dateLabel.alpha = alpha;
     self.categoryNameLabel.alpha = alpha;
     self.descriptionLabel.alpha = alpha;
@@ -287,14 +283,31 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    [self.amountTextView resignFirstResponder];
 
-    if (indexPath.row == 1) {
-        if (!_datePickerVisible) {
-            [self showDatePicker];
-        } else {
-            [self hideDatePicker];
+    switch (indexPath.row) {
+        case 0: {
+            if (_datePickerVisible) {
+                [self hideDatePicker];
+                [self.amountTextField becomeFirstResponder];
+            }
+            break;
+        }
+        case 1: {
+            [self.amountTextField resignFirstResponder];
+
+            if (!_datePickerVisible) {
+                [self showDatePicker];
+            } else {
+                [self hideDatePicker];
+            }
+            break;
+        }
+        default: {
+            [self.amountTextField resignFirstResponder];
+            if (_datePickerVisible) {
+                [self hideDatePicker];
+            }
+            break;
         }
     }
 }
@@ -340,17 +353,21 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
     [self updateDateLabel];
 }
 
-#pragma mark - UITextViewDelegate -
+#pragma mark - UITextFieldDelegate -
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    NSString *newText = [textView.text stringByReplacingCharactersInRange:range withString:text];
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    return _isEditMode;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
 
     _doneBarButton.enabled = (([newText length] > 0) && (newText.floatValue > 0.0f));
 
     return YES;
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView {
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
     [self hideDatePicker];
 }
 
@@ -359,18 +376,17 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 - (void)editButtonPressed:(UIBarButtonItem *)sender {
     [self setEditMode];
 
-    [self.amountTextView becomeFirstResponder];
+    [self.amountTextField becomeFirstResponder];
 }
 
 - (void)cancelButtonPressed:(UIBarButtonItem *)sender {
-    [self.amountTextView resignFirstResponder];
+    [self.amountTextField resignFirstResponder];
     [self hideDatePicker];
 
     _dateOfExpense = _expenseToShow.dateOfExpense;
     _iconName = _expenseToShow.category.iconName;
 
     [self updateText];
-
     [self setDetailMode];
 }
 
@@ -389,12 +405,12 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 }
 
 - (void)doneButtonPressed:(UIBarButtonItem *)sender {
-    [self.amountTextView resignFirstResponder];
+    [self.amountTextField resignFirstResponder];
     [self hideDatePicker];
 
     BOOL isChanged = NO;
 
-    NSString *amountString = [_amountTextView.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    NSString *amountString = [_amountTextField.text stringByReplacingOccurrencesOfString:@"," withString:@"."];
     if (_expenseToShow.amount.floatValue != [amountString floatValue]) {
         self.expenseToShow.amount = @([amountString floatValue]);
         isChanged = YES;

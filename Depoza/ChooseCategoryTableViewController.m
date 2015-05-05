@@ -94,7 +94,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return NSLocalizedString(@"Change the icon category.", @"ChooseCategoryVC header title for pick icon section");
+        return NSLocalizedString(@"Change the icon of category.", @"ChooseCategoryVC header title for pick icon section");
     }
     return NSLocalizedString(@"Change the category of expense.", @"ChooseCategoryVC header title for change category section");
 }
@@ -114,6 +114,12 @@
         _isChangeIconPressed = YES;
         [self performSegueWithIdentifier:@"ChangeIcon" sender:nil];
     }
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
+        // Set the text color of our header/footer text.
+    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
+    [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
 }
 
 #pragma mark - Navigation -
