@@ -18,6 +18,7 @@
 + (NSInteger)countForCategoriesInContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)getAllCategoriesInContext:(NSManagedObjectContext *)context;
++ (NSArray *)getCategoriesInContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate;
 
 + (NSArray *)getCategoriesTitleAndIconNameInContext:(NSManagedObjectContext *)context;
 + (NSArray *)getAllTitlesInContext:(NSManagedObjectContext *)context;
@@ -28,5 +29,7 @@
 + (NSArray *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
+
++ (NSArray *)sumOfExpensesInManagedObjectContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate;
 
 @end

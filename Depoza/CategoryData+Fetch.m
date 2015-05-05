@@ -74,6 +74,12 @@
     return foundCategories;
 }
 
++ (NSArray *)getCategoriesInContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate {
+    NSArray *categories = [CategoryData getAllCategoriesInContext:context];
+
+    return [categories filteredArrayUsingPredicate:predicate];
+}
+
 + (CategoryData *)categoryFromTitle:(NSString *)category context:(NSManagedObjectContext *)context {
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
 
@@ -191,6 +197,29 @@
     }
 
     return count;
+}
+
++ (NSArray *)sumOfExpensesInManagedObjectContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate {
+    NSExpression *amount = [NSExpression expressionForKeyPath:@"expense.amount"];
+    NSExpression *sum = [NSExpression expressionForFunction:@"sum:" arguments:@[amount]];
+
+    NSExpressionDescription *sumDescription = [NSExpressionDescription new];
+    sumDescription.name = @"sum";
+    sumDescription.expression = sum;
+    sumDescription.expressionResultType = NSFloatAttributeType;
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+    fetchRequest.propertiesToFetch = @[sumDescription];
+    fetchRequest.resultType = NSDictionaryResultType;
+    fetchRequest.predicate = predicate;
+
+    NSError *error = nil;
+    NSArray *results = [context executeFetchRequest:fetchRequest error:nil];
+    if (error) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+    }
+
+    return results;
 }
 
 @end
