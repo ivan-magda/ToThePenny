@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CustomRightDetailLabel : UITableViewCell
+@interface CustomRightDetailCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *leftLabel;
 @property (nonatomic, weak) IBOutlet UILabel *rightDetailLabel;

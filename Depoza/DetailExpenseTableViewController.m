@@ -96,7 +96,7 @@ static const CGFloat kExtendedTrailingSpaceConstantValue = 33.0f;
     if (dateFormatter == nil) {
         dateFormatter = [NSDateFormatter new];
         dateFormatter.timeZone = [NSTimeZone localTimeZone];
-        dateFormatter.dateFormat = @"dd MMMM yyyy, HH:mm";
+        dateFormatter.dateFormat = @"d MMMM yyyy, HH:mm";
     }
     return [dateFormatter stringFromDate:date];
 }

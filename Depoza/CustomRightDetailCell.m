@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-#import "CustomRightDetailLabel.h"
+#import "CustomRightDetailCell.h"
 
-@implementation CustomRightDetailLabel
+@implementation CustomRightDetailCell
 
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "CategoriesInfo.h"
+#import "CategoryData.h"
 
 @implementation CategoriesInfo
 
@@ -18,6 +19,10 @@
         _iconName = iconName;
     }
     return self;
+}
+
++ (instancetype)categoryInfoFromCategoryData:(CategoryData *)category {
+    return [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
 }
 
 @end

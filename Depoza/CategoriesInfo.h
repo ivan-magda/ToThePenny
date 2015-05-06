@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class CategoryData;
+
 @interface CategoriesInfo : NSObject
 
 @property (nonatomic, copy) NSString *title;
@@ -16,5 +18,7 @@
 @property (nonatomic, strong) NSNumber *amount;
 
 - (instancetype)initWithTitle:(NSString *)title iconName:(NSString *)iconName idValue:(NSNumber *)idValue andAmount:(NSNumber *)amount;
+
++ (instancetype)categoryInfoFromCategoryData:(CategoryData *)category;
 
 @end

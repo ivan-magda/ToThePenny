@@ -9,15 +9,22 @@
     //ViewController
 #import "SearchExpensesTableViewController.h"
 #import "DetailExpenseTableViewController.h"
+#import "SelectedCategoryTableViewController.h"
     //View
-#import "CustomRightDetailLabel.h"
+#import "CustomRightDetailCell.h"
+#import "FoundExpenseCell.h"
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
+#import "CategoriesInfo.h"
     //Categories
 #import "NSString+FormatAmount.h"
+#import "NSDate+IsDateBetweenCurrentYear.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+static NSString * const kFoundExpenseCellReuseIdentifier = @"FoundExpenseCell";
+static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
 @interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
@@ -33,6 +40,9 @@
 
 @implementation SearchExpensesTableViewController {
     BOOL _isSearchBarFirstResponder;
+
+    NSArray *_filteredCategories;
+    NSArray *_filteredExpenses;
 }
 
 #pragma mark - ViewControllerLifeCycle -
@@ -74,49 +84,35 @@
 
 #pragma mark - Helpers -
 
-- (NSString *)formatDate:(NSDate *)theDate {
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [NSDateFormatter new];
-        [formatter setDateFormat:@"dd.MM.YY"];
+- (NSString *)formatDate:(NSDate *)date {
+    static NSDateFormatter *defaultFormatter = nil;
+    static NSDateFormatter *currentYearFormatter = nil;
+
+    if (defaultFormatter == nil || currentYearFormatter == nil) {
+        defaultFormatter = [NSDateFormatter new];
+        [defaultFormatter setDateFormat:@"d MMM. YYYY"];
+
+        currentYearFormatter = [NSDateFormatter new];
+        [currentYearFormatter setDateFormat:@"d MMM."];
     }
-    return [formatter stringFromDate:theDate];
-}
 
-- (void)configureCell:(CustomRightDetailLabel *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ExpenseData *expense = nil;
-    if ([self isSearchPredicatesIsNil]) {
-        expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-        cell.leftLabel.text = expense.category.title;
-        cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
+    NSString *formatDate = nil;
+    if ([[NSDate date]isDateBetweenCurrentYear]) {
+        formatDate = [currentYearFormatter stringFromDate:date];
     } else {
-        if (indexPath.section == 0) {
-            NSArray *filteredCategories = [CategoryData getCategoriesInContext:_fetchedResultsController.managedObjectContext usingPredicate:_categoriesSearchPredicate];
-            CategoryData *category = filteredCategories[indexPath.row];
-
-            cell.leftLabel.text = category.title;
-
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"idValue == %@", category.idValue]];
-            NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_fetchedResultsController.managedObjectContext usingPredicate:predicate];
-            NSParameterAssert(results.count == 1);
-
-            cell.rightDetailLabel.text = [NSString formatAmount:[results lastObject][@"sum"]];
-        } else {
-            expense = [self filteredArrayOfExpensesUsingPredicate:self.expensesSearchPredicate][indexPath.row];
-
-            cell.leftLabel.text = (expense.descriptionOfExpense.length == 0 ? @"(No Description)" : expense.descriptionOfExpense);
-            cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount], [self formatDate:expense.dateOfExpense]];
-        }
+        formatDate = [defaultFormatter stringFromDate:date];
     }
-}
 
-- (BOOL)isSearchPredicatesIsNil {
-    return (_categoriesSearchPredicate == nil && _expensesSearchPredicate == nil);
-}
+    NSInteger countForDot = [[formatDate componentsSeparatedByString:@"."]count] - 1;
+    if (countForDot > 1) {
+        NSRange range = [formatDate rangeOfString:@"."];
+        NSParameterAssert(range.location != NSNotFound);
+        range.length = 1;
 
-- (NSArray *)filteredArrayOfExpensesUsingPredicate:(NSPredicate *)predicate {
-    return [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
+        formatDate = [formatDate stringByReplacingCharactersInRange:range withString:@""];
+    }
+
+    return formatDate;
 }
 
 #pragma mark - Search -
@@ -151,6 +147,11 @@
                                                                                         modifier:NSDirectPredicateModifier
                                                                                             type:NSContainsPredicateOperatorType
                                                                                          options:NSCaseInsensitivePredicateOption];
+        NSExpression *expenses = [NSExpression expressionForKeyPath:@"expense.@count"];
+        NSExpression *count = [NSExpression expressionForConstantValue:@0];
+        NSPredicate *numberOfExpensesGreaterThenZero = [NSComparisonPredicate predicateWithLeftExpression:expenses rightExpression:count modifier:NSDirectPredicateModifier type:NSGreaterThanPredicateOperatorType options:0];
+
+        NSPredicate *categoryPredicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[numberOfExpensesGreaterThenZero, containsTitlePredicate]];
             //Expenses predicate
         NSExpression *categoryTitleForExpense = [NSExpression expressionForKeyPath:@"category.title"];
         NSExpression *text = [NSExpression expressionForConstantValue:searchText];
@@ -167,14 +168,42 @@
                                                                                                options:NSCaseInsensitivePredicateOption];
         NSPredicate *expensesPredicate = [NSCompoundPredicate orPredicateWithSubpredicates:@[containsTitleForExpensePredicate, containsDescriptionPredicate]];
 
-        self.categoriesSearchPredicate = containsTitlePredicate;
+        self.categoriesSearchPredicate = categoryPredicate;
         self.expensesSearchPredicate = expensesPredicate;
+
+        _filteredCategories = [CategoryData getCategoriesInContext:_fetchedResultsController.managedObjectContext usingPredicate:_categoriesSearchPredicate];
+        _filteredExpenses = [self filteredArrayOfExpensesUsingPredicate:self.expensesSearchPredicate];
     } else {
         self.categoriesSearchPredicate = nil;
         self.expensesSearchPredicate = nil;
+        _filteredCategories = nil;
+        _filteredExpenses = nil;
     }
 
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+
+- (BOOL)isSearchPredicatesIsNil {
+    return (_categoriesSearchPredicate == nil && _expensesSearchPredicate == nil);
+}
+
+- (NSArray *)filteredArrayOfExpensesUsingPredicate:(NSPredicate *)predicate {
+    return [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
+}
+
+- (CategoryData *)filteredCategoryForIndexPath:(NSIndexPath *)indexPath {
+    return _filteredCategories[indexPath.row];
+}
+
+- (NSNumber *)sumOfExpensesWhenSearchProceed {
+    NSNumber *sum = [_filteredExpenses valueForKeyPath:@"@sum.amount"];
+
+    return sum;
+}
+
+- (BOOL)isNothingFound {
+    return (![self isSearchPredicatesIsNil] && _filteredCategories.count == 0 && _filteredExpenses.count == 0);
 }
 
 #pragma mark SetEditig
@@ -207,8 +236,11 @@
                          [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
                      }];
     self.searchBar.text = nil;
-    self.categoriesSearchPredicate = nil;
-    self.expensesSearchPredicate = nil;
+
+    _categoriesSearchPredicate = nil;
+    _expensesSearchPredicate = nil;
+    _filteredCategories = nil;
+    _filteredExpenses = nil;
 
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -243,34 +275,47 @@
 #pragma mark - Segues
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if ([identifier isEqualToString:@"MoreInfo"] && [self isEditing]) {
+    if (([identifier isEqualToString:@"MoreInfo"] || [identifier isEqualToString:@"CategorySelected"]) &&
+        [self isEditing]) {
         return NO;
+    } else if (([identifier isEqualToString:@"MoreInfo"] || [identifier isEqualToString:@"CategorySelected"])
+               && ![self isSearchPredicatesIsNil]) {
+        return YES;
     }
     return YES;
 }
 
-#warning need to override
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    NSIndexPath *indexPath = nil;
+    if ([sender isKindOfClass:[UITableViewCell class]]) {
+        UITableViewCell *cell = (UITableViewCell *)sender;
+        indexPath = [self.tableView indexPathForCell:cell];
+    }
+
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
-        if ([sender isKindOfClass:[UITableViewCell class]]) {
-            UITableViewCell *cell = (UITableViewCell *)sender;
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
+        if ([self isSearchPredicatesIsNil]) {
+            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            detailsViewController.expenseToShow = expense;
 
-            detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
-            if (self.categoriesSearchPredicate == nil) {
-                ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
-                detailsViewController.expenseToShow = expense;
+            _isSearchBarFirstResponder = (self.searchBar.isFirstResponder);
+        } else {
+            NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
+            ExpenseData *expense = filteredExpenses[indexPath.row];
+            detailsViewController.expenseToShow = expense;
 
-                _isSearchBarFirstResponder = (self.searchBar.isFirstResponder);
-            } else {
-                NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
-                ExpenseData *expense = filteredExpenses[indexPath.row];
-                detailsViewController.expenseToShow = expense;
-
-                _isSearchBarFirstResponder = YES;
-            }
+            _isSearchBarFirstResponder = YES;
         }
+    } else if ([segue.identifier isEqualToString:@"CategorySelected"] && indexPath.section == 0) {
+        SelectedCategoryTableViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _fetchedResultsController.managedObjectContext;
+
+        CategoriesInfo *category = [CategoriesInfo categoryInfoFromCategoryData:[self filteredCategoryForIndexPath:indexPath]];
+        controller.selectedCategory = category;
+        controller.timePeriod = [NSDate date];
+
+        _isSearchBarFirstResponder = YES;
     }
 
     [self.searchBar resignFirstResponder];
@@ -291,27 +336,81 @@
         } else {
             return 0;
         }
+    } else if ([self isNothingFound] && section == 0) {
+        return 1;
     } else {
         if (section == 0) {
-            return [[CategoryData getCategoriesInContext:_fetchedResultsController.managedObjectContext usingPredicate:_categoriesSearchPredicate]count];
+            return _filteredCategories.count;
         } else {
-            return [[self filteredArrayOfExpensesUsingPredicate:self.expensesSearchPredicate]count];
+            return _filteredExpenses.count;
         }
     }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CustomRightDetailLabel *cell = (CustomRightDetailLabel *)[tableView dequeueReusableCellWithIdentifier:@"AllCell"];
-    [self configureCell:cell atIndexPath:indexPath];
+    UITableViewCell *cell = nil;
+    if (indexPath.section == 0 && _categoriesSearchPredicate != nil && ![self isNothingFound]) {
+        cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
+
+        [self configureCell:cell atIndexPath:indexPath];
+    } else if ([self isNothingFound] && indexPath.section == 0) {
+        CustomRightDetailCell *nothingFoundCell = [tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
+        nothingFoundCell.leftLabel.text = NSLocalizedString(@"Nothing found", @"Nothing found text for nothing found cell in SearchVC");
+        nothingFoundCell.rightDetailLabel.text = nil;
+        nothingFoundCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        nothingFoundCell.accessoryType = UITableViewCellAccessoryNone;
+
+        return nothingFoundCell;
+    } else {
+        cell = (FoundExpenseCell *)[tableView dequeueReusableCellWithIdentifier:kFoundExpenseCellReuseIdentifier];
+
+        [self configureCell:cell atIndexPath:indexPath];
+    }
 
     return cell;
+}
+
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    ExpenseData *expense = nil;
+    if ([self isSearchPredicatesIsNil]) {
+        FoundExpenseCell *cellToConfigurate = (FoundExpenseCell *)cell;
+        expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+        [self configureFoundExpenseCell:cellToConfigurate withExpense:expense];
+    } else {
+        if (indexPath.section == 0) {
+            CustomRightDetailCell *cellToConfigurate = (CustomRightDetailCell *)cell;
+            CategoryData *category = [self filteredCategoryForIndexPath:indexPath];
+
+            cellToConfigurate.leftLabel.text = category.title;
+            cellToConfigurate.selectionStyle = UITableViewCellStyleDefault;
+            cellToConfigurate.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+            NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"idValue == %@", category.idValue]];
+            NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_fetchedResultsController.managedObjectContext usingPredicate:predicate];
+            NSParameterAssert(results.count == 1);
+
+            cellToConfigurate.rightDetailLabel.text = [NSString formatAmount:[results lastObject][@"sum"]];
+        } else {
+            FoundExpenseCell *cellToConfigurate = (FoundExpenseCell *)cell;
+            expense = _filteredExpenses[indexPath.row];
+
+            [self configureFoundExpenseCell:cellToConfigurate withExpense:expense];
+        }
+    }
+}
+
+- (void)configureFoundExpenseCell:(FoundExpenseCell *)cell withExpense:(ExpenseData *)expense {
+    cell.categoryTitleLabel.text = expense.category.title;
+    cell.descriptionLabel.text = (expense.descriptionOfExpense.length == 0 ? NSLocalizedString(@"(No Description)", @"Found expense cell no descrition text") : expense.descriptionOfExpense);
+    cell.amountLabel.text = [NSString formatAmount:expense.amount];
+    cell.dateLabel.text = [self formatDate:expense.dateOfExpense];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
     return [self isSearchPredicatesIsNil];
 }
 
-#warning check for correct object received to delete
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
@@ -336,19 +435,52 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (![self isSearchPredicatesIsNil] && section == 1) {
-        NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
-        NSNumber *sum = [filteredExpenses valueForKeyPath:@"@sum.amount"];
+        NSNumber *sum = [self sumOfExpensesWhenSearchProceed];
 
-        return [NSString stringWithFormat:@"Transactions %@", [NSString formatAmount:sum]];
+        return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Transactions", @"Transactions title for header in SearchVC"), [NSString formatAmount:sum]];
+    } else if (![self isSearchPredicatesIsNil] && section == 0) {
+        NSArray *filteredCategories = _filteredCategories;
+
+        NSMutableArray *predicateArray = [NSMutableArray new];
+        for (CategoryData *category in filteredCategories) {
+            NSExpression *categoryId = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(idValue))];
+            NSExpression *idValue = [NSExpression expressionForConstantValue:category.idValue];
+            NSPredicate *containsIdValue = [NSComparisonPredicate predicateWithLeftExpression:categoryId rightExpression:idValue modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:0];
+
+            [predicateArray addObject:containsIdValue];
+        }
+        NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicateArray];
+
+        NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_fetchedResultsController.managedObjectContext usingPredicate:predicate];
+
+        CGFloat sum = 0.0f;
+        for (NSDictionary *sumDict in results) {
+            sum += [sumDict[@"sum"]floatValue];
+        }
+
+        return [NSString stringWithFormat:@"%@: %@", NSLocalizedString(@"Categories", @"Categories title for header in SearchVC"), [NSString formatAmount:@(sum)]];
     }
     return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (![self isSearchPredicatesIsNil] && section == 1) {
-        return self.tableView.sectionHeaderHeight;
+    if (![self isSearchPredicatesIsNil]) {
+        if (section == 0 && _filteredCategories.count == 0) {
+            return 0.0f;
+        } else if ([[self sumOfExpensesWhenSearchProceed]floatValue] == 0.0f) {
+            return 0.0f;
+        }
+        return self.tableView.sectionHeaderHeight + 16.0f;
     }
     return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![self isSearchPredicatesIsNil] && indexPath.section == 0) {
+        return 44.0f;
+    } else {
+        return 60.0f;
+    }
 }
 
 #pragma mark UITableViewDelegate
@@ -361,6 +493,28 @@
     if (![self isSearchPredicatesIsNil]) {
         UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
         [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:17]];
+        footer.textLabel.textAlignment = NSTextAlignmentLeft;
+
+        NSString *text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];
+        if (text) {
+            NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc]initWithString:text];
+
+            NSRange range = [text rangeOfString:@":"];
+            if (range.location != NSNotFound) {
+                NSInteger length = text.length;
+                range.location += 1;
+                range.length = length - range.location;
+
+                [attributedText addAttribute:NSForegroundColorAttributeName value:UIColorFromRGB(0xFF3333) range:range];
+            }
+            footer.textLabel.attributedText = attributedText;
+
+            footer.textLabel.textAlignment = NSTextAlignmentCenter;
+
+            UIView *backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0.0f,0.0f,CGRectGetWidth(self.view.bounds),[tableView.delegate tableView:tableView heightForHeaderInSection:section])];
+            backgroundView.backgroundColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.85f];
+            footer.backgroundView = backgroundView;
+        }
     }
 }
 
