@@ -19,6 +19,7 @@
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentYear.h"
+#import "NSString+FormatDate.h"
 
 static NSString * const kSelectStartAndEndDatesCellReuseIdentifier = @"SelectStartAndEndDatesCell";
 static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
@@ -46,15 +47,6 @@ static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
     [self performFetch];
 }
 
-- (NSString *)formatDate:(NSDate *)date {
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [NSDateFormatter new];
-        [formatter setDateFormat:@"d.MM"];
-    }
-    return [formatter stringFromDate:date];
-}
-
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -75,25 +67,25 @@ static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
         if (indexPath.row == 0) {
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"Start date", @"Start date, selected category view controller");
-            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+            cell.rightDetailLabel.text = [NSString formatDate:[NSDate date]];
 
             return cell;
         } else if (indexPath.row == 1 && !_datePickerVisible) {
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
-            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+            cell.rightDetailLabel.text = [NSString formatDate:[NSDate date]];
 
             return cell;
         } else if (indexPath.row == 1 && _datePickerVisible && _selectedIndexPath.row == 1) {
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
-            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+            cell.rightDetailLabel.text = [NSString formatDate:[NSDate date]];
 
             return cell;
         } else if (indexPath.row == 2 && _datePickerVisible && _selectedIndexPath.row == 0) {
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
-            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+            cell.rightDetailLabel.text = [NSString formatDate:[NSDate date]];
 
             return cell;
         } else {
@@ -132,7 +124,7 @@ static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
         cell.leftLabel.text = expense.descriptionOfExpense;
     }
 
-    cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount],[self formatDate:expense.dateOfExpense]];
+    cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount],[NSString formatDate:expense.dateOfExpense]];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {

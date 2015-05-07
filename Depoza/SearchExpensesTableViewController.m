@@ -20,6 +20,7 @@
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+IsDateBetweenCurrentYear.h"
+#import "NSString+FormatDate.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -80,39 +81,6 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     if ([self isEditing]) {
         [self setEditing:NO];
     }
-}
-
-#pragma mark - Helpers -
-
-- (NSString *)formatDate:(NSDate *)date {
-    static NSDateFormatter *defaultFormatter = nil;
-    static NSDateFormatter *currentYearFormatter = nil;
-
-    if (defaultFormatter == nil || currentYearFormatter == nil) {
-        defaultFormatter = [NSDateFormatter new];
-        [defaultFormatter setDateFormat:@"d MMM. YYYY"];
-
-        currentYearFormatter = [NSDateFormatter new];
-        [currentYearFormatter setDateFormat:@"d MMM."];
-    }
-
-    NSString *formatDate = nil;
-    if ([[NSDate date]isDateBetweenCurrentYear]) {
-        formatDate = [currentYearFormatter stringFromDate:date];
-    } else {
-        formatDate = [defaultFormatter stringFromDate:date];
-    }
-
-    NSInteger countForDot = [[formatDate componentsSeparatedByString:@"."]count] - 1;
-    if (countForDot > 1) {
-        NSRange range = [formatDate rangeOfString:@"."];
-        NSParameterAssert(range.location != NSNotFound);
-        range.length = 1;
-
-        formatDate = [formatDate stringByReplacingCharactersInRange:range withString:@""];
-    }
-
-    return formatDate;
 }
 
 #pragma mark - Search -
@@ -405,7 +373,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     cell.categoryTitleLabel.text = expense.category.title;
     cell.descriptionLabel.text = (expense.descriptionOfExpense.length == 0 ? NSLocalizedString(@"(No Description)", @"Found expense cell no descrition text") : expense.descriptionOfExpense);
     cell.amountLabel.text = [NSString formatAmount:expense.amount];
-    cell.dateLabel.text = [self formatDate:expense.dateOfExpense];
+    cell.dateLabel.text = [NSString formatDate:expense.dateOfExpense];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

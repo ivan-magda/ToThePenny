@@ -90,6 +90,7 @@
 		50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */; };
 		50BB50431AC6391C001AE915 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BB50421AC6391C001AE915 /* CategoryData.m */; };
 		50BB50441AC6391C001AE915 /* CategoryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BB50421AC6391C001AE915 /* CategoryData.m */; };
+		50BF8D421AFB726C002387EF /* NSString+FormatDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50BF8D411AFB726C002387EF /* NSString+FormatDate.m */; };
 		50C068581AFA049900BCC3EA /* FoundExpenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C068571AFA049900BCC3EA /* FoundExpenseCell.m */; };
 		50C0685B1AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50C0685A1AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.m */; };
 		50C8A3641AC8BA2B000347D3 /* Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C8A3621AC8BA2B000347D3 /* Search.png */; };
@@ -266,6 +267,8 @@
 		50BA1B9A1A960FB10091644D /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
 		50BB50411AC6391C001AE915 /* CategoryData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryData.h; sourceTree = "<group>"; };
 		50BB50421AC6391C001AE915 /* CategoryData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryData.m; sourceTree = "<group>"; };
+		50BF8D401AFB726C002387EF /* NSString+FormatDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FormatDate.h"; sourceTree = "<group>"; };
+		50BF8D411AFB726C002387EF /* NSString+FormatDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FormatDate.m"; sourceTree = "<group>"; };
 		50C068561AFA049900BCC3EA /* FoundExpenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FoundExpenseCell.h; sourceTree = "<group>"; };
 		50C068571AFA049900BCC3EA /* FoundExpenseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FoundExpenseCell.m; sourceTree = "<group>"; };
 		50C068591AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentYear.h"; sourceTree = "<group>"; };
@@ -472,6 +475,8 @@
 				50CD56511AD401EA0093CE4F /* NSURL+InternalExtensions.m */,
 				5064C6D41AC5491200979BF0 /* NSString+FormatAmount.h */,
 				5064C6D51AC5491200979BF0 /* NSString+FormatAmount.m */,
+				50BF8D401AFB726C002387EF /* NSString+FormatDate.h */,
+				50BF8D411AFB726C002387EF /* NSString+FormatDate.m */,
 				5064C6D81AC5491B00979BF0 /* NSDate */,
 			);
 			name = Categories;
@@ -1108,6 +1113,7 @@
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
 				509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
+				50BF8D421AFB726C002387EF /* NSString+FormatDate.m in Sources */,
 				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
 				50206E9C1AC8E097001A017E /* CategoryIconsCollectionViewController.m in Sources */,
 				5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
