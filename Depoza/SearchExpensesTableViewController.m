@@ -283,6 +283,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
         CategoriesInfo *category = [CategoriesInfo categoryInfoFromCategoryData:[self filteredCategoryForIndexPath:indexPath]];
         controller.selectedCategory = category;
         controller.timePeriod = [NSDate date];
+        controller.timePeriodFromMinAndMaxDates = YES;
 
         _isSearchBarFirstResponder = YES;
     }

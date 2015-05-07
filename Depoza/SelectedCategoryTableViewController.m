@@ -60,14 +60,26 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
     _datePickerVisible = NO;
 
-    _startDate = [NSDate date];
-    _endDate = [NSDate date];
+    [self configureTimePeriod];
 
     [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
     [self performFetch];
 }
 
 #pragma mark - Helpers -
+
+- (void)configureTimePeriod {
+    if (self.timePeriodFromMinAndMaxDates) {
+        _minimumDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
+        _maximumDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
+    } else {
+        NSArray *dates = [_timePeriod getFirstAndLastDaysInTheCurrentMonth];
+        _minimumDate = [dates firstObject];
+        _maximumDate = [dates lastObject];
+    }
+    _startDate = _minimumDate;
+    _endDate = _maximumDate;
+}
 
 - (NSString *)formatDateForDateCell:(NSDate *)date {
     static NSDateFormatter *dateFormatter = nil;
@@ -127,10 +139,15 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
                 datePicker.tag = 110;
                 [cell.contentView addSubview:datePicker];
 
-                [datePicker setDate:[NSDate date] animated:NO];
+                [datePicker setMinimumDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
+                [datePicker setMaximumDate:[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
 
                 [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
             }
+            UIDatePicker *datePicker = (UIDatePicker *)[cell viewWithTag:110];
+            NSDate *dateToSet = (_selectedIndexPath.row == DateCellTypeStartDateCell ? _startDate : _endDate);
+            [datePicker setDate:dateToSet animated:NO];
+
             return cell;
         }
     } else {
@@ -253,6 +270,12 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
         _selectedIndexPath = nil;
 
         [self reloadFirstSection];
+
+        [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
+        self.fetchedResultsController.fetchRequest.predicate = [self compoundPredicateForFetchedResultsController];
+        [self performFetch];
+
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
@@ -320,23 +343,17 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     return [NSIndexPath indexPathForRow:indexPath.row inSection:1];
 }
 
-- (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
-    }
-
-    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
-
+- (NSPredicate *)compoundPredicateForFetchedResultsController {
     NSNumber *idValue = self.selectedCategory.idValue;
-    NSArray *dates = [_timePeriod getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *dates = @[_startDate, _endDate];
 
     NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(categoryId))];
     NSExpression *idToFind  = [NSExpression expressionForConstantValue:idValue];
     NSPredicate *idPredicate  = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath
-                                                                 rightExpression:idToFind
-                                                                        modifier:NSDirectPredicateModifier
-                                                                            type:NSEqualToPredicateOperatorType
-                                                                         options:0];
+                                                                   rightExpression:idToFind
+                                                                          modifier:NSDirectPredicateModifier
+                                                                              type:NSEqualToPredicateOperatorType
+                                                                           options:0];
 
     NSExpression *dateExp    = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(dateOfExpense))];
     NSExpression *dateStart  = [NSExpression expressionForConstantValue:[dates firstObject]];
@@ -344,14 +361,21 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     NSExpression *expression = [NSExpression expressionForAggregate:@[dateStart, dateEnd]];
 
     NSPredicate *datePredicate = [NSComparisonPredicate predicateWithLeftExpression:dateExp
-                                                                rightExpression:expression
-                                                                       modifier:NSDirectPredicateModifier
-                                                                           type:NSBetweenPredicateOperatorType
-                                                                        options:0];
+                                                                    rightExpression:expression
+                                                                           modifier:NSDirectPredicateModifier
+                                                                               type:NSBetweenPredicateOperatorType
+                                                                            options:0];
 
-    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[idPredicate, datePredicate]];
+    return [NSCompoundPredicate andPredicateWithSubpredicates:@[idPredicate, datePredicate]];
+}
 
-    fetchRequest.predicate = predicate;
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    fetchRequest.predicate = [self compoundPredicateForFetchedResultsController];
 
         // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];

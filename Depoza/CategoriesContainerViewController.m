@@ -52,6 +52,7 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
         }
         controller.selectedCategory = category;
         controller.timePeriod = _timePeriod;
+        controller.timePeriodFromMinAndMaxDates = NO;
     }
 }
 

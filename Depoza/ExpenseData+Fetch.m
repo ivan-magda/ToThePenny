@@ -106,8 +106,12 @@
     return count;
 }
 
-+ (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
++ (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context andCategoryId:(NSNumber *)categoryId {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    if (categoryId) {
+        request.predicate = [ExpenseData categoryIdPredicateFromCategoryIdValue:categoryId];
+    }
 
     [request setResultType:NSDictionaryResultType];
 
@@ -140,8 +144,12 @@
     return minDate;
 }
 
-+ (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
++ (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context andCategoryId:(NSNumber *)categoryId {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    if (categoryId) {
+        request.predicate = [ExpenseData categoryIdPredicateFromCategoryIdValue:categoryId];
+    }
 
     [request setResultType:NSDictionaryResultType];
 
@@ -172,6 +180,21 @@
         maxDate = [[objects objectAtIndex:0] valueForKey:@"maxDate"];
     }
     return maxDate;
+}
+
++ (NSPredicate *)categoryIdPredicateFromCategoryIdValue:(NSNumber *)categoryId {
+    NSExpression *categoryIdKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(categoryId))];
+    NSExpression *idValue = [NSExpression expressionForConstantValue:categoryId];
+    return [NSComparisonPredicate predicateWithLeftExpression:categoryIdKeyPath rightExpression:idValue modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:0];
+}
+
+
++ (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
+    return [ExpenseData oldestDateExpenseInManagedObjectContext:context andCategoryId:nil];
+}
+
++ (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
+    return [ExpenseData mostRecentDateExpenseInManagedObjectContext:context andCategoryId:nil];
 }
 
 + (NSArray *)getEachMonthWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context {
