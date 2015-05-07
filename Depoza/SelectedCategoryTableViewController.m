@@ -18,6 +18,10 @@
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+#import "NSDate+IsDateBetweenCurrentYear.h"
+
+static NSString * const kSelectStartAndEndDatesCellReuseIdentifier = @"SelectStartAndEndDatesCell";
+static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
 
 @interface SelectedCategoryTableViewController () <NSFetchedResultsControllerDelegate>
 
@@ -25,7 +29,10 @@
 
 @end
 
-@implementation SelectedCategoryTableViewController
+@implementation SelectedCategoryTableViewController {
+    BOOL _datePickerVisible;
+    NSIndexPath *_selectedIndexPath;
+}
 
 
 - (void)viewDidLoad {
@@ -33,30 +40,88 @@
 
     self.title = _selectedCategory.title;
 
-    [NSFetchedResultsController deleteCacheWithName:@"Selected"];
+    _datePickerVisible = NO;
 
+    [NSFetchedResultsController deleteCacheWithName:@"Selected"];
     [self performFetch];
 }
 
-- (NSString *)formatDate:(NSDate *)theDate {
+- (NSString *)formatDate:(NSDate *)date {
     static NSDateFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [NSDateFormatter new];
         [formatter setDateFormat:@"d.MM"];
     }
-    return [formatter stringFromDate:theDate];
+    return [formatter stringFromDate:date];
 }
 
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSUInteger numberOfSections = [[self.fetchedResultsController sections]count];
-    return numberOfSections;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
-    return [sectionInfo numberOfObjects];
+    if (section == 0) {
+        return (_datePickerVisible ? 3 : 2);
+    } else {
+        id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:0];
+        return [sectionInfo numberOfObjects];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
+            cell.leftLabel.text = NSLocalizedString(@"Start date", @"Start date, selected category view controller");
+            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+
+            return cell;
+        } else if (indexPath.row == 1 && !_datePickerVisible) {
+            CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
+            cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
+            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+
+            return cell;
+        } else if (indexPath.row == 1 && _datePickerVisible && _selectedIndexPath.row == 1) {
+            CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
+            cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
+            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+
+            return cell;
+        } else if (indexPath.row == 2 && _datePickerVisible && _selectedIndexPath.row == 0) {
+            CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
+            cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
+            cell.rightDetailLabel.text = [self formatDate:[NSDate date]];
+
+            return cell;
+        } else {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DatePickerCell"];
+
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DatePickerCell"];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+
+                UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 216.0f)];
+                datePicker.tag = 110;
+                [cell.contentView addSubview:datePicker];
+
+                [datePicker setDate:[NSDate date] animated:NO];
+
+                [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+            }
+
+            return cell;
+        }
+    } else {
+        CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kCustomRightDetailCellReuseIdentifier];
+
+        NSIndexPath *correctIndexPath = [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+        [self configureCell:cell atIndexPath:correctIndexPath];
+        
+        return cell;
+    }
 }
 
 - (void)configureCell:(CustomRightDetailCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -68,13 +133,6 @@
     }
 
     cell.rightDetailLabel.text = [NSString stringWithFormat:@"%@, %@", [NSString formatAmount:expense.amount],[self formatDate:expense.dateOfExpense]];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:@"SelectedCell"];
-    [self configureCell:cell atIndexPath:indexPath];
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -93,8 +151,77 @@
 
 #pragma mark - UITableViewDelegate -
 
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && _datePickerVisible) {
+        if (indexPath.row == 1 && _selectedIndexPath.row == 0) {
+            return nil;
+        } else if (indexPath.row == 2 && _selectedIndexPath.row == 1) {
+            return nil;
+        }
+    }
+    return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
+    _selectedIndexPath = indexPath;
+
+    if (indexPath.section == 0) {
+        if (!_datePickerVisible) {
+            [self showDatePicker];
+        } else {
+            [self hideDatePicker];
+        }
+        return;
+    }
+        // Also hide the date picker when tapped on any other row.
+    [self hideDatePicker];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (_datePickerVisible && indexPath.section == 0) {
+        if (indexPath.row == 1 && _selectedIndexPath.row == 0) {
+            return 217.0f;
+        } else if (indexPath.row == 2 && _selectedIndexPath.row == 1) {
+            return 217.0f;
+        }
+    }
+    return 44.0f;
+}
+
+#pragma mark - DatePicker -
+
+- (void)showDatePicker {
+    _datePickerVisible = YES;
+
+    UIColor *tintColor = self.view.tintColor;
+    CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+    cell.rightDetailLabel.textColor = tintColor;
+
+
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+- (void)hideDatePicker {
+    if (_datePickerVisible) {
+        _datePickerVisible = NO;
+        _selectedIndexPath = nil;
+
+        CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:_selectedIndexPath];
+        cell.rightDetailLabel.textColor = [UIColor lightGrayColor];
+
+
+        [self.tableView beginUpdates];
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    }
+}
+
+- (void)dateChanged:(UIDatePicker *)datePicker {
+
 }
 
 #pragma mark - Navigation -

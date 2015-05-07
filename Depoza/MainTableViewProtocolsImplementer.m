@@ -20,7 +20,18 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+typedef NS_ENUM(NSInteger, ScrollDirection) {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+};
+
 @interface MainTableViewProtocolsImplementer () <UIScrollViewDelegate>
+
+@property (nonatomic, assign) CGFloat lastContentOffset;
 
 @end
 
@@ -185,6 +196,20 @@
     } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
         scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0.0f, 0.0f, 0.0f);
     }
+
+    ScrollDirection scrollDirection = ScrollDirectionNone;
+
+    if (_lastContentOffset > scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionDown;
+    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionUp;
+    }
+
+    self.lastContentOffset = scrollView.contentOffset.y;
+
+    if (scrollDirection == ScrollDirectionDown && scrollView.contentOffset.y == sectionHeaderHeight) {
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:YES];
+    }
 }
 
 #pragma mark NSFetchedResultsControllerDelegate
@@ -200,21 +225,12 @@
 
     switch(type) {
         case NSFetchedResultsChangeInsert: {
-//            if (self.fetchedResultsController.fetchedObjects.count == 1 &&
-//                [tableView visibleCells].count == 1) {
-//                [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-//                return;
-//            }
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
         }
 
         case NSFetchedResultsChangeDelete: {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
-//            if (self.fetchedResultsController.fetchedObjects.count == 0) {
-//                [tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-//            }
             break;
         }
 

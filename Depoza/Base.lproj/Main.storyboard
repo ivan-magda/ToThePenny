@@ -1211,11 +1211,43 @@
         <scene sceneID="TYm-fA-R9y">
             <objects>
                 <tableViewController id="OhM-zH-INc" customClass="SelectedCategoryTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sEb-8t-xKX">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sEb-8t-xKX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
+                            <tableViewCell tag="232" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectStartAndEndDatesCell" id="GhX-mH-TQB" customClass="CustomRightDetailCell">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GhX-mH-TQB" id="ArE-Uq-aT8">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start/End date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GL-8S-cde">
+                                            <rect key="frame" x="15" y="11" width="107" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTI-mh-4A3">
+                                            <rect key="frame" x="252" y="11" width="35" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="centerY" secondItem="7GL-8S-cde" secondAttribute="centerY" id="1fR-Ye-dJI"/>
+                                        <constraint firstAttribute="trailing" secondItem="tTI-mh-4A3" secondAttribute="trailing" constant="33" id="8dj-to-kwk"/>
+                                        <constraint firstAttribute="centerY" secondItem="tTI-mh-4A3" secondAttribute="centerY" id="suL-Lz-SBw"/>
+                                        <constraint firstItem="tTI-mh-4A3" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="7GL-8S-cde" secondAttribute="trailing" constant="8" symbolic="YES" id="v7q-18-oUu"/>
+                                        <constraint firstItem="7GL-8S-cde" firstAttribute="leading" secondItem="ArE-Uq-aT8" secondAttribute="leading" constant="15" id="zPq-uD-YuA"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="leftLabel" destination="7GL-8S-cde" id="jyX-oJ-cQE"/>
+                                    <outlet property="rightDetailLabel" destination="tTI-mh-4A3" id="2oZ-zA-1gY"/>
+                                </connections>
+                            </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectedCell" id="c8P-ap-GkC" customClass="CustomRightDetailCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
@@ -1297,9 +1329,9 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="bBY-Me-af6"/>
-        <segue reference="rRc-1T-lWX"/>
-        <segue reference="xQY-w0-KW7"/>
         <segue reference="eiF-x1-yp8"/>
+        <segue reference="xQY-w0-KW7"/>
+        <segue reference="tqp-JB-Yta"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>
