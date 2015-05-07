@@ -278,11 +278,12 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     if (([identifier isEqualToString:@"MoreInfo"] || [identifier isEqualToString:@"CategorySelected"]) &&
         [self isEditing]) {
         return NO;
-    } else if (([identifier isEqualToString:@"MoreInfo"] || [identifier isEqualToString:@"CategorySelected"])
-               && ![self isSearchPredicatesIsNil]) {
+    } else if ([identifier isEqualToString:@"MoreInfo"]) {
+        return YES;
+    } else if ([identifier isEqualToString:@"CategorySelected"] && ![self isNothingFound]) {
         return YES;
     }
-    return YES;
+    return NO;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
