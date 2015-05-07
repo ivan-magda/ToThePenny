@@ -23,7 +23,16 @@ NSString * const DetailExpenseTableViewControllerDidUpdateNotification = @"Detai
 
 static const CGFloat kExtendedTrailingSpaceConstantValue = 33.0f;
 
-@interface DetailExpenseTableViewController () <UITextFieldDelegate>
+typedef NS_ENUM(NSInteger, ScrollDirection) {
+    ScrollDirectionNone,
+    ScrollDirectionRight,
+    ScrollDirectionLeft,
+    ScrollDirectionUp,
+    ScrollDirectionDown,
+    ScrollDirectionCrazy,
+};
+
+@interface DetailExpenseTableViewController () <UITextFieldDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -34,6 +43,8 @@ static const CGFloat kExtendedTrailingSpaceConstantValue = 33.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dateLabelTrailingSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *categoryLabelTrailingSpace;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelTrailingSpace;
+
+@property (nonatomic, assign) CGFloat lastContentOffset;
 
 @end
 
@@ -461,6 +472,25 @@ static const CGFloat kExtendedTrailingSpaceConstantValue = 33.0f;
 
     [self updateText];
     [self setDetailMode];
+}
+
+#pragma mark - UIScrollViewDelegate -
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    ScrollDirection scrollDirection = ScrollDirectionNone;
+
+    if (_lastContentOffset > scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionDown;
+    } else if (self.lastContentOffset < scrollView.contentOffset.y) {
+        scrollDirection = ScrollDirectionUp;
+    }
+
+    self.lastContentOffset = scrollView.contentOffset.y;
+
+    if (_isEditMode && scrollDirection == ScrollDirectionDown && _datePickerVisible) {
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:NO];
+        [self hideDatePicker];
+    }
 }
 
 @end
