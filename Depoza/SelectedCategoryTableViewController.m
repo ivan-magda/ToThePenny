@@ -183,8 +183,9 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
         return NSLocalizedString(@"Period of the transactions.", @"SelectedCategoryVC title for header in section");
+    } else {
+        return NSLocalizedString(@"Founded transactions.", @"SelectedCategoryVC title for header in section");
     }
-    return nil;
 }
 
 #pragma mark - UITableViewDelegate -
@@ -302,7 +303,8 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
-            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            NSIndexPath *correctIndexPath = [self correctIndexPathForFetchedResultsControllerFromIndexPath:indexPath];
+            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:correctIndexPath];
             controller.expenseToShow = expense;
         }
     }
