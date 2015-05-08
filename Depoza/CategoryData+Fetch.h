@@ -32,4 +32,6 @@
 
 + (NSArray *)sumOfExpensesInManagedObjectContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate;
 
++ (NSUInteger)countForFrequencyUseInManagedObjectContext:(NSManagedObjectContext *)context betweenDates:(NSArray *)dates andWithCategoryIdValue:(NSNumber *)categoryId;
+
 @end

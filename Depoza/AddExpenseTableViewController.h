@@ -3,8 +3,9 @@
 
 @interface AddExpenseTableViewController : UITableViewController
 
-@property (nonatomic, weak) id<AddExpenseTableViewControllerDelegate> delegate;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, copy) NSArray *categoriesInfo;
+
+@property (nonatomic, weak) id<AddExpenseTableViewControllerDelegate> delegate;
 
 @end

@@ -5,11 +5,11 @@
     //CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
-#import "CategoryData.h"
 #import "CategoryData+Fetch.h"
 #import "CategoriesInfo.h"
     //Categories
 #import "NSString+FormatAmount.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
     //KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
@@ -47,6 +47,8 @@ static const CGFloat kCustomTableViewCellHeight = 54.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:_categoriesInfo];
+
     [self createDoneBarButton];
 
     _isDelegateNotified = NO;
@@ -68,6 +70,34 @@ static const CGFloat kCustomTableViewCellHeight = 54.0f;
 
         _isDelegateNotified = YES;
     }
+}
+
+#pragma mark - SortCategories -
+
+- (NSArray *)sortedCategoriesFromCategoriesInfo:(NSArray *)categories {
+    NSSortDescriptor *alphabeticSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES selector:@selector(caseInsensitiveCompare:)];
+
+    NSArray *sortedArray = [_categoriesInfo sortedArrayUsingDescriptors:@[alphabeticSort]];
+
+        //Sort by frequency of use
+    NSArray *dates = [[NSDate date]getFirstAndLastDaysInTheCurrentMonth];
+    __weak NSManagedObjectContext *context = _managedObjectContext;
+
+    NSSortDescriptor *sortByFrequencyUse = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO comparator:^NSComparisonResult(CategoriesInfo *obj1, CategoriesInfo *obj2) {
+
+        NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:context betweenDates:dates andWithCategoryIdValue:obj1.idValue];
+        NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:context betweenDates:dates andWithCategoryIdValue:obj2.idValue];
+
+        if (countForCategory1 < countForCategory2) {
+            return NSOrderedAscending;
+        } else if (countForCategory1 > countForCategory2) {
+            return NSOrderedDescending;
+        } else {
+            return NSOrderedSame;
+        }
+    }];
+
+    return [sortedArray sortedArrayUsingDescriptors:@[sortByFrequencyUse]];
 }
 
 #pragma mark - UITableViewDataSource -

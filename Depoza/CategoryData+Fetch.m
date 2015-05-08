@@ -10,6 +10,7 @@
 #import "CategoryData+Fetch.h"
 #import "Persistence.h"
 #import "CategoriesInfo.h"
+#import "ExpenseData+Fetch.h"
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 
@@ -220,6 +221,27 @@
     }
 
     return results;
+}
+
++ (NSUInteger)countForFrequencyUseInManagedObjectContext:(NSManagedObjectContext *)context betweenDates:(NSArray *)dates andWithCategoryIdValue:(NSNumber *)categoryId {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+
+    NSPredicate *betweenDatesPredicate = [ExpenseData compoundPredicateBetweenDates:dates];
+
+    NSExpression *idKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(categoryId))];
+    NSExpression *idValue = [NSExpression expressionForConstantValue:categoryId];
+    NSPredicate *categoryIdPredicate = [NSComparisonPredicate predicateWithLeftExpression:idKeyPath rightExpression:idValue modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:0];
+
+    NSPredicate *predicate = [NSCompoundPredicate andPredicateWithSubpredicates:@[categoryIdPredicate, betweenDatesPredicate]];
+    fetchRequest.predicate = predicate;
+
+    NSError *error = nil;
+    NSUInteger result = [context countForFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+    }
+
+    return result;
 }
 
 @end
