@@ -81,16 +81,6 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     _endDate = _maximumDate;
 }
 
-- (NSString *)formatDateForDateCell:(NSDate *)date {
-    static NSDateFormatter *dateFormatter = nil;
-    if (dateFormatter == nil) {
-        dateFormatter = [NSDateFormatter new];
-        dateFormatter.timeZone = [NSTimeZone localTimeZone];
-        dateFormatter.dateFormat = @" HH:mm";
-    }
-    return [NSString stringWithFormat:@"%@%@", [NSString formatDate:date], [dateFormatter stringFromDate:date]];
-}
-
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -112,7 +102,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
                 //Start date cell
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"Start date", @"Start date, selected category view controller");
-            cell.rightDetailLabel.text = [self formatDateForDateCell:_startDate];
+            cell.rightDetailLabel.text = [NSString formatDate:_startDate];
 
             return cell;
         } else if (indexPath.row == DateCellTypeEndDateCell && !_datePickerVisible) {
@@ -137,6 +127,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
                 UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetHeight(self.view.bounds), 216.0f)];
                 datePicker.tag = 110;
+                datePicker.datePickerMode = UIDatePickerModeDate;
                 [cell.contentView addSubview:datePicker];
 
                 [datePicker setMinimumDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
@@ -177,7 +168,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (CustomRightDetailCell *)getConfiguratedEndDateCell {
     CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
     cell.leftLabel.text = NSLocalizedString(@"End date", @"End date, selected category view controller");
-    cell.rightDetailLabel.text = [self formatDateForDateCell:_endDate];
+    cell.rightDetailLabel.text = [NSString formatDate:_endDate];
 
     return cell;
 }
@@ -201,7 +192,11 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     if (section == 0) {
         return NSLocalizedString(@"Period of the transactions.", @"SelectedCategoryVC title for header in section");
     } else {
-        return NSLocalizedString(@"Founded transactions.", @"SelectedCategoryVC title for header in section");
+        if (_fetchedResultsController.fetchedObjects.count > 0) {
+            return NSLocalizedString(@"Founded transactions.", @"SelectedCategoryVC title for header in section");
+        } else {
+            return NSLocalizedString(@"Nothing found.", @"'Nothing found' title for header in section");
+        }
     }
 }
 
@@ -307,7 +302,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 - (void)updateDateStringOnDateCellAtIndexPath:(NSIndexPath *)indexPath withDate:(NSDate *)date {
     CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.rightDetailLabel.text = [self formatDateForDateCell:date];
+    cell.rightDetailLabel.text = [NSString formatDate:date];
 }
 
 - (void)reloadFirstSection {
