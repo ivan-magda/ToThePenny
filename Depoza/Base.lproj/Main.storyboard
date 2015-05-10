@@ -300,7 +300,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="9oH-d4-e2k" imageView="QLc-LB-xH5" rowHeight="54" style="IBUITableViewCellStyleDefault" id="Fxh-JW-hJ0" userLabel="CategoryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" textLabel="9oH-d4-e2k" style="IBUITableViewCellStyleDefault" id="Fxh-JW-hJ0" userLabel="CategoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fxh-JW-hJ0" id="d5B-JR-GYu">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -311,9 +311,6 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Airplane" id="QLc-LB-xH5">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </imageView>
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -338,20 +335,13 @@
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedCategoryCell" rowHeight="54" id="Xh0-cf-YjO" userLabel="SelectedCategoryCell" customClass="SelectedCategoryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectedCategoryCell" id="Xh0-cf-YjO" userLabel="SelectedCategoryCell" customClass="SelectedCategoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Xh0-cf-YjO" id="uBl-Z0-YwN">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Airplane" translatesAutoresizingMaskIntoConstraints="NO" id="zUB-8U-sci">
-                                            <rect key="frame" x="15" y="6" width="42" height="42"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="42" id="N7S-c4-AM2"/>
-                                                <constraint firstAttribute="height" constant="42" id="WWa-Jj-kNQ"/>
-                                            </constraints>
-                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAE-Ji-58i">
-                                            <rect key="frame" x="65" y="16" width="67" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="67" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="3c2-HQ-fEa"/>
                                             </constraints>
@@ -360,7 +350,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="X" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFT-6T-0oe">
-                                            <rect key="frame" x="290" y="16" width="10" height="21"/>
+                                            <rect key="frame" x="290" y="12" width="10" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="5dU-S8-Wlc"/>
                                             </constraints>
@@ -371,16 +361,13 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="XFT-6T-0oe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rAE-Ji-58i" secondAttribute="trailing" constant="8" symbolic="YES" id="226-gJ-pLz"/>
-                                        <constraint firstAttribute="centerY" secondItem="zUB-8U-sci" secondAttribute="centerY" id="8FM-rp-e25"/>
-                                        <constraint firstItem="zUB-8U-sci" firstAttribute="leading" secondItem="uBl-Z0-YwN" secondAttribute="leading" constant="15" id="MZm-IS-bYd"/>
                                         <constraint firstAttribute="trailing" secondItem="XFT-6T-0oe" secondAttribute="trailing" constant="20" symbolic="YES" id="OwB-cl-Dle"/>
+                                        <constraint firstItem="rAE-Ji-58i" firstAttribute="leading" secondItem="uBl-Z0-YwN" secondAttribute="leading" constant="15" id="SxG-HT-I83"/>
                                         <constraint firstAttribute="centerY" secondItem="rAE-Ji-58i" secondAttribute="centerY" id="hGV-KO-tNk"/>
                                         <constraint firstAttribute="centerY" secondItem="XFT-6T-0oe" secondAttribute="centerY" id="qFb-ga-U5h"/>
-                                        <constraint firstItem="rAE-Ji-58i" firstAttribute="leading" secondItem="zUB-8U-sci" secondAttribute="trailing" constant="8" id="rlh-SL-C7n"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="categoryIcon" destination="zUB-8U-sci" id="QNX-gz-Xlk"/>
                                     <outlet property="categoryTitle" destination="rAE-Ji-58i" id="XQr-gU-Ut8"/>
                                 </connections>
                             </tableViewCell>

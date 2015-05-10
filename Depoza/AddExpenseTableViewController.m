@@ -22,7 +22,7 @@ static const NSInteger kExpenseTextFieldTag = 555;
 static const NSInteger kDescriptionTextFieldTag = 777;
 
 static const CGFloat kExpenseTextFieldHeight = 64.0f;
-static const CGFloat kCustomTableViewCellHeight = 54.0f;
+static const CGFloat kCustomTableViewCellHeight = 44.0f;
 
 @interface AddExpenseTableViewController () <UITextFieldDelegate>
 
@@ -167,13 +167,11 @@ static const CGFloat kCustomTableViewCellHeight = 54.0f;
             CategoriesInfo *category = _categoriesInfo[indexPath.row];
 
             cell.textLabel.text = category.title;
-            cell.imageView.image = [UIImage imageNamed:category.iconName];
         } else {
             CategoriesInfo *category = _categoriesInfo[_selectedRow.row];
 
             SelectedCategoryCell *selectedCell = (SelectedCategoryCell *)cell;
             selectedCell.categoryTitle.text = category.title;
-            selectedCell.categoryIcon.image = [UIImage imageNamed:category.iconName];
         }
     }
 }
