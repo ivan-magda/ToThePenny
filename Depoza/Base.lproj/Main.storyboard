@@ -371,6 +371,28 @@
                                     <outlet property="categoryTitle" destination="rAE-Ji-58i" id="XQr-gU-Ut8"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchFoarCategoryCell" id="leh-a8-TCo" userLabel="SearchForCategory" customClass="SearchForCategoryCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="leh-a8-TCo" id="DMb-8n-jAB">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <searchBar tag="240" contentMode="redraw" searchBarStyle="minimal" placeholder="Search for category" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-EH-g14">
+                                            <rect key="frame" x="8" y="0.0" width="312" height="44"/>
+                                            <color key="barTintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </searchBar>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ALc-EH-g14" firstAttribute="top" secondItem="DMb-8n-jAB" secondAttribute="top" id="X53-xw-aYP"/>
+                                        <constraint firstAttribute="trailing" secondItem="ALc-EH-g14" secondAttribute="trailing" id="ZJz-HB-Ddt"/>
+                                        <constraint firstAttribute="bottom" secondItem="ALc-EH-g14" secondAttribute="bottom" id="ZKV-eA-JCd"/>
+                                        <constraint firstItem="ALc-EH-g14" firstAttribute="leading" secondItem="DMb-8n-jAB" secondAttribute="leading" constant="8" id="jFn-9l-THr"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="searchBar" destination="ALc-EH-g14" id="2gv-OM-VD7"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="G42-sP-2k6" id="8nU-Ek-tfV"/>

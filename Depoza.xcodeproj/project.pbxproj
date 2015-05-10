@@ -35,6 +35,8 @@
 		5009809E1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5009809D1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m */; };
 		500980A21AE3908B007DFCEA /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
 		500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */; };
+		5011BBCC1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */; };
+		5011BBCF1AFFA037005E9EDF /* SearchForCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -183,6 +185,10 @@
 		500980A31AE4B2DC007DFCEA /* CategoriesContainerViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesContainerViewControllerDelegate.h; sourceTree = "<group>"; };
 		500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
+		5011BBCA1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualDate.h"; sourceTree = "<group>"; };
+		5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDatesWithEqualDate.m"; sourceTree = "<group>"; };
+		5011BBCD1AFFA037005E9EDF /* SearchForCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchForCategoryCell.h; sourceTree = "<group>"; };
+		5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchForCategoryCell.m; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -539,6 +545,8 @@
 				5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */,
 				507BF2B31AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.h */,
 				507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */,
+				5011BBCA1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.h */,
+				5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */,
 				50E021F91AD942F5008489DA /* NSDate+TomorrowDate.h */,
 				50E021FA1AD942F5008489DA /* NSDate+TomorrowDate.m */,
 				50E021FC1AD944DF008489DA /* NSDate+NextMonthFirstDate.h */,
@@ -792,6 +800,8 @@
 				500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */,
 				50C068561AFA049900BCC3EA /* FoundExpenseCell.h */,
 				50C068571AFA049900BCC3EA /* FoundExpenseCell.m */,
+				5011BBCD1AFFA037005E9EDF /* SearchForCategoryCell.h */,
+				5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1104,6 +1114,7 @@
 				50E021F81AD90838008489DA /* GradientView.m in Sources */,
 				504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */,
 				50B4DE471AF1E5C2008CCC45 /* SelectedCategoryCell.m in Sources */,
+				5011BBCF1AFFA037005E9EDF /* SearchForCategoryCell.m in Sources */,
 				50CD56521AD401EA0093CE4F /* NSURL+InternalExtensions.m in Sources */,
 				50FDE3B11A9B5A8D007C9FC0 /* CategoriesContainerViewController.m in Sources */,
 				50E021AD1AD8BDAF008489DA /* TitleViewButton.m in Sources */,
@@ -1130,6 +1141,7 @@
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
 				5099930B1AF5C450007F7A84 /* CPDConstants.m in Sources */,
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
+				5011BBCC1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m in Sources */,
 				503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */,
 				50E021FB1AD942F5008489DA /* NSDate+TomorrowDate.m in Sources */,
 				5009809E1AE38FF6007DFCEA /* SelectedCategoryTableViewController.m in Sources */,
