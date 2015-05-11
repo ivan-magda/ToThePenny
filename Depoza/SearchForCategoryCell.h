@@ -11,5 +11,6 @@
 @interface SearchForCategoryCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UITextField *textField;
+@property (nonatomic, weak) IBOutlet UIButton *addCategoryButton;
 
 @end

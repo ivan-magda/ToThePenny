@@ -20,10 +20,10 @@ static NSString * const kExpenseTextFieldCellIdentifier     = @"ExpenseTextField
 static NSString * const kCategoryCellIdentifier             = @"CategoryCell";
 static NSString * const kDescriptionTextFieldCellIdentifier = @"DescriptionFieldCell";
 static NSString * const kSelectedCategoryCellIdentifier     = @"SelectedCategoryCell";
+static NSString * const kSearchForCategoryCellIdentifier    = @"SearchForCategoryCell";
 
 static const NSInteger kExpenseTextFieldTag = 555;
 static const NSInteger kDescriptionTextFieldTag = 777;
-static const NSInteger kSearchBarTag = 240;
 
 static const CGFloat kExpenseTextFieldHeight = 64.0f;
 static const CGFloat kCustomTableViewCellHeight = 44.0f;
@@ -41,6 +41,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 @property (weak, nonatomic) UITextField *expenseTextField;
 @property (weak, nonatomic) UITextField *descriptionTextField;
 @property (weak, nonatomic) UITextField *searchForCategoryTextField;
+@property (weak, nonatomic) UIButton *addCategoryButton;
 
 @property (strong, nonatomic) NSPredicate *categoriesSearchPredicate;
 
@@ -223,11 +224,17 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
         return expenseTextFieldCell;
     } else if (indexPath.section == SectionTypeSearchForCategory) {
-        SearchForCategoryCell *cell = (SearchForCategoryCell *)[tableView dequeueReusableCellWithIdentifier:@"SearchFoarCategoryCell"];
-        [cell.contentView addSubview:separatorLineView];
+        SearchForCategoryCell *cell = (SearchForCategoryCell *)[tableView dequeueReusableCellWithIdentifier:kSearchForCategoryCellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-        self.searchForCategoryTextField = (UITextField *)[cell viewWithTag:kSearchBarTag];
+        self.searchForCategoryTextField = cell.textField;
         _searchForCategoryTextField.delegate = self;
+
+        self.addCategoryButton = cell.addCategoryButton;
+        [self.addCategoryButton addTarget:self action:@selector(addCategoryButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+        self.addCategoryButton.hidden = _categoriesSearchPredicate == nil;
+
+        [cell.contentView addSubview:separatorLineView];
 
         return cell;
     } else if (indexPath.section == SectionTypeCategoriesTitles) {
@@ -300,9 +307,6 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     if (indexPath.section == SectionTypeExpenseAmount) {
         [self.expenseTextField becomeFirstResponder];
         return;
-    } else if (indexPath.section == SectionTypeSearchForCategory) {
-        [self.searchForCategoryTextField becomeFirstResponder];
-        return;
     } else if (indexPath.section == SectionTypeDescription) {
         [self.descriptionTextField becomeFirstResponder];
         return;
@@ -346,6 +350,8 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == SectionTypeSelectionDate && indexPath.row == 1) {
         return nil;
+    } else if (indexPath.section == SectionTypeSearchForCategory && !_categorySelected) {
+        return nil;
     }
     return indexPath;
 }
@@ -384,6 +390,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     [self.descriptionTextField resignFirstResponder];
 }
 
+#pragma mark AddCategoryButton
+
+- (void)addCategoryButtonPressed {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 #pragma mark Search
 
 - (void)updateSearchResultsWithSearchText:(NSString *)searchText {
@@ -399,9 +411,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         NSArray *categories = [_categoriesInfo filteredArrayUsingPredicate:_categoriesSearchPredicate];
 
         _filteredCategories = [categories sortedArrayUsingDescriptors:@[alhabeticSort]];
+
+        self.addCategoryButton.hidden = NO;
     } else {
         self.categoriesSearchPredicate = nil;
         _filteredCategories = nil;
+        self.addCategoryButton.hidden = YES;
     }
 
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:SectionTypeCategoriesTitles] withRowAnimation:UITableViewRowAnimationAutomatic];

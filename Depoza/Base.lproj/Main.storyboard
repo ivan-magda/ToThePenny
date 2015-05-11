@@ -341,7 +341,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAE-Ji-58i">
-                                            <rect key="frame" x="15" y="12" width="67" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="256" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="3c2-HQ-fEa"/>
                                             </constraints>
@@ -349,46 +349,56 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="251" text="X" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XFT-6T-0oe">
-                                            <rect key="frame" x="290" y="12" width="10" height="21"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DeleteSign.png" translatesAutoresizingMaskIntoConstraints="NO" id="37c-fi-Nzs">
+                                            <rect key="frame" x="279" y="12" width="21" height="21"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="5dU-S8-Wlc"/>
+                                                <constraint firstAttribute="height" constant="21" id="091-km-DQr"/>
+                                                <constraint firstAttribute="width" constant="21" id="gcl-96-emW"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                            <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="XFT-6T-0oe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rAE-Ji-58i" secondAttribute="trailing" constant="8" symbolic="YES" id="226-gJ-pLz"/>
-                                        <constraint firstAttribute="trailing" secondItem="XFT-6T-0oe" secondAttribute="trailing" constant="20" symbolic="YES" id="OwB-cl-Dle"/>
+                                        <constraint firstAttribute="centerY" secondItem="37c-fi-Nzs" secondAttribute="centerY" id="Ca2-oj-paN"/>
                                         <constraint firstItem="rAE-Ji-58i" firstAttribute="leading" secondItem="uBl-Z0-YwN" secondAttribute="leading" constant="15" id="SxG-HT-I83"/>
+                                        <constraint firstAttribute="trailing" secondItem="37c-fi-Nzs" secondAttribute="trailing" constant="20" symbolic="YES" id="duN-j3-mSy"/>
                                         <constraint firstAttribute="centerY" secondItem="rAE-Ji-58i" secondAttribute="centerY" id="hGV-KO-tNk"/>
-                                        <constraint firstAttribute="centerY" secondItem="XFT-6T-0oe" secondAttribute="centerY" id="qFb-ga-U5h"/>
+                                        <constraint firstItem="37c-fi-Nzs" firstAttribute="leading" secondItem="rAE-Ji-58i" secondAttribute="trailing" constant="8" symbolic="YES" id="za1-fV-GBh"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="categoryTitle" destination="rAE-Ji-58i" id="XQr-gU-Ut8"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchFoarCategoryCell" id="leh-a8-TCo" userLabel="SearchForCategory" customClass="SearchForCategoryCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchForCategoryCell" id="leh-a8-TCo" userLabel="SearchForCategory" customClass="SearchForCategoryCell">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="leh-a8-TCo" id="DMb-8n-jAB">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="240" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for category" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fNH-fi-5ja">
-                                            <rect key="frame" x="15" y="12" width="285" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="256" height="21"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjV-cE-r2X">
+                                            <rect key="frame" x="279" y="12" width="21" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="21" id="1Lx-lR-RQC"/>
+                                                <constraint firstAttribute="height" constant="21" id="3c6-mz-R0u"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <state key="normal" image="Checkmark.png"/>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="fNH-fi-5ja" firstAttribute="leading" secondItem="DMb-8n-jAB" secondAttribute="leading" constant="15" id="6tf-Tt-DNH"/>
-                                        <constraint firstAttribute="trailing" secondItem="fNH-fi-5ja" secondAttribute="trailing" constant="20" symbolic="YES" id="Lhk-50-UiU"/>
+                                        <constraint firstItem="jjV-cE-r2X" firstAttribute="leading" secondItem="fNH-fi-5ja" secondAttribute="trailing" constant="8" symbolic="YES" id="DDj-OW-a43"/>
+                                        <constraint firstAttribute="centerY" secondItem="jjV-cE-r2X" secondAttribute="centerY" id="TBC-yv-sfN"/>
                                         <constraint firstAttribute="centerY" secondItem="fNH-fi-5ja" secondAttribute="centerY" id="lVH-dF-EkR"/>
+                                        <constraint firstAttribute="trailing" secondItem="jjV-cE-r2X" secondAttribute="trailing" constant="20" symbolic="YES" id="xf6-lU-ZaJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="addCategoryButton" destination="jjV-cE-r2X" id="8dW-ll-mSl"/>
                                     <outlet property="textField" destination="fNH-fi-5ja" id="BQ4-tq-9MD"/>
                                 </connections>
                             </tableViewCell>
@@ -1324,8 +1334,10 @@
     <resources>
         <image name="Airplane" width="42" height="42"/>
         <image name="Banknotes.png" width="32" height="32"/>
+        <image name="Checkmark.png" width="21" height="21"/>
         <image name="Clothes" width="42" height="42"/>
         <image name="Cocktail" width="42" height="42"/>
+        <image name="DeleteSign.png" width="21" height="21"/>
         <image name="Search.png" width="32" height="32"/>
         <image name="Settings.png" width="32" height="32"/>
         <image name="Tomato" width="42" height="42"/>

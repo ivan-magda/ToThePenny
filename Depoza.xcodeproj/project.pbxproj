@@ -48,6 +48,12 @@
 		502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502839121ACC11A700C97C99 /* CoreData.framework */; };
 		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
 		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
+		5058F20A1B00A1A1007BBDE6 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2071B00A1A1007BBDE6 /* Checkmark.png */; };
+		5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2081B00A1A1007BBDE6 /* Checkmark@2x.png */; };
+		5058F20C1B00A1A1007BBDE6 /* Checkmark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2091B00A1A1007BBDE6 /* Checkmark@3x.png */; };
+		5058F2101B00A27B007BBDE6 /* DeleteSign.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F20D1B00A27B007BBDE6 /* DeleteSign.png */; };
+		5058F2111B00A27B007BBDE6 /* DeleteSign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F20E1B00A27B007BBDE6 /* DeleteSign@2x.png */; };
+		5058F2121B00A27B007BBDE6 /* DeleteSign@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */; };
 		505AF9341A91577000E0CB28 /* DetailExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 505AF9331A91577000E0CB28 /* DetailExpenseTableViewController.m */; };
 		505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13A1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m */; };
 		505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 505CA13D1A761B21009CA7B1 /* Fetch.m */; };
@@ -207,6 +213,12 @@
 		503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
 		504C435D1A9F4856007D6D4B /* CategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesInfo.h; sourceTree = "<group>"; };
 		504C435E1A9F4856007D6D4B /* CategoriesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesInfo.m; sourceTree = "<group>"; };
+		5058F2071B00A1A1007BBDE6 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
+		5058F2081B00A1A1007BBDE6 /* Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@2x.png"; sourceTree = "<group>"; };
+		5058F2091B00A1A1007BBDE6 /* Checkmark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checkmark@3x.png"; sourceTree = "<group>"; };
+		5058F20D1B00A27B007BBDE6 /* DeleteSign.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = DeleteSign.png; sourceTree = "<group>"; };
+		5058F20E1B00A27B007BBDE6 /* DeleteSign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSign@2x.png"; sourceTree = "<group>"; };
+		5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "DeleteSign@3x.png"; sourceTree = "<group>"; };
 		505AF9321A91577000E0CB28 /* DetailExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailExpenseTableViewController.h; sourceTree = "<group>"; };
 		505AF9331A91577000E0CB28 /* DetailExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailExpenseTableViewController.m; sourceTree = "<group>"; };
 		505CA1391A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+FirstAndLastDaysOfMonth.h"; sourceTree = "<group>"; };
@@ -429,6 +441,12 @@
 				50AA306B1AF2241300A60DCB /* Trash.png */,
 				50AA306C1AF2241300A60DCB /* Trash@2x.png */,
 				50AA306D1AF2241300A60DCB /* Trash@3x.png */,
+				5058F2071B00A1A1007BBDE6 /* Checkmark.png */,
+				5058F2081B00A1A1007BBDE6 /* Checkmark@2x.png */,
+				5058F2091B00A1A1007BBDE6 /* Checkmark@3x.png */,
+				5058F20D1B00A27B007BBDE6 /* DeleteSign.png */,
+				5058F20E1B00A27B007BBDE6 /* DeleteSign@2x.png */,
+				5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1000,20 +1018,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5058F2121B00A27B007BBDE6 /* DeleteSign@3x.png in Resources */,
 				50AA306E1AF2241300A60DCB /* Trash.png in Resources */,
 				500540F31AC560CC007EF006 /* BillFilled@2x.png in Resources */,
 				500541061AC56226007EF006 /* SettingsFilled.png in Resources */,
+				5058F2101B00A27B007BBDE6 /* DeleteSign.png in Resources */,
 				500540F91AC560CC007EF006 /* MoneyBox@2x.png in Resources */,
 				50E021E01AD8E3EE008489DA /* SelectMonthViewController.xib in Resources */,
 				500540F61AC560CC007EF006 /* MoneyBagFilled.png in Resources */,
 				500540FF1AC560CC007EF006 /* PurchaseOrderFilled@2.png in Resources */,
 				500540F71AC560CC007EF006 /* MoneyBagFilled@2x.png in Resources */,
 				50A2AB261AEF4C0300463BBB /* Down@2x.png in Resources */,
+				5058F20A1B00A1A1007BBDE6 /* Checkmark.png in Resources */,
 				500541051AC56226007EF006 /* Settings@2x.png in Resources */,
 				50E021D91AD8C7BE008489DA /* Up@3x.png in Resources */,
 				500541041AC56226007EF006 /* Settings.png in Resources */,
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
+				5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */,
 				500540F21AC560CC007EF006 /* BillFilled.png in Resources */,
 				50A6E5641ACFB9110042BA6E /* seedUS.sqlite in Resources */,
 				500540F81AC560CC007EF006 /* MoneyBox.png in Resources */,
@@ -1025,10 +1047,12 @@
 				50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */,
 				500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */,
 				50A2AB271AEF4C0300463BBB /* Down@3x.png in Resources */,
+				5058F2111B00A27B007BBDE6 /* DeleteSign@2x.png in Resources */,
 				50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */,
 				500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */,
 				500540EF1AC560CC007EF006 /* BanknotesFilled@2x.png in Resources */,
 				500540F01AC560CC007EF006 /* Bill.png in Resources */,
+				5058F20C1B00A1A1007BBDE6 /* Checkmark@3x.png in Resources */,
 				50E021D71AD8C7BE008489DA /* Up.png in Resources */,
 				500540F11AC560CC007EF006 /* Bill@2x.png in Resources */,
 				50A2AB251AEF4C0300463BBB /* Down.png in Resources */,
