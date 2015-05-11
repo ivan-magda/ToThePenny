@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/AddExpenseTableViewController.m"
-            timestampString = "453027222.500936"
+            timestampString = "453052265.577429"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "624"
-            endingLineNumber = "624"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
             landmarkName = "@implementation AddExpenseTableViewController"
             landmarkType = "3">
          </BreakpointContent>

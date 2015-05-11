@@ -20,7 +20,7 @@
     CategoryData *category = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];
     category.idValue = @([self nextId]);
     category.title = title;
-    category.iconName = iconName;
+    category.iconName = (iconName == nil ? @"Puzzle" : iconName);
     
     NSError *error = nil;
     if (![context save:&error]) {
@@ -242,6 +242,24 @@
     }
 
     return result;
+}
+
++ (BOOL)checkForUniqueName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
+
+    NSExpression *title = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(title))];
+    NSExpression *categoryName = [NSExpression expressionForConstantValue:name];
+    NSPredicate *predicate = [NSComparisonPredicate predicateWithLeftExpression:title rightExpression:categoryName modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:NSCaseInsensitivePredicateOption];
+
+    fetchRequest.predicate = predicate;
+
+    NSError *error = nil;
+    NSUInteger countCategories = [context countForFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"%s %@", __PRETTY_FUNCTION__, [error localizedDescription]);
+    }
+
+    return (countCategories == 0);
 }
 
 @end

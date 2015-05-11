@@ -101,7 +101,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (NSArray *)sortedCategoriesFromCategoriesInfo:(NSArray *)categories {
     NSSortDescriptor *alphabeticSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES selector:@selector(caseInsensitiveCompare:)];
 
-    NSArray *sortedArray = [_categoriesInfo sortedArrayUsingDescriptors:@[alphabeticSort]];
+    NSArray *sortedArray = [categories sortedArrayUsingDescriptors:@[alphabeticSort]];
 
         //Sort by frequency of use
     NSArray *dates = [[NSDate date]getFirstAndLastDaysInTheCurrentMonth];
@@ -393,7 +393,46 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 #pragma mark AddCategoryButton
 
 - (void)addCategoryButtonPressed {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSString *categoryName = [self.searchForCategoryTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+
+    [self hideDatePicker];
+    [self resignActiveTextField];
+    
+    if ([CategoryData checkForUniqueName:categoryName managedObjectContext:_managedObjectContext]) {
+        CategoryData *category = [CategoryData categoryDataWithTitle:categoryName iconName:nil andExpenses:nil inManagedObjectContext:_managedObjectContext];
+
+        CategoriesInfo *categoryInfo = [CategoriesInfo categoryInfoFromCategoryData:category];
+
+        NSMutableArray *categories = [NSMutableArray arrayWithArray:_categoriesInfo];
+        [categories addObject:categoryInfo];
+
+        self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:[categories copy]];
+
+        __block NSUInteger index = -1;
+        [_categoriesInfo enumerateObjectsUsingBlock:^(CategoriesInfo *obj, NSUInteger idx, BOOL *stop) {
+            if (categoryInfo.idValue.integerValue == obj.idValue.integerValue) {
+                index = idx;
+                *stop = YES;
+            }
+        }];
+        NSParameterAssert(index != -1);
+
+        _categorySelected = YES;
+        _selectedCategoryRow = [NSIndexPath indexPathForRow:index inSection:SectionTypeCategoriesTitles];
+
+        self.categoriesSearchPredicate = nil;
+        [self reloadTableViewSections];
+
+        [self.delegate addExpenseTableViewController:self didAddCategory:category];
+
+        [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddExpnseVC succes text when category added") completion:^{
+            [self descriptionTextFieldBecomeFirstResponder];
+        }];
+    } else {
+        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Category already exist", @"AddExpenseVC error message when category already exist") completion:^{
+            [self.searchForCategoryTextField becomeFirstResponder];
+        }];
+    }
 }
 
 #pragma mark Search

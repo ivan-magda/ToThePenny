@@ -34,4 +34,6 @@
 
 + (NSUInteger)countForFrequencyUseInManagedObjectContext:(NSManagedObjectContext *)context betweenDates:(NSArray *)dates andWithCategoryIdValue:(NSNumber *)categoryId;
 
++ (BOOL)checkForUniqueName:(NSString *)name managedObjectContext:(NSManagedObjectContext *)context;
+
 @end

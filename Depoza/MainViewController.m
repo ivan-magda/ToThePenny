@@ -222,6 +222,13 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     return [categoriesInfo copy];
 }
 
+- (void)addCategoryToCategoriesInfo:(CategoryData *)category {
+    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
+    [_categoriesInfo addObject:info];
+
+    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+}
+
 #pragma mark UIUpdates
 
 - (void)updateAmountLabel {
@@ -511,6 +518,10 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     _isAddExpensePresenting = NO;
 }
 
+- (void)addExpenseTableViewController:(AddExpenseTableViewController *)controller didAddCategory:(CategoryData *)category {
+    [self addCategoryToCategoriesInfo:category];
+}
+
 #pragma mark SelectMonthViewControllerDelegate
 
 - (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
@@ -574,10 +585,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)manageCategoryTableViewControllerDidAddCategory:(NSNotification *)notification {
     CategoryData *category = notification.object;
 
-    CategoriesInfo *info = [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
-    [_categoriesInfo addObject:info];
-
-    [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
+    [self addCategoryToCategoriesInfo:category];
 }
 
 - (void)manageCategoryTableViewControllerDidUpdateCategory:(NSNotification *)notification {
