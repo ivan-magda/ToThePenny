@@ -75,7 +75,14 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     } else {
         NSArray *dates = [_timePeriod getFirstAndLastDaysInTheCurrentMonth];
         _minimumDate = [dates firstObject];
-        _maximumDate = [dates lastObject];
+
+        NSDate *maxDate = [dates lastObject];
+        NSDate *mostRecentDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
+        if ([mostRecentDate compare:maxDate] == NSOrderedAscending) {
+            _maximumDate = mostRecentDate;
+        } else {
+            _maximumDate = [dates lastObject];
+        }
     }
     _startDate = _minimumDate;
     _endDate = _maximumDate;
