@@ -40,7 +40,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 @end
 
 @implementation SearchExpensesTableViewController {
-    BOOL _isSearchBarFirstResponder;
+    BOOL _searchBarFirstResponder;
 
     NSArray *_filteredCategories;
     NSArray *_filteredExpenses;
@@ -54,7 +54,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     NSParameterAssert(_managedObjectContext);
 
     [self configurateSearchBar];
-    _isSearchBarFirstResponder = NO;
+    _searchBarFirstResponder = NO;
 
     _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
     [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
@@ -70,7 +70,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if (_isSearchBarFirstResponder) {
+    if (_searchBarFirstResponder) {
         [_searchBar becomeFirstResponder];
     }
 }
@@ -268,13 +268,13 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
             ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
             detailsViewController.expenseToShow = expense;
 
-            _isSearchBarFirstResponder = (self.searchBar.isFirstResponder);
+            _searchBarFirstResponder = (self.searchBar.isFirstResponder);
         } else {
             NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
             ExpenseData *expense = filteredExpenses[indexPath.row];
             detailsViewController.expenseToShow = expense;
 
-            _isSearchBarFirstResponder = YES;
+            _searchBarFirstResponder = YES;
         }
     } else if ([segue.identifier isEqualToString:@"CategorySelected"] && indexPath.section == 0) {
         SelectedCategoryTableViewController *controller = segue.destinationViewController;
@@ -285,7 +285,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
         controller.timePeriod = [NSDate date];
         controller.timePeriodFromMinAndMaxDates = YES;
 
-        _isSearchBarFirstResponder = YES;
+        _searchBarFirstResponder = YES;
     }
 
     [self.searchBar resignFirstResponder];

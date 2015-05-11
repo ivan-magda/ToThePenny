@@ -376,21 +376,20 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="leh-a8-TCo" id="DMb-8n-jAB">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <searchBar tag="240" contentMode="redraw" searchBarStyle="minimal" placeholder="Search for category" translatesAutoresizingMaskIntoConstraints="NO" id="ALc-EH-g14">
-                                            <rect key="frame" x="8" y="0.0" width="312" height="44"/>
-                                            <color key="barTintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <textField opaque="NO" clipsSubviews="YES" tag="240" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search for category" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fNH-fi-5ja">
+                                            <rect key="frame" x="15" y="12" width="285" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <textInputTraits key="textInputTraits"/>
-                                        </searchBar>
+                                        </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ALc-EH-g14" firstAttribute="top" secondItem="DMb-8n-jAB" secondAttribute="top" id="X53-xw-aYP"/>
-                                        <constraint firstAttribute="trailing" secondItem="ALc-EH-g14" secondAttribute="trailing" id="ZJz-HB-Ddt"/>
-                                        <constraint firstAttribute="bottom" secondItem="ALc-EH-g14" secondAttribute="bottom" id="ZKV-eA-JCd"/>
-                                        <constraint firstItem="ALc-EH-g14" firstAttribute="leading" secondItem="DMb-8n-jAB" secondAttribute="leading" constant="8" id="jFn-9l-THr"/>
+                                        <constraint firstItem="fNH-fi-5ja" firstAttribute="leading" secondItem="DMb-8n-jAB" secondAttribute="leading" constant="15" id="6tf-Tt-DNH"/>
+                                        <constraint firstAttribute="trailing" secondItem="fNH-fi-5ja" secondAttribute="trailing" constant="20" symbolic="YES" id="Lhk-50-UiU"/>
+                                        <constraint firstAttribute="centerY" secondItem="fNH-fi-5ja" secondAttribute="centerY" id="lVH-dF-EkR"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="searchBar" destination="ALc-EH-g14" id="2gv-OM-VD7"/>
+                                    <outlet property="textField" destination="fNH-fi-5ja" id="BQ4-tq-9MD"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1223,7 +1222,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sEb-8t-xKX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
                             <tableViewCell tag="232" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectStartAndEndDatesCell" id="GhX-mH-TQB" customClass="CustomRightDetailCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
@@ -1234,7 +1233,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start/End date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7GL-8S-cde">
                                             <rect key="frame" x="15" y="11" width="107" height="21"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTI-mh-4A3">

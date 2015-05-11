@@ -40,7 +40,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 @property (weak, nonatomic) UITextField *expenseTextField;
 @property (weak, nonatomic) UITextField *descriptionTextField;
-@property (weak, nonatomic) UISearchBar *searchBar;
+@property (weak, nonatomic) UITextField *searchForCategoryTextField;
+
+@property (strong, nonatomic) NSPredicate *categoriesSearchPredicate;
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender;
 - (IBAction)descriptionTextFieldDidEndOnExit:(UITextField *)sender;
@@ -49,10 +51,13 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 @implementation AddExpenseTableViewController {
     NSNumber *_expenseFromTextField;
-    NSIndexPath *_selectedRow;
-    BOOL categorySelected;
+    NSIndexPath *_selectedCategoryRow;
+    BOOL _categorySelected;
+    BOOL _expenseTextFieldActive;
 
-    BOOL _isDelegateNotified;
+    NSArray *_filteredCategories;
+
+    BOOL _delegateNotified;
 
     BOOL _datePickerVisible;
     NSDate *_dateExpense;
@@ -67,7 +72,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
     [self createDoneBarButton];
 
-    _isDelegateNotified = NO;
+    _delegateNotified = NO;
     _datePickerVisible = NO;
     _dateExpense = [NSDate date];
 }
@@ -81,12 +86,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 
-    if (!_isDelegateNotified) {
+    if (!_delegateNotified) {
         [self resignActiveTextField];
 
         [self.delegate addExpenseTableViewControllerDidCancel:self];
 
-        _isDelegateNotified = YES;
+        _delegateNotified = YES;
     }
 }
 
@@ -133,21 +138,25 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     switch (section) {
         case SectionTypeSelectionDate:
             return (_datePickerVisible ? 2 : 1);
-            break;
         case SectionTypeExpenseAmount:
             return 1;
-            break;
         case SectionTypeSearchForCategory:
-            return (categorySelected ? 0 : 1);
-        case SectionTypeCategoriesTitles:
-            return (categorySelected ? 1 : [_categoriesInfo count]);
-            break;
+            return (_categorySelected ? 0 : 1);
+        case SectionTypeCategoriesTitles: {
+            if (_categoriesSearchPredicate == nil) {
+                return (_categorySelected ? 1 : [_categoriesInfo count]);
+            } else {
+                if (_categorySelected) {
+                    return 1;
+                } else {
+                    return _filteredCategories.count;
+                }
+            }
+        }
         case SectionTypeDescription:
-            return (categorySelected ? 1 : 0);
-            break;
+            return (_categorySelected ? 1 : 0);
         default:
             return 0;
-            break;
     }
 }
 
@@ -217,11 +226,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         SearchForCategoryCell *cell = (SearchForCategoryCell *)[tableView dequeueReusableCellWithIdentifier:@"SearchFoarCategoryCell"];
         [cell.contentView addSubview:separatorLineView];
 
-        self.searchBar = (UISearchBar *)[cell viewWithTag:kSearchBarTag];
+        self.searchForCategoryTextField = (UITextField *)[cell viewWithTag:kSearchBarTag];
+        _searchForCategoryTextField.delegate = self;
 
         return cell;
     } else if (indexPath.section == SectionTypeCategoriesTitles) {
-        if (categorySelected) {
+        if (_categorySelected) {
             SelectedCategoryCell *selectedCategoryCell = (SelectedCategoryCell *)[tableView dequeueReusableCellWithIdentifier:kSelectedCategoryCellIdentifier];
 
             [self configurateCell:selectedCategoryCell indexPath:indexPath];
@@ -251,12 +261,17 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)configurateCell:(UITableViewCell *)cell indexPath:(NSIndexPath *)indexPath {
     if (cell) {
-        if (!categorySelected) {
-            CategoriesInfo *category = _categoriesInfo[indexPath.row];
+        if (!_categorySelected) {
+            CategoriesInfo *category = (_categoriesSearchPredicate == nil ? _categoriesInfo[indexPath.row] : _filteredCategories[indexPath.row]);
 
             cell.textLabel.text = category.title;
         } else {
-            CategoriesInfo *category = _categoriesInfo[_selectedRow.row];
+            CategoriesInfo *category = nil;
+            if (_categoriesSearchPredicate == nil) {
+                category = _categoriesInfo[_selectedCategoryRow.row];
+            } else {
+                category = _filteredCategories[_selectedCategoryRow.row];
+            }
 
             SelectedCategoryCell *selectedCell = (SelectedCategoryCell *)cell;
             selectedCell.categoryTitle.text = category.title;
@@ -280,30 +295,36 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         // Also hide the date picker when tapped on any other row.
     [self hideDatePicker];
 
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+
     if (indexPath.section == SectionTypeExpenseAmount) {
         [self.expenseTextField becomeFirstResponder];
         return;
     } else if (indexPath.section == SectionTypeSearchForCategory) {
-        [self.searchBar becomeFirstResponder];
+        [self.searchForCategoryTextField becomeFirstResponder];
         return;
     } else if (indexPath.section == SectionTypeDescription) {
         [self.descriptionTextField becomeFirstResponder];
         return;
     }
 
-    [self.searchBar resignFirstResponder];
+    [self.searchForCategoryTextField resignFirstResponder];
     [self.expenseTextField resignFirstResponder];
 
-    if (!categorySelected) {
-        categorySelected = YES;
-        _selectedRow = indexPath;
+    if (!_categorySelected) {
+        _categorySelected = YES;
+        _selectedCategoryRow = indexPath;
 
         [self reloadTableViewSections];
 
         [self descriptionTextFieldBecomeFirstResponder];
     } else {
-        categorySelected = NO;
-        _selectedRow = nil;
+        _categorySelected = NO;
+        _selectedCategoryRow = nil;
+
+        self.categoriesSearchPredicate = nil;
+        self.searchForCategoryTextField.text = nil;
+        _filteredCategories = nil;
 
         self.descriptionTextField.text = nil;
         [self.descriptionTextField resignFirstResponder];
@@ -333,7 +354,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)reloadTableViewSections {
     [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(2, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(SectionTypeSearchForCategory, 3)] withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.tableView endUpdates];
 }
 
@@ -359,7 +380,31 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)resignActiveTextField {
     [self.expenseTextField resignFirstResponder];
+    [self.searchForCategoryTextField resignFirstResponder];
     [self.descriptionTextField resignFirstResponder];
+}
+
+#pragma mark Search
+
+- (void)updateSearchResultsWithSearchText:(NSString *)searchText {
+    if (searchText.length > 0) {
+        NSExpression *categoryTitle = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(title))];
+        NSExpression *title = [NSExpression expressionForConstantValue:searchText];
+        NSPredicate *startsWithTextPredicate = [NSComparisonPredicate predicateWithLeftExpression:categoryTitle rightExpression:title modifier:NSDirectPredicateModifier type:NSBeginsWithPredicateOperatorType options:NSCaseInsensitivePredicateOption];
+
+        self.categoriesSearchPredicate = startsWithTextPredicate;
+
+        NSSortDescriptor *alhabeticSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES selector:@selector(caseInsensitiveCompare:)];
+
+        NSArray *categories = [_categoriesInfo filteredArrayUsingPredicate:_categoriesSearchPredicate];
+
+        _filteredCategories = [categories sortedArrayUsingDescriptors:@[alhabeticSort]];
+    } else {
+        self.categoriesSearchPredicate = nil;
+        _filteredCategories = nil;
+    }
+
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:SectionTypeCategoriesTitles] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark Date
@@ -406,6 +451,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (void)showDatePicker {
     _datePickerVisible = YES;
 
+    [self.searchForCategoryTextField resignFirstResponder];
     [self.expenseTextField resignFirstResponder];
     [self.descriptionTextField resignFirstResponder];
 
@@ -445,8 +491,8 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
     [self resignActiveTextField];
 
-    if (_expenseFromTextField.floatValue > 0.0f && categorySelected) {
-        CategoriesInfo *category = _categoriesInfo[_selectedRow.row];
+    if (_expenseFromTextField.floatValue > 0.0f && _categorySelected) {
+        CategoriesInfo *category = _categoriesInfo[_selectedCategoryRow.row];
 
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField categoryName:category.title description:_descriptionTextField.text];
 
@@ -455,7 +501,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         if ([self.delegate respondsToSelector:@selector(addExpenseTableViewController:didFinishAddingExpense:)]) {
             [self.delegate addExpenseTableViewController:self didFinishAddingExpense:expense];
 
-            _isDelegateNotified = YES;
+            _delegateNotified = YES;
 
             [KVNProgress showSuccessWithStatus:@"Added" completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -463,11 +509,11 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         } else {
             NSParameterAssert(NO);
         }
-    } else if (_expenseFromTextField.floatValue == 0.0f && categorySelected){
+    } else if (_expenseFromTextField.floatValue == 0.0f && _categorySelected){
         [KVNProgress showErrorWithStatus:@"Please enter the amount of expense" completion:^{
             [_expenseTextField becomeFirstResponder];
         }];
-    } else if (_expenseFromTextField.floatValue > 0.0f && !categorySelected) {
+    } else if (_expenseFromTextField.floatValue > 0.0f && !_categorySelected) {
         [KVNProgress showErrorWithStatus:@"Please choose category" completion:^{
             [self resignActiveTextField];
         }];
@@ -505,40 +551,39 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     if (_datePickerVisible) {
         [self hideDatePicker];
     }
-
-    NSString *text = textField.text;
-    if (text.length > 0) {
-        NSMutableCharacterSet *charactersToKeep = [NSMutableCharacterSet decimalDigitCharacterSet];
-        [charactersToKeep addCharactersInString:@","];
-
-        NSCharacterSet *charactersToRemove = [charactersToKeep invertedSet];
-
-        NSString *newString = [[text componentsSeparatedByCharactersInSet:charactersToRemove]
-                               componentsJoinedByString:@""];
-        textField.text = newString;
-    }
 }
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString *stringFromTextField = stringFromTextField = [[textField.text stringByReplacingCharactersInRange:range withString:string]stringByReplacingOccurrencesOfString:@"," withString:@"."];
+    NSString *stringFromTextField = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    if ([self.expenseTextField isFirstResponder]) {
+        _expenseTextFieldActive = YES;
 
-    if (stringFromTextField.length > 0) {
-        _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
-    } else if (stringFromTextField.length == 0) {
-        if (_expenseFromTextField) {
-            _expenseFromTextField = @(0.0f);
+        NSString *stringWithReplacing = [stringFromTextField stringByReplacingOccurrencesOfString:@"," withString:@"."];
+
+        if (stringWithReplacing.length > 0) {
+            _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
+        } else if (stringWithReplacing.length == 0) {
+            if (_expenseFromTextField) {
+                _expenseFromTextField = @(0.0f);
+            }
         }
+    } else {
+        [self updateSearchResultsWithSearchText:stringFromTextField];
     }
     return YES;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    _expenseFromTextField = [NSNumber numberWithFloat:[[textField.text stringByReplacingOccurrencesOfString:@"," withString:@"." ]floatValue]];
+    if (_expenseTextFieldActive) {
+        _expenseTextFieldActive = NO;
 
-    if (_expenseFromTextField.floatValue > 0) {
-        textField.text = [NSString formatAmount:_expenseFromTextField];
-    } else {
-        textField.text = nil;
+        _expenseFromTextField = [NSNumber numberWithFloat:[[textField.text stringByReplacingOccurrencesOfString:@"," withString:@"." ]floatValue]];
+
+        if (_expenseFromTextField.floatValue > 0) {
+            textField.text = [NSString formatAmount:_expenseFromTextField];
+        } else {
+            textField.text = nil;
+        }
     }
 }
 
@@ -549,7 +594,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
     [self.delegate addExpenseTableViewControllerDidCancel:self];
 
-    _isDelegateNotified = YES;
+    _delegateNotified = YES;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:nil];

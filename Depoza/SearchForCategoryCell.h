@@ -10,6 +10,6 @@
 
 @interface SearchForCategoryCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, weak) IBOutlet UITextField *textField;
 
 @end
