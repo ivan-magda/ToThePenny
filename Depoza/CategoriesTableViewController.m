@@ -145,7 +145,7 @@ NSString * const CategoriesTableViewControllerDidRemoveCategoryNotification = @"
     [fetchRequest setFetchBatchSize:20];
 
         // Edit the sort key as appropriate.
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:NO];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES];
 
     [fetchRequest setSortDescriptors:@[sort]];
 
