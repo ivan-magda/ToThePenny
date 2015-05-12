@@ -27,9 +27,11 @@
 static NSString * const kFoundExpenseCellReuseIdentifier = @"FoundExpenseCell";
 static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
+static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense";
+
 @interface SearchTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (strong, nonatomic) NSFetchedResultsController *expenseFetchedResultsController;
 
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) NSPredicate *categoriesSearchPredicate;
@@ -62,7 +64,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     self.definesPresentationContext = YES;
     self.tableView.allowsSelectionDuringEditing = YES;
 
-    [NSFetchedResultsController deleteCacheWithName:@"All"];
+    [NSFetchedResultsController deleteCacheWithName:kExpenseFetchedResultsControllerCacheName];
 
     [self performFetch];
 }
@@ -139,7 +141,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
         self.categoriesSearchPredicate = categoryPredicate;
         self.expensesSearchPredicate = expensesPredicate;
 
-        _filteredCategories = [CategoryData getCategoriesInContext:_fetchedResultsController.managedObjectContext usingPredicate:_categoriesSearchPredicate];
+        _filteredCategories = [CategoryData getCategoriesInContext:_expenseFetchedResultsController.managedObjectContext usingPredicate:_categoriesSearchPredicate];
         _filteredExpenses = [self filteredArrayOfExpensesUsingPredicate:self.expensesSearchPredicate];
     } else {
         self.categoriesSearchPredicate = nil;
@@ -157,7 +159,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 }
 
 - (NSArray *)filteredArrayOfExpensesUsingPredicate:(NSPredicate *)predicate {
-    return [self.fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
+    return [self.expenseFetchedResultsController.fetchedObjects filteredArrayUsingPredicate:predicate];
 }
 
 - (CategoryData *)filteredCategoryForIndexPath:(NSIndexPath *)indexPath {
@@ -263,14 +265,14 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
-        detailsViewController.managedObjectContext = _fetchedResultsController.managedObjectContext;
+        detailsViewController.managedObjectContext = _expenseFetchedResultsController.managedObjectContext;
         if ([self isSearchPredicatesIsNil]) {
-            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:indexPath];
+            ExpenseData *expense = [_expenseFetchedResultsController objectAtIndexPath:indexPath];
             detailsViewController.expenseToShow = expense;
 
             _searchBarFirstResponder = (self.searchBar.isFirstResponder);
         } else {
-            NSArray *filteredExpenses = [_fetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
+            NSArray *filteredExpenses = [_expenseFetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
             ExpenseData *expense = filteredExpenses[indexPath.row];
             detailsViewController.expenseToShow = expense;
 
@@ -278,7 +280,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
         }
     } else if ([segue.identifier isEqualToString:@"CategorySelected"] && indexPath.section == 0) {
         SelectedCategoryTableViewController *controller = segue.destinationViewController;
-        controller.managedObjectContext = _fetchedResultsController.managedObjectContext;
+        controller.managedObjectContext = _expenseFetchedResultsController.managedObjectContext;
 
         CategoriesInfo *category = [CategoriesInfo categoryInfoFromCategoryData:[self filteredCategoryForIndexPath:indexPath]];
         controller.selectedCategory = category;
@@ -301,7 +303,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self isSearchPredicatesIsNil]) {
         if (section == 0) {
-            id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
+            id <NSFetchedResultsSectionInfo> sectionInfo = [self.expenseFetchedResultsController sections][section];
             return [sectionInfo numberOfObjects];
         } else {
             return 0;
@@ -344,7 +346,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
     ExpenseData *expense = nil;
     if ([self isSearchPredicatesIsNil]) {
         FoundExpenseCell *cellToConfigurate = (FoundExpenseCell *)cell;
-        expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+        expense = [self.expenseFetchedResultsController objectAtIndexPath:indexPath];
 
         [self configureFoundExpenseCell:cellToConfigurate withExpense:expense];
     } else {
@@ -357,7 +359,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
             cellToConfigurate.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
             NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"idValue == %@", category.idValue]];
-            NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_fetchedResultsController.managedObjectContext usingPredicate:predicate];
+            NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_expenseFetchedResultsController.managedObjectContext usingPredicate:predicate];
             NSParameterAssert(results.count == 1);
 
             cellToConfigurate.rightDetailLabel.text = [NSString formatAmount:[results lastObject][@"sum"]];
@@ -383,8 +385,8 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
-        [context deleteObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSManagedObjectContext *context = [self.expenseFetchedResultsController managedObjectContext];
+        [context deleteObject:[self.expenseFetchedResultsController objectAtIndexPath:indexPath]];
 
         NSError *error = nil;
         if (![context save:&error]) {
@@ -421,7 +423,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
         }
         NSPredicate *predicate = [NSCompoundPredicate orPredicateWithSubpredicates:predicateArray];
 
-        NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_fetchedResultsController.managedObjectContext usingPredicate:predicate];
+        NSArray *results = [CategoryData sumOfExpensesInManagedObjectContext:_expenseFetchedResultsController.managedObjectContext usingPredicate:predicate];
 
         CGFloat sum = 0.0f;
         for (NSDictionary *sumDict in results) {
@@ -493,16 +495,16 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
     DetailExpenseTableViewController *editExpenseViewController = [navigationController.viewControllers firstObject];
     editExpenseViewController.managedObjectContext = _managedObjectContext;
-    editExpenseViewController.expenseToShow = [_fetchedResultsController objectAtIndexPath:indexPath];
+    editExpenseViewController.expenseToShow = [_expenseFetchedResultsController objectAtIndexPath:indexPath];
     
     [self presentViewController:navigationController animated:YES completion:nil];
 }
 
 #pragma mark - NSFetchedResultsController -
 
-- (NSFetchedResultsController *)fetchedResultsController {
-    if (_fetchedResultsController != nil) {
-        return _fetchedResultsController;
+- (NSFetchedResultsController *)expenseFetchedResultsController {
+    if (_expenseFetchedResultsController != nil) {
+        return _expenseFetchedResultsController;
     }
 
     NSFetchRequest *fetchRequest = [NSFetchRequest new];
@@ -523,16 +525,16 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
                                                              initWithFetchRequest:fetchRequest
                                                              managedObjectContext:self.managedObjectContext
                                                              sectionNameKeyPath:nil
-                                                             cacheName:@"All"];
+                                                             cacheName:kExpenseFetchedResultsControllerCacheName];
     aFetchedResultsController.delegate = self;
-    self.fetchedResultsController = aFetchedResultsController;
+    self.expenseFetchedResultsController = aFetchedResultsController;
 
-    return _fetchedResultsController;
+    return _expenseFetchedResultsController;
 }
 
 - (void)performFetch {
     NSError *error;
-    if (![self.fetchedResultsController performFetch:&error]) {
+    if (![self.expenseFetchedResultsController performFetch:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         exit(-1);  // Fail
     }
@@ -546,7 +548,6 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-
     UITableView *tableView = self.tableView;
 
     if ([self isSearchPredicatesIsNil]) {
@@ -568,13 +569,10 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
                 [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
                 break;
         }
-    } else {
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id )sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {
-
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertSections:[NSIndexSet indexSetWithIndex:sectionIndex] withRowAnimation:UITableViewRowAnimationFade];
@@ -593,7 +591,10 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-        // The fetch controller has sent all current change notifications, so tell the table view to process all updates.
+    if ([self isSearchPredicatesIsNil] == NO) {
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }
+
     [self.tableView endUpdates];
 }
 
