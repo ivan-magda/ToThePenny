@@ -68,6 +68,8 @@
 		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
 		506E72B21A1E0D560006F2DF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72B11A1E0D560006F2DF /* MainViewController.m */; };
 		507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */; };
+		508213FA1B023B40003740D2 /* LaunchImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 508213F81B023B40003740D2 /* LaunchImage.jpg */; };
+		508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 508213F91B023B40003740D2 /* LaunchImage@2x.jpg */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50891E191AF45B6F0091C322 /* CategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50891E181AF45B6F0091C322 /* CategoriesTableViewController.m */; };
 		5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
@@ -243,6 +245,8 @@
 		506E72B11A1E0D560006F2DF /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		507BF2B31AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualMonth.h"; sourceTree = "<group>"; };
 		507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDatesWithEqualMonth.m"; sourceTree = "<group>"; };
+		508213F81B023B40003740D2 /* LaunchImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchImage.jpg; sourceTree = "<group>"; };
+		508213F91B023B40003740D2 /* LaunchImage@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LaunchImage@2x.jpg"; sourceTree = "<group>"; };
 		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		50891E171AF45B6F0091C322 /* CategoriesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesTableViewController.h; sourceTree = "<group>"; };
@@ -447,6 +451,8 @@
 				5058F20D1B00A27B007BBDE6 /* DeleteSign.png */,
 				5058F20E1B00A27B007BBDE6 /* DeleteSign@2x.png */,
 				5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */,
+				508213F81B023B40003740D2 /* LaunchImage.jpg */,
+				508213F91B023B40003740D2 /* LaunchImage@2x.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1046,6 +1052,7 @@
 				50C8A3651AC8BA2B000347D3 /* Search@2x.png in Resources */,
 				50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */,
 				500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */,
+				508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */,
 				50A2AB271AEF4C0300463BBB /* Down@3x.png in Resources */,
 				5058F2111B00A27B007BBDE6 /* DeleteSign@2x.png in Resources */,
 				50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */,
@@ -1062,6 +1069,7 @@
 				500540F41AC560CC007EF006 /* MoneyBag.png in Resources */,
 				50E021D81AD8C7BE008489DA /* Up@2x.png in Resources */,
 				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
+				508213FA1B023B40003740D2 /* LaunchImage.jpg in Resources */,
 				500540FA1AC560CC007EF006 /* MoneyBoxFilled.png in Resources */,
 				500540FD1AC560CC007EF006 /* PurchaseOrder@2x.png in Resources */,
 				500540FC1AC560CC007EF006 /* PurchaseOrder.png in Resources */,
