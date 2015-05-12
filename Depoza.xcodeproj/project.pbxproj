@@ -90,7 +90,7 @@
 		50AA306E1AF2241300A60DCB /* Trash.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306B1AF2241300A60DCB /* Trash.png */; };
 		50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306C1AF2241300A60DCB /* Trash@2x.png */; };
 		50AA30701AF2241300A60DCB /* Trash@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50AA306D1AF2241300A60DCB /* Trash@3x.png */; };
-		50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */; };
+		50AA42EB1A87A22A0019CB55 /* SearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42EA1A87A22A0019CB55 /* SearchTableViewController.m */; };
 		50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AA42F71A87AC860019CB55 /* ExpenseData.m */; };
 		50B3574D1A48596000168958 /* Persistence.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3574C1A48596000168958 /* Persistence.m */; };
 		50B3E7211AF3ADA60080C04F /* CustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E7201AF3ADA60080C04F /* CustomTabBarController.m */; };
@@ -271,8 +271,8 @@
 		50AA306B1AF2241300A60DCB /* Trash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trash.png; sourceTree = "<group>"; };
 		50AA306C1AF2241300A60DCB /* Trash@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trash@2x.png"; sourceTree = "<group>"; };
 		50AA306D1AF2241300A60DCB /* Trash@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Trash@3x.png"; sourceTree = "<group>"; };
-		50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchExpensesTableViewController.h; sourceTree = "<group>"; };
-		50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchExpensesTableViewController.m; sourceTree = "<group>"; };
+		50AA42E91A87A22A0019CB55 /* SearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewController.h; sourceTree = "<group>"; };
+		50AA42EA1A87A22A0019CB55 /* SearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewController.m; sourceTree = "<group>"; };
 		50AA42F61A87AC860019CB55 /* ExpenseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseData.h; sourceTree = "<group>"; };
 		50AA42F71A87AC860019CB55 /* ExpenseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseData.m; sourceTree = "<group>"; };
 		50B3574B1A48596000168958 /* Persistence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Persistence.h; sourceTree = "<group>"; };
@@ -663,7 +663,7 @@
 				5009809F1AE3906B007DFCEA /* SelectedCategoryTableVC */,
 				509993031AF5BD7C007F7A84 /* PieChartVC */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseVC */,
-				50AA42EC1A87A2310019CB55 /* SearchExpenseVC */,
+				50AA42EC1A87A2310019CB55 /* SearchVC */,
 				506803DC1A91E273002A3DA0 /* DetailVC */,
 				50D4E0F71A92253A0040C260 /* ChooseCategoryVC */,
 				509CDD141AEC9BAB00A6A5E9 /* EditDescriptionVC */,
@@ -749,13 +749,13 @@
 			name = Category;
 			sourceTree = "<group>";
 		};
-		50AA42EC1A87A2310019CB55 /* SearchExpenseVC */ = {
+		50AA42EC1A87A2310019CB55 /* SearchVC */ = {
 			isa = PBXGroup;
 			children = (
-				50AA42E91A87A22A0019CB55 /* SearchExpensesTableViewController.h */,
-				50AA42EA1A87A22A0019CB55 /* SearchExpensesTableViewController.m */,
+				50AA42E91A87A22A0019CB55 /* SearchTableViewController.h */,
+				50AA42EA1A87A22A0019CB55 /* SearchTableViewController.m */,
 			);
-			name = SearchExpenseVC;
+			name = SearchVC;
 			sourceTree = "<group>";
 		};
 		50B3574E1A48597300168958 /* PersistenceStack */ = {
@@ -1152,7 +1152,7 @@
 				50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */,
 				50206E9C1AC8E097001A017E /* CategoryIconsCollectionViewController.m in Sources */,
 				5064C6D61AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
-				50AA42EB1A87A22A0019CB55 /* SearchExpensesTableViewController.m in Sources */,
+				50AA42EB1A87A22A0019CB55 /* SearchTableViewController.m in Sources */,
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				505AF9341A91577000E0CB28 /* DetailExpenseTableViewController.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,

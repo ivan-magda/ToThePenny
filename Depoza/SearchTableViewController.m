@@ -7,7 +7,7 @@
 //
 
     //ViewController
-#import "SearchExpensesTableViewController.h"
+#import "SearchTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "SelectedCategoryTableViewController.h"
     //View
@@ -27,7 +27,7 @@
 static NSString * const kFoundExpenseCellReuseIdentifier = @"FoundExpenseCell";
 static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
-@interface SearchExpensesTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
+@interface SearchTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
 @property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 
@@ -39,7 +39,7 @@ static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
 @end
 
-@implementation SearchExpensesTableViewController {
+@implementation SearchTableViewController {
     BOOL _searchBarFirstResponder;
 
     NSArray *_filteredCategories;

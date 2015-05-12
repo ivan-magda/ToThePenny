@@ -10,7 +10,7 @@
 #import "AppDelegate.h"
 #import "CustomTabBarController.h"
 #import "MainViewController.h"
-#import "SearchExpensesTableViewController.h"
+#import "SearchTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "SettingsTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
@@ -29,7 +29,7 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
 @implementation AppDelegate {
     CustomTabBarController *_tabBarController;
     MainViewController *_mainViewController;
-    SearchExpensesTableViewController *_allExpensesTableViewController;
+    SearchTableViewController *_allExpensesTableViewController;
     SettingsTableViewController *_settingsTableViewController;
 
     NSUserDefaults *_appGroupUserDefaults;
@@ -46,7 +46,7 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
 
         //Get the AllExpensesViewController
     navigationController = (UINavigationController *)_tabBarController.viewControllers[1];
-    _allExpensesTableViewController = (SearchExpensesTableViewController *)navigationController.viewControllers[0];
+    _allExpensesTableViewController = (SearchTableViewController *)navigationController.viewControllers[0];
 
         //Get the SettingsTableViewController
     navigationController = (UINavigationController *)_tabBarController.viewControllers[2];
