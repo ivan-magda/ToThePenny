@@ -74,6 +74,7 @@
     if ([_dateOfExpense compare:otherExpense.dateOfExpense] != NSOrderedSame) {
         return NO;
     }
+    
     return YES;
 }
 

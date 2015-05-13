@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		50000FBB1B039E2D00509F45 /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
 		500540EC1AC560CC007EF006 /* Banknotes.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D81AC560CC007EF006 /* Banknotes.png */; };
 		500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D91AC560CC007EF006 /* Banknotes@2x.png */; };
 		500540EE1AC560CC007EF006 /* BanknotesFilled.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540DA1AC560CC007EF006 /* BanknotesFilled.png */; };
@@ -1125,6 +1126,7 @@
 			files = (
 				50BB50441AC6391C001AE915 /* CategoryData.m in Sources */,
 				50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
+				50000FBB1B039E2D00509F45 /* CustomRightDetailCell.m in Sources */,
 				5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
 				5018A8C51AC9885600E75948 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				50A1D4D91AC0434300E56EB1 /* ExpenseData.m in Sources */,

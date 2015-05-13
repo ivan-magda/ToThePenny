@@ -8,10 +8,10 @@
 
 #import "TodayViewController.h"
 #import <NotificationCenter/NotificationCenter.h>
-
+    //View
+#import "CustomRightDetailCell.h"
     //Data
 #import "Expense.h"
-
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -21,6 +21,8 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 static NSString * const kTodayExpensesKey = @"todayExpenses";
 static NSString * const kNumberExpensesToShowUserDefaultsKey = @"numberExpenseToShow";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
+
+static NSString * const kCustomRightDetailCellIdentifier = @"Cell";
 
 static const CGFloat kDefaultRowHeight = 44.0f;
 
@@ -128,6 +130,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
         return [expenses sortedArrayUsingDescriptors:@[sortDescriptor]];
     }
+
     return nil;
 }
 
@@ -171,8 +174,7 @@ typedef void (^UpdateBlock)(NCUpdateResult);
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *identifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    NSParameterAssert(cell);
+    CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:identifier];
 
     [self configureCell:cell atIndexPath:indexPath];
 
@@ -208,14 +210,11 @@ typedef void (^UpdateBlock)(NCUpdateResult);
     return [formatter stringFromDate:theDate];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+- (void)configureCell:(CustomRightDetailCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     Expense *expense = _expenses[indexPath.row];
 
-    cell.textLabel.text = expense.category;
-    cell.textLabel.textColor = [UIColor whiteColor];
-
-    NSString *amount = [NSString formatAmount:expense.amount];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@, %@", amount, [self formatDate:expense.dateOfExpense]];
+    cell.leftLabel.text = (expense.descriptionOfExpense.length == 0 ? expense.category : expense.descriptionOfExpense);
+    cell.rightDetailLabel.text = [NSString formatAmount:expense.amount];
 
         //Rangoon Green color
     UIView *selectedView = [[UIView alloc]init];
