@@ -160,6 +160,7 @@
 
 /* Begin PBXFileReference section */
 		264746BB42B33C07DA0F2051 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		50000FC11B03A1B300509F45 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
 		500540D81AC560CC007EF006 /* Banknotes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Banknotes.png; sourceTree = "<group>"; };
 		500540D91AC560CC007EF006 /* Banknotes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Banknotes@2x.png"; sourceTree = "<group>"; };
 		500540DA1AC560CC007EF006 /* BanknotesFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BanknotesFilled.png; sourceTree = "<group>"; };
@@ -1225,6 +1226,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				506E72911A1E0B450006F2DF /* Base */,
+				50000FC11B03A1B300509F45 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
