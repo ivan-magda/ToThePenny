@@ -75,7 +75,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     _dateOfExpense = _expenseToShow.dateOfExpense;
     _iconName = _expenseToShow.category.iconName;
 
-    _editBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editButtonPressed:)];
+    _editBarButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Edit"] style:UIBarButtonItemStylePlain target:self action:@selector(editButtonPressed:)];
     _doneBarButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneButtonPressed:)];
     _cancelBatButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelButtonPressed:)];
     _deleteBarButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Trash"] style:UIBarButtonItemStylePlain target:self action:@selector(deleteButtonPressed:)];

@@ -800,7 +800,7 @@
             </objects>
             <point key="canvasLocation" x="490" y="615"/>
         </scene>
-        <!--Extension Settings-->
+        <!--Extension-->
         <scene sceneID="Ir3-dO-CQe">
             <objects>
                 <tableViewController id="EhH-xj-Z4H" customClass="ExtensionSettingsTableViewController" sceneMemberID="viewController">
@@ -855,7 +855,7 @@
                             <outlet property="delegate" destination="EhH-xj-Z4H" id="IYr-7H-lMX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Extension Settings" id="Ibd-Rx-dE7"/>
+                    <navigationItem key="navigationItem" title="Extension" id="Ibd-Rx-dE7"/>
                     <connections>
                         <outlet property="pickerView" destination="mqU-r3-DX7" id="9N3-Cg-6B0"/>
                     </connections>

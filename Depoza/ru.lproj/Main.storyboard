@@ -577,7 +577,7 @@
             </objects>
             <point key="canvasLocation" x="1077" y="-1357"/>
         </scene>
-        <!--Изменить Описание-->
+        <!--Описание-->
         <scene sceneID="ILK-6D-sak">
             <objects>
                 <viewController id="95x-nD-XVy" customClass="EditDescriptionViewController" sceneMemberID="viewController">
@@ -604,7 +604,7 @@
                             <constraint firstAttribute="bottom" secondItem="PKs-ba-HLP" secondAttribute="bottom" id="yHo-Mq-aFi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Изменить Описание" id="zQn-Be-5l1">
+                    <navigationItem key="navigationItem" title="Описание" id="zQn-Be-5l1">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="KHh-Qq-xCR">
                             <connections>
                                 <action selector="cancelBarButtonPressed:" destination="95x-nD-XVy" id="XdQ-JQ-QWf"/>
@@ -800,7 +800,7 @@
             </objects>
             <point key="canvasLocation" x="490" y="615"/>
         </scene>
-        <!--Настройки Расширения-->
+        <!--Расширение-->
         <scene sceneID="Ir3-dO-CQe">
             <objects>
                 <tableViewController id="EhH-xj-Z4H" customClass="ExtensionSettingsTableViewController" sceneMemberID="viewController">
@@ -855,7 +855,7 @@
                             <outlet property="delegate" destination="EhH-xj-Z4H" id="IYr-7H-lMX"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Настройки Расширения" id="Ibd-Rx-dE7"/>
+                    <navigationItem key="navigationItem" title="Расширение" id="Ibd-Rx-dE7"/>
                     <connections>
                         <outlet property="pickerView" destination="mqU-r3-DX7" id="9N3-Cg-6B0"/>
                     </connections>
@@ -905,7 +905,7 @@
             </objects>
             <point key="canvasLocation" x="925" y="976"/>
         </scene>
-        <!--Добавление Категории-->
+        <!--Добавить-->
         <scene sceneID="K5y-dP-7gO">
             <objects>
                 <tableViewController id="wV7-2g-efQ" customClass="ManageCategoryTableViewController" sceneMemberID="viewController">
@@ -970,7 +970,7 @@
                             <outlet property="delegate" destination="wV7-2g-efQ" id="N8d-Xa-iEO"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Добавление Категории" id="FoH-o8-3k5">
+                    <navigationItem key="navigationItem" title="Добавить" id="FoH-o8-3k5">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="qoJ-FW-Qbh">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="wV7-2g-efQ" id="Csu-Sg-4Uw"/>

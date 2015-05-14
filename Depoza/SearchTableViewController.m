@@ -59,7 +59,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
     _searchBarFirstResponder = NO;
 
     _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
-    [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
+    [self addRightBarButtonItemsToNavigationItem:@[_searchButton]];
 
     self.definesPresentationContext = YES;
     self.tableView.allowsSelectionDuringEditing = YES;
@@ -74,14 +74,6 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 
     if (_searchBarFirstResponder) {
         [_searchBar becomeFirstResponder];
-    }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-
-    if ([self isEditing]) {
-        [self setEditing:NO];
     }
 }
 
@@ -176,18 +168,6 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
     return (![self isSearchPredicatesIsNil] && _filteredCategories.count == 0 && _filteredExpenses.count == 0);
 }
 
-#pragma mark SetEditig
-
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    [super setEditing:editing animated:animated];
-
-    if (editing) {
-        [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem]];
-    } else {
-        [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
-    }
-}
-
 #pragma mark UISearchBarDelegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
@@ -203,7 +183,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
                          self.navigationItem.titleView.alpha = 0;
                      } completion:^(BOOL finished) {
                          self.navigationItem.titleView = nil;
-                         [self addRightBarButtonItemsToNavigationItem:@[self.editButtonItem, _searchButton]];
+                         [self addRightBarButtonItemsToNavigationItem:@[_searchButton]];
                      }];
     self.searchBar.text = nil;
 
@@ -245,14 +225,12 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 #pragma mark - Segues
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    if (([identifier isEqualToString:@"MoreInfo"] || [identifier isEqualToString:@"CategorySelected"]) &&
-        [self isEditing]) {
-        return NO;
-    } else if ([identifier isEqualToString:@"MoreInfo"]) {
+    if ([identifier isEqualToString:@"MoreInfo"]) {
         return YES;
     } else if ([identifier isEqualToString:@"CategorySelected"] && ![self isNothingFound]) {
         return YES;
     }
+
     return NO;
 }
 
@@ -396,13 +374,6 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
             abort();
         }
     }
-}
-
-- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isEditing]) {
-        return nil;
-    }
-    return indexPath;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {

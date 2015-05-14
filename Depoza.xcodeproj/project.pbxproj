@@ -41,7 +41,6 @@
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
-		5015A56D1AC02C230056271A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5015A56C1AC02C230056271A /* MainInterface.storyboard */; };
 		5015A5701AC02C230056271A /* Depoza Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5015A5631AC02C230056271A /* Depoza Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5018A8C51AC9885600E75948 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50206E9C1AC8E097001A017E /* CategoryIconsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50206E9B1AC8E097001A017E /* CategoryIconsCollectionViewController.m */; };
@@ -73,6 +72,10 @@
 		508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 508213F91B023B40003740D2 /* LaunchImage@2x.jpg */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		50891E191AF45B6F0091C322 /* CategoriesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50891E181AF45B6F0091C322 /* CategoriesTableViewController.m */; };
+		508DF84E1B04C4720015DC9F /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 508DF84B1B04C4720015DC9F /* Edit.png */; };
+		508DF84F1B04C4720015DC9F /* Edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 508DF84C1B04C4720015DC9F /* Edit@2x.png */; };
+		508DF8501B04C4720015DC9F /* Edit@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 508DF84D1B04C4720015DC9F /* Edit@3x.png */; };
+		508DF8511B04C86B0015DC9F /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 508DF8531B04C86B0015DC9F /* MainInterface.storyboard */; };
 		5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
 		5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */; };
 		509993061AF5BDBD007F7A84 /* PieChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509993051AF5BDBD007F7A84 /* PieChartViewController.m */; };
@@ -206,7 +209,6 @@
 		5015A5681AC02C230056271A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5015A5691AC02C230056271A /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		5015A56A1AC02C230056271A /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
-		5015A56C1AC02C230056271A /* MainInterface.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainInterface.storyboard; sourceTree = "<group>"; };
 		50206E9A1AC8E097001A017E /* CategoryIconsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryIconsCollectionViewController.h; sourceTree = "<group>"; };
 		50206E9B1AC8E097001A017E /* CategoryIconsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryIconsCollectionViewController.m; sourceTree = "<group>"; };
 		502547941A1EC86600DCB8FB /* AddExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseTableViewController.h; sourceTree = "<group>"; };
@@ -253,6 +255,11 @@
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		50891E171AF45B6F0091C322 /* CategoriesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesTableViewController.h; sourceTree = "<group>"; };
 		50891E181AF45B6F0091C322 /* CategoriesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesTableViewController.m; sourceTree = "<group>"; };
+		508DF84B1B04C4720015DC9F /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Edit.png; sourceTree = "<group>"; };
+		508DF84C1B04C4720015DC9F /* Edit@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit@2x.png"; sourceTree = "<group>"; };
+		508DF84D1B04C4720015DC9F /* Edit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit@3x.png"; sourceTree = "<group>"; };
+		508DF8521B04C86B0015DC9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		508DF8551B04C8700015DC9F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
 		5097DACB1A921CD7006DB197 /* CategoryData+Fetch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CategoryData+Fetch.h"; sourceTree = "<group>"; };
 		5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+Fetch.m"; sourceTree = "<group>"; };
 		5097DACE1A922294006DB197 /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
@@ -424,7 +431,7 @@
 				50A1D4D31AC03F2200E56EB1 /* Depoza Extension.entitlements */,
 				5015A5691AC02C230056271A /* TodayViewController.h */,
 				5015A56A1AC02C230056271A /* TodayViewController.m */,
-				5015A56C1AC02C230056271A /* MainInterface.storyboard */,
+				508DF8531B04C86B0015DC9F /* MainInterface.storyboard */,
 				5015A5671AC02C230056271A /* Supporting Files */,
 			);
 			path = "Depoza Extension";
@@ -455,6 +462,9 @@
 				5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */,
 				508213F81B023B40003740D2 /* LaunchImage.jpg */,
 				508213F91B023B40003740D2 /* LaunchImage@2x.jpg */,
+				508DF84B1B04C4720015DC9F /* Edit.png */,
+				508DF84C1B04C4720015DC9F /* Edit@2x.png */,
+				508DF84D1B04C4720015DC9F /* Edit@3x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1000,6 +1010,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 506E72771A1E0B450006F2DF;
 			productRefGroup = 506E72811A1E0B450006F2DF /* Products */;
@@ -1018,7 +1029,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5015A56D1AC02C230056271A /* MainInterface.storyboard in Resources */,
+				508DF8511B04C86B0015DC9F /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1041,6 +1052,7 @@
 				500541051AC56226007EF006 /* Settings@2x.png in Resources */,
 				50E021D91AD8C7BE008489DA /* Up@3x.png in Resources */,
 				500541041AC56226007EF006 /* Settings.png in Resources */,
+				508DF8501B04C4720015DC9F /* Edit@3x.png in Resources */,
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */,
@@ -1052,6 +1064,7 @@
 				500540F51AC560CC007EF006 /* MoneyBag@2x.png in Resources */,
 				500540EE1AC560CC007EF006 /* BanknotesFilled.png in Resources */,
 				50C8A3651AC8BA2B000347D3 /* Search@2x.png in Resources */,
+				508DF84F1B04C4720015DC9F /* Edit@2x.png in Resources */,
 				50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */,
 				500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */,
 				508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */,
@@ -1063,6 +1076,7 @@
 				500540F01AC560CC007EF006 /* Bill.png in Resources */,
 				5058F20C1B00A1A1007BBDE6 /* Checkmark@3x.png in Resources */,
 				50E021D71AD8C7BE008489DA /* Up.png in Resources */,
+				508DF84E1B04C4720015DC9F /* Edit.png in Resources */,
 				500540F11AC560CC007EF006 /* Bill@2x.png in Resources */,
 				50A2AB251AEF4C0300463BBB /* Down.png in Resources */,
 				500540FB1AC560CC007EF006 /* MoneyBoxFilled@2x.png in Resources */,
@@ -1237,6 +1251,15 @@
 				506E72961A1E0B450006F2DF /* Base */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		508DF8531B04C86B0015DC9F /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				508DF8521B04C86B0015DC9F /* Base */,
+				508DF8551B04C8700015DC9F /* ru */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
