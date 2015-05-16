@@ -59,12 +59,9 @@
                                     <outlet property="delegate" destination="M4Y-Lb-cyx" id="J9a-xm-idD"/>
                                 </connections>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No new transactions found." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OJH-L4-n5K">
-                                <rect key="frame" x="15" y="65" width="212" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="No new transactions found." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OJH-L4-n5K">
+                                <rect key="frame" x="15" y="65" width="285" height="21"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="TkR-QU-t9Z"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -77,6 +74,7 @@
                             <constraint firstAttribute="centerY" secondItem="OJH-L4-n5K" secondAttribute="centerY" id="GHJ-ev-0Qr"/>
                             <constraint firstAttribute="trailing" secondItem="Bg9-qK-6yJ" secondAttribute="trailing" id="bzZ-WA-VgG"/>
                             <constraint firstItem="Bg9-qK-6yJ" firstAttribute="leading" secondItem="S3S-Oj-5AN" secondAttribute="leading" id="ifP-cZ-Otf"/>
+                            <constraint firstAttribute="trailing" secondItem="OJH-L4-n5K" secondAttribute="trailing" constant="20" symbolic="YES" id="xIv-cE-Y8E"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>

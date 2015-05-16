@@ -461,16 +461,6 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
     }
 }
 
-- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    UINavigationController *navigationController = [self.storyboard instantiateViewControllerWithIdentifier:@"EditNavigationController"];
-
-    DetailExpenseTableViewController *editExpenseViewController = [navigationController.viewControllers firstObject];
-    editExpenseViewController.managedObjectContext = _managedObjectContext;
-    editExpenseViewController.expenseToShow = [_expenseFetchedResultsController objectAtIndexPath:indexPath];
-    
-    [self presentViewController:navigationController animated:YES completion:nil];
-}
-
 #pragma mark - NSFetchedResultsController -
 
 - (NSFetchedResultsController *)expenseFetchedResultsController {

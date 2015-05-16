@@ -52,9 +52,10 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 @implementation AddExpenseTableViewController {
     NSNumber *_expenseFromTextField;
-    NSIndexPath *_selectedCategoryRow;
-    BOOL _categorySelected;
     BOOL _expenseTextFieldActive;
+
+    NSString *_selectedCategoryTitle;
+    BOOL _categorySelected;
 
     NSArray *_filteredCategories;
 
@@ -275,9 +276,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         } else {
             CategoriesInfo *category = nil;
             if (_categoriesSearchPredicate == nil) {
-                category = _categoriesInfo[_selectedCategoryRow.row];
+                category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_categoriesInfo];
             } else {
-                category = _filteredCategories[_selectedCategoryRow.row];
+                category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_filteredCategories];
             }
 
             SelectedCategoryCell *selectedCell = (SelectedCategoryCell *)cell;
@@ -312,19 +313,25 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         return;
     }
 
-    [self.searchForCategoryTextField resignFirstResponder];
-    [self.expenseTextField resignFirstResponder];
+    [self resignActiveTextField];
 
     if (!_categorySelected) {
         _categorySelected = YES;
-        _selectedCategoryRow = indexPath;
+
+        if (_categoriesSearchPredicate == nil) {
+            CategoriesInfo *category = _categoriesInfo[indexPath.row];
+            _selectedCategoryTitle = category.title;
+        } else {
+            CategoriesInfo *category = _filteredCategories[indexPath.row];
+            _selectedCategoryTitle = category.title;
+        }
 
         [self reloadTableViewSections];
 
         [self descriptionTextFieldBecomeFirstResponder];
     } else {
         _categorySelected = NO;
-        _selectedCategoryRow = nil;
+        _selectedCategoryTitle = nil;
 
         self.categoriesSearchPredicate = nil;
         self.searchForCategoryTextField.text = nil;
@@ -364,6 +371,21 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     [self.tableView endUpdates];
 }
 
+- (CategoriesInfo *)categoryInfoFromTitle:(NSString *)title andCategoriesInfo:(NSArray *)categories {
+    NSUInteger index = -1;
+
+    index = [categories indexOfObjectPassingTest:^BOOL(CategoriesInfo *obj, NSUInteger idx, BOOL *stop) {
+        if ([obj.title isEqualToString:title]) {
+            return YES;
+        }
+        return NO;
+    }];
+
+    NSParameterAssert(index != -1);
+
+    return categories[index];
+}
+
 - (void)expenseTextFieldBecomeFirstResponder {
     if (_expenseTextField != nil) {
         [self.expenseTextField becomeFirstResponder];
@@ -393,13 +415,13 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 #pragma mark AddCategoryButton
 
 - (void)addCategoryButtonPressed {
-    NSString *categoryName = [self.searchForCategoryTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    NSString *categoryTitle = [self.searchForCategoryTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 
     [self hideDatePicker];
     [self resignActiveTextField];
     
-    if ([CategoryData checkForUniqueName:categoryName managedObjectContext:_managedObjectContext]) {
-        CategoryData *category = [CategoryData categoryDataWithTitle:categoryName iconName:nil andExpenses:nil inManagedObjectContext:_managedObjectContext];
+    if ([CategoryData checkForUniqueName:categoryTitle managedObjectContext:_managedObjectContext]) {
+        CategoryData *category = [CategoryData categoryDataWithTitle:categoryTitle iconName:nil andExpenses:nil inManagedObjectContext:_managedObjectContext];
 
         CategoriesInfo *categoryInfo = [CategoriesInfo categoryInfoFromCategoryData:category];
 
@@ -408,17 +430,8 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
         self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:[categories copy]];
 
-        __block NSUInteger index = -1;
-        [_categoriesInfo enumerateObjectsUsingBlock:^(CategoriesInfo *obj, NSUInteger idx, BOOL *stop) {
-            if (categoryInfo.idValue.integerValue == obj.idValue.integerValue) {
-                index = idx;
-                *stop = YES;
-            }
-        }];
-        NSParameterAssert(index != -1);
-
         _categorySelected = YES;
-        _selectedCategoryRow = [NSIndexPath indexPathForRow:index inSection:SectionTypeCategoriesTitles];
+        _selectedCategoryTitle = categoryTitle;
 
         self.categoriesSearchPredicate = nil;
         [self reloadTableViewSections];
@@ -546,7 +559,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     [self resignActiveTextField];
 
     if (_expenseFromTextField.floatValue > 0.0f && _categorySelected) {
-        CategoriesInfo *category = _categoriesInfo[_selectedCategoryRow.row];
+        CategoriesInfo *category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_categoriesInfo];
 
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField categoryName:category.title description:_descriptionTextField.text];
 

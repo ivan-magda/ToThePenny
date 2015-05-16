@@ -3,7 +3,7 @@
 "Cej-gX-a3A.text" = "Category/Description";
 
 /* Class = "UILabel"; text = "No new expense today."; ObjectID = "OJH-L4-n5K"; */
-"OJH-L4-n5K.text" = "Новых транзакций не обнаружено.";
+"OJH-L4-n5K.text" = "Сегодня новых транзакций не обнаружено.";
 
 /* Class = "UILabel"; text = "Amount"; ObjectID = "Wn4-Sc-jDJ"; */
 "Wn4-Sc-jDJ.text" = "Amount";
