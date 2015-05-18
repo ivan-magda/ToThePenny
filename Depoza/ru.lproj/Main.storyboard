@@ -270,7 +270,7 @@
             </objects>
             <point key="canvasLocation" x="490" y="-149"/>
         </scene>
-        <!--Добавить Расход-->
+        <!--Добавить-->
         <scene sceneID="6ay-zP-VgH">
             <objects>
                 <tableViewController id="G42-sP-2k6" customClass="AddExpenseTableViewController" sceneMemberID="viewController">
@@ -408,7 +408,7 @@
                             <outlet property="delegate" destination="G42-sP-2k6" id="hpA-7L-7mS"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Добавить Расход" id="4gu-5P-d8u">
+                    <navigationItem key="navigationItem" title="Добавить" id="4gu-5P-d8u">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="q5Y-Wk-Tf6">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="G42-sP-2k6" id="ZCJ-Qj-DA5"/>
@@ -997,7 +997,7 @@
             <objects>
                 <collectionViewController id="K6k-wL-Ce8" customClass="CategoryIconsCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" id="Scn-oM-ZUx">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="H1W-1V-aMM">
@@ -1348,10 +1348,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="Ke7-wc-ErB"/>
-        <segue reference="eiF-x1-yp8"/>
-        <segue reference="xQY-w0-KW7"/>
         <segue reference="rRc-1T-lWX"/>
+        <segue reference="Ke7-wc-ErB"/>
+        <segue reference="xQY-w0-KW7"/>
+        <segue reference="hGy-jW-v8B"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

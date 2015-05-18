@@ -81,6 +81,7 @@
 		509993061AF5BDBD007F7A84 /* PieChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509993051AF5BDBD007F7A84 /* PieChartViewController.m */; };
 		5099930B1AF5C450007F7A84 /* CPDConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 509993081AF5C450007F7A84 /* CPDConstants.m */; };
 		5099930C1AF5C450007F7A84 /* CPDStockPriceStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5099930A1AF5C450007F7A84 /* CPDStockPriceStore.m */; };
+		509B7D711B0A1F29007711EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 509B7D6F1B0A1F29007711EA /* Localizable.strings */; };
 		509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */; };
 		50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
 		50A1D4D81AC0434000E56EB1 /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
@@ -270,6 +271,8 @@
 		509993081AF5C450007F7A84 /* CPDConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPDConstants.m; sourceTree = "<group>"; };
 		509993091AF5C450007F7A84 /* CPDStockPriceStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPDStockPriceStore.h; sourceTree = "<group>"; };
 		5099930A1AF5C450007F7A84 /* CPDStockPriceStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPDStockPriceStore.m; sourceTree = "<group>"; };
+		509B7D701B0A1F29007711EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		509B7D721B0A1F4C007711EA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		509CDD111AEC9BA300A6A5E9 /* EditDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDescriptionViewController.h; sourceTree = "<group>"; };
 		509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDescriptionViewController.m; sourceTree = "<group>"; };
 		50A1D4D21AC03ECA00E56EB1 /* Depoza.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Depoza.entitlements; sourceTree = "<group>"; };
@@ -648,6 +651,7 @@
 		506E72831A1E0B450006F2DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				509B7D6F1B0A1F29007711EA /* Localizable.strings */,
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				506E72851A1E0B450006F2DF /* main.m */,
 			);
@@ -1054,6 +1058,7 @@
 				500541041AC56226007EF006 /* Settings.png in Resources */,
 				508DF8501B04C4720015DC9F /* Edit@3x.png in Resources */,
 				506E72921A1E0B450006F2DF /* Main.storyboard in Resources */,
+				509B7D711B0A1F29007711EA /* Localizable.strings in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */,
 				500540F21AC560CC007EF006 /* BillFilled.png in Resources */,
@@ -1260,6 +1265,15 @@
 				508DF8551B04C8700015DC9F /* ru */,
 			);
 			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		509B7D6F1B0A1F29007711EA /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				509B7D701B0A1F29007711EA /* Base */,
+				509B7D721B0A1F4C007711EA /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

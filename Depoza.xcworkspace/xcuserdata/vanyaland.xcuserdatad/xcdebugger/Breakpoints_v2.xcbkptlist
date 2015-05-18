@@ -249,7 +249,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "553"
             endingLineNumber = "553"
-            landmarkName = "-controller:didChangeSection:atIndex:forChangeType:"
+            landmarkName = "-controllerDidChangeContent:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -265,8 +265,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "570"
             endingLineNumber = "570"
-            landmarkName = "-controllerDidChangeContent:"
-            landmarkType = "5">
+            landmarkName = "@implementation SearchTableViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

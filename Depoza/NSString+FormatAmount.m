@@ -19,7 +19,12 @@
     }
     NSString *formattedString = [formatter stringFromNumber:amount];
 
-    return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
+    NSString *countryCode = [[NSLocale currentLocale]objectForKey:NSLocaleCountryCode];
+    if ([countryCode isEqualToString:@"RU"]) {
+        return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
+    } else {
+        return [formattedString stringByReplacingOccurrencesOfString:@".00" withString:@""];
+    }
 }
 
 @end

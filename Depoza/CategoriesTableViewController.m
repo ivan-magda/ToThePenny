@@ -93,7 +93,7 @@ NSString * const CategoriesTableViewControllerDidRemoveCategoryNotification = @"
             abort();
         }
 
-        [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category deleted", @"CategoriesVC show message when category deleted")];
+        [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Deleted", @"CategoriesVC show message when category deleted")];
     }
 }
 

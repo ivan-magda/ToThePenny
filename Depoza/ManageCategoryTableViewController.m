@@ -93,7 +93,7 @@ NSString * const ManageCategoryTableViewControllerDidUpdateCategoryNotification 
 
             [[NSNotificationCenter defaultCenter]postNotificationName:ManageCategoryTableViewControllerDidAddCategoryNotification object:category];
 
-            [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddCategoryVC succes text for show") completion:^{
+            [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Added", @"AddCategoryVC succes text for show") completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
         } else {
@@ -116,7 +116,7 @@ NSString * const ManageCategoryTableViewControllerDidUpdateCategoryNotification 
 
             [[NSNotificationCenter defaultCenter]postNotificationName:ManageCategoryTableViewControllerDidUpdateCategoryNotification object:self.categoryToEdit];
 
-            [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category updated", @"AddCategoryVC update category text") completion:^{
+            [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Updated", @"AddCategoryVC update category text") completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
         } else {

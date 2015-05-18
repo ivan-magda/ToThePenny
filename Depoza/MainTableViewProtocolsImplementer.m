@@ -107,7 +107,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     }
 
     if (amount == 0) {
-        return NSLocalizedString(@"No new transactions found", @"Title for header, when amount of expenses is zero");
+        return NSLocalizedString(@"No new transactions today", @"Title for header, when amount of expenses is zero");
     }
 
     NSString *today = NSLocalizedString(@"Today", @"Today in title for header ins section");

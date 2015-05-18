@@ -158,6 +158,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
     NSMutableCharacterSet *charactersToKeep = [NSMutableCharacterSet decimalDigitCharacterSet];
     [charactersToKeep addCharactersInString:@","];
+    [charactersToKeep addCharactersInString:@"."];
 
     NSCharacterSet *charactersToRemove = [charactersToKeep invertedSet];
 
@@ -410,7 +411,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
         abort();
     }
 
-    [KVNProgress showSuccessWithStatus:@"Removed" completion:^{
+    [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Deleted", @"Successful deleted message in DetailVC") completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
 }
@@ -465,7 +466,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     if (isChanged) {
         [[NSNotificationCenter defaultCenter]postNotificationName:DetailExpenseTableViewControllerDidUpdateNotification object:nil];
 
-        [KVNProgress showSuccessWithStatus:@"Updated" completion:^{
+        [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Updated", @"Successful update message in DetailVC") completion:^{
             [self.navigationController popViewControllerAnimated:YES];
         }];
     }
