@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
         <!--Поиск-->
@@ -341,7 +341,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAE-Ji-58i">
-                                            <rect key="frame" x="15" y="12" width="256" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="233" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="3c2-HQ-fEa"/>
                                             </constraints>
@@ -349,11 +349,11 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DeleteSign.png" translatesAutoresizingMaskIntoConstraints="NO" id="37c-fi-Nzs">
-                                            <rect key="frame" x="279" y="12" width="21" height="21"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DeleteSign.png" translatesAutoresizingMaskIntoConstraints="NO" id="37c-fi-Nzs">
+                                            <rect key="frame" x="256" y="0.0" width="44" height="44"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="091-km-DQr"/>
-                                                <constraint firstAttribute="width" constant="21" id="gcl-96-emW"/>
+                                                <constraint firstAttribute="height" constant="44" id="091-km-DQr"/>
+                                                <constraint firstAttribute="width" constant="44" id="gcl-96-emW"/>
                                             </constraints>
                                         </imageView>
                                     </subviews>
@@ -375,15 +375,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="240" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Поиск категории" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fNH-fi-5ja">
-                                            <rect key="frame" x="15" y="12" width="256" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="233" height="21"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjV-cE-r2X">
-                                            <rect key="frame" x="279" y="12" width="21" height="21"/>
+                                            <rect key="frame" x="256" y="0.0" width="44" height="44"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="21" id="1Lx-lR-RQC"/>
-                                                <constraint firstAttribute="height" constant="21" id="3c6-mz-R0u"/>
+                                                <constraint firstAttribute="width" constant="44" id="1Lx-lR-RQC"/>
+                                                <constraint firstAttribute="height" constant="44" id="3c6-mz-R0u"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <state key="normal" image="Checkmark.png"/>
@@ -692,9 +692,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <sections>
-                            <tableViewSection footerTitle="Управляйте категориями: добавление и изменение." id="dyv-25-eoq" userLabel="CategorySection">
+                            <tableViewSection footerTitle="Управляйте категориями, добавляйте или изменяйте категорию." id="dyv-25-eoq" userLabel="CategorySection">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="e0U-Ne-J04" style="IBUITableViewCellStyleDefault" id="ndQ-Ny-pkq" userLabel="Category">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="e0U-Ne-J04" imageView="qz8-hc-xSK" style="IBUITableViewCellStyleDefault" id="ndQ-Ny-pkq" userLabel="Category">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ndQ-Ny-pkq" id="3rX-WK-b1B">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -705,13 +705,16 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Content.png" id="qz8-hc-xSK">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="uP3-aB-RxQ" kind="push" identifier="Categories" id="qge-y3-6o4"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="1mw-1W-tE6" style="IBUITableViewCellStyleDefault" id="3bN-uE-5y0" userLabel="AddCategory">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="1mw-1W-tE6" imageView="x4m-Tj-G7Y" style="IBUITableViewCellStyleDefault" id="3bN-uE-5y0" userLabel="AddCategory">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3bN-uE-5y0" id="ciw-bD-b2A">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -722,6 +725,9 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="CreateNew.png" id="x4m-Tj-G7Y">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -732,7 +738,7 @@
                             </tableViewSection>
                             <tableViewSection footerTitle="Управляйте настройками расширения." id="Ocd-v5-Fg1" userLabel="ExtenstionSection">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7jZ-Yl-Zz5" style="IBUITableViewCellStyleDefault" id="cXe-pp-c1a" userLabel="Extenstion">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="7jZ-Yl-Zz5" imageView="pij-5B-OIi" style="IBUITableViewCellStyleDefault" id="cXe-pp-c1a" userLabel="Extenstion">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cXe-pp-c1a" id="3qd-lA-WJ4">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -743,6 +749,9 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="Plugin.png" id="pij-5B-OIi">
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </imageView>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
@@ -759,7 +768,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Добавление при открытии" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwa-Ip-Gee">
-                                                    <rect key="frame" x="15" y="11" width="205" height="21"/>
+                                                    <rect key="frame" x="52" y="11" width="211" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -770,15 +779,24 @@
                                                         <action selector="startupSwitchDidChangeValue:" destination="Dv6-6c-FEv" eventType="valueChanged" id="KGa-3k-rA7"/>
                                                     </connections>
                                                 </switch>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MoneyBox.png" translatesAutoresizingMaskIntoConstraints="NO" id="z5z-7e-1rB">
+                                                    <rect key="frame" x="15" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="JJl-VA-Fwk"/>
+                                                        <constraint firstAttribute="width" constant="22" id="cBq-rV-Cqm"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Gwa-Ip-Gee" secondAttribute="bottom" constant="11" id="4M5-87-x6r"/>
-                                                <constraint firstItem="Gwa-Ip-Gee" firstAttribute="leading" secondItem="XPk-aP-X1y" secondAttribute="leading" constant="15" id="4yE-sZ-8Sh"/>
                                                 <constraint firstAttribute="bottom" secondItem="nJY-OX-oOW" secondAttribute="bottom" constant="6" id="BYZ-Tx-oQO"/>
+                                                <constraint firstAttribute="centerY" secondItem="z5z-7e-1rB" secondAttribute="centerY" id="G1V-yk-bzb"/>
+                                                <constraint firstItem="Gwa-Ip-Gee" firstAttribute="leading" secondItem="z5z-7e-1rB" secondAttribute="trailing" constant="15" id="LGR-Fq-G3k"/>
                                                 <constraint firstItem="Gwa-Ip-Gee" firstAttribute="top" secondItem="XPk-aP-X1y" secondAttribute="top" constant="11" id="bbQ-v9-hm9"/>
                                                 <constraint firstAttribute="trailing" secondItem="nJY-OX-oOW" secondAttribute="trailing" constant="8" id="df8-Ca-jaS"/>
-                                                <constraint firstItem="nJY-OX-oOW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gwa-Ip-Gee" secondAttribute="trailing" constant="8" symbolic="YES" id="for-Gd-LLw"/>
+                                                <constraint firstItem="nJY-OX-oOW" firstAttribute="leading" secondItem="Gwa-Ip-Gee" secondAttribute="trailing" id="for-Gd-LLw"/>
                                                 <constraint firstItem="nJY-OX-oOW" firstAttribute="top" secondItem="XPk-aP-X1y" secondAttribute="top" constant="6" id="ndP-6W-iTr"/>
+                                                <constraint firstItem="z5z-7e-1rB" firstAttribute="leading" secondItem="XPk-aP-X1y" secondAttribute="leading" constant="15" id="qii-Vh-Aru"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -816,7 +834,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3mX-Ew-tYa" id="Jgb-nI-zU6">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Отображаемые расходы" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ohr-Bg-X3j">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Отображаемых транзакций" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ohr-Bg-X3j">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1337,7 +1355,11 @@
         <image name="Checkmark.png" width="21" height="21"/>
         <image name="Clothes" width="42" height="42"/>
         <image name="Cocktail" width="42" height="42"/>
+        <image name="Content.png" width="22" height="22"/>
+        <image name="CreateNew.png" width="22" height="22"/>
         <image name="DeleteSign.png" width="21" height="21"/>
+        <image name="MoneyBox.png" width="22" height="22"/>
+        <image name="Plugin.png" width="22" height="22"/>
         <image name="Search.png" width="32" height="32"/>
         <image name="Settings.png" width="32" height="32"/>
         <image name="Tomato" width="42" height="42"/>
@@ -1348,9 +1370,9 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="rRc-1T-lWX"/>
-        <segue reference="Ke7-wc-ErB"/>
+        <segue reference="bBY-Me-af6"/>
         <segue reference="xQY-w0-KW7"/>
+        <segue reference="rRc-1T-lWX"/>
         <segue reference="hGy-jW-v8B"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
