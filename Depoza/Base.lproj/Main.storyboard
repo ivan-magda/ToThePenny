@@ -1306,7 +1306,7 @@
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="jGb-u9-8Qt" secondAttribute="trailing" id="3H6-m0-fX0"/>
                                         <constraint firstItem="WDI-1N-8eL" firstAttribute="leading" secondItem="x2k-Nr-jZs" secondAttribute="leading" constant="15" id="40E-qh-lbt"/>
-                                        <constraint firstItem="jGb-u9-8Qt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WDI-1N-8eL" secondAttribute="trailing" id="O2t-6I-kZ6"/>
+                                        <constraint firstItem="jGb-u9-8Qt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WDI-1N-8eL" secondAttribute="trailing" constant="1" id="O2t-6I-kZ6"/>
                                         <constraint firstAttribute="centerY" secondItem="jGb-u9-8Qt" secondAttribute="centerY" id="WqM-pK-J8M"/>
                                         <constraint firstAttribute="centerY" secondItem="WDI-1N-8eL" secondAttribute="centerY" id="wnV-Gr-VuY"/>
                                     </constraints>
