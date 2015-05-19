@@ -341,7 +341,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rAE-Ji-58i">
-                                            <rect key="frame" x="15" y="12" width="233" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="245" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="21" id="3c2-HQ-fEa"/>
                                             </constraints>
@@ -350,7 +350,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DeleteSign.png" translatesAutoresizingMaskIntoConstraints="NO" id="37c-fi-Nzs">
-                                            <rect key="frame" x="256" y="0.0" width="44" height="44"/>
+                                            <rect key="frame" x="268" y="0.0" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="091-km-DQr"/>
                                                 <constraint firstAttribute="width" constant="44" id="gcl-96-emW"/>
@@ -360,7 +360,7 @@
                                     <constraints>
                                         <constraint firstAttribute="centerY" secondItem="37c-fi-Nzs" secondAttribute="centerY" id="Ca2-oj-paN"/>
                                         <constraint firstItem="rAE-Ji-58i" firstAttribute="leading" secondItem="uBl-Z0-YwN" secondAttribute="leading" constant="15" id="SxG-HT-I83"/>
-                                        <constraint firstAttribute="trailing" secondItem="37c-fi-Nzs" secondAttribute="trailing" constant="20" symbolic="YES" id="duN-j3-mSy"/>
+                                        <constraint firstAttribute="trailing" secondItem="37c-fi-Nzs" secondAttribute="trailing" constant="8" id="duN-j3-mSy"/>
                                         <constraint firstAttribute="centerY" secondItem="rAE-Ji-58i" secondAttribute="centerY" id="hGV-KO-tNk"/>
                                         <constraint firstItem="37c-fi-Nzs" firstAttribute="leading" secondItem="rAE-Ji-58i" secondAttribute="trailing" constant="8" symbolic="YES" id="za1-fV-GBh"/>
                                     </constraints>
@@ -375,12 +375,12 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" tag="240" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Поиск категории" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fNH-fi-5ja">
-                                            <rect key="frame" x="15" y="12" width="233" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="245" height="21"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <textInputTraits key="textInputTraits" autocorrectionType="no"/>
                                         </textField>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjV-cE-r2X">
-                                            <rect key="frame" x="256" y="0.0" width="44" height="44"/>
+                                            <rect key="frame" x="268" y="0.0" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="44" id="1Lx-lR-RQC"/>
                                                 <constraint firstAttribute="height" constant="44" id="3c6-mz-R0u"/>
@@ -394,7 +394,7 @@
                                         <constraint firstItem="jjV-cE-r2X" firstAttribute="leading" secondItem="fNH-fi-5ja" secondAttribute="trailing" constant="8" symbolic="YES" id="DDj-OW-a43"/>
                                         <constraint firstAttribute="centerY" secondItem="jjV-cE-r2X" secondAttribute="centerY" id="TBC-yv-sfN"/>
                                         <constraint firstAttribute="centerY" secondItem="fNH-fi-5ja" secondAttribute="centerY" id="lVH-dF-EkR"/>
-                                        <constraint firstAttribute="trailing" secondItem="jjV-cE-r2X" secondAttribute="trailing" constant="20" symbolic="YES" id="xf6-lU-ZaJ"/>
+                                        <constraint firstAttribute="trailing" secondItem="jjV-cE-r2X" secondAttribute="trailing" constant="8" id="xf6-lU-ZaJ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
