@@ -20,6 +20,8 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+static const CGFloat kTableViewRowHeight = 44.0f;
+
 typedef NS_ENUM(NSInteger, ScrollDirection) {
     ScrollDirectionNone,
     ScrollDirectionRight,
@@ -126,6 +128,11 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     MainViewCell *cell = (MainViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell"];
 
     [self configureCell:cell atIndexPath:indexPath];
+
+    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, kTableViewRowHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
+    separator.backgroundColor = tableView.separatorColor;
+
+    [cell addSubview:separator];
 
     return cell;
 }
