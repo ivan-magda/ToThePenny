@@ -26,6 +26,8 @@ static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza"
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 
+NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
+
 @implementation AppDelegate {
     CustomTabBarController *_tabBarController;
     MainViewController *_mainViewController;
@@ -231,6 +233,24 @@ static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"Deta
     
     [self.persistence removePersistentStoreNotificationSubscribes];
     [self.persistence saveContext];
+}
+
+#pragma mark - StatusBarTouchTracking -
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesBegan:touches withEvent:event];
+
+    CGPoint location = [[[event allTouches]anyObject]locationInView:[self window]];
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+
+    if (CGRectContainsPoint(statusBarFrame, location)) {
+        [self statusBarTouchedAction];
+    }
+}
+
+- (void)statusBarTouchedAction {
+    [[NSNotificationCenter defaultCenter]postNotificationName:StatusBarTappedNotification
+                                                        object:nil];
 }
 
 @end

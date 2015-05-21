@@ -1,3 +1,5 @@
+    //AppDelegate
+#import "AppDelegate.h"
     //ViewControllers
 #import "MainViewController.h"
 #import "AddExpenseTableViewController.h"
@@ -103,6 +105,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self addNotificationSubscribes];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(statusBarTappedAction:) name:StatusBarTappedNotification object:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
 
@@ -111,6 +118,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
             self.tableView.alpha = 1.0f;
         }];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:StatusBarTappedNotification object:nil];
 }
 
 - (void)dealloc {
@@ -555,6 +567,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 - (void)applicationWillResignActive {
     [self changeMonthToShowFromDate:[NSDate date]];
+}
+
+- (void)statusBarTappedAction:(NSNotification *)notification {
+    UIScrollView *scrollView = (UIScrollView *)self.tableView;
+    [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:YES];
 }
 
 #pragma mark DetailExpenseTableViewControllerNotification
