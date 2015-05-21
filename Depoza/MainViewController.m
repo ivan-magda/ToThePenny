@@ -201,7 +201,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)notificateCategoriesContainerViewControllerWithNewCategoriesInfo:(NSArray *)categoriesInfo {
     NSArray *categories = [self cleanUpCategoriesInfoWithInfo:categoriesInfo];
 
-    [self updateTableHeaderViewFromNumberOfCategories:categories.count];
+    [self updateTableHeaderViewLayoutFromNumberOfCategories:categories.count];
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:categories];
 }
@@ -235,14 +235,15 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     self.totalExpensesLabel.text = [NSString formatAmount:@(_totalExpenses)];
 }
 
-- (void)updateTableHeaderViewFromNumberOfCategories:(NSInteger)categoriesCount{
+- (void)updateTableHeaderViewLayoutFromNumberOfCategories:(NSInteger)categoriesCount{
     [self.view layoutIfNeeded];
 
     BOOL isTwoCollumns = (categoriesCount >= 5);
     BOOL isEmpty = (categoriesCount == 0);
 
         //Hide page control if numberOfPages == 1(categoriesCount > 8)
-    CGFloat adjustment = (categoriesCount <= 8 ? DefaultPageControlHeightValue - 8.0f : 0);
+    CGFloat spaceBetweenCollectionView = 8.0f;
+    CGFloat adjustment = (categoriesCount <= 8 ? DefaultPageControlHeightValue - spaceBetweenCollectionView : 0);
 
     if (isEmpty) {
         self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
