@@ -85,6 +85,17 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     return attributedText;
 }
 
+- (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+    ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+
+    cell.categoryLabel.text = (expense.descriptionOfExpense.length == 0 ? expense.category.title : expense.descriptionOfExpense);
+    cell.amountLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
+}
+
+- (BOOL)noNewTransactionsToday {
+    return (self.fetchedResultsController.fetchedObjects.count == 0);
+}
+
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -95,33 +106,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
     return [sectionInfo numberOfObjects];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (![self isCurrentMonthShowing] && self.fetchedResultsController.fetchedObjects.count > 0) {
-        return NSLocalizedString(@"All expenses for month", @"Title for header, when show all expenses for month");
-    }
-
-    NSArray *expenses = self.fetchedResultsController.fetchedObjects;
-    CGFloat amount = 0.0f;
-    for (ExpenseData *anExpense in expenses) {
-        amount += [anExpense.amount floatValue];
-    }
-
-    if (amount == 0) {
-        return NSLocalizedString(@"No new transactions today", @"Title for header, when amount of expenses is zero");
-    }
-
-    NSString *today = NSLocalizedString(@"Today", @"Today in title for header ins section");
-
-    return [NSString stringWithFormat:@"%@: %@", today, [NSString formatAmount:@(amount)]];
-}
-
-- (void)configureCell:(MainViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
-
-    cell.categoryLabel.text = (expense.descriptionOfExpense.length == 0 ? expense.category.title : expense.descriptionOfExpense);
-    cell.amountLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -155,13 +139,41 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     }
 }
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if ([self noNewTransactionsToday]) {
+        return nil;
+    }
+
+    if (![self isCurrentMonthShowing] && self.fetchedResultsController.fetchedObjects.count > 0) {
+        return NSLocalizedString(@"All transactions for month", @"Title for header, when show all expenses for month");
+    }
+
+    NSArray *expenses = self.fetchedResultsController.fetchedObjects;
+    CGFloat amount = 0.0f;
+    for (ExpenseData *anExpense in expenses) {
+        amount += [anExpense.amount floatValue];
+    }
+
+    NSString *today = NSLocalizedString(@"Today", @"Today in title for header ins section");
+
+    return [NSString stringWithFormat:@"%@: %@", today, [NSString formatAmount:@(amount)]];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if ([self noNewTransactionsToday]) {
+        return 0.0f;
+    }
+
     return self.tableView.sectionHeaderHeight;
 }
 
 #pragma mark - UITableViewDelegate -
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if ([self noNewTransactionsToday]) {
+        return nil;
+    }
+
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
     label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
     label.shadowOffset = CGSizeMake(0, 1);

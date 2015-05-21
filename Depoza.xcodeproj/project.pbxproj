@@ -617,6 +617,7 @@
 				506E72931A1E0B450006F2DF /* Images.xcassets */,
 				506E72951A1E0B450006F2DF /* LaunchScreen.xib */,
 				50A1D4D21AC03ECA00E56EB1 /* Depoza.entitlements */,
+				509B7D6F1B0A1F29007711EA /* Localizable.strings */,
 				505CA13F1A762653009CA7B1 /* Categories */,
 				5025479B1A1ED27600DCB8FB /* Resources */,
 				500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */,
@@ -628,7 +629,6 @@
 		506E72831A1E0B450006F2DF /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				509B7D6F1B0A1F29007711EA /* Localizable.strings */,
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				506E72851A1E0B450006F2DF /* main.m */,
 			);

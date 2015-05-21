@@ -577,15 +577,15 @@ typedef NS_ENUM(NSUInteger, SectionType) {
             NSParameterAssert(NO);
         }
     } else if (_expenseFromTextField.floatValue == 0.0f && _categorySelected){
-        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Please enter the amount of expense", @"Failure enter amount of expense message in AddExpenseVC") completion:^{
+        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Enter the amount of expense", @"Failure enter amount of expense message in AddExpenseVC") completion:^{
             [_expenseTextField becomeFirstResponder];
         }];
     } else if (_expenseFromTextField.floatValue > 0.0f && !_categorySelected) {
-        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Please choose category", @"Failure choose category message in AddExpenseVC") completion:^{
+        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Choose category", @"Failure choose category message in AddExpenseVC") completion:^{
             [self resignActiveTextField];
         }];
     } else {
-        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Please enter the data", @"Failure enter data message in AddExpenseVC") completion:^{
+        [KVNProgress showErrorWithStatus:NSLocalizedString(@"Enter the data", @"Failure enter data message in AddExpenseVC") completion:^{
             [_expenseTextField becomeFirstResponder];
         }];
     }
