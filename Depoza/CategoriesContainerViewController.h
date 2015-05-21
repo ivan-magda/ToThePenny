@@ -30,6 +30,11 @@ extern const CGFloat DefaultCollectionViewHeightValue;
  */
 extern const CGFloat ReducedCollectionViewHeightValue;
 
+/*!
+ * The default constant value of page control height constant equal to 37.0f.
+ */
+extern const CGFloat DefaultPageControlHeightValue;
+
 @interface CategoriesContainerViewController : UIViewController <MainViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -42,5 +47,7 @@ extern const CGFloat ReducedCollectionViewHeightValue;
 @property (nonatomic, strong) NSDate *timePeriod;
 
 @property (nonatomic, strong) id <CategoriesContainerViewControllerDelegate>delegate;
+
+- (NSInteger)numberOfPages;
 
 @end

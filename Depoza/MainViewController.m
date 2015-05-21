@@ -201,7 +201,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)notificateCategoriesContainerViewControllerWithNewCategoriesInfo:(NSArray *)categoriesInfo {
     NSArray *categories = [self cleanUpCategoriesInfoWithInfo:categoriesInfo];
 
-    [self updateTableHeaderViewIfNeededFromNumberOfCategories:categories.count];
+    [self updateTableHeaderViewFromNumberOfCategories:categories.count];
 
     [self.delegate mainViewController:self didLoadCategoriesInfo:categories];
 }
@@ -235,49 +235,35 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     self.totalExpensesLabel.text = [NSString formatAmount:@(_totalExpenses)];
 }
 
-- (void)updateTableHeaderViewIfNeededFromNumberOfCategories:(NSInteger)categoriesCount{
+- (void)updateTableHeaderViewFromNumberOfCategories:(NSInteger)categoriesCount{
     [self.view layoutIfNeeded];
 
-    BOOL isTwoCollumns = categoriesCount >= 5;
-    BOOL isEmpty = categoriesCount == 0;
+    BOOL isTwoCollumns = (categoriesCount >= 5);
+    BOOL isEmpty = (categoriesCount == 0);
+
+        //Hide page control if numberOfPages == 1(categoriesCount > 8)
+    CGFloat adjustment = (categoriesCount <= 8 ? DefaultPageControlHeightValue - 8.0f : 0);
 
     if (isEmpty) {
-        if (_containerViewHeightConstraint.constant != ReducedContainerViewHeightValue ||
-            _containerView.collectionViewHeightConstraint.constant != 0.0f) {
-            self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
-            self.containerView.collectionViewHeightConstraint.constant = 0.0f;
-        }
+        self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
+        self.containerView.collectionViewHeightConstraint.constant = 0.0f;
     } else if (isTwoCollumns) {
-        if (_containerViewHeightConstraint.constant != DefaultContainerViewHeightValue ||
-            _containerView.collectionViewHeightConstraint.constant != DefaultCollectionViewHeightValue) {
-            self.containerViewHeightConstraint.constant = DefaultContainerViewHeightValue;
-            self.containerView.collectionViewHeightConstraint.constant = DefaultCollectionViewHeightValue;
-        }
+        self.containerViewHeightConstraint.constant = DefaultContainerViewHeightValue - adjustment;
+        self.containerView.collectionViewHeightConstraint.constant = DefaultCollectionViewHeightValue;
     } else {
-        if (_containerViewHeightConstraint.constant != ReducedContainerViewHeightValue ||
-            _containerView.collectionViewHeightConstraint.constant != ReducedContainerViewHeightValue) {
-            self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue;
-            self.containerView.collectionViewHeightConstraint.constant = ReducedCollectionViewHeightValue;
-        }
+        self.containerViewHeightConstraint.constant = ReducedContainerViewHeightValue - adjustment;
+        self.containerView.collectionViewHeightConstraint.constant = ReducedCollectionViewHeightValue;
     }
-    
+
     [self.view layoutIfNeeded];
     self.containerView.collectionView.alpha = 0.0f;
 
     if (isTwoCollumns) {
-        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kDefaultInfoViewHeightValue) {
-            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kDefaultInfoViewHeightValue);
-            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
-        } else {
-            self.containerView.collectionView.alpha = 1.0f;
-        }
+        CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kDefaultInfoViewHeightValue - adjustment);
+        [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
     } else {
-        if (CGRectGetHeight(self.tableView.tableHeaderView.bounds) != kReducedInfoViewHeightValue) {
-            CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kReducedInfoViewHeightValue);
-            [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
-        } else {
-            self.containerView.collectionView.alpha = 1.0f;
-        }
+        CGRect frame =  CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), kReducedInfoViewHeightValue - adjustment);
+        [self changeHeightTableHeaderViewWithAnimationFromFrame:frame];
     }
 }
 

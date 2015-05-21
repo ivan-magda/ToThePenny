@@ -22,9 +22,12 @@ const CGFloat ReducedContainerViewHeightValue = 106.0f;
 const CGFloat DefaultCollectionViewHeightValue = 138.0f;
 const CGFloat ReducedCollectionViewHeightValue = 69.0f;
 
+const CGFloat DefaultPageControlHeightValue = 37.0f;
+
 @interface CategoriesContainerViewController ()
 
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pageControlHeightConstraint;
 
 @end
 
@@ -36,6 +39,14 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
 
     NSParameterAssert(_managedObjectContext);
 }
+
+#pragma mark - Private -
+
+- (NSInteger)numberOfPages {
+    return self.pageControl.numberOfPages;
+}
+
+#pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"CategorySelected"]) {
@@ -100,6 +111,9 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
     NSInteger itemCount = [self.collectionView numberOfItemsInSection:0];
     NSInteger pages = ceil(itemCount / 8.0);
     [self.pageControl setNumberOfPages:pages];
+
+    self.pageControlHeightConstraint.constant = (pages == 1 ? 0.0f : DefaultPageControlHeightValue);
+    self.pageControl.hidden = pages == 1;
 
     return cell;
 }

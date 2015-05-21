@@ -1237,6 +1237,7 @@
                         <outlet property="collectionView" destination="7up-cW-8Pr" id="vmt-qS-ysd"/>
                         <outlet property="collectionViewHeightConstraint" destination="8VD-Gg-mhy" id="6mH-Iu-92J"/>
                         <outlet property="pageControl" destination="VC3-d3-h8e" id="rjB-if-TTd"/>
+                        <outlet property="pageControlHeightConstraint" destination="0Vu-D2-3D5" id="obT-8r-NFx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngY-57-QyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
