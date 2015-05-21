@@ -53,6 +53,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 @property (weak, nonatomic) IBOutlet UILabel *totalExpensesLabel;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *addTransactionRoundedButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *containerViewHeightConstraint;
 
@@ -98,10 +99,10 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self initializeLocalVariables];
 
     [self configurateTableAndFetchedControllers];
-
+    [self configurateAddTransactionButton];
     [self configurateTitleViewButton];
-    [self addMotionEffectToViews];
 
+    [self addMotionEffectToViews];
     [self addNotificationSubscribes];
 }
 
@@ -163,6 +164,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
 }
 
+- (void)configurateAddTransactionButton {
+    self.addTransactionRoundedButton.layer.cornerRadius = (CGRectGetHeight(self.addTransactionRoundedButton.bounds) / 2.0f);
+    [self addMotionEffectToView:self.addTransactionRoundedButton magnitude:kMotionEffectMagnitudeValue];
+}
+
 - (BOOL)isCurrentMonthWithNoExpenses {
     return (_totalExpenses == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
 }
@@ -181,6 +187,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
             self.isShowExpenseDetailFromExtension = NO;
         }
     }
+}
+
+- (void)setScrollViewContentOffsetToZeroAnimated:(BOOL)animated {
+    UIScrollView *scrollView = (UIScrollView *)self.tableView;
+    [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:animated];
 }
 
 #pragma mark FetchCategoriesData
@@ -529,6 +540,10 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     NSDate *date = [self dateFromMonthInfo:monthInfo];
 
     [self changeMonthToShowFromDate:date];
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self setScrollViewContentOffsetToZeroAnimated:YES];
+    });
 }
 
 - (NSDate *)dateFromMonthInfo:(NSDictionary *)monthInfo {
@@ -570,8 +585,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)statusBarTappedAction:(NSNotification *)notification {
-    UIScrollView *scrollView = (UIScrollView *)self.tableView;
-    [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:YES];
+    [self setScrollViewContentOffsetToZeroAnimated:YES];
 }
 
 #pragma mark DetailExpenseTableViewControllerNotification

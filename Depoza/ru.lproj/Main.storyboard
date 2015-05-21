@@ -239,6 +239,20 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wma-3l-z5Q">
+                                <rect key="frame" x="252" y="387" width="60" height="60"/>
+                                <color key="backgroundColor" red="0.039215686274509803" green="0.47843137254901957" blue="0.70980392156862748" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="v64-Na-slM"/>
+                                    <constraint firstAttribute="width" constant="60" id="xQi-13-RJy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="ultraLight" pointSize="50"/>
+                                <inset key="contentEdgeInsets" minX="0.0" minY="-8" maxX="0.0" maxY="0.0"/>
+                                <state key="normal" title="+"/>
+                                <connections>
+                                    <segue destination="JNE-qc-fiL" kind="modal" identifier="AddExpense" id="lak-r0-Hy5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -246,6 +260,8 @@
                             <constraint firstItem="LcM-Rm-VQk" firstAttribute="leading" secondItem="Lms-O3-59V" secondAttribute="leading" id="WXf-kD-aUo"/>
                             <constraint firstAttribute="bottom" secondItem="LcM-Rm-VQk" secondAttribute="bottom" id="fFl-AZ-SPK"/>
                             <constraint firstAttribute="trailing" secondItem="LcM-Rm-VQk" secondAttribute="trailing" id="krU-4h-EdT"/>
+                            <constraint firstAttribute="trailing" secondItem="Wma-3l-z5Q" secondAttribute="trailing" constant="8" id="vhp-Fy-OfW"/>
+                            <constraint firstItem="Npd-sX-d81" firstAttribute="top" secondItem="Wma-3l-z5Q" secondAttribute="bottom" constant="8" symbolic="YES" id="zcb-uk-IOj"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Расходы" id="H7q-K3-3GL">
@@ -254,13 +270,9 @@
                                 <segue destination="1Gu-Al-Idk" kind="push" identifier="PieChart" id="18Y-dP-37v"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="tTU-ch-4YA">
-                            <connections>
-                                <segue destination="JNE-qc-fiL" kind="modal" identifier="AddExpense" id="3er-JC-Cyy"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addTransactionRoundedButton" destination="Wma-3l-z5Q" id="qSG-XQ-Qci"/>
                         <outlet property="containerViewHeightConstraint" destination="0sj-Na-8SW" id="Ehc-L6-v4h"/>
                         <outlet property="tableView" destination="LcM-Rm-VQk" id="rCs-nx-4dA"/>
                         <outlet property="totalExpensesLabel" destination="kxL-xl-ePS" id="bHk-oc-csJ"/>
