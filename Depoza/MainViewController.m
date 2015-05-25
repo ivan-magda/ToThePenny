@@ -498,6 +498,10 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)addExpenseTableViewController:(AddExpenseTableViewController *)controller didFinishAddingExpense:(Expense *)expense {
     _isAddExpensePresenting = NO;
 
+    if (![[NSDate date]isDatesWithEqualMonth:expense.dateOfExpense]) {
+        return;
+    }
+
     _totalExpenses += [expense.amount floatValue];
 
     [_categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

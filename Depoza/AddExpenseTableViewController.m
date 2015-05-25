@@ -62,7 +62,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     BOOL _delegateNotified;
 
     BOOL _datePickerVisible;
-    NSDate *_dateExpense;
+    NSDate *_date;
 }
 
 #pragma mark - ViewController life cycle -
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
     _delegateNotified = NO;
     _datePickerVisible = NO;
-    _dateExpense = [NSDate date];
+    _date = [NSDate date];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -187,7 +187,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                 [cell.contentView addSubview:separatorLineView];
             }
 
-            cell.textLabel.text = [self formatDate:_dateExpense];
+            cell.textLabel.text = [self formatDate:_date];
 
             return cell;
         } else {
@@ -201,7 +201,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                 datePicker.tag = 112;
 
                 [datePicker setMaximumDate:[NSDate getStartAndEndDatesOfTheCurrentDate].lastObject];
-                [datePicker setDate:_dateExpense];
+                [datePicker setDate:_date];
 
                 [cell.contentView addSubview:datePicker];
                 [cell.contentView addSubview:separatorLineView];
@@ -210,7 +210,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
             }
 
             UIDatePicker *datePicker = (UIDatePicker *)[cell viewWithTag:112];
-            [datePicker setDate:_dateExpense animated:NO];
+            [datePicker setDate:_date animated:NO];
 
             return cell;
         }
@@ -507,8 +507,8 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 #pragma mark DatePicker
 
 - (void)dateChanged:(UIDatePicker *)datePicker {
-    _dateExpense = datePicker.date;
-    [self updateDateLabelWithDate:_dateExpense];
+    _date = datePicker.date;
+    [self updateDateLabelWithDate:_date];
 }
 
 - (NSIndexPath *)dateCellIndexPath {
@@ -562,6 +562,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         CategoriesInfo *category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_categoriesInfo];
 
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField categoryName:category.title description:_descriptionTextField.text];
+        expense.dateOfExpense = _date;
 
         [self addExpenseToCategoryData:expense];
 
@@ -599,7 +600,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:self.managedObjectContext];
     expenseData.amount = expense.amount;
     expenseData.categoryId = categoryData.idValue;
-    expenseData.dateOfExpense = _dateExpense;
+    expenseData.dateOfExpense = _date;
     expenseData.descriptionOfExpense = expense.descriptionOfExpense;
     expenseData.idValue = @(expense.idValue);
     expenseData.category = categoryData;
