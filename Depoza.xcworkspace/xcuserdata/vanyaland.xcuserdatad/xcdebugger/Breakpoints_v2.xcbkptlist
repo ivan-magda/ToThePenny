@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/Persistence.m"
-            timestampString = "452314410.167083"
+            timestampString = "454250530.377849"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "523"
-            endingLineNumber = "523"
+            startingLineNumber = "547"
+            endingLineNumber = "547"
             landmarkName = "-deduplicationExpensesWithCompletionHandler:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,6 +362,22 @@
             startingLineNumber = "241"
             endingLineNumber = "241"
             landmarkName = "-touchesBegan:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Depoza/Persistence.m"
+            timestampString = "454250530.377849"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "285"
+            endingLineNumber = "285"
+            landmarkName = "-deviceListURL"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

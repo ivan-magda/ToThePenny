@@ -17,7 +17,7 @@
 typedef void(^DeduplicationsCompletionHandlerBlock)(BOOL deduplicationsFound);
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
-static NSString * const kUbiquitousKeyValueStoreSeedDataKey = @"seedData";
+static NSString * const kUserDefaultsSeedDataKey = @"seedData";
 static NSString * const kURLForUbiquityContainerIdentifier = @"iCloud.com.MagdaIvan.Depoza";
 
 NSString* Setting_iCloudUUID = @"iCloud.UUID";
@@ -79,6 +79,10 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             }];
         });
 
+        if (_iCloudStoreExists) {
+            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:kUserDefaultsSeedDataKey];
+        }
+
         [self managedObjectContext];
     }
     return self;
@@ -108,7 +112,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 
         [self addPersistentStoreNotificationSubscribes];
 
-        if (!_iCloudStoreExists ) {
+        if (!_iCloudStoreExists && ![[NSUserDefaults standardUserDefaults]boolForKey:kUserDefaultsSeedDataKey]) {
             [self seedInitialData:_persistentStoreCoordinator];
         } else {
             NSError *error = nil;
@@ -158,8 +162,8 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     }
     NSLog(@"Store succesfully initialized using the original seed");
 
-    NSUbiquitousKeyValueStore *kvStore = [NSUbiquitousKeyValueStore defaultStore];
-    [kvStore setBool:YES forKey:kUbiquitousKeyValueStoreSeedDataKey];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:YES forKey:kUserDefaultsSeedDataKey];
 }
 
 - (void)insertNecessaryCategoryData {
@@ -273,7 +277,10 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 
 #pragma mark Device List Handling
 
-#warning if iCloud don't enabled then app crash
+- (BOOL)iCloudEnabled {
+    return ([[NSFileManager defaultManager]ubiquityIdentityToken] != nil);
+}
+
 - (NSURL *)deviceListURL {
     NSURL *iCloudURLBase = [[NSFileManager defaultManager] URLForUbiquityContainerIdentifier:kURLForUbiquityContainerIdentifier];
 
@@ -283,6 +290,10 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 }
 
 - (void)setupDeviceList {
+    if (![self iCloudEnabled]) {
+        return;
+    }
+
     _knownDeviceUUIDs = nil;
 
         // setup the device list document
@@ -307,6 +318,10 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 }
 
 - (void)teardownDeviceList {
+    if (![self iCloudEnabled]) {
+        return;
+    }
+
     if (_deviceList) {
         [NSFileCoordinator removeFilePresenter:_deviceList];
         _deviceList = nil;
@@ -323,6 +338,10 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 }
 
 - (void)deviceListChanged:(NSNotification *)notification {
+    if (![self iCloudEnabled]) {
+        return;
+    }
+
     dispatch_async(_backgroundQueue, ^{
         @synchronized(_backgroundQueue) {
                 // prevent any other change notifications while we are processing the updated list
@@ -339,6 +358,14 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 
 //Refreshing the device list handles forcing the synchronisation, checking if the current device is known and updating the device list.
 - (void)refreshDeviceList:(BOOL)canAddCurrentDevice completionHandler:(void (^)(BOOL deviceListExisted, BOOL currentDevicePresent))completionHandler {
+    __block BOOL deviceListExisted = NO;
+    __block BOOL currentDevicePresent = NO;
+
+    if (![self iCloudEnabled]) {
+        completionHandler(deviceListExisted, currentDevicePresent);
+        return;
+    }
+
     _knownDeviceUUIDs = nil;
 
     NSString* iCloudUUID = [[NSUserDefaults standardUserDefaults] stringForKey:Setting_iCloudUUID];
@@ -348,9 +375,6 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     [fileURL forceSyncFile:_backgroundQueue completion:^(BOOL syncCompleted, NSError* error) {
         NSFileCoordinator *coordinator = [[NSFileCoordinator alloc] initWithFilePresenter:_deviceList];
         error = nil;
-
-        __block BOOL deviceListExisted = NO;
-        __block BOOL currentDevicePresent = NO;
 
             // attempt to read the device list
         [coordinator coordinateReadingItemAtURL:fileURL options:0 error:&error byAccessor:^(NSURL *readURL) {
