@@ -6,8 +6,12 @@
     //  Copyright (c) 2014 Ivan Magda. All rights reserved.
     //
 
-    //ViewControllers
+    //AppDelegate
 #import "AppDelegate.h"
+    //Crashlytics
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+    //ViewControllers
 #import "CustomTabBarController.h"
 #import "MainViewController.h"
 #import "SearchTableViewController.h"
@@ -136,6 +140,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 #pragma mark - AppDelegate -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [Fabric with:@[CrashlyticsKit]];
+
     [self customiseAppearance];
 
     self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];

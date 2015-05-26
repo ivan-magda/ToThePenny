@@ -30,6 +30,8 @@
 		50206E9C1AC8E097001A017E /* CategoryIconsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50206E9B1AC8E097001A017E /* CategoryIconsCollectionViewController.m */; };
 		502547961A1EC86600DCB8FB /* AddExpenseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502547951A1EC86600DCB8FB /* AddExpenseTableViewController.m */; };
 		502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502839121ACC11A700C97C99 /* CoreData.framework */; };
+		503268E61B147BD400A24667 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503268E41B147BD400A24667 /* Fabric.framework */; };
+		503268E71B147BD400A24667 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503268E51B147BD400A24667 /* Crashlytics.framework */; };
 		503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */ = {isa = PBXBuildFile; fileRef = 503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */; };
 		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
 		5058F20A1B00A1A1007BBDE6 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2071B00A1A1007BBDE6 /* Checkmark.png */; };
@@ -196,6 +198,8 @@
 		502547951A1EC86600DCB8FB /* AddExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseTableViewController.m; sourceTree = "<group>"; };
 		502839121ACC11A700C97C99 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		502A1E4D1A21FADC00C63EA6 /* AddExpenseTableViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseTableViewControllerDelegate.h; sourceTree = "<group>"; };
+		503268E41B147BD400A24667 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Depoza/Fabric.framework; sourceTree = "<group>"; };
+		503268E51B147BD400A24667 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Depoza/Crashlytics.framework; sourceTree = "<group>"; };
 		503BF6F61A9F08D600791B90 /* MainTableViewProtocolsImplementer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewProtocolsImplementer.h; sourceTree = "<group>"; };
 		503BF6F71A9F08D600791B90 /* MainTableViewProtocolsImplementer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewProtocolsImplementer.m; sourceTree = "<group>"; };
 		504C435D1A9F4856007D6D4B /* CategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesInfo.h; sourceTree = "<group>"; };
@@ -356,6 +360,8 @@
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
 				A70581F20A7C1421A8099790 /* libPods.a in Frameworks */,
+				503268E71B147BD400A24667 /* Crashlytics.framework in Frameworks */,
+				503268E61B147BD400A24667 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,6 +901,8 @@
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				503268E41B147BD400A24667 /* Fabric.framework */,
+				503268E51B147BD400A24667 /* Crashlytics.framework */,
 				50E021E71AD8F78D008489DA /* QuartzCore.framework */,
 				50E021E51AD8F63C008489DA /* Accelerate.framework */,
 				502839121ACC11A700C97C99 /* CoreData.framework */,
@@ -934,6 +942,7 @@
 				506E727E1A1E0B450006F2DF /* Resources */,
 				A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */,
 				5015A5741AC02C230056271A /* Embed App Extensions */,
+				503268E31B147B2800A24667 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1099,6 +1108,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		503268E31B147B2800A24667 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run bc5ec3b27cb51435f8a751d3af6b7c12ab3d3573 9e76b8fae47fb5b6db4d70a5201671f9ae6be32ba2dce7965d7fe4ee6b67bd05";
+		};
 		A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1390,6 +1412,10 @@
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Depoza",
+				);
 				INFOPLIST_FILE = Depoza/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1405,6 +1431,10 @@
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Depoza",
+				);
 				INFOPLIST_FILE = Depoza/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
