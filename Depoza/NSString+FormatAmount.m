@@ -14,17 +14,16 @@
     static NSNumberFormatter *formatter = nil;
     if (formatter == nil) {
         formatter = [NSNumberFormatter new];
+
+        NSLocale *ruLocale = [NSLocale localeWithLocaleIdentifier:@"ru_RU"];
+        formatter.locale = ruLocale;
+
         formatter.numberStyle = kCFNumberFormatterDecimalStyle;
         formatter.minimumFractionDigits = 2;
     }
     NSString *formattedString = [formatter stringFromNumber:amount];
 
-    NSString *countryCode = [[NSLocale currentLocale]objectForKey:NSLocaleCountryCode];
-    if ([countryCode isEqualToString:@"RU"]) {
-        return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
-    } else {
-        return [formattedString stringByReplacingOccurrencesOfString:@".00" withString:@""];
-    }
+    return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
 }
 
 @end
