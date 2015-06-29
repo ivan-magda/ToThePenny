@@ -189,7 +189,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     }
 }
 
-- (void)setScrollViewContentOffsetToZeroAnimated:(BOOL)animated {
+- (void)setScrollViewContentOffsetToZeroWithAnimation:(BOOL)animated {
     UIScrollView *scrollView = (UIScrollView *)self.tableView;
     [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:animated];
 }
@@ -546,7 +546,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self changeMonthToShowFromDate:date];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.15 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self setScrollViewContentOffsetToZeroAnimated:YES];
+        [self setScrollViewContentOffsetToZeroWithAnimation:YES];
     });
 }
 
@@ -589,16 +589,14 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)statusBarTappedAction:(NSNotification *)notification {
-    [self setScrollViewContentOffsetToZeroAnimated:YES];
+    [self setScrollViewContentOffsetToZeroWithAnimation:YES];
 }
 
 #pragma mark DetailExpenseTableViewControllerNotification
 
 - (void)detailExpenseTableViewControllerDidFinishUpdateExpense:(NSNotification *)notification {
     [self loadCategoriesDataBetweenDate:_dateToShow];
-
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
-
     [self updateAmountLabel];
 }
 
@@ -606,7 +604,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 - (void)manageCategoryTableViewControllerDidAddCategory:(NSNotification *)notification {
     CategoryData *category = notification.object;
-
     [self addCategoryToCategoriesInfo:category];
 }
 
