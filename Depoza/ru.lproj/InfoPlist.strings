@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Depoza
+
+  Created by Ivan Magda on 05.07.15.
+  Copyright (c) 2015 Ivan Magda. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "ДоКопеечки";
+"CFBundleName" = "ДоКопеечки";
