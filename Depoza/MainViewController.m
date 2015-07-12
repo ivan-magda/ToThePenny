@@ -87,9 +87,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
     [self assertionCheck];
 
-        //hide pie chart bar button item
-    [self.navigationItem setLeftBarButtonItem:nil];
-
         //Present table view with smooth animation at start up
     if (!_isShowExpenseDetailFromExtension &&
         ![[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {

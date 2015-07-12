@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Wwr-sZ-vet">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
@@ -124,25 +124,6 @@
             </objects>
             <point key="canvasLocation" x="490" y="-1357"/>
         </scene>
-        <!--Pie Chart View Controller-->
-        <scene sceneID="fwu-x9-Q1O">
-            <objects>
-                <viewController id="1Gu-Al-Idk" customClass="PieChartViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="SyF-VQ-Xhz"/>
-                        <viewControllerLayoutGuide type="bottom" id="8bk-iy-Uxz"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="IIq-1H-zGX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="QeJ-oK-Opm"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qch-6P-CnI" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="487" y="-753"/>
-        </scene>
         <!--Expenses-->
         <scene sceneID="uaz-hx-xfG">
             <objects>
@@ -167,7 +148,7 @@
                                                 <constraint firstAttribute="height" constant="36" id="utt-mD-dIX"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="30"/>
-                                            <color key="textColor" red="1" green="0.20000000000000001" blue="0.20000000000000001" alpha="0.90000000000000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                             <size key="shadowOffset" width="0.0" height="1"/>
                                         </label>
@@ -267,9 +248,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Expenses" id="H7q-K3-3GL">
-                        <barButtonItem key="leftBarButtonItem" title="Chart" id="YiM-GO-dM4">
+                        <barButtonItem key="leftBarButtonItem" image="PieChart.png" id="RU9-jm-h8O">
                             <connections>
-                                <segue destination="1Gu-Al-Idk" kind="push" identifier="PieChart" id="18Y-dP-37v"/>
+                                <segue destination="sVo-OS-lba" kind="push" identifier="PieChart" id="wJl-uA-ihQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -282,7 +263,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nh9-BY-Rd1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="-149"/>
+            <point key="canvasLocation" x="502" y="-309"/>
         </scene>
         <!--Add Expense-->
         <scene sceneID="6ay-zP-VgH">
@@ -695,7 +676,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Asx-3q-bNQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="-149"/>
+            <point key="canvasLocation" x="94" y="-309"/>
         </scene>
         <!--Settings-->
         <scene sceneID="nIb-Z6-984">
@@ -830,7 +811,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4Y-gS-7h3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="615"/>
+            <point key="canvasLocation" x="502" y="779"/>
         </scene>
         <!--Extension-->
         <scene sceneID="Ir3-dO-CQe">
@@ -894,7 +875,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SSd-78-ZIx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="1402"/>
+            <point key="canvasLocation" x="502" y="1538"/>
         </scene>
         <!--Categories-->
         <scene sceneID="igg-f7-Ed1">
@@ -935,7 +916,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tRy-B5-kx4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="925" y="976"/>
+            <point key="canvasLocation" x="975" y="1140"/>
         </scene>
         <!--Add Category-->
         <scene sceneID="K5y-dP-7gO">
@@ -1156,7 +1137,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Prc-aA-gym" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="82" y="615"/>
+            <point key="canvasLocation" x="94" y="779"/>
         </scene>
         <!--Categories Container View Controller-->
         <scene sceneID="6uK-uQ-VSv">
@@ -1256,14 +1237,135 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ngY-57-QyD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="925" y="-102.5"/>
+            <point key="canvasLocation" x="975" y="-245"/>
+        </scene>
+        <!--Pie Chart View Controller-->
+        <scene sceneID="5aF-iD-OiQ">
+            <objects>
+                <tableViewController id="sVo-OS-lba" customClass="PieChartViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" id="6ai-5D-J1m">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="BS7-9T-PpS" userLabel="PieChartView">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="340"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIR-mh-A7k">
+                                    <rect key="frame" x="120" y="8" width="80" height="33"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="33" id="MDI-LI-cxS"/>
+                                        <constraint firstAttribute="width" constant="80" id="UXU-So-vjW"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <state key="normal" title="SelectDate">
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s5Q-Bz-dvo">
+                                    <rect key="frame" x="20" y="49" width="280" height="29"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkY-aw-3VV">
+                                    <rect key="frame" x="0.0" y="86" width="320" height="254"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstItem="GkY-aw-3VV" firstAttribute="leading" secondItem="BS7-9T-PpS" secondAttribute="leading" id="30G-bq-WEz"/>
+                                <constraint firstItem="OIR-mh-A7k" firstAttribute="top" secondItem="BS7-9T-PpS" secondAttribute="top" constant="8" id="8h7-yx-jX8"/>
+                                <constraint firstAttribute="centerX" secondItem="OIR-mh-A7k" secondAttribute="centerX" id="8mh-hB-bUf"/>
+                                <constraint firstAttribute="trailing" secondItem="GkY-aw-3VV" secondAttribute="trailing" id="UGP-7s-zQc"/>
+                                <constraint firstAttribute="trailing" secondItem="s5Q-Bz-dvo" secondAttribute="trailing" constant="20" symbolic="YES" id="lDX-NC-MDs"/>
+                                <constraint firstAttribute="centerX" secondItem="s5Q-Bz-dvo" secondAttribute="centerX" id="qJP-H9-CkA"/>
+                                <constraint firstAttribute="bottom" secondItem="GkY-aw-3VV" secondAttribute="bottom" id="uFO-Ax-x6P"/>
+                                <constraint firstItem="GkY-aw-3VV" firstAttribute="top" secondItem="s5Q-Bz-dvo" secondAttribute="bottom" constant="8" symbolic="YES" id="vSE-7V-Ygm"/>
+                                <constraint firstItem="s5Q-Bz-dvo" firstAttribute="top" secondItem="OIR-mh-A7k" secondAttribute="bottom" constant="8" symbolic="YES" id="vZe-Wk-M3f"/>
+                                <constraint firstItem="s5Q-Bz-dvo" firstAttribute="leading" secondItem="BS7-9T-PpS" secondAttribute="leading" constant="20" symbolic="YES" id="vcL-sV-bJ6"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PieChartTableViewCell" id="Fbw-MS-Hb3" customClass="PieChartTableViewCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fbw-MS-Hb3" id="Hqx-ar-4tq">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDZ-jo-3Bi">
+                                            <rect key="frame" x="15" y="10" width="44" height="44"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="44" id="FtH-GO-hth"/>
+                                                <constraint firstAttribute="height" constant="44" id="rQS-sZ-n8K"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucS-3r-lx8">
+                                            <rect key="frame" x="229" y="8" width="58" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Percent" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcW-9f-zXM">
+                                            <rect key="frame" x="230" y="35" width="57" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urp-Tb-7jC">
+                                            <rect key="frame" x="67" y="21" width="67" height="21"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fDZ-jo-3Bi" firstAttribute="leading" secondItem="Hqx-ar-4tq" secondAttribute="leading" constant="15" id="4YZ-XM-I2c"/>
+                                        <constraint firstItem="hcW-9f-zXM" firstAttribute="top" secondItem="ucS-3r-lx8" secondAttribute="bottom" constant="6" id="LOw-zg-xv7"/>
+                                        <constraint firstAttribute="centerY" secondItem="urp-Tb-7jC" secondAttribute="centerY" id="TDR-Zn-XHD"/>
+                                        <constraint firstItem="hcW-9f-zXM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="urp-Tb-7jC" secondAttribute="trailing" constant="1" id="UKB-iB-W5t"/>
+                                        <constraint firstItem="urp-Tb-7jC" firstAttribute="leading" secondItem="fDZ-jo-3Bi" secondAttribute="trailing" constant="8" id="UlV-Zm-Hqc"/>
+                                        <constraint firstItem="ucS-3r-lx8" firstAttribute="top" secondItem="Hqx-ar-4tq" secondAttribute="top" constant="8" id="VAz-BK-01R"/>
+                                        <constraint firstAttribute="centerY" secondItem="fDZ-jo-3Bi" secondAttribute="centerY" id="WTc-vy-YIh"/>
+                                        <constraint firstAttribute="trailing" secondItem="ucS-3r-lx8" secondAttribute="trailing" id="iQh-aj-HC2"/>
+                                        <constraint firstAttribute="trailing" secondItem="hcW-9f-zXM" secondAttribute="trailing" id="jL0-YF-jl3"/>
+                                        <constraint firstItem="ucS-3r-lx8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="urp-Tb-7jC" secondAttribute="trailing" constant="1" id="sqX-dN-q2n"/>
+                                        <constraint firstAttribute="bottom" secondItem="hcW-9f-zXM" secondAttribute="bottom" constant="8" id="zZQ-PV-6rR"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="amountLabel" destination="ucS-3r-lx8" id="y3Z-g7-AFb"/>
+                                    <outlet property="categoryTitleLabel" destination="urp-Tb-7jC" id="mFL-tO-0ur"/>
+                                    <outlet property="coloredCategoryView" destination="fDZ-jo-3Bi" id="LT5-aE-n5C"/>
+                                    <outlet property="percentLabel" destination="hcW-9f-zXM" id="eSW-KY-kcA"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="sVo-OS-lba" id="S9W-Ob-3Zr"/>
+                            <outlet property="delegate" destination="sVo-OS-lba" id="oH7-Ni-GZf"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="j9o-H1-Cr8">
+                        <barButtonItem key="backBarButtonItem" title=" " id="JxK-A4-DQP"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="amountLabel" destination="s5Q-Bz-dvo" id="PwH-CW-oAz"/>
+                        <outlet property="pieChartView" destination="GkY-aw-3VV" id="MrZ-IX-vCr"/>
+                        <outlet property="selectDateButton" destination="OIR-mh-A7k" id="0hd-UO-DZR"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Qk-dd-qyr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="975" y="191"/>
         </scene>
         <!--Selected Category Table View Controller-->
         <scene sceneID="TYm-fA-R9y">
             <objects>
                 <tableViewController id="OhM-zH-INc" customClass="SelectedCategoryTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sEb-8t-xKX">
-                        <rect key="frame" x="0.0" y="64" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                         <prototypes>
@@ -1343,7 +1445,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2r-WL-WGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1367" y="-39"/>
+            <point key="canvasLocation" x="1367" y="-14"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mtN-41-rsD">
@@ -1374,6 +1476,7 @@
         <image name="CreateNew.png" width="22" height="22"/>
         <image name="DeleteSign.png" width="21" height="21"/>
         <image name="MoneyBox.png" width="22" height="22"/>
+        <image name="PieChart.png" width="22" height="22"/>
         <image name="Plugin.png" width="22" height="22"/>
         <image name="Search.png" width="32" height="32"/>
         <image name="Settings.png" width="32" height="32"/>
@@ -1385,10 +1488,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qiW-IC-btw"/>
-        <segue reference="bBY-Me-af6"/>
         <segue reference="eiF-x1-yp8"/>
-        <segue reference="nDW-xd-tmg"/>
+        <segue reference="Ke7-wc-ErB"/>
+        <segue reference="xQY-w0-KW7"/>
+        <segue reference="rRc-1T-lWX"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

@@ -133,6 +133,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [[UITabBar appearance]setTintColor:UIColorFromRGB(0x067AB5)];
 
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:17]} forState:UIControlStateNormal];
+    
+    [[UISegmentedControl appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]} forState:UIControlStateNormal];
 
         //When contained in UISearchBar
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
