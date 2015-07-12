@@ -105,7 +105,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     NSArray *sortedArray = [categories sortedArrayUsingDescriptors:@[alphabeticSort]];
 
         //Sort by frequency of use
-    NSArray *dates = [[NSDate date]getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *dates = [[NSDate date]getFirstAndLastDatesFromMonth];
     __weak NSManagedObjectContext *context = _managedObjectContext;
 
     NSSortDescriptor *sortByFrequencyUse = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO comparator:^NSComparisonResult(CategoriesInfo *obj1, CategoriesInfo *obj2) {

@@ -1273,7 +1273,7 @@
                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 </view>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstItem="GkY-aw-3VV" firstAttribute="leading" secondItem="BS7-9T-PpS" secondAttribute="leading" id="30G-bq-WEz"/>
                                 <constraint firstItem="OIR-mh-A7k" firstAttribute="top" secondItem="BS7-9T-PpS" secondAttribute="top" constant="8" id="8h7-yx-jX8"/>
@@ -1293,12 +1293,23 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fbw-MS-Hb3" id="Hqx-ar-4tq">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDZ-jo-3Bi">
-                                            <rect key="frame" x="15" y="10" width="44" height="44"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fDZ-jo-3Bi" userLabel="ColoredView">
+                                            <rect key="frame" x="15" y="2" width="60" height="60"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="5StarHotel" translatesAutoresizingMaskIntoConstraints="NO" id="dba-E6-2QG">
+                                                    <rect key="frame" x="9" y="9" width="42" height="42"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="42" id="Jey-5C-Cy1"/>
+                                                        <constraint firstAttribute="height" constant="42" id="XzS-bP-lig"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.80000000000000004" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="44" id="FtH-GO-hth"/>
-                                                <constraint firstAttribute="height" constant="44" id="rQS-sZ-n8K"/>
+                                                <constraint firstAttribute="width" constant="60" id="FtH-GO-hth"/>
+                                                <constraint firstAttribute="centerY" secondItem="dba-E6-2QG" secondAttribute="centerY" id="dpR-Lm-o4l"/>
+                                                <constraint firstAttribute="centerX" secondItem="dba-E6-2QG" secondAttribute="centerX" id="gWQ-33-gSg"/>
+                                                <constraint firstAttribute="height" constant="60" id="rQS-sZ-n8K"/>
                                             </constraints>
                                         </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ucS-3r-lx8">
@@ -1314,7 +1325,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="Category" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="urp-Tb-7jC">
-                                            <rect key="frame" x="67" y="21" width="67" height="21"/>
+                                            <rect key="frame" x="83" y="21" width="67" height="21"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1336,6 +1347,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="amountLabel" destination="ucS-3r-lx8" id="y3Z-g7-AFb"/>
+                                    <outlet property="categoryIcon" destination="dba-E6-2QG" id="00a-zB-Rbe"/>
                                     <outlet property="categoryTitleLabel" destination="urp-Tb-7jC" id="mFL-tO-0ur"/>
                                     <outlet property="coloredCategoryView" destination="fDZ-jo-3Bi" id="LT5-aE-n5C"/>
                                     <outlet property="percentLabel" destination="hcW-9f-zXM" id="eSW-KY-kcA"/>
@@ -1467,6 +1479,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="5StarHotel" width="42" height="42"/>
         <image name="Airplane" width="42" height="42"/>
         <image name="Banknotes.png" width="32" height="32"/>
         <image name="Checkmark.png" width="21" height="21"/>

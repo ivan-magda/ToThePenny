@@ -80,7 +80,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     }
     categoriesIds = nil;
     
-    NSArray *days = [date getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *days = [date getFirstAndLastDatesFromMonth];
 
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([CategoryData class])];
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];

@@ -14,5 +14,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *categoryTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *amountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *percentLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *categoryIcon;
 
 @end

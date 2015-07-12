@@ -209,7 +209,7 @@
         [request setReturnsObjectsAsFaults:NO];
 
         while ([oldestDate compare:mostRecentDate] != NSOrderedDescending) {
-            NSArray *dates = [oldestDate getFirstAndLastDaysInTheCurrentMonth];
+            NSArray *dates = [oldestDate getFirstAndLastDatesFromMonth];
 
             NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
             request.predicate = predicate;

@@ -73,7 +73,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
         _minimumDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
         _maximumDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
     } else {
-        NSArray *dates = [_timePeriod getFirstAndLastDaysInTheCurrentMonth];
+        NSArray *dates = [_timePeriod getFirstAndLastDatesFromMonth];
         _minimumDate = [dates firstObject];
 
         NSDate *maxDate = [dates lastObject];

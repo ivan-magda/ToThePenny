@@ -13,13 +13,16 @@
 #import "Fetch.h"
     //Categories
 #import "NSDate+StartAndEndDatesOfYear.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSString+FormatAmount.h"
     //View
 #import "PieChartTableViewCell.h"
 
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
 static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCell";
 
-@interface PieChartViewController () <CPTPlotDataSource>
+@interface PieChartViewController () <CPTPlotDataSource, CPTPieChartDataSource>
 
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
 @property (nonatomic, strong) CPTTheme *theme;
@@ -34,6 +37,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 @implementation PieChartViewController {
     NSMutableArray *_categoriesInfo;
     NSNumber *_totalAmount;
+    NSArray *_colors;
 }
 
 #pragma mark - UIViewController lifecycle methods -
@@ -41,9 +45,12 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _colors = @[@0xFF0000, @0x00FF00, @0x00FF99, @0x00FFFF, @0xFFFF00, @0xFFFFCC, @0xFFCC00, @0xFFCCFF, @0xFF9900, @0xFF66FF, @0xCCFF00, @0xCCFFFF, @0xCCCC00, @0x33FFC0, @0xCC99FF, @0x99FF00, @0x99FFFF, @0x9999FF, @0x99CCFF, @0x66FF00, @0x66FFCC, @0x66FFFF, @0x6699FF];
+    
+    
     [self configurateNavigationBar];
 
-    NSArray *dates = [_dateToShow startAndEndDatesOfYear];
+    NSArray *dates = [_dateToShow getFirstAndLastDatesFromMonth];
 
     __weak PieChartViewController *weakSelf = self;
     
@@ -57,7 +64,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
         _totalAmount = totalAmount;
     }];
     
-    self.segmentedControl.selectedSegmentIndex = 2;
+    self.segmentedControl.selectedSegmentIndex = 1;
     self.amountLabel.text = [NSString formatAmount:_totalAmount];
 
     [self initPlot];
@@ -93,6 +100,15 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 
 - (NSNumber *)calculatePercentageValueForAmount:(NSNumber *)amount andTotalAmount:(NSNumber *)totalAmount {
     return @(amount.floatValue / totalAmount.floatValue * 100.0f);
+}
+
+- (UIColor *)getUIColorForIndex:(NSUInteger)index {
+    if (index > _colors.count) {
+        return ([CPTPieChart defaultPieSliceColorForIndex:index].uiColor);
+    }
+    int value = [_colors[index] intValue];
+    
+    return UIColorFromRGB(value);
 }
 
 #pragma mark - CPTPlotDataSource methods -
@@ -132,6 +148,13 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     
         //Create and return layer with label text
     return [[CPTTextLayer alloc] initWithText:labelValue style:labelText];
+}
+
+-(CPTFill *)sliceFillForPieChart:(CPTPieChart *)pieChart recordIndex:(NSUInteger)index {
+    UIColor *color = [self getUIColorForIndex:index];
+    CPTFill *fillColor = [CPTFill fillWithColor:[CPTColor colorWithCGColor:color.CGColor]];
+    
+    return fillColor;
 }
 
 #pragma mark - Chart behavior -
@@ -201,10 +224,11 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     
     PieChartTableViewCell *cell = (PieChartTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kPieChartTableViewCellIdentifier];
     
-    cell.coloredCategoryView.backgroundColor = ([CPTPieChart defaultPieSliceColorForIndex:indexPath.row].uiColor);
+    cell.coloredCategoryView.backgroundColor = [self getUIColorForIndex:indexPath.row];
     cell.coloredCategoryView.layer.cornerRadius = (CGRectGetHeight(cell.coloredCategoryView.bounds) / 2.0f);
     cell.categoryTitleLabel.text = category.title;
     cell.amountLabel.text  = [NSString formatAmount:category.amount];
+    cell.categoryIcon.image = [UIImage imageNamed:category.iconName];
 
     NSNumber *percent = [self calculatePercentageValueForAmount:category.amount andTotalAmount:_totalAmount];
     cell.percentLabel.text = [NSString stringWithFormat:@"%0.1f %%", percent.floatValue];

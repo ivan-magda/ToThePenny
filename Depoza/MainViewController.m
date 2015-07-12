@@ -336,14 +336,14 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
     NSArray *todayDates = nil;
     NSPredicate *todayPredicate = nil;
-    NSArray *monthDates = [_dateToShow getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *monthDates = [_dateToShow getFirstAndLastDatesFromMonth];
     NSPredicate *monthPredicate = [ExpenseData compoundPredicateBetweenDates:monthDates];
 
     if ([NSDate isDateBetweenCurrentMonth:_dateToShow]) {
         todayDates = [NSDate getStartAndEndDatesOfTheCurrentDate];
         todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
     } else {
-        todayDates = [_dateToShow getFirstAndLastDaysInTheCurrentMonth];
+        todayDates = [_dateToShow getFirstAndLastDatesFromMonth];
         todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
     }
 
@@ -676,7 +676,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
 
         //Create compound predicate: dateOfExpense >= dates[0] AND dateOfExpense <= dates[1]
-    NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *dates = [NSDate getFirstAndLastDatesFromCurrentMonth];
     NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:dates];
     fetchRequest.predicate = predicate;
 

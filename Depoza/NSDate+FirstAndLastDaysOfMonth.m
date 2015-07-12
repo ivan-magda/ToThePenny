@@ -62,11 +62,11 @@
     return @[firstDay, lastDay];
 }
 
-+ (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
++ (NSArray *)getFirstAndLastDatesFromCurrentMonth {
     return [NSDate getDatesFromDate:[NSDate date] sameDayOrFirstAndLastOfMonth:NO];
 }
 
-- (NSArray *)getFirstAndLastDaysInTheCurrentMonth {
+- (NSArray *)getFirstAndLastDatesFromMonth {
     NSArray *dates = [NSDate getDatesFromDate:self sameDayOrFirstAndLastOfMonth:NO];
     return dates;
 }

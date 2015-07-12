@@ -12,8 +12,8 @@
 
 - (NSDictionary *)getComponents;
 
-+ (NSArray *)getFirstAndLastDaysInTheCurrentMonth;
++ (NSArray *)getFirstAndLastDatesFromCurrentMonth;
 
-- (NSArray *)getFirstAndLastDaysInTheCurrentMonth;
+- (NSArray *)getFirstAndLastDatesFromMonth;
 
 @end

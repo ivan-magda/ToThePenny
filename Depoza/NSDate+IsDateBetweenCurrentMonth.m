@@ -12,7 +12,7 @@
 @implementation NSDate (IsDateBetweenCurrentMonth)
 
 + (BOOL)isDateBetweenCurrentMonth:(NSDate *)dateToCompare {
-    NSArray *dates = [NSDate getFirstAndLastDaysInTheCurrentMonth];
+    NSArray *dates = [NSDate getFirstAndLastDatesFromCurrentMonth];
     NSDate *startDate = dates.firstObject;
     NSDate *endDate = dates.lastObject;
 
