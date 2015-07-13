@@ -3,12 +3,12 @@
     //Delegate
 #import "AddExpenseTableViewControllerDelegate.h"
 #import "MainViewControllerDelegate.h"
-#import "SelectMonthViewControllerDelegate.h"
+#import "SelectTimePeriodViewControllerDelegate.h"
 #import "CategoriesContainerViewControllerDelegate.h"
 
 @class NSManagedObjectContext;
 
-@interface MainViewController : UIViewController <AddExpenseTableViewControllerDelegate, SelectMonthViewControllerDelegate, CategoriesContainerViewControllerDelegate>
+@interface MainViewController : UIViewController <AddExpenseTableViewControllerDelegate, SelectTimePeriodViewControllerDelegate, CategoriesContainerViewControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 

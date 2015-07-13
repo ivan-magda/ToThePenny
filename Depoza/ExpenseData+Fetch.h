@@ -30,5 +30,6 @@
 + (NSDate *)mostRecentDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context andCategoryId:(NSNumber *)categoryId ;
 
 + (NSArray *)getEachMonthWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)getEachYearWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

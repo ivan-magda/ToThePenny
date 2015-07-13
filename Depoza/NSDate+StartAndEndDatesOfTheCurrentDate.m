@@ -22,16 +22,14 @@
     return dictComponents;
 }
 
-+ (NSArray *)getStartAndEndDatesOfTheCurrentDate {
-    NSDate *today = [NSDate date];
-
++ (NSArray *)getDatesFromDate:(NSDate *)date {
     NSCalendar *calendar = [NSCalendar currentCalendar];
-
-    NSDictionary *components = [today getComponents];
+    
+    NSDictionary *components = [date getComponents];
     NSInteger year = [components[@"year"]integerValue];
     NSInteger month = [components[@"month"]integerValue];
     NSInteger day = [components[@"day"]integerValue];
-
+    
     NSDateComponents *startDateComponents = [NSDateComponents new];
     startDateComponents.year = year;
     startDateComponents.month = month;
@@ -39,7 +37,7 @@
     startDateComponents.hour = 0;
     startDateComponents.minute = 0;
     startDateComponents.second = 0;
-
+    
     NSDateComponents *endDateComponents = [NSDateComponents new];
     endDateComponents.year = year;
     endDateComponents.month = month;
@@ -47,18 +45,26 @@
     endDateComponents.hour = 23;
     endDateComponents.minute = 59;
     endDateComponents.second = 59;
-
+    
     NSDate *startDate = [calendar dateFromComponents:startDateComponents];
     NSDate *endDate = [calendar dateFromComponents:endDateComponents];
-
+    
     NSAssert((startDate != nil) && (endDate != nil), @"Dates can't be nil!");
-
+    
     /*
      NSLog(@"%@", [startDate descriptionWithLocale:[NSLocale currentLocale]]);
      NSLog(@"%@", [endDate descriptionWithLocale:[NSLocale currentLocale]]);
      */
     
     return @[startDate, endDate];
+}
+
++ (NSArray *)getStartAndEndDatesOfTheCurrentDate {
+    return [NSDate getDatesFromDate:[NSDate date]];
+}
+
+- (NSArray *)getStartAndEndDatesFromDate {
+    return [NSDate getDatesFromDate:self];
 }
 
 @end

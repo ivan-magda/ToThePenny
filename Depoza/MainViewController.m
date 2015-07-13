@@ -6,7 +6,7 @@
 #import "DetailExpenseTableViewController.h"
 #import "CategoriesContainerViewController.h"
 #import "MainTableViewProtocolsImplementer.h"
-#import "SelectMonthViewController.h"
+#import "SelectTimePeriodViewController.h"
 #import "ManageCategoryTableViewController.h"
 #import "CategoriesTableViewController.h"
 #import "CategoriesContainerViewController.h"
@@ -71,7 +71,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     CGFloat _totalExpenses;
     NSMutableArray *_categoriesInfo;
 
-    SelectMonthViewController *_selectMonthViewController;
+    SelectTimePeriodViewController *_selectTimePeriodViewController;
     TitleViewButton *_titleViewButton;
     NSDate *_dateToShow;
 
@@ -368,11 +368,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         });
     } else {
         if (_selectMonthIsVisible) {
-            NSParameterAssert(_selectMonthViewController != nil);
+            NSParameterAssert(_selectTimePeriodViewController != nil);
 
             _selectMonthIsVisible = NO;
 
-            [_selectMonthViewController dismissFromParentViewController];
+            [_selectTimePeriodViewController dismissFromParentViewController];
             [self changeMonthToShowFromDate:[NSDate date]];
         }
         [self performSegueWithIdentifier:@"AddExpense" sender:nil];
@@ -388,9 +388,9 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)dismissSelectMonthViewController {
-    NSParameterAssert(_selectMonthViewController != nil);
+    NSParameterAssert(_selectTimePeriodViewController != nil);
 
-    [_selectMonthViewController dismissFromParentViewController];
+    [_selectTimePeriodViewController dismissFromParentViewController];
     _selectMonthIsVisible = NO;
 }
 
@@ -418,12 +418,13 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         _titleViewButton.imageView.transform = CGAffineTransformMakeRotation((CGFloat)180.0 * M_PI/180.0);
     } completion:nil];
 
-    _selectMonthViewController = [[SelectMonthViewController alloc]initWithNibName:@"SelectMonthViewController" bundle:nil];
+    _selectTimePeriodViewController = [[SelectTimePeriodViewController alloc]initWithNibName:NSStringFromClass([SelectTimePeriodViewController class]) bundle:nil];
 
-    _selectMonthViewController.managedObjectContext = self.managedObjectContext;
-    _selectMonthViewController.delegate = self;
+    _selectTimePeriodViewController.managedObjectContext = self.managedObjectContext;
+    _selectTimePeriodViewController.delegate = self;
+    _selectTimePeriodViewController.isSelectMonthMode = YES;
 
-    [_selectMonthViewController presentInParentViewController:self.tabBarController];
+    [_selectTimePeriodViewController presentInParentViewController:self.tabBarController];
 
     _selectMonthIsVisible = YES;
 }
@@ -533,9 +534,9 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self addCategoryToCategoriesInfo:category];
 }
 
-#pragma mark SelectMonthViewControllerDelegate
+#pragma mark SelectTimePeriodViewControllerDelegate
 
-- (void)selectMonthViewController:(SelectMonthViewController *)selectMonthViewController didSelectMonth:(NSDictionary *)monthInfo {
+- (void)selectTimePeriodViewController:(SelectTimePeriodViewController *)selectMonthViewController didSelectValue:(NSDictionary *)monthInfo {
     _selectMonthIsVisible = NO;
 
     NSDate *date = [self dateFromMonthInfo:monthInfo];

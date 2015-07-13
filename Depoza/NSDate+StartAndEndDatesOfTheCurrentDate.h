@@ -12,4 +12,6 @@
 
 + (NSArray *)getStartAndEndDatesOfTheCurrentDate;
 
+- (NSArray *)getStartAndEndDatesFromDate;
+
 @end

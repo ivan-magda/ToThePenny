@@ -1252,25 +1252,23 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIR-mh-A7k">
-                                    <rect key="frame" x="120" y="8" width="80" height="33"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="33" id="MDI-LI-cxS"/>
-                                        <constraint firstAttribute="width" constant="80" id="UXU-So-vjW"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                    <rect key="frame" x="111" y="8" width="99" height="37"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                     <state key="normal" title="SelectDate">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
+                                    <connections>
+                                        <action selector="selectDateButtonPressed:" destination="sVo-OS-lba" eventType="touchUpInside" id="40A-qJ-cXg"/>
+                                    </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s5Q-Bz-dvo">
-                                    <rect key="frame" x="20" y="49" width="280" height="29"/>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                    <rect key="frame" x="20" y="53" width="280" height="25"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkY-aw-3VV">
-                                    <rect key="frame" x="0.0" y="86" width="320" height="254"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <rect key="frame" x="0.0" y="86" width="320" height="246"/>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1281,7 +1279,7 @@
                                 <constraint firstAttribute="trailing" secondItem="GkY-aw-3VV" secondAttribute="trailing" id="UGP-7s-zQc"/>
                                 <constraint firstAttribute="trailing" secondItem="s5Q-Bz-dvo" secondAttribute="trailing" constant="20" symbolic="YES" id="lDX-NC-MDs"/>
                                 <constraint firstAttribute="centerX" secondItem="s5Q-Bz-dvo" secondAttribute="centerX" id="qJP-H9-CkA"/>
-                                <constraint firstAttribute="bottom" secondItem="GkY-aw-3VV" secondAttribute="bottom" id="uFO-Ax-x6P"/>
+                                <constraint firstAttribute="bottom" secondItem="GkY-aw-3VV" secondAttribute="bottom" constant="8" id="uFO-Ax-x6P"/>
                                 <constraint firstItem="GkY-aw-3VV" firstAttribute="top" secondItem="s5Q-Bz-dvo" secondAttribute="bottom" constant="8" symbolic="YES" id="vSE-7V-Ygm"/>
                                 <constraint firstItem="s5Q-Bz-dvo" firstAttribute="top" secondItem="OIR-mh-A7k" secondAttribute="bottom" constant="8" symbolic="YES" id="vZe-Wk-M3f"/>
                                 <constraint firstItem="s5Q-Bz-dvo" firstAttribute="leading" secondItem="BS7-9T-PpS" secondAttribute="leading" constant="20" symbolic="YES" id="vcL-sV-bJ6"/>

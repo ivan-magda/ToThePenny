@@ -119,8 +119,8 @@
 		50E021D71AD8C7BE008489DA /* Up.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E021D41AD8C7BE008489DA /* Up.png */; };
 		50E021D81AD8C7BE008489DA /* Up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E021D51AD8C7BE008489DA /* Up@2x.png */; };
 		50E021D91AD8C7BE008489DA /* Up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E021D61AD8C7BE008489DA /* Up@3x.png */; };
-		50E021DF1AD8E3EE008489DA /* SelectMonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E021DD1AD8E3EE008489DA /* SelectMonthViewController.m */; };
-		50E021E01AD8E3EE008489DA /* SelectMonthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E021DE1AD8E3EE008489DA /* SelectMonthViewController.xib */; };
+		50E021DF1AD8E3EE008489DA /* SelectTimePeriodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E021DD1AD8E3EE008489DA /* SelectTimePeriodViewController.m */; };
+		50E021E01AD8E3EE008489DA /* SelectTimePeriodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E021DE1AD8E3EE008489DA /* SelectTimePeriodViewController.xib */; };
 		50E021F81AD90838008489DA /* GradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E021F71AD90838008489DA /* GradientView.m */; };
 		50E021FB1AD942F5008489DA /* NSDate+TomorrowDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E021FA1AD942F5008489DA /* NSDate+TomorrowDate.m */; };
 		50E021FE1AD944DF008489DA /* NSDate+NextMonthFirstDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E021FD1AD944DF008489DA /* NSDate+NextMonthFirstDate.m */; };
@@ -128,6 +128,8 @@
 		50E094BC1B5112FC00BB6217 /* Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E094B91B5112FC00BB6217 /* Back@2x.png */; };
 		50E094BD1B5112FC00BB6217 /* Back@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 50E094BA1B5112FC00BB6217 /* Back@3x.png */; };
 		50E094CA1B513C2800BB6217 /* PieChartTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094C91B513C2800BB6217 /* PieChartTableViewCell.m */; };
+		50E094CD1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CC1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m */; };
+		50E094D01B5379C000BB6217 /* NSDate+NextYearFirstDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
 		50E784B71AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */; };
 		50EA039C1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EA039B1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.m */; };
@@ -329,9 +331,9 @@
 		50E021D41AD8C7BE008489DA /* Up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Up.png; sourceTree = "<group>"; };
 		50E021D51AD8C7BE008489DA /* Up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Up@2x.png"; sourceTree = "<group>"; };
 		50E021D61AD8C7BE008489DA /* Up@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Up@3x.png"; sourceTree = "<group>"; };
-		50E021DC1AD8E3EE008489DA /* SelectMonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMonthViewController.h; sourceTree = "<group>"; };
-		50E021DD1AD8E3EE008489DA /* SelectMonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectMonthViewController.m; sourceTree = "<group>"; };
-		50E021DE1AD8E3EE008489DA /* SelectMonthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectMonthViewController.xib; sourceTree = "<group>"; };
+		50E021DC1AD8E3EE008489DA /* SelectTimePeriodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTimePeriodViewController.h; sourceTree = "<group>"; };
+		50E021DD1AD8E3EE008489DA /* SelectTimePeriodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTimePeriodViewController.m; sourceTree = "<group>"; };
+		50E021DE1AD8E3EE008489DA /* SelectTimePeriodViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectTimePeriodViewController.xib; sourceTree = "<group>"; };
 		50E021E51AD8F63C008489DA /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		50E021E71AD8F78D008489DA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		50E021F61AD90838008489DA /* GradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GradientView.h; sourceTree = "<group>"; };
@@ -345,9 +347,13 @@
 		50E094BA1B5112FC00BB6217 /* Back@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Back@3x.png"; sourceTree = "<group>"; };
 		50E094C81B513C2800BB6217 /* PieChartTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartTableViewCell.h; sourceTree = "<group>"; };
 		50E094C91B513C2800BB6217 /* PieChartTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartTableViewCell.m; sourceTree = "<group>"; };
+		50E094CB1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualYear.h"; sourceTree = "<group>"; };
+		50E094CC1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDatesWithEqualYear.m"; sourceTree = "<group>"; };
+		50E094CE1B5379C000BB6217 /* NSDate+NextYearFirstDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NextYearFirstDate.h"; sourceTree = "<group>"; };
+		50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NextYearFirstDate.m"; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
-		50E54FAC1AE2645E00D6E609 /* SelectMonthViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectMonthViewControllerDelegate.h; sourceTree = "<group>"; };
+		50E54FAC1AE2645E00D6E609 /* SelectTimePeriodViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectTimePeriodViewControllerDelegate.h; sourceTree = "<group>"; };
 		50E784B51AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfYear.h"; sourceTree = "<group>"; };
 		50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfYear.m"; sourceTree = "<group>"; };
 		50EA039A1AC1846C007E6FA2 /* ExtensionSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExtensionSettingsTableViewController.h; sourceTree = "<group>"; };
@@ -590,12 +596,16 @@
 				5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */,
 				507BF2B31AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.h */,
 				507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */,
+				50E094CB1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.h */,
+				50E094CC1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m */,
 				5011BBCA1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.h */,
 				5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */,
 				50E021F91AD942F5008489DA /* NSDate+TomorrowDate.h */,
 				50E021FA1AD942F5008489DA /* NSDate+TomorrowDate.m */,
 				50E021FC1AD944DF008489DA /* NSDate+NextMonthFirstDate.h */,
 				50E021FD1AD944DF008489DA /* NSDate+NextMonthFirstDate.m */,
+				50E094CE1B5379C000BB6217 /* NSDate+NextYearFirstDate.h */,
+				50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */,
 				50E784B51AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.h */,
 				50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */,
 				50C068591AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.h */,
@@ -688,7 +698,7 @@
 				50B3E7221AF3B5E60080C04F /* TabBarController */,
 				5063D1991A85F0C2006168D3 /* MainVC */,
 				509993031AF5BD7C007F7A84 /* PieChartVC */,
-				50E021E11AD8E3F4008489DA /* SelectMonthVC */,
+				50E021E11AD8E3F4008489DA /* SelectTimePeriodVC */,
 				50FDE3B21A9B5A95007C9FC0 /* CategoriesContainerVC */,
 				5009809F1AE3906B007DFCEA /* SelectedCategoryTableVC */,
 				5063D19B1A85F0EF006168D3 /* AddExpenseVC */,
@@ -889,15 +899,15 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		50E021E11AD8E3F4008489DA /* SelectMonthVC */ = {
+		50E021E11AD8E3F4008489DA /* SelectTimePeriodVC */ = {
 			isa = PBXGroup;
 			children = (
-				50E021DC1AD8E3EE008489DA /* SelectMonthViewController.h */,
-				50E021DD1AD8E3EE008489DA /* SelectMonthViewController.m */,
-				50E54FAC1AE2645E00D6E609 /* SelectMonthViewControllerDelegate.h */,
-				50E021DE1AD8E3EE008489DA /* SelectMonthViewController.xib */,
+				50E021DC1AD8E3EE008489DA /* SelectTimePeriodViewController.h */,
+				50E021DD1AD8E3EE008489DA /* SelectTimePeriodViewController.m */,
+				50E54FAC1AE2645E00D6E609 /* SelectTimePeriodViewControllerDelegate.h */,
+				50E021DE1AD8E3EE008489DA /* SelectTimePeriodViewController.xib */,
 			);
-			name = SelectMonthVC;
+			name = SelectTimePeriodVC;
 			sourceTree = "<group>";
 		};
 		50EA039D1AC1847B007E6FA2 /* ExtensionSettingsVC */ = {
@@ -1093,7 +1103,7 @@
 				501CCAFF1B48B35400609142 /* iRate.bundle in Resources */,
 				500541061AC56226007EF006 /* SettingsFilled.png in Resources */,
 				5058F2101B00A27B007BBDE6 /* DeleteSign.png in Resources */,
-				50E021E01AD8E3EE008489DA /* SelectMonthViewController.xib in Resources */,
+				50E021E01AD8E3EE008489DA /* SelectTimePeriodViewController.xib in Resources */,
 				5095D5E71B4FC34800F8333D /* PieChart.png in Resources */,
 				50C929D51B0B322100690F2C /* CreateNew@3x.png in Resources */,
 				50A2AB261AEF4C0300463BBB /* Down@2x.png in Resources */,
@@ -1239,6 +1249,7 @@
 				505CA13E1A761B21009CA7B1 /* Fetch.m in Sources */,
 				502547961A1EC86600DCB8FB /* AddExpenseTableViewController.m in Sources */,
 				50CD56551AD402480093CE4F /* CoreDataDeviceList.m in Sources */,
+				50E094D01B5379C000BB6217 /* NSDate+NextYearFirstDate.m in Sources */,
 				5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */,
 				509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */,
 				50AA42F81A87AC860019CB55 /* ExpenseData.m in Sources */,
@@ -1271,7 +1282,8 @@
 				5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */,
 				50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */,
 				50DFA1831AF4CD0400789F35 /* ExpandedCollectionViewFlowLayout.m in Sources */,
-				50E021DF1AD8E3EE008489DA /* SelectMonthViewController.m in Sources */,
+				50E021DF1AD8E3EE008489DA /* SelectTimePeriodViewController.m in Sources */,
+				50E094CD1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m in Sources */,
 				50FEF8331A960309007BC483 /* ManageCategoryTableViewController.m in Sources */,
 				500980A21AE3908B007DFCEA /* CustomRightDetailCell.m in Sources */,
 				50C0685B1AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.m in Sources */,

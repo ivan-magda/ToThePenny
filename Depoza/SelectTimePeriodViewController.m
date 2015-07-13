@@ -7,7 +7,7 @@
 //
 
     //ViewControllers
-#import "SelectMonthViewController.h"
+#import "SelectTimePeriodViewController.h"
 #import "GradientView.h"
     //CoreData
 #import "ExpenseData+Fetch.h"
@@ -17,15 +17,15 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
-@interface SelectMonthViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface SelectTimePeriodViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end
 
-@implementation SelectMonthViewController {
+@implementation SelectTimePeriodViewController {
     GradientView *_gradientView;
-    NSArray *_monthInfo;
+    NSArray *_dataSourceInformation;
     NSDateFormatter *_dateFormatter;
     NSInteger _currentYear;
 }
@@ -36,16 +36,21 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.backgroundColor = [UIColor clearColor];
-
-    _monthInfo = [ExpenseData getEachMonthWithSumExpensesInManagedObjectContext:_managedObjectContext];
-
-    NSDictionary *dictionary = [[NSDate date]getComponents];
-    _currentYear = [dictionary[@"year"]integerValue];
-
-    _dateFormatter = [[NSDateFormatter alloc] init];
-    [_dateFormatter setDateFormat:@"MMMM"];
-    if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
-        [_dateFormatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+    
+    if (_isSelectMonthMode) {
+        _dataSourceInformation = [ExpenseData getEachMonthWithSumExpensesInManagedObjectContext:_managedObjectContext];
+        
+        NSDictionary *dictionary = [[NSDate date]getComponents];
+        _currentYear = [dictionary[@"year"]integerValue];
+        
+        _dateFormatter = [NSDateFormatter new];
+        
+        [_dateFormatter setDateFormat:@"MMMM"];
+        if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
+            [_dateFormatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+        }
+    } else {
+        _dataSourceInformation = [ExpenseData getEachYearWithSumExpensesInManagedObjectContext:_managedObjectContext];
     }
 }
 
@@ -104,7 +109,7 @@
 #pragma mark - UITableView -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return _monthInfo.count;
+    return _dataSourceInformation.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -120,17 +125,24 @@
 
         cell.layer.cornerRadius = 1.0f;
     }
-    NSDictionary *dictionary = _monthInfo[indexPath.section];
-    NSInteger month = [dictionary[@"month"]integerValue];
+    NSDictionary *dictionary = _dataSourceInformation[indexPath.section];
     NSInteger year = [dictionary[@"year"]integerValue];
 
-    NSString *monthString = [[_dateFormatter monthSymbols]objectAtIndex:month - 1];
-    NSMutableString *text = [NSMutableString stringWithString:monthString];
-    if (year != _currentYear) {
-        [text appendString:[NSString stringWithFormat:@" %d", (int)year]];
+    if (_isSelectMonthMode) {
+        NSInteger month = [dictionary[@"month"]integerValue];
+        
+        NSString *monthString = [[_dateFormatter monthSymbols]objectAtIndex:month - 1];
+        NSMutableString *text = [NSMutableString stringWithString:monthString];
+        
+        if (year != _currentYear) {
+            [text appendString:[NSString stringWithFormat:@" %d", (int)year]];
+        }
+        
+        cell.textLabel.text = [text uppercaseString];
+    } else {
+        cell.textLabel.text = [[NSString stringWithFormat:@"%ld", (long)year]uppercaseString];
     }
 
-    cell.textLabel.text = [text uppercaseString];
     cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
     cell.textLabel.textColor = [UIColor blackColor];
 
@@ -144,9 +156,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([self.delegate respondsToSelector:@selector(selectMonthViewController:didSelectMonth:)]) {
-        [_delegate selectMonthViewController:self didSelectMonth:_monthInfo[indexPath.section]];
+    if ([self.delegate respondsToSelector:@selector(selectTimePeriodViewController:didSelectValue:)]) {
+        [_delegate selectTimePeriodViewController:self didSelectValue:_dataSourceInformation[indexPath.section]];
     }
+    
     [self dismissFromParentViewController];
 }
 
