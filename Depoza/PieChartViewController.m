@@ -45,7 +45,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _colors = @[@0xFF0000, @0x00FF00, @0x00FF99, @0x00FFFF, @0xFFFF00, @0xFFFFCC, @0xFFCC00, @0xFFCCFF, @0xFF9900, @0xFF66FF, @0xCCFF00, @0xCCFFFF, @0xCCCC00, @0x33FFC0, @0xCC99FF, @0x99FF00, @0x99FFFF, @0x9999FF, @0x99CCFF, @0x66FF00, @0x66FFCC, @0x66FFFF, @0x6699FF];
+    _colors = @[@0xFF7F7F, @0x00FF99, @0x00FFFF, @0xFFFF00, @0xFFCC00, @0xFFCCFF, @0xCCFF00, @0xCCFFFF, @0xCCCC00, @0x33FFC0, @0xFF9900, @0xFF66FF, @0xCC99FF, @0x99FF00, @0x99FFFF, @0x9999FF, @0x99CCFF, @0x66FF00, @0x66FFCC, @0xFFFFCC, @0x00FF00, @0x66FFFF, @0x6699FF, @0xFF0000];
     
     
     [self configurateNavigationBar];
@@ -103,7 +103,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 - (UIColor *)getUIColorForIndex:(NSUInteger)index {
-    if (index > _colors.count) {
+    if (index >= _colors.count) {
         return ([CPTPieChart defaultPieSliceColorForIndex:index].uiColor);
     }
     int value = [_colors[index] intValue];
