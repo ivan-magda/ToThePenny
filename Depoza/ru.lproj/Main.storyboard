@@ -124,10 +124,10 @@
             </objects>
             <point key="canvasLocation" x="490" y="-1357"/>
         </scene>
-        <!--Pie Chart View Controller-->
+        <!--Pie Chart Table View Controller-->
         <scene sceneID="fwu-x9-Q1O">
             <objects>
-                <viewController id="1Gu-Al-Idk" customClass="PieChartViewController" sceneMemberID="viewController">
+                <viewController id="1Gu-Al-Idk" customClass="PieChartTableViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SyF-VQ-Xhz"/>
                         <viewControllerLayoutGuide type="bottom" id="8bk-iy-Uxz"/>

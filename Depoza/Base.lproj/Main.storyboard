@@ -1239,10 +1239,10 @@
             </objects>
             <point key="canvasLocation" x="975" y="-245"/>
         </scene>
-        <!--Pie Chart View Controller-->
+        <!--Pie Chart Table View Controller-->
         <scene sceneID="5aF-iD-OiQ">
             <objects>
-                <tableViewController id="sVo-OS-lba" customClass="PieChartViewController" sceneMemberID="viewController">
+                <tableViewController id="sVo-OS-lba" customClass="PieChartTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" id="6ai-5D-J1m">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

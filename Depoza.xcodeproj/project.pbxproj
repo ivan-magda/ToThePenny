@@ -70,7 +70,7 @@
 		5095D5E91B4FC34800F8333D /* PieChart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5095D5E61B4FC34800F8333D /* PieChart@3x.png */; };
 		5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */; };
 		5097DAD01A922294006DB197 /* ChooseCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */; };
-		509993061AF5BDBD007F7A84 /* PieChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509993051AF5BDBD007F7A84 /* PieChartViewController.m */; };
+		509993061AF5BDBD007F7A84 /* PieChartTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509993051AF5BDBD007F7A84 /* PieChartTableViewController.m */; };
 		509B7D711B0A1F29007711EA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 509B7D6F1B0A1F29007711EA /* Localizable.strings */; };
 		509CDD131AEC9BA300A6A5E9 /* EditDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 509CDD121AEC9BA300A6A5E9 /* EditDescriptionViewController.m */; };
 		50A1D4D71AC0433600E56EB1 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 506E728A1A1E0B450006F2DF /* DataModel.xcdatamodeld */; };
@@ -265,8 +265,8 @@
 		5097DACC1A921CD7006DB197 /* CategoryData+Fetch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CategoryData+Fetch.m"; sourceTree = "<group>"; };
 		5097DACE1A922294006DB197 /* ChooseCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChooseCategoryTableViewController.h; sourceTree = "<group>"; };
 		5097DACF1A922294006DB197 /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
-		509993041AF5BDBD007F7A84 /* PieChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartViewController.h; sourceTree = "<group>"; };
-		509993051AF5BDBD007F7A84 /* PieChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartViewController.m; sourceTree = "<group>"; };
+		509993041AF5BDBD007F7A84 /* PieChartTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartTableViewController.h; sourceTree = "<group>"; };
+		509993051AF5BDBD007F7A84 /* PieChartTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartTableViewController.m; sourceTree = "<group>"; };
 		509B7D701B0A1F29007711EA /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		509B7D721B0A1F4C007711EA /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		509CDD111AEC9BA300A6A5E9 /* EditDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditDescriptionViewController.h; sourceTree = "<group>"; };
@@ -736,8 +736,8 @@
 		509993031AF5BD7C007F7A84 /* PieChartVC */ = {
 			isa = PBXGroup;
 			children = (
-				509993041AF5BDBD007F7A84 /* PieChartViewController.h */,
-				509993051AF5BDBD007F7A84 /* PieChartViewController.m */,
+				509993041AF5BDBD007F7A84 /* PieChartTableViewController.h */,
+				509993051AF5BDBD007F7A84 /* PieChartTableViewController.m */,
 			);
 			name = PieChartVC;
 			sourceTree = "<group>";
@@ -1250,7 +1250,7 @@
 				50B3574D1A48596000168958 /* Persistence.m in Sources */,
 				505AF9341A91577000E0CB28 /* DetailExpenseTableViewController.m in Sources */,
 				508774871A1F0C19002D1A9E /* Expense.m in Sources */,
-				509993061AF5BDBD007F7A84 /* PieChartViewController.m in Sources */,
+				509993061AF5BDBD007F7A84 /* PieChartTableViewController.m in Sources */,
 				50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */,
 				500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */,
 				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,

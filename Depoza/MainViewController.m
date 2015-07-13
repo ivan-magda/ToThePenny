@@ -10,7 +10,7 @@
 #import "ManageCategoryTableViewController.h"
 #import "CategoriesTableViewController.h"
 #import "CategoriesContainerViewController.h"
-#import "PieChartViewController.h"
+#import "PieChartTableViewController.h"
     //View
 #import "TitleViewButton.h"
     //CoreData
@@ -483,7 +483,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         self.delegate = controller;
         self.containerView = controller;
     } else if ([segue.identifier isEqualToString:@"PieChart"]) {
-        PieChartViewController *controller = segue.destinationViewController;
+        PieChartTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
         controller.dateToShow = _dateToShow;
     }

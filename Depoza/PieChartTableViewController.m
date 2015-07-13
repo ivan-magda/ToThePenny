@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
-#import "PieChartViewController.h"
+#import "PieChartTableViewController.h"
 #import <CorePlot-CocoaTouch.h>
     //CoreData
 #import "CategoriesInfo.h"
@@ -22,7 +22,7 @@
 
 static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCell";
 
-@interface PieChartViewController () <CPTPlotDataSource, CPTPieChartDataSource>
+@interface PieChartTableViewController () <CPTPlotDataSource, CPTPieChartDataSource>
 
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
 @property (nonatomic, strong) CPTTheme *theme;
@@ -34,7 +34,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 
 @end
 
-@implementation PieChartViewController {
+@implementation PieChartTableViewController {
     NSMutableArray *_categoriesInfo;
     NSNumber *_totalAmount;
     NSArray *_colors;
@@ -52,7 +52,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 
     NSArray *dates = [_dateToShow getFirstAndLastDatesFromMonth];
 
-    __weak PieChartViewController *weakSelf = self;
+    __weak PieChartTableViewController *weakSelf = self;
     
     [Fetch loadCategoriesInfoInContext:_managedObjectContext betweenDates:dates withCompletionHandler:^(NSArray *fetchedCategories, NSNumber *totalAmount) {
         NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(amount)) ascending:NO];
@@ -220,26 +220,36 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    CategoriesInfo *category = _categoriesInfo[indexPath.row];
-    
     PieChartTableViewCell *cell = (PieChartTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kPieChartTableViewCellIdentifier];
     
-    cell.coloredCategoryView.backgroundColor = [self getUIColorForIndex:indexPath.row];
+    [self configuratePieChartTableViewCell:cell forRowAtIndexPath:indexPath];
+    
+    return cell;
+}
+
+- (void)configuratePieChartTableViewCell:(PieChartTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    CategoriesInfo *category = _categoriesInfo[indexPath.row];
+    
+    cell.coloredCategoryView.backgroundColor    = [self getUIColorForIndex:indexPath.row];
     cell.coloredCategoryView.layer.cornerRadius = (CGRectGetHeight(cell.coloredCategoryView.bounds) / 2.0f);
     cell.categoryTitleLabel.text = category.title;
-    cell.amountLabel.text  = [NSString formatAmount:category.amount];
+    cell.amountLabel.text   = [NSString formatAmount:category.amount];
     cell.categoryIcon.image = [UIImage imageNamed:category.iconName];
-
+    
     NSNumber *percent = [self calculatePercentageValueForAmount:category.amount andTotalAmount:_totalAmount];
     cell.percentLabel.text = [NSString stringWithFormat:@"%0.1f %%", percent.floatValue];
     
     
-    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, 64.0f - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
-    separator.backgroundColor = tableView.separatorColor;
+    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, 64.0f - 0.5f, self.tableView.bounds.size.width - 15.0f, 0.5f)];
+    separator.backgroundColor = self.tableView.separatorColor;
     
     [cell addSubview:separator];
-    
-    return cell;
+}
+
+#pragma mark - UITableViewDelegate -
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma mark - HandleActions -
