@@ -9,6 +9,7 @@
     //ViewControllers
 #import "PieChartTableViewController.h"
 #import "SelectTimePeriodViewController.h"
+#import "SelectedCategoryTableViewController.h"
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoriesInfo.h"
@@ -85,6 +86,22 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 #pragma mark - Helper methods -
 
 - (void)updateTransactionsData {
+    NSArray *dates = [self getDatesForLoadCategoriesData];
+    
+    __weak PieChartTableViewController *weakSelf = self;
+    
+    [Fetch loadCategoriesInfoInContext:_managedObjectContext betweenDates:dates withCompletionHandler:^(NSArray *fetchedCategories, NSNumber *totalAmount) {
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(amount)) ascending:NO];
+        NSMutableArray *sortedCategories = [[fetchedCategories sortedArrayUsingDescriptors:@[sortDescriptor]]mutableCopy];
+        
+        [weakSelf removeCategoriesWithoutTransactionsFrom:sortedCategories];
+        
+        _categoriesInfo = sortedCategories;
+        _totalAmount = totalAmount;
+    }];
+}
+
+- (NSArray *)getDatesForLoadCategoriesData {
     NSArray *dates;
     
     switch (self.segmentedControl.selectedSegmentIndex) {
@@ -105,17 +122,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     }
     NSParameterAssert(dates != nil);
     
-    __weak PieChartTableViewController *weakSelf = self;
-    
-    [Fetch loadCategoriesInfoInContext:_managedObjectContext betweenDates:dates withCompletionHandler:^(NSArray *fetchedCategories, NSNumber *totalAmount) {
-        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(amount)) ascending:NO];
-        NSMutableArray *sortedCategories = [[fetchedCategories sortedArrayUsingDescriptors:@[sortDescriptor]]mutableCopy];
-        
-        [weakSelf removeCategoriesWithoutTransactionsFrom:sortedCategories];
-        
-        _categoriesInfo = sortedCategories;
-        _totalAmount = totalAmount;
-    }];
+    return dates;
 }
 
 - (void)updateLabels {
@@ -373,6 +380,25 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+#pragma mark - Navigation -
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"CategorySelected"]) {
+        SelectedCategoryTableViewController *controller = segue.destinationViewController;
+        controller.managedObjectContext = _managedObjectContext;
+        
+        CategoriesInfo *category = nil;
+        if ([sender isKindOfClass:[UITableViewCell class]]) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
+            
+            category = _categoriesInfo[indexPath.row];
+        }
+        controller.selectedCategory = category;
+        controller.timePeriodDates  = [self getDatesForLoadCategoriesData];
+    }
+
 }
 
 #pragma mark - HandleActions -

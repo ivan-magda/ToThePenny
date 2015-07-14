@@ -14,7 +14,9 @@
 #import "CategoryInfoCollectionViewCell.h"
     //CoreData
 #import "CategoriesInfo.h"
+    //Categories
 #import "NSString+FormatAmount.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
 
 const CGFloat DefaultContainerViewHeightValue = 175.0f;
 const CGFloat ReducedContainerViewHeightValue = 106.0f;
@@ -62,8 +64,7 @@ const CGFloat DefaultPageControlHeightValue = 37.0f;
             [self.delegate categoriesContainerViewController:self didChooseCategory:category];
         }
         controller.selectedCategory = category;
-        controller.timePeriod = _timePeriod;
-        controller.timePeriodFromMinAndMaxDates = NO;
+        controller.timePeriodDates = [_timePeriod getFirstAndLastDatesFromMonth];
     }
 }
 

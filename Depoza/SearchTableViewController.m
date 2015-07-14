@@ -14,7 +14,7 @@
 #import "CustomRightDetailCell.h"
 #import "FoundExpenseCell.h"
     //CoreData
-#import "ExpenseData.h"
+#import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "CategoriesInfo.h"
     //Categories
@@ -262,8 +262,10 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 
         CategoriesInfo *category = [CategoriesInfo categoryInfoFromCategoryData:[self filteredCategoryForIndexPath:indexPath]];
         controller.selectedCategory = category;
-        controller.timePeriod = [NSDate date];
-        controller.timePeriodFromMinAndMaxDates = YES;
+        
+        NSDate *minimumDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:category.idValue];
+        NSDate *maximumDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:category.idValue];
+        controller.timePeriodDates = @[minimumDate, maximumDate];
 
         _searchBarFirstResponder = YES;
     }

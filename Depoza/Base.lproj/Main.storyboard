@@ -1352,6 +1352,7 @@
                                     <outlet property="categoryTitleLabel" destination="urp-Tb-7jC" id="mFL-tO-0ur"/>
                                     <outlet property="coloredCategoryView" destination="fDZ-jo-3Bi" id="LT5-aE-n5C"/>
                                     <outlet property="percentLabel" destination="hcW-9f-zXM" id="eSW-KY-kcA"/>
+                                    <segue destination="OhM-zH-INc" kind="push" identifier="CategorySelected" id="akn-K6-Nv2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -1502,10 +1503,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="eiF-x1-yp8"/>
-        <segue reference="Ke7-wc-ErB"/>
-        <segue reference="xQY-w0-KW7"/>
         <segue reference="qiW-IC-btw"/>
+        <segue reference="akn-K6-Nv2"/>
+        <segue reference="Ke7-wc-ErB"/>
+        <segue reference="eiF-x1-yp8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

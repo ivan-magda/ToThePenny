@@ -17,9 +17,10 @@
 #import "CustomRightDetailCell.h"
     //Categories
 #import "NSString+FormatAmount.h"
+#import "NSString+FormatDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentYear.h"
-#import "NSString+FormatDate.h"
+#import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 
 static NSString * const kSelectStartAndEndDatesCellReuseIdentifier = @"SelectStartAndEndDatesCell";
 static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
@@ -55,6 +56,8 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    NSParameterAssert(self.timePeriodDates.count == 2);
 
     self.title = _selectedCategory.title;
 
@@ -69,23 +72,26 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 #pragma mark - Helpers -
 
 - (void)configureTimePeriod {
-    if (self.timePeriodFromMinAndMaxDates) {
-        _minimumDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
-        _maximumDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
+    NSDate *minDate = [[self.timePeriodDates firstObject]getStartAndEndDatesFromDate].firstObject;
+    NSDate *maxDate = [[self.timePeriodDates lastObject]getStartAndEndDatesFromDate].lastObject;
+    
+    NSDate *oldestDate = [[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]getStartAndEndDatesFromDate].firstObject;
+    NSDate *mostRecentDate = [[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]getStartAndEndDatesFromDate].lastObject;
+    
+    if ([maxDate compare:mostRecentDate] == NSOrderedDescending) {
+        _maximumDate = mostRecentDate;
     } else {
-        NSArray *dates = [_timePeriod getFirstAndLastDatesFromMonth];
-        _minimumDate = [dates firstObject];
-
-        NSDate *maxDate = [dates lastObject];
-        NSDate *mostRecentDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue];
-        if ([mostRecentDate compare:maxDate] == NSOrderedAscending) {
-            _maximumDate = mostRecentDate;
-        } else {
-            _maximumDate = [dates lastObject];
-        }
+        _maximumDate = maxDate;
     }
+    
+    if ([minDate compare:oldestDate] == NSOrderedAscending) {
+        _minimumDate = oldestDate;
+    } else {
+        _minimumDate = minDate;
+    }
+    
     _startDate = _minimumDate;
-    _endDate = _maximumDate;
+    _endDate   = _maximumDate;
 }
 
 #pragma mark - UITableViewDataSource -
@@ -134,11 +140,11 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
                 UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetHeight(self.view.bounds), 216.0f)];
                 datePicker.tag = 110;
-                datePicker.datePickerMode = UIDatePickerModeDate;
+                datePicker.datePickerMode = UIDatePickerModeDateAndTime;
                 [cell.contentView addSubview:datePicker];
 
-                [datePicker setMinimumDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
-                [datePicker setMaximumDate:[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
+                [datePicker setMinimumDate:_minimumDate];
+                [datePicker setMaximumDate:_maximumDate];
 
                 [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
             }
