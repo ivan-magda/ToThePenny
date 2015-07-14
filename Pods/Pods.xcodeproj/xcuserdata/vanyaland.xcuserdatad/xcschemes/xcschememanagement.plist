@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-HSDatePickerViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>390AA73B88FA2913C7AE5721</key>
+		<key>4A6DC0A4DEC1AC0754F51B55</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>472D96458CC6B6461DFFF561</key>
+		<key>82B62D1A3540236059F79AB4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A6462029C573F244A2637CC0</key>
+		<key>882989047A6DC6EA4F8E303A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B65B222A0E35BBA4AFEB2954</key>
 		<dict>
 			<key>primary</key>
 			<true/>

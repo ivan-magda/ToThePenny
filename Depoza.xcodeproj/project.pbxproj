@@ -27,6 +27,7 @@
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
 		5015A5701AC02C230056271A /* Depoza Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 5015A5631AC02C230056271A /* Depoza Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5018A8C51AC9885600E75948 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
+		501B14161B54C7A00016910C /* BouncePresentAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 501B14151B54C7A00016910C /* BouncePresentAnimationController.m */; };
 		501CCAFF1B48B35400609142 /* iRate.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 501CCAFC1B48B35400609142 /* iRate.bundle */; };
 		501CCB001B48B35400609142 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCAFE1B48B35400609142 /* iRate.m */; };
 		501CCB041B48B5E600609142 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 501CCB061B48B5E600609142 /* InfoPlist.strings */; };
@@ -202,6 +203,8 @@
 		5015A5681AC02C230056271A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5015A5691AC02C230056271A /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		5015A56A1AC02C230056271A /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
+		501B14141B54C7A00016910C /* BouncePresentAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncePresentAnimationController.h; sourceTree = "<group>"; };
+		501B14151B54C7A00016910C /* BouncePresentAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncePresentAnimationController.m; sourceTree = "<group>"; };
 		501CCAFC1B48B35400609142 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		501CCAFD1B48B35400609142 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		501CCAFE1B48B35400609142 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -883,6 +886,8 @@
 				50086E8D1AC6E7F600162677 /* MainViewCell.m */,
 				50E021F61AD90838008489DA /* GradientView.h */,
 				50E021F71AD90838008489DA /* GradientView.m */,
+				501B14141B54C7A00016910C /* BouncePresentAnimationController.h */,
+				501B14151B54C7A00016910C /* BouncePresentAnimationController.m */,
 				50B4DE451AF1E5C2008CCC45 /* SelectedCategoryCell.h */,
 				50B4DE461AF1E5C2008CCC45 /* SelectedCategoryCell.m */,
 				50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */,
@@ -1264,6 +1269,7 @@
 				509993061AF5BDBD007F7A84 /* PieChartTableViewController.m in Sources */,
 				50A6C05D1A92C71800699862 /* ExpenseData+Fetch.m in Sources */,
 				500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */,
+				501B14161B54C7A00016910C /* BouncePresentAnimationController.m in Sources */,
 				50BA1B9B1A960FB10091644D /* SettingsTableViewController.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */,

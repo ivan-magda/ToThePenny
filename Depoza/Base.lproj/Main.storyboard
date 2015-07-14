@@ -1252,7 +1252,10 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIR-mh-A7k">
-                                    <rect key="frame" x="111" y="8" width="99" height="37"/>
+                                    <rect key="frame" x="70" y="8" width="180" height="37"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="180" id="fsJ-Z8-mMH"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                                     <state key="normal" title="SelectDate">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

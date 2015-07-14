@@ -1,6 +1,7 @@
-platform :ios, "7.0"
+platform :ios, '7.0'
 
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'KVNProgress', '~> 2.2'
 pod 'CorePlot', '~> 1.5'
+pod 'HSDatePickerViewController', '~> 1.0'
