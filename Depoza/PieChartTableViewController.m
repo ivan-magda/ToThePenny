@@ -142,6 +142,10 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
             if (!monthFormatter) {
                 monthFormatter = [NSDateFormatter new];
                 [monthFormatter setDateFormat:@"MMMM YYYY"];
+                
+                if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
+                    [monthFormatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+                }
             }
             return [monthFormatter stringFromDate:date];
         }

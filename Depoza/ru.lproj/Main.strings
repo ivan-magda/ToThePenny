@@ -1,0 +1,171 @@
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "14b-gs-KKC"; */
+"14b-gs-KKC.text" = "Title";
+
+/* Class = "UILabel"; text = "Добавить категорию"; ObjectID = "1mw-1W-tE6"; */
+"1mw-1W-tE6.text" = "Добавить категорию";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "1yJ-ym-B5k"; */
+"1yJ-ym-B5k.text" = "Date";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "4SO-cW-Pyo"; */
+"4SO-cW-Pyo.text" = "Category";
+
+/* Class = "UINavigationItem"; title = "Добавить"; ObjectID = "4gu-5P-d8u"; */
+"4gu-5P-d8u.title" = "Добавить";
+
+/* Class = "UINavigationItem"; title = "Настройки"; ObjectID = "6oE-Pz-2cz"; */
+"6oE-Pz-2cz.title" = "Настройки";
+
+/* Class = "UILabel"; text = "Start/End date"; ObjectID = "7GL-8S-cde"; */
+"7GL-8S-cde.text" = "Start/End date";
+
+/* Class = "UITextField"; placeholder = "0,00"; ObjectID = "7Wm-gp-gc6"; */
+"7Wm-gp-gc6.placeholder" = "0,00";
+
+/* Class = "UILabel"; text = "Расширение"; ObjectID = "7jZ-Yl-Zz5"; */
+"7jZ-Yl-Zz5.text" = "Расширение";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "9oH-d4-e2k"; */
+"9oH-d4-e2k.text" = "Title";
+
+/* Class = "UITextField"; placeholder = "Название категории"; ObjectID = "ALc-Cy-ssO"; */
+"ALc-Cy-ssO.placeholder" = "Название категории";
+
+/* Class = "UILabel"; text = "Иконка"; ObjectID = "Agt-79-Wff"; */
+"Agt-79-Wff.text" = "Иконка";
+
+/* Class = "UINavigationItem"; title = "Добавить"; ObjectID = "FoH-o8-3k5"; */
+"FoH-o8-3k5.title" = "Добавить";
+
+/* Class = "UILabel"; text = "Добавление при открытии"; ObjectID = "Gwa-Ip-Gee"; */
+"Gwa-Ip-Gee.text" = "Добавление при открытии";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "H0f-08-eaF"; */
+"H0f-08-eaF.text" = "Title";
+
+/* Class = "UILabel"; text = "5"; ObjectID = "H1m-4S-xvb"; */
+"H1m-4S-xvb.text" = "5";
+
+/* Class = "UINavigationItem"; title = "Расходы"; ObjectID = "H7q-K3-3GL"; */
+"H7q-K3-3GL.title" = "Расходы";
+
+/* Class = "UITabBarItem"; title = "Расходы"; ObjectID = "HE9-VB-20J"; */
+"HE9-VB-20J.title" = "Расходы";
+
+/* Class = "UILabel"; text = "Сумма"; ObjectID = "IVu-Kj-yFl"; */
+"IVu-Kj-yFl.text" = "Сумма";
+
+/* Class = "UINavigationItem"; title = "Расширение"; ObjectID = "Ibd-Rx-dE7"; */
+"Ibd-Rx-dE7.title" = "Расширение";
+
+/* Class = "UINavigationItem"; title = "Категории"; ObjectID = "LGP-N2-8Y0"; */
+"LGP-N2-8Y0.title" = "Категории";
+
+/* Class = "UITableViewController"; title = "Category"; ObjectID = "MpU-36-BsH"; */
+"MpU-36-BsH.title" = "Category";
+
+/* Class = "UILabel"; text = "Не обнаружено новых транзакций"; ObjectID = "MzK-pl-xAY"; */
+"MzK-pl-xAY.text" = "Не обнаружено новых транзакций";
+
+/* Class = "UILabel"; text = "25.50"; ObjectID = "O0c-N4-amn"; */
+"O0c-N4-amn.text" = "25.50";
+
+/* Class = "UITableViewSection"; footerTitle = "Управляйте настройками расширения."; ObjectID = "Ocd-v5-Fg1"; */
+"Ocd-v5-Fg1.footerTitle" = "Управляйте настройками расширения.";
+
+/* Class = "UITextView"; text = "Введите описание"; ObjectID = "PKs-ba-HLP"; */
+"PKs-ba-HLP.text" = "Введите описание";
+
+/* Class = "UINavigationItem"; title = "Расход"; ObjectID = "Qur-wg-iYa"; */
+"Qur-wg-iYa.title" = "Расход";
+
+/* Class = "UITabBarItem"; title = "Настройки"; ObjectID = "RJ6-dR-x4Q"; */
+"RJ6-dR-x4Q.title" = "Настройки";
+
+/* Class = "UINavigationItem"; title = "Изменить Категорию"; ObjectID = "THP-bm-8uL"; */
+"THP-bm-8uL.title" = "Изменить Категорию";
+
+/* Class = "UILabel"; text = "Описание"; ObjectID = "TWO-k2-EMN"; */
+"TWO-k2-EMN.text" = "Описание";
+
+/* Class = "UILabel"; text = "Дата"; ObjectID = "VtJ-Fl-OPY"; */
+"VtJ-Fl-OPY.text" = "Дата";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "WCq-IQ-RA1"; */
+"WCq-IQ-RA1.text" = "Detail";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "WDI-1N-8eL"; */
+"WDI-1N-8eL.text" = "Description";
+
+/* Class = "UIButton"; normalTitle = "+"; ObjectID = "Wma-3l-z5Q"; */
+"Wma-3l-z5Q.normalTitle" = "+";
+
+/* Class = "UILabel"; text = "CategoryTitle"; ObjectID = "XWT-ab-WBB"; */
+"XWT-ab-WBB.text" = "CategoryTitle";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "cvQ-Sg-oCL"; */
+"cvQ-Sg-oCL.text" = "Amount";
+
+/* Class = "UITableViewSection"; footerTitle = "Управляйте категориями, добавляйте или изменяйте категорию."; ObjectID = "dyv-25-eoq"; */
+"dyv-25-eoq.footerTitle" = "Управляйте категориями, добавляйте или изменяйте категорию.";
+
+/* Class = "UILabel"; text = "Категории"; ObjectID = "e0U-Ne-J04"; */
+"e0U-Ne-J04.text" = "Категории";
+
+/* Class = "UITextField"; text = "50"; ObjectID = "evm-gb-Pzi"; */
+"evm-gb-Pzi.text" = "50";
+
+/* Class = "UITextField"; placeholder = "Поиск категории"; ObjectID = "fNH-fi-5ja"; */
+"fNH-fi-5ja.placeholder" = "Поиск категории";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "gNI-gq-4KC"; */
+"gNI-gq-4KC.text" = "Description";
+
+/* Class = "UITextField"; placeholder = "Введите описание"; ObjectID = "hHk-PM-Xa0"; */
+"hHk-PM-Xa0.placeholder" = "Введите описание";
+
+/* Class = "UINavigationItem"; title = "Поиск"; ObjectID = "ihl-OM-MD1"; */
+"ihl-OM-MD1.title" = "Поиск";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "jGb-u9-8Qt"; */
+"jGb-u9-8Qt.text" = "Detail";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "jkK-n9-121"; */
+"jkK-n9-121.text" = "Date";
+
+/* Class = "UILabel"; text = "Summa"; ObjectID = "kxL-xl-ePS"; */
+"kxL-xl-ePS.text" = "Summa";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "nfA-1R-jSe"; */
+"nfA-1R-jSe.text" = "Amount";
+
+/* Class = "UILabel"; text = "Отображаемых транзакций"; ObjectID = "ohr-Bg-X3j"; */
+"ohr-Bg-X3j.text" = "Отображаемых транзакций";
+
+/* Class = "UITableViewSection"; footerTitle = "Позволяет производить добавление транзакции при открытии приложения."; ObjectID = "qTa-8P-aGy"; */
+"qTa-8P-aGy.footerTitle" = "Позволяет производить добавление транзакции при открытии приложения.";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "rAE-Ji-58i"; */
+"rAE-Ji-58i.text" = "Category";
+
+/* Class = "UILabel"; text = "Category/Description"; ObjectID = "son-R0-NKv"; */
+"son-R0-NKv.text" = "Category/Description";
+
+/* Class = "UILabel"; text = "Date"; ObjectID = "tTI-mh-4A3"; */
+"tTI-mh-4A3.text" = "Date";
+
+/* Class = "UILabel"; text = "Category"; ObjectID = "uxS-mc-hf3"; */
+"uxS-mc-hf3.text" = "Category";
+
+/* Class = "UILabel"; text = "Категория"; ObjectID = "veD-YL-dRd"; */
+"veD-YL-dRd.text" = "Категория";
+
+/* Class = "UITabBarItem"; title = "Поиск"; ObjectID = "w29-Ws-Oc5"; */
+"w29-Ws-Oc5.title" = "Поиск";
+
+/* Class = "UILabel"; text = "Description"; ObjectID = "zHA-Av-m7y"; */
+"zHA-Av-m7y.text" = "Description";
+
+/* Class = "UINavigationItem"; title = "Описание"; ObjectID = "zQn-Be-5l1"; */
+"zQn-Be-5l1.title" = "Описание";

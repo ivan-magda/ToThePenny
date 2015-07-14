@@ -173,7 +173,6 @@
 
 /* Begin PBXFileReference section */
 		264746BB42B33C07DA0F2051 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		50000FC11B03A1B300509F45 /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/Main.storyboard; sourceTree = "<group>"; };
 		500540D81AC560CC007EF006 /* Banknotes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Banknotes.png; sourceTree = "<group>"; };
 		500540D91AC560CC007EF006 /* Banknotes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Banknotes@2x.png"; sourceTree = "<group>"; };
 		500540DA1AC560CC007EF006 /* BanknotesFilled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BanknotesFilled.png; sourceTree = "<group>"; };
@@ -205,6 +204,7 @@
 		5015A56A1AC02C230056271A /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
 		501B14141B54C7A00016910C /* BouncePresentAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BouncePresentAnimationController.h; sourceTree = "<group>"; };
 		501B14151B54C7A00016910C /* BouncePresentAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BouncePresentAnimationController.m; sourceTree = "<group>"; };
+		501B14171B54D0300016910C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		501CCAFC1B48B35400609142 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		501CCAFD1B48B35400609142 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		501CCAFE1B48B35400609142 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -1335,7 +1335,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				506E72911A1E0B450006F2DF /* Base */,
-				50000FC11B03A1B300509F45 /* ru */,
+				501B14171B54D0300016910C /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
