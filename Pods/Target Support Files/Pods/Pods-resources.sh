@@ -58,11 +58,9 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "HSDatePickerViewController/HSDatePickerViewControllerDemo/HSDatePickerViewController/HSDatePickerViewController.xib"
   install_resource "KVNProgress/KVNProgress/Resources/KVNProgressView.xib"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "HSDatePickerViewController/HSDatePickerViewControllerDemo/HSDatePickerViewController/HSDatePickerViewController.xib"
   install_resource "KVNProgress/KVNProgress/Resources/KVNProgressView.xib"
 fi
 

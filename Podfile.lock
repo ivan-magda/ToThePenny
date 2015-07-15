@@ -1,16 +1,13 @@
 PODS:
   - CorePlot (1.6)
-  - HSDatePickerViewController (1.0.1)
   - KVNProgress (2.2.1)
 
 DEPENDENCIES:
   - CorePlot (~> 1.5)
-  - HSDatePickerViewController (~> 1.0)
   - KVNProgress (~> 2.2)
 
 SPEC CHECKSUMS:
   CorePlot: 820901f6c147f2d84549ffa1f0902869f980d74d
-  HSDatePickerViewController: b292f2a53b2644a68aa5e1343053d2f3554de64c
   KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
 
 COCOAPODS: 0.37.2

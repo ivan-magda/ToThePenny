@@ -10,7 +10,7 @@
 
 @class NSManagedObjectContext;
 
-@interface PieChartTableViewController : UITableViewController <UIViewControllerTransitioningDelegate>
+@interface PieChartTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 

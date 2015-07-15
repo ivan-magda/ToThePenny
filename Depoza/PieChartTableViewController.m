@@ -10,6 +10,7 @@
 #import "PieChartTableViewController.h"
 #import "SelectTimePeriodViewController.h"
 #import "SelectedCategoryTableViewController.h"
+#import "HSDatePickerViewController.h"
     //CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoriesInfo.h"
@@ -24,10 +25,8 @@
 #import "NSString+FormatAmount.h"
     //View
 #import "PieChartTableViewCell.h"
-#import "BouncePresentAnimationController.h"
     //Frameworks
 #import <CorePlot-CocoaTouch.h>
-#import <HSDatePickerViewController.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -49,24 +48,18 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 @property (weak, nonatomic) IBOutlet UIView *pieChartView;
 @property (strong, nonatomic) UISegmentedControl *segmentedControl;
 
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+@property (nonatomic, strong) NSDateFormatter *monthAndYearLabelDateFormater;
+
 @end
 
 @implementation PieChartTableViewController {
     NSMutableArray *_categoriesInfo;
     NSNumber *_totalAmount;
     NSArray *_colors;
-    
-    BouncePresentAnimationController *_bouncePresentAnimationController;
 }
 
 #pragma mark - UIViewController lifecycle methods -
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        _bouncePresentAnimationController = [BouncePresentAnimationController new];
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -438,12 +431,28 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     return selectTimePeriodViewController;
 }
 
+- (NSDateFormatter *)dateFormatter {
+    if (!_dateFormatter) {
+        _dateFormatter = [NSDateFormatter new];
+        [_dateFormatter setDateFormat:@"ccc d MMMM"];
+    }
+    return _dateFormatter;
+}
+
+- (NSDateFormatter *)monthAndYearLabelDateFormater {
+    if (!_monthAndYearLabelDateFormater) {
+        _monthAndYearLabelDateFormater = [NSDateFormatter new];
+        [_monthAndYearLabelDateFormater setDateFormat:@"MMMM yyyy"];
+        [self setRuMonthSymbols:_monthAndYearLabelDateFormater];
+    }
+    return _monthAndYearLabelDateFormater;
+}
+
 - (IBAction)selectDateButtonPressed:(UIButton *)sender {
     switch (self.segmentedControl.selectedSegmentIndex) {
         case ShowByDay: {
             HSDatePickerViewController *hsdpvc = [HSDatePickerViewController new];
             hsdpvc.delegate = self;
-            hsdpvc.transitioningDelegate = self;
             hsdpvc.date = _dateToShow;
             hsdpvc.minuteStep = StepFifteenMinutes;
             hsdpvc.minDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext];
@@ -454,25 +463,13 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
             }
             hsdpvc.maxDate = maxDate;
             
-            static NSDateFormatter *dateFormatter = nil;
-            if (!dateFormatter) {
-                dateFormatter = [NSDateFormatter new];
-                [dateFormatter setDateFormat:@"ccc d MMMM"];
-            }
-            hsdpvc.dateFormatter = dateFormatter;
-            
-            static NSDateFormatter *monthAndYearLabelDateFormater = nil;
-            if (!monthAndYearLabelDateFormater) {
-                monthAndYearLabelDateFormater = [NSDateFormatter new];
-                [monthAndYearLabelDateFormater setDateFormat:@"MMMM yyyy"];
-                [self setRuMonthSymbols:monthAndYearLabelDateFormater];
-            }
-            hsdpvc.monthAndYearLabelDateFormater = monthAndYearLabelDateFormater;
+            hsdpvc.dateFormatter = [self dateFormatter];
+            hsdpvc.monthAndYearLabelDateFormater = [self monthAndYearLabelDateFormater];
             
             hsdpvc.backButtonTitle = NSLocalizedString(@"Back", @"HSDatePickerViewController backButtonTitle");
             hsdpvc.confirmButtonTitle = NSLocalizedString(@"Set Date", @"HSDatePickerViewController confirmButtonTitle");
             
-            [self.tabBarController presentViewController:hsdpvc animated:YES completion:nil];
+            [hsdpvc presentInParentViewController:self.tabBarController];
             
             return;
         }
@@ -549,12 +546,6 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     _dateToShow = date;
     
     [self reloadData];
-}
-
-#pragma mark - UIViewControllerTransitioningDelegate -
-
-- (id<UIViewControllerAnimatedTransitioning>) animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController: (UIViewController *)source {
-    return _bouncePresentAnimationController;
 }
 
 @end
