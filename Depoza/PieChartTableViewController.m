@@ -417,9 +417,15 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 - (void)segmentedControlDidChangeValue:(UISegmentedControl *)segmentedControl {
-    _dateToShow = [NSDate date];
+    UIScrollView *scrollView = (UIScrollView *)self.tableView;
+    [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:YES];
     
-    [self reloadData];
+    CGFloat delay = (scrollView.contentOffset.y > 0 ? 0.45f : 0.0f);
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delay * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        _dateToShow = [NSDate date];
+        [self reloadData];
+    });
 }
 
 - (SelectTimePeriodViewController *)getConfiguratedSelectTimePeriodViewController {
