@@ -71,12 +71,20 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 #pragma mark - Helpers -
 
+- (NSDate *)getBeginningOfDayDateFromDate:(NSDate *)date {
+    return [date getStartAndEndDatesFromDate].firstObject;
+}
+
+- (NSDate *)getEndOfDayDateFromDate:(NSDate *)date {
+    return [date getStartAndEndDatesFromDate].lastObject;
+}
+
 - (void)configureTimePeriod {
-    NSDate *minDate = [[self.timePeriodDates firstObject]getStartAndEndDatesFromDate].firstObject;
-    NSDate *maxDate = [[self.timePeriodDates lastObject]getStartAndEndDatesFromDate].lastObject;
+    NSDate *minDate = [self getBeginningOfDayDateFromDate:[self.timePeriodDates firstObject]];
+    NSDate *maxDate = [self getEndOfDayDateFromDate:[self.timePeriodDates lastObject]];
     
-    NSDate *oldestDate = [[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]getStartAndEndDatesFromDate].firstObject;
-    NSDate *mostRecentDate = [[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]getStartAndEndDatesFromDate].lastObject;
+    NSDate *oldestDate = [self getBeginningOfDayDateFromDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
+    NSDate *mostRecentDate = [self getEndOfDayDateFromDate:[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
     
     if ([maxDate compare:mostRecentDate] == NSOrderedDescending) {
         _maximumDate = mostRecentDate;
@@ -140,7 +148,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
                 UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetHeight(self.view.bounds), 216.0f)];
                 datePicker.tag = 110;
-                datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+                datePicker.datePickerMode = UIDatePickerModeDate;
                 [cell.contentView addSubview:datePicker];
 
                 [datePicker setMinimumDate:_minimumDate];
@@ -290,14 +298,14 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (void)dateChanged:(UIDatePicker *)datePicker {
     switch (_selectedIndexPath.row) {
         case DateCellTypeStartDateCell: {
-            _startDate = datePicker.date;
+            _startDate = [self getBeginningOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_startDate];
 
             break;
         }
         case DateCellTypeEndDateCell: {
-            _endDate = datePicker.date;
+            _endDate = [self getEndOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_endDate];
 

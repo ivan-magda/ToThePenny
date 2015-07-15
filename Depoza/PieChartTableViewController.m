@@ -39,7 +39,7 @@ typedef NS_ENUM(NSUInteger, ShowBy) {
 
 static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCell";
 
-@interface PieChartTableViewController () <CPTPlotDataSource, CPTPieChartDataSource, SelectTimePeriodViewControllerDelegate, HSDatePickerViewControllerDelegate>
+@interface PieChartTableViewController () <CPTPlotDataSource, CPTPieChartDataSource, CPTPieChartDelegate, SelectTimePeriodViewControllerDelegate, HSDatePickerViewControllerDelegate>
 
 @property (nonatomic, strong) CPTGraphHostingView *hostView;
 @property (nonatomic, strong) CPTTheme *theme;
@@ -150,9 +150,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
                 monthFormatter = [NSDateFormatter new];
                 [monthFormatter setDateFormat:@"MMMM YYYY"];
                 
-                if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
-                    [monthFormatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
-                }
+                [self setRuMonthSymbols:monthFormatter];
             }
             return [monthFormatter stringFromDate:date];
         }
@@ -167,6 +165,12 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
             break;
     }
     return nil;
+}
+
+- (void)setRuMonthSymbols:(NSDateFormatter *)monthFormatter {
+    if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
+        [monthFormatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+    }
 }
 
 - (void)reloadData {
@@ -219,7 +223,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     return UIColorFromRGB(value);
 }
 
-#pragma mark - CPTPlotDataSource methods -
+#pragma mark - CPTPlotDataSource -
 
     //return number of categories
 - (NSUInteger)numberOfRecordsForPlot:(CPTPlot *)plot {
@@ -263,6 +267,13 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     CPTFill *fillColor = [CPTFill fillWithColor:[CPTColor colorWithCGColor:color.CGColor]];
     
     return fillColor;
+}
+
+#pragma mark - CPTPieChartDelegate -
+
+- (void)pieChart:(CPTPieChart *)plot sliceWasSelectedAtRecordIndex:(NSUInteger)idx {
+    CategoriesInfo *selectedCategory = _categoriesInfo[idx];
+    [self performSegueWithIdentifier:@"CategorySelected" sender:selectedCategory];
 }
 
 #pragma mark - Chart behavior -
@@ -394,6 +405,8 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
             
             category = _categoriesInfo[indexPath.row];
+        } else if ([sender isKindOfClass:[CategoriesInfo class]]) {
+            category = (CategoriesInfo *)sender;
         }
         controller.selectedCategory = category;
         controller.timePeriodDates  = [self getDatesForLoadCategoriesData];
@@ -438,9 +451,23 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
             }
             hsdpvc.maxDate = maxDate;
             
-            NSDateFormatter *dateFormatter = [NSDateFormatter new];
-            [dateFormatter setDateFormat:@"ccc d MMMM"];
+            static NSDateFormatter *dateFormatter = nil;
+            if (!dateFormatter) {
+                dateFormatter = [NSDateFormatter new];
+                [dateFormatter setDateFormat:@"ccc d MMMM"];
+            }
             hsdpvc.dateFormatter = dateFormatter;
+            
+            static NSDateFormatter *monthAndYearLabelDateFormater = nil;
+            if (!monthAndYearLabelDateFormater) {
+                monthAndYearLabelDateFormater = [NSDateFormatter new];
+                [monthAndYearLabelDateFormater setDateFormat:@"MMMM yyyy"];
+                [self setRuMonthSymbols:monthAndYearLabelDateFormater];
+            }
+            hsdpvc.monthAndYearLabelDateFormater = monthAndYearLabelDateFormater;
+            
+            hsdpvc.backButtonTitle = NSLocalizedString(@"Back", @"HSDatePickerViewController backButtonTitle");
+            hsdpvc.confirmButtonTitle = NSLocalizedString(@"Set Date", @"HSDatePickerViewController confirmButtonTitle");
             
             [self.tabBarController presentViewController:hsdpvc animated:YES completion:nil];
             
