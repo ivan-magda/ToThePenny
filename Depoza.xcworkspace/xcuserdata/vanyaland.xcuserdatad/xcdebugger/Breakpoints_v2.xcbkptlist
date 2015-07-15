@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/SelectedCategoryTableViewController.m"
-            timestampString = "458614817.199115"
+            timestampString = "458635182.745222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
             landmarkName = "-tableView:numberOfRowsInSection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -84,11 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/SelectedCategoryTableViewController.m"
-            timestampString = "458614817.199115"
+            timestampString = "458635182.745222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "239"
-            endingLineNumber = "239"
+            startingLineNumber = "233"
+            endingLineNumber = "233"
             landmarkName = "-tableView:didSelectRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/SelectedCategoryTableViewController.m"
-            timestampString = "458614817.199115"
+            timestampString = "458635182.745222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "255"
-            endingLineNumber = "255"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "-tableView:heightForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -116,11 +116,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/SelectedCategoryTableViewController.m"
-            timestampString = "458614817.199115"
+            timestampString = "458635182.745222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
             landmarkName = "-showDatePicker"
             landmarkType = "5">
          </BreakpointContent>
@@ -132,11 +132,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Depoza/SelectedCategoryTableViewController.m"
-            timestampString = "458614817.199115"
+            timestampString = "458635182.745222"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "115"
+            endingLineNumber = "115"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>

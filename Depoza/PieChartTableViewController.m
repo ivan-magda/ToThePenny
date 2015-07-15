@@ -408,6 +408,9 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
         } else if ([sender isKindOfClass:[CategoriesInfo class]]) {
             category = (CategoriesInfo *)sender;
         }
+        
+        NSParameterAssert(category != nil);
+        
         controller.selectedCategory = category;
         controller.timePeriodDates  = [self getDatesForLoadCategoriesData];
     }

@@ -22,6 +22,8 @@
 		500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */; };
 		5011BBCC1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */; };
 		5011BBCF1AFFA037005E9EDF /* SearchForCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */; };
+		5014C3711B5636A5007B29B7 /* NSDate+BeginningOfDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014C3701B5636A5007B29B7 /* NSDate+BeginningOfDay.m */; };
+		5014C3741B563738007B29B7 /* NSDate+EndOfDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014C3731B563738007B29B7 /* NSDate+EndOfDay.m */; };
 		5014D9981AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */; };
 		5015A5651AC02C230056271A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5015A5641AC02C230056271A /* NotificationCenter.framework */; };
 		5015A56B1AC02C230056271A /* TodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5015A56A1AC02C230056271A /* TodayViewController.m */; };
@@ -195,6 +197,10 @@
 		5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDatesWithEqualDate.m"; sourceTree = "<group>"; };
 		5011BBCD1AFFA037005E9EDF /* SearchForCategoryCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchForCategoryCell.h; sourceTree = "<group>"; };
 		5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchForCategoryCell.m; sourceTree = "<group>"; };
+		5014C36F1B5636A5007B29B7 /* NSDate+BeginningOfDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BeginningOfDay.h"; sourceTree = "<group>"; };
+		5014C3701B5636A5007B29B7 /* NSDate+BeginningOfDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BeginningOfDay.m"; sourceTree = "<group>"; };
+		5014C3721B563738007B29B7 /* NSDate+EndOfDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+EndOfDay.h"; sourceTree = "<group>"; };
+		5014C3731B563738007B29B7 /* NSDate+EndOfDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+EndOfDay.m"; sourceTree = "<group>"; };
 		5014D9961AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDateBetweenCurrentMonth.h"; sourceTree = "<group>"; };
 		5014D9971AA056DC00B4CBFF /* NSDate+IsDateBetweenCurrentMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDateBetweenCurrentMonth.m"; sourceTree = "<group>"; };
 		5015A5631AC02C230056271A /* Depoza Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Depoza Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -613,6 +619,10 @@
 				50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */,
 				50C068591AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.h */,
 				50C0685A1AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.m */,
+				5014C36F1B5636A5007B29B7 /* NSDate+BeginningOfDay.h */,
+				5014C3701B5636A5007B29B7 /* NSDate+BeginningOfDay.m */,
+				5014C3721B563738007B29B7 /* NSDate+EndOfDay.h */,
+				5014C3731B563738007B29B7 /* NSDate+EndOfDay.m */,
 			);
 			name = NSDate;
 			sourceTree = "<group>";
@@ -1275,6 +1285,7 @@
 				507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
+				5014C3711B5636A5007B29B7 /* NSDate+BeginningOfDay.m in Sources */,
 				5011BBCC1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m in Sources */,
 				503BF6F81A9F08D600791B90 /* MainTableViewProtocolsImplementer.m in Sources */,
 				50E021FB1AD942F5008489DA /* NSDate+TomorrowDate.m in Sources */,
@@ -1292,6 +1303,7 @@
 				50E094CD1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m in Sources */,
 				50FEF8331A960309007BC483 /* ManageCategoryTableViewController.m in Sources */,
 				500980A21AE3908B007DFCEA /* CustomRightDetailCell.m in Sources */,
+				5014C3741B563738007B29B7 /* NSDate+EndOfDay.m in Sources */,
 				50C0685B1AFA1DFB00BCC3EA /* NSDate+IsDateBetweenCurrentYear.m in Sources */,
 				50E094CA1B513C2800BB6217 /* PieChartTableViewCell.m in Sources */,
 				505CA13B1A761723009CA7B1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,

@@ -21,6 +21,8 @@
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+IsDateBetweenCurrentYear.h"
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
+#import "NSDate+BeginningOfDay.h"
+#import "NSDate+EndOfDay.h"
 
 static NSString * const kSelectStartAndEndDatesCellReuseIdentifier = @"SelectStartAndEndDatesCell";
 static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
@@ -71,20 +73,12 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 #pragma mark - Helpers -
 
-- (NSDate *)getBeginningOfDayDateFromDate:(NSDate *)date {
-    return [date getStartAndEndDatesFromDate].firstObject;
-}
-
-- (NSDate *)getEndOfDayDateFromDate:(NSDate *)date {
-    return [date getStartAndEndDatesFromDate].lastObject;
-}
-
 - (void)configureTimePeriod {
-    NSDate *minDate = [self getBeginningOfDayDateFromDate:[self.timePeriodDates firstObject]];
-    NSDate *maxDate = [self getEndOfDayDateFromDate:[self.timePeriodDates lastObject]];
+    NSDate *minDate = [NSDate getBeginningOfDayDateFromDate:[self.timePeriodDates firstObject]];
+    NSDate *maxDate = [NSDate getEndOfDayDateFromDate:[self.timePeriodDates lastObject]];
     
-    NSDate *oldestDate = [self getBeginningOfDayDateFromDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
-    NSDate *mostRecentDate = [self getEndOfDayDateFromDate:[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
+    NSDate *oldestDate = [NSDate getBeginningOfDayDateFromDate:[ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
+    NSDate *mostRecentDate = [NSDate getEndOfDayDateFromDate:[ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:_selectedCategory.idValue]];
     
     if ([maxDate compare:mostRecentDate] == NSOrderedDescending) {
         _maximumDate = mostRecentDate;
@@ -298,14 +292,14 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (void)dateChanged:(UIDatePicker *)datePicker {
     switch (_selectedIndexPath.row) {
         case DateCellTypeStartDateCell: {
-            _startDate = [self getBeginningOfDayDateFromDate:datePicker.date];
+            _startDate = [NSDate getBeginningOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_startDate];
 
             break;
         }
         case DateCellTypeEndDateCell: {
-            _endDate = [self getEndOfDayDateFromDate:datePicker.date];
+            _endDate = [NSDate getEndOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_endDate];
 
