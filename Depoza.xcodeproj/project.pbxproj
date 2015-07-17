@@ -440,7 +440,6 @@
 			children = (
 				501CCB011B48B35A00609142 /* iRate */,
 				5062EE051AF5AB8D00704185 /* ZFModalTransitionAnimator */,
-				5062EE041AF5AB7100704185 /* CorePlot */,
 			);
 			name = ThirdParty;
 			sourceTree = "<group>";
@@ -558,13 +557,6 @@
 				5064C6D81AC5491B00979BF0 /* NSDate */,
 			);
 			name = Categories;
-			sourceTree = "<group>";
-		};
-		5062EE041AF5AB7100704185 /* CorePlot */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CorePlot;
 			sourceTree = "<group>";
 		};
 		5062EE051AF5AB8D00704185 /* ZFModalTransitionAnimator */ = {

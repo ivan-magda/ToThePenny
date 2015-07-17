@@ -130,6 +130,9 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [[UINavigationBar appearance]setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:21.0], NSFontAttributeName, nil]];
 
+    [[UINavigationBar appearance]setTranslucent:NO];
+    [[UITabBar appearance]setTranslucent:YES];
+    
     [[UITabBar appearance]setTintColor:UIColorFromRGB(0x067AB5)];
 
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:17]} forState:UIControlStateNormal];

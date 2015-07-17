@@ -1,13 +1,16 @@
 PODS:
   - CorePlot (1.6)
+  - KBRoundedButton (1.0.2)
   - KVNProgress (2.2.1)
 
 DEPENDENCIES:
   - CorePlot (~> 1.5)
+  - KBRoundedButton
   - KVNProgress (~> 2.2)
 
 SPEC CHECKSUMS:
   CorePlot: 820901f6c147f2d84549ffa1f0902869f980d74d
+  KBRoundedButton: 945bd6d3b58726f3b0020cae0c70b7072c257f02
   KVNProgress: 7001d2d16a2755cee5599e8e485befe056f2197b
 
 COCOAPODS: 0.37.2

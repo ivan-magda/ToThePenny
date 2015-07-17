@@ -96,7 +96,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self initializeLocalVariables];
 
     [self configurateTableAndFetchedControllers];
-    [self configurateAddTransactionButton];
     [self configurateTitleViewButton];
 
     [self addMotionEffectToViews];
@@ -159,11 +158,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
-}
-
-- (void)configurateAddTransactionButton {
-    self.addTransactionRoundedButton.layer.cornerRadius = (CGRectGetHeight(self.addTransactionRoundedButton.bounds) / 2.0f);
-    [self addMotionEffectToView:self.addTransactionRoundedButton magnitude:kMotionEffectMagnitudeValue];
 }
 
 - (BOOL)isCurrentMonthWithNoExpenses {
@@ -736,6 +730,8 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
             [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
         }
     }
+    
+    [self addMotionEffectToView:_addTransactionRoundedButton magnitude:kMotionEffectMagnitudeValue];
 }
 
 - (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {

@@ -106,12 +106,11 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
         //Sort by frequency of use
     NSArray *dates = [[NSDate date]getFirstAndLastDatesFromMonth];
-    __weak NSManagedObjectContext *context = _managedObjectContext;
 
     NSSortDescriptor *sortByFrequencyUse = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO comparator:^NSComparisonResult(CategoriesInfo *obj1, CategoriesInfo *obj2) {
 
-        NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:context betweenDates:dates andWithCategoryIdValue:obj1.idValue];
-        NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:context betweenDates:dates andWithCategoryIdValue:obj2.idValue];
+        NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj1.idValue];
+        NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj2.idValue];
 
         if (countForCategory1 < countForCategory2) {
             return NSOrderedAscending;

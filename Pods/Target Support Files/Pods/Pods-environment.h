@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_CorePlot 6
 #define COCOAPODS_VERSION_PATCH_CorePlot 0
 
+// KBRoundedButton
+#define COCOAPODS_POD_AVAILABLE_KBRoundedButton
+#define COCOAPODS_VERSION_MAJOR_KBRoundedButton 1
+#define COCOAPODS_VERSION_MINOR_KBRoundedButton 0
+#define COCOAPODS_VERSION_PATCH_KBRoundedButton 2
+
 // KVNProgress
 #define COCOAPODS_POD_AVAILABLE_KVNProgress
 #define COCOAPODS_VERSION_MAJOR_KVNProgress 2

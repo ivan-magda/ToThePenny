@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-KBRoundedButton.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>186682DC60432F93B4423C39</key>
+		<key>2BF0BC5AB9D9C161433DAFA3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31E3841F23A5111C1A247C37</key>
+		<key>86260B509BC8EA85469E2BC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8FD2128D89AC8F89D69A33D7</key>
+		<key>EB112350C11B274DD0237817</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EBAC30288F8DB5A2EDAB5EEA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
