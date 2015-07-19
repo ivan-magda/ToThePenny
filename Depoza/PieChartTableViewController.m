@@ -189,9 +189,6 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 - (void)configurateNavigationBar {
-    UIBarButtonItem *barBtnItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"Back"] style:UIBarButtonItemStylePlain target:self action:@selector(goBack:)];
-    self.navigationItem.leftBarButtonItem = barBtnItem;
-    
     self.segmentedControl = [[UISegmentedControl alloc]initWithItems:@[NSLocalizedString(@"Day", @"Day"), NSLocalizedString(@"Month", @"Month"), NSLocalizedString(@"Year", @"Year")]];
     [_segmentedControl addTarget:self action:@selector(segmentedControlDidChangeValue:) forControlEvents:UIControlEventValueChanged];
     
@@ -411,10 +408,6 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 #pragma mark - HandleActions -
-
-- (void)goBack:(UIBarButtonItem *)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (void)segmentedControlDidChangeValue:(UISegmentedControl *)segmentedControl {
     UIScrollView *scrollView = (UIScrollView *)self.tableView;

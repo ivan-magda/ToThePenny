@@ -24,6 +24,7 @@
 #import "NSDate+FirstAndLastDaysOfMonth.m"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSDate+IsDatesWithEqualMonth.h"
+#import "NSDate+IsDatesWithEqualYear.h"
 #import "NSString+FormatAmount.h"
     //Transition
 #import "ZFModalTransitionAnimator.h"
@@ -100,6 +101,8 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
     [self addMotionEffectToViews];
     [self addNotificationSubscribes];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -300,15 +303,34 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (NSString *)formatDateForMonthLabel:(NSDate *)theDate {
-    static NSDateFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MMMM"];
+    static NSDateFormatter *month = nil;
+    
+    if (month == nil) {
+        month = [NSDateFormatter new];
+        [month setDateFormat:@"MMMM"];
+        
         if ([[[NSLocale currentLocale]objectForKey:NSLocaleCountryCode]isEqualToString:@"RU"]) {
-            [formatter setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
+            [month setMonthSymbols:@[@"Январь", @"Февраль", @"Март", @"Апрель", @"Май", @"Июнь", @"Июль", @"Август", @"Сентябрь", @"Октябрь", @"Ноябрь", @"Декабрь"]];
         }
+        
     }
-    return [formatter stringFromDate:theDate];
+    
+    NSDate *date = [NSDate date];
+    if (![date isDatesWithEqualYear:theDate]) {
+        static NSDateFormatter *year = nil;
+        
+        if (!year) {
+            year = [NSDateFormatter new];
+            [year setDateFormat:@"YYYY"];
+        }
+        
+        NSString *monthString = [month stringFromDate:theDate];
+        NSString *yearString  = [year stringFromDate:theDate];
+        
+        return [NSString stringWithFormat:@"%@ %@", monthString, yearString];
+    }
+    
+    return [month stringFromDate:theDate];
 }
 
 #pragma mark ChangeMonth
