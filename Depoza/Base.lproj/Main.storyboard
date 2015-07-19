@@ -1280,14 +1280,17 @@
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GkY-aw-3VV">
                                     <rect key="frame" x="0.0" y="86" width="320" height="246"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="320" id="QKg-Rt-wDN"/>
+                                        <constraint firstAttribute="height" constant="246" id="bWy-QT-hFU"/>
+                                    </constraints>
                                 </view>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstItem="GkY-aw-3VV" firstAttribute="leading" secondItem="BS7-9T-PpS" secondAttribute="leading" id="30G-bq-WEz"/>
                                 <constraint firstItem="OIR-mh-A7k" firstAttribute="top" secondItem="BS7-9T-PpS" secondAttribute="top" constant="8" id="8h7-yx-jX8"/>
                                 <constraint firstAttribute="centerX" secondItem="OIR-mh-A7k" secondAttribute="centerX" id="8mh-hB-bUf"/>
-                                <constraint firstAttribute="trailing" secondItem="GkY-aw-3VV" secondAttribute="trailing" id="UGP-7s-zQc"/>
+                                <constraint firstAttribute="centerX" secondItem="GkY-aw-3VV" secondAttribute="centerX" id="NUx-v0-WHt"/>
                                 <constraint firstAttribute="trailing" secondItem="s5Q-Bz-dvo" secondAttribute="trailing" constant="20" symbolic="YES" id="lDX-NC-MDs"/>
                                 <constraint firstAttribute="centerX" secondItem="s5Q-Bz-dvo" secondAttribute="centerX" id="qJP-H9-CkA"/>
                                 <constraint firstAttribute="bottom" secondItem="GkY-aw-3VV" secondAttribute="bottom" constant="8" id="uFO-Ax-x6P"/>

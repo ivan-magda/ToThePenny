@@ -212,6 +212,10 @@
     NSDate *oldestDate     = [self oldestDateExpenseInManagedObjectContext:context];
     NSDate *mostRecentDate = [self mostRecentDateExpenseInManagedObjectContext:context];
     
+    if (!oldestDate || !mostRecentDate) {
+        return [NSArray array];
+    }
+    
     return @[oldestDate, mostRecentDate];
 }
 

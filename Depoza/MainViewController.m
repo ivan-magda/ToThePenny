@@ -163,24 +163,15 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
 }
 
-- (BOOL)isCurrentMonthWithNoExpenses {
-    return (_totalExpenses == 0 && self.todayFetchedResultsController.fetchedObjects.count == 0);
-}
-
-- (BOOL)ifNeedForcedToShowAddExpenseViewController {
-    return (_isFirstTimeFetchForCategoriesInfo && [self isCurrentMonthWithNoExpenses] && [_dateToShow isDatesWithEqualMonth:[NSDate date]]);
-}
-
 - (void)presentAddExpenseViewControllerIfNeeded {
-    if ([self ifNeedForcedToShowAddExpenseViewController]) {
-        [self performAddExpense];
-        self.isShowExpenseDetailFromExtension = NO;
-    } else if (_isFirstTimeFetchForCategoriesInfo && [[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
         if (!_isShowExpenseDetailFromExtension) {
             [self performAddExpense];
             self.isShowExpenseDetailFromExtension = NO;
         }
     }
+    
+    _isShowExpenseDetailFromExtension = NO;
 }
 
 - (void)setScrollViewContentOffsetToZeroWithAnimation:(BOOL)animated {

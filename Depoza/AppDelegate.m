@@ -124,6 +124,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 #pragma mark - UI -
 
 - (void)customiseAppearance {
+    //008CC7
     [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x067AB5)];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
 
@@ -247,8 +248,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
     [_appGroupUserDefaults synchronize];
     
-    [self.persistence removePersistentStoreNotificationSubscribes];
     [self.persistence saveContext];
+    [self.persistence removePersistentStoreNotificationSubscribes];
 }
 
 #pragma mark - StatusBarTouchTracking -
