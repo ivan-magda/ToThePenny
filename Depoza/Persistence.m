@@ -116,7 +116,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             [self seedInitialData:_persistentStoreCoordinator];
         } else {
             NSError *error = nil;
-            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:_iCloudOptions error:&error]) {
+            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:(_iCloudStoreExists ? _iCloudOptions : nil) error:&error]) {
                 NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
                 abort();
             }
@@ -157,7 +157,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     NSPersistentStore *seedStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:seedStoreURL options:seedStoreOptions error:&seedStoreError];
 
     NSError *error = nil;
-    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:_iCloudOptions withType:NSSQLiteStoreType error:&error]) {
+    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:(_iCloudStoreExists ? _iCloudOptions : nil) withType:NSSQLiteStoreType error:&error]) {
         NSLog(@"Error adding seed persistent store %@, %@", error, [error userInfo]);
     }
     NSLog(@"Store succesfully initialized using the original seed");
@@ -239,7 +239,9 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
 - (void)storeWillChange:(NSNotification *)notification {
     NSLog(@"%s %@", __PRETTY_FUNCTION__, notification.description);
     dispatch_async(dispatch_get_main_queue(), ^{
+        
         NSUInteger persistentStoreUbiquitousTransitionType = [[notification.userInfo objectForKey:NSPersistentStoreUbiquitousTransitionTypeKey]unsignedIntegerValue];
+        
         if (persistentStoreUbiquitousTransitionType == NSPersistentStoreUbiquitousTransitionTypeAccountRemoved) {
             NSLog(@"NSPersistentStoreUbiquitousTransitionTypeAccountRemoved");
                 // If the iCloud account changes then the device list path will be invalid.
@@ -253,15 +255,19 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             if (![self.managedObjectContext save:&saveError]) {
                 NSLog(@"Save error: %@", [saveError localizedDescription]);
             }
+            
             [self.managedObjectContext reset];
+            
             return;
         }
 
         if ([self.managedObjectContext hasChanges]) {
             NSError *saveError;
+            
             if (![self.managedObjectContext save:&saveError]) {
                 NSLog(@"Save error: %@", [saveError localizedDescription]);
             }
+            
         } else {
             [self.managedObjectContext reset];
         }
@@ -639,6 +645,17 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             abort();
         }
     }
+}
+
+#pragma mark - Delete all data -
+
+- (void)deleteAllCategories {
+    NSArray *categories = [CategoryData getAllCategoriesInContext:_managedObjectContext];
+    
+    for (CategoryData *category in categories) {
+        [_managedObjectContext deleteObject:category];
+    }
+    [self saveContext];
 }
 
 @end

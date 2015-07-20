@@ -75,21 +75,6 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     return [[NSBundle mainBundle] URLForResource:@"DataModel" withExtension:@"momd"];
 }
 
-- (void)checkForMinimalData {
-    __weak NSManagedObjectContext *context = self.managedObjectContext;
-    __weak Persistence *persistence = self.persistence;
-    __weak MainViewController *controller = _mainViewController;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSInteger categoriesCount = [CategoryData countForCategoriesInContext:context];
-        NSInteger expensesCount = [ExpenseData countForExpensesInContext:context];
-        if (categoriesCount + expensesCount == 0) {
-            NSLog(@"%s insert categories Data", __PRETTY_FUNCTION__);
-            [persistence insertNecessaryCategoryData];
-            [controller updateUserInterfaceWithNewFetch:NO];
-        }
-    });
-}
-
 #pragma mark PersistenceDelegate
 
 - (void)persistenceStore:(Persistence *)persistence didChangeNotification:(NSNotification *)notification {
@@ -112,7 +97,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (void)setKVNDisplayTime {
     KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
     configuration.minimumSuccessDisplayTime = 0.75f;
-    configuration.minimumErrorDisplayTime   = 0.75f;
+    configuration.minimumErrorDisplayTime   = 1.0f;
 
     configuration.statusFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
     configuration.circleSize = 100.0f;
@@ -158,8 +143,6 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
-
-    [self checkForMinimalData];
 
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     

@@ -451,7 +451,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         AddExpenseTableViewController *controller = (AddExpenseTableViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.managedObjectContext = _managedObjectContext;
-
         controller.categoriesInfo = _categoriesInfo;
 
             // create animator object with instance of modal view controller

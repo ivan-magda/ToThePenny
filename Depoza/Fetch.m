@@ -27,6 +27,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     NSParameterAssert(context);
 
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    request.returnsObjectsAsFaults = NO;
 
     if (key) {
         NSSortDescriptor *sort = [[NSSortDescriptor alloc]initWithKey:key ascending:YES];

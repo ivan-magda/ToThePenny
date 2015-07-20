@@ -1,5 +1,6 @@
     //ViewControllers
 #import "AddExpenseTableViewController.h"
+#import "AppDelegate.h"
     //View
 #import "SelectedCategoryCell.h"
 #import "SearchForCategoryCell.h"
@@ -8,6 +9,7 @@
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
 #import "CategoriesInfo.h"
+#import "Persistence.h"
     //Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -109,8 +111,40 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
     NSSortDescriptor *sortByFrequencyUse = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO comparator:^NSComparisonResult(CategoriesInfo *obj1, CategoriesInfo *obj2) {
 
-        NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj1.idValue];
-        NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj2.idValue];
+        NSNumber *obj1IdValue;
+        NSNumber *obj2IdValue;
+        
+        @try {
+            obj1IdValue = obj1.idValue;
+            obj2IdValue = obj2.idValue;
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception %@", exception.reason);
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.75 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self resignActiveTextField];
+                
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [self.delegate addExpenseTableViewControllerDidCancel:self];
+                    
+                    _delegateNotified = YES;
+                    
+                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    Persistence *persistence = appDelegate.persistence;
+                    
+                    [persistence deleteAllCategories];
+                    [persistence insertNecessaryCategoryData];
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
+                    });
+                }];
+            });
+        }
+        @finally {
+        }
+        
+        NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj1IdValue];
+        NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj2IdValue];
 
         if (countForCategory1 < countForCategory2) {
             return NSOrderedAscending;

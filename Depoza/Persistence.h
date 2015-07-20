@@ -33,6 +33,7 @@
 - (id)initWithStoreURL:(NSURL *)storeURL modelURL:(NSURL *)modelURL;
 
 - (void)saveContext;
+- (void)deleteAllCategories;
 
 - (void)removePersistentStoreNotificationSubscribes;
 - (void)addPersistentStoreNotificationSubscribes;
