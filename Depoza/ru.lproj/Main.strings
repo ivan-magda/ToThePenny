@@ -169,3 +169,9 @@
 
 /* Class = "UINavigationItem"; title = "Описание"; ObjectID = "zQn-Be-5l1"; */
 "zQn-Be-5l1.title" = "Описание";
+
+/* Class = "UISegmentedControl"; McN-eI-x8J.segmentTitles[0] = "By Date"; ObjectID = "McN-eI-x8J"; */
+"McN-eI-x8J.segmentTitles[0]" = "По дате";
+
+/* Class = "UISegmentedControl"; McN-eI-x8J.segmentTitles[1] = "By Amount"; ObjectID = "McN-eI-x8J"; */
+"McN-eI-x8J.segmentTitles[1]" = "По сумме";

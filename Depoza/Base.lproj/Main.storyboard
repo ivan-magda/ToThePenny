@@ -1392,7 +1392,30 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sEb-8t-xKX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="v2C-Jy-xVn" userLabel="TableHeaderView">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="McN-eI-x8J">
+                                    <rect key="frame" x="15" y="8" width="290" height="29"/>
+                                    <segments>
+                                        <segment title="By Date"/>
+                                        <segment title="By Amount"/>
+                                    </segments>
+                                    <color key="tintColor" red="0.023529411764705882" green="0.47843137254901957" blue="0.70980392156862748" alpha="1" colorSpace="calibratedRGB"/>
+                                    <connections>
+                                        <action selector="segmentedControlDidChangeValue:" destination="OhM-zH-INc" eventType="valueChanged" id="nns-h0-e0c"/>
+                                    </connections>
+                                </segmentedControl>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="McN-eI-x8J" secondAttribute="bottom" constant="8" id="a4X-Pi-gJj"/>
+                                <constraint firstItem="McN-eI-x8J" firstAttribute="top" secondItem="v2C-Jy-xVn" secondAttribute="top" constant="8" id="l7L-b6-ViL"/>
+                                <constraint firstItem="McN-eI-x8J" firstAttribute="leading" secondItem="v2C-Jy-xVn" secondAttribute="leading" constant="15" id="r8V-ZB-pOM"/>
+                                <constraint firstAttribute="trailing" secondItem="McN-eI-x8J" secondAttribute="trailing" constant="15" id="yfh-v2-p9Q"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell tag="232" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="SelectStartAndEndDatesCell" id="GhX-mH-TQB" customClass="CustomRightDetailCell">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
@@ -1467,6 +1490,9 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="R5a-Ho-d2B"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="segmentedControl" destination="McN-eI-x8J" id="z33-ip-f7H"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z2r-WL-WGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1514,8 +1540,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="qiW-IC-btw"/>
         <segue reference="akn-K6-Nv2"/>
+        <segue reference="tqp-JB-Yta"/>
         <segue reference="Ke7-wc-ErB"/>
         <segue reference="eiF-x1-yp8"/>
     </inferredMetricsTieBreakers>

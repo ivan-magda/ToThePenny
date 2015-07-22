@@ -69,35 +69,6 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 #pragma mark - ViewController life cycle -
 
-- (void)dataCheck {
-    CategoriesInfo *categoryInfo;
-    @try {
-        for (categoryInfo in _categoriesInfo) {
-            NSLog(@"%@ ID %@", categoryInfo.title, categoryInfo.idValue);
-        }
-        return;
-    }
-    @catch (NSException *exception) {
-        NSLog(@"%@", exception.reason);
-        
-        NSArray *categories = [CategoryData getAllCategoriesInContext:_managedObjectContext];
-        for (CategoryData *category in categories) {
-            if ([category.title isEqualToString:categoryInfo.title]) {
-                [_managedObjectContext deleteObject:category];
-                [_managedObjectContext save:nil];
-                
-                NSMutableArray *categoriesInf = [NSMutableArray arrayWithArray:_categoriesInfo];
-                [categoriesInf removeObject:categoryInfo];
-                
-                _categoriesInfo = [categoriesInf copy];
-                [self dataCheck];
-            }
-        }
-    }
-    @finally {
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -127,6 +98,38 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         [self.delegate addExpenseTableViewControllerDidCancel:self];
 
         _delegateNotified = YES;
+    }
+}
+
+#pragma mark - DataCheck -
+
+- (void)dataCheck {
+    CategoriesInfo *categoryInfo;
+    @try {
+        for (categoryInfo in _categoriesInfo) {
+            NSLog(@"%@ ID %@", categoryInfo.title, categoryInfo.idValue);
+        }
+        return;
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@", exception.reason);
+        
+        NSArray *categories = [CategoryData getAllCategoriesInContext:_managedObjectContext];
+        for (CategoryData *category in categories) {
+            if ([category.title isEqualToString:categoryInfo.title]) {
+                [_managedObjectContext deleteObject:category];
+                [_managedObjectContext save:nil];
+                
+                NSMutableArray *categoriesInf = [NSMutableArray arrayWithArray:_categoriesInfo];
+                [categoriesInf removeObject:categoryInfo];
+                
+                _categoriesInfo = [categoriesInf copy];
+                
+                [self dataCheck];
+            }
+        }
+    }
+    @finally {
     }
 }
 
@@ -160,11 +163,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                     
                     _delegateNotified = YES;
                     
-                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                    Persistence *persistence = appDelegate.persistence;
+//                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+//                    Persistence *persistence = appDelegate.persistence;
                     
-                    [persistence deleteAllCategories];
-                    [persistence insertNecessaryCategoryData];
+#warning uncomment this for App Store disribution
+                    //[persistence deleteAllCategories];
+                    //[persistence insertNecessaryCategoryData];
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
                     });

@@ -159,15 +159,15 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     return [NSString stringWithFormat:@"%@: %@", today, [NSString formatAmount:@(amount)]];
 }
 
+#pragma mark - UITableViewDelegate -
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if ([self noNewTransactionsToday]) {
         return 0.0f;
     }
-
+    
     return self.tableView.sectionHeaderHeight;
 }
-
-#pragma mark - UITableViewDelegate -
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if ([self noNewTransactionsToday]) {

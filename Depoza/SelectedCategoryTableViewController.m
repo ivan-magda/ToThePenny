@@ -33,14 +33,16 @@ static const NSInteger kNumberOfSectionsInTableView = 2;
 static const NSInteger kNumberOfRowsInFirstSection = 2;
 
 typedef NS_ENUM(NSUInteger, DateCellType) {
-    DateCellTypeNone = -1,
-    DateCellTypeStartDateCell = 0,
-    DateCellTypeEndDateCell = 1,
+    NoneDateCellType = -1,
+    StartDateCellType = 0,
+    EndDateCellType = 1,
 };
 
 @interface SelectedCategoryTableViewController () <NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
+@property (weak, nonatomic) IBOutlet UISegmentedControl *segmentedControl;
 
 @end
 
@@ -96,6 +98,62 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     _endDate   = _maximumDate;
 }
 
+- (BOOL)isNothingFound {
+    return _fetchedResultsController.fetchedObjects.count == 0;
+}
+
+- (void)updateSegmentedControlState {
+    BOOL isNothingFound = [self isNothingFound];
+    for (int i = 0; i < self.segmentedControl.numberOfSegments; ++i) {
+        [self.segmentedControl setEnabled:!isNothingFound forSegmentAtIndex:i];
+    }
+    
+    NSInteger selectedSegmentIndex = (isNothingFound ? UISegmentedControlNoSegment : 0);
+    self.segmentedControl.selectedSegmentIndex = selectedSegmentIndex;
+}
+
+- (void)reloadExpensesSection {
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+- (void)reloadSelectTimePeriodSection {
+    [self.tableView beginUpdates];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+}
+
+- (NSArray *)sortedArrayBySegmentedControlState {
+    NSArray *expenses = _fetchedResultsController.fetchedObjects;
+
+    NSSortDescriptor *sortDescriptor = nil;
+    switch (self.segmentedControl.selectedSegmentIndex) {
+        case UISegmentedControlNoSegment: case 0: {
+            sortDescriptor = [[NSSortDescriptor alloc]initWithKey:NSStringFromSelector(@selector(dateOfExpense)) ascending:NO];
+            break;
+        }
+        case 1: {
+            sortDescriptor = [[NSSortDescriptor alloc]initWithKey:NSStringFromSelector(@selector(amount)) ascending:NO];
+            break;
+        }
+        default:
+            break;
+    }
+    
+    return [expenses sortedArrayUsingDescriptors:@[sortDescriptor]];
+}
+
+- (void)updateDateCellDateTextColorWithColor:(UIColor *)color atIndexPath:(NSIndexPath *)indexPath {
+    CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.rightDetailLabel.textColor = color;
+}
+
+- (void)updateDateStringOnDateCellAtIndexPath:(NSIndexPath *)indexPath withDate:(NSDate *)date {
+    CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.rightDetailLabel.text = [NSString formatDate:date];
+}
+
 #pragma mark - UITableViewDataSource -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -113,23 +171,23 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        if (indexPath.row == DateCellTypeStartDateCell) {
+        if (indexPath.row == StartDateCellType) {
                 //Start date cell
             CustomRightDetailCell *cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kSelectStartAndEndDatesCellReuseIdentifier];
             cell.leftLabel.text = NSLocalizedString(@"Start date", @"Start date, selected category view controller");
             cell.rightDetailLabel.text = [NSString formatDate:_startDate];
 
             return cell;
-        } else if (indexPath.row == DateCellTypeEndDateCell && !_datePickerVisible) {
+        } else if (indexPath.row == EndDateCellType && !_datePickerVisible) {
 
             return [self getConfiguratedEndDateCell];
 
-        } else if (indexPath.row == DateCellTypeEndDateCell && _datePickerVisible &&
-                   _selectedIndexPath.row == DateCellTypeEndDateCell) {
+        } else if (indexPath.row == EndDateCellType && _datePickerVisible &&
+                   _selectedIndexPath.row == EndDateCellType) {
 
             return [self getConfiguratedEndDateCell];
 
-        } else if (indexPath.row == 2 && _datePickerVisible && _selectedIndexPath.row == DateCellTypeStartDateCell) {
+        } else if (indexPath.row == 2 && _datePickerVisible && _selectedIndexPath.row == StartDateCellType) {
 
             return [self getConfiguratedEndDateCell];
 
@@ -151,7 +209,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
                 [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
             }
             UIDatePicker *datePicker = (UIDatePicker *)[cell viewWithTag:110];
-            NSDate *dateToSet = (_selectedIndexPath.row == DateCellTypeStartDateCell ? _startDate : _endDate);
+            NSDate *dateToSet = (_selectedIndexPath.row == StartDateCellType ? _startDate : _endDate);
             [datePicker setDate:dateToSet animated:NO];
 
             return cell;
@@ -169,7 +227,8 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 }
 
 - (void)configureExpenseCell:(CustomRightDetailCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    ExpenseData *expense = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NSIndexPath *correctIndexPath = [self correctIndexPathForFetchedResultsControllerFromIndexPath:indexPath];
+    ExpenseData *expense = [self sortedArrayBySegmentedControlState][correctIndexPath.row];
 
     if (expense.descriptionOfExpense.length == 0) {
         cell.leftLabel.text = NSLocalizedString(@"(No Description)", @"SelectedCategoryVC when expenseDescription.length == 0 show (No description)");
@@ -191,7 +250,9 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSIndexPath *correctIndexPath = [self correctIndexPathForFetchedResultsControllerFromIndexPath:indexPath];
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [self.fetchedResultsController.managedObjectContext deleteObject:[self.fetchedResultsController objectAtIndexPath:correctIndexPath]];
+        ExpenseData *expense = [self sortedArrayBySegmentedControlState][correctIndexPath.row];
+        
+        [self.fetchedResultsController.managedObjectContext deleteObject:expense];
 
         NSError *error = nil;
         if (![self.fetchedResultsController.managedObjectContext save:&error]) {
@@ -219,9 +280,9 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && _datePickerVisible) {
-        if (indexPath.row == DateCellTypeEndDateCell && _selectedIndexPath.row == DateCellTypeStartDateCell) {
+        if (indexPath.row == EndDateCellType && _selectedIndexPath.row == StartDateCellType) {
             return nil;
-        } else if (indexPath.row == 2 && _selectedIndexPath.row == DateCellTypeEndDateCell) {
+        } else if (indexPath.row == 2 && _selectedIndexPath.row == EndDateCellType) {
             return nil;
         }
     }
@@ -247,9 +308,9 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_datePickerVisible && indexPath.section == 0) {
-        if (indexPath.row == DateCellTypeEndDateCell && _selectedIndexPath.row == DateCellTypeStartDateCell) {
+        if (indexPath.row == EndDateCellType && _selectedIndexPath.row == StartDateCellType) {
             return 217.0f;
-        } else if (indexPath.row == 2 && _selectedIndexPath.row == DateCellTypeEndDateCell) {
+        } else if (indexPath.row == 2 && _selectedIndexPath.row == EndDateCellType) {
             return 217.0f;
         }
     }
@@ -266,7 +327,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (void)showDatePicker {
     _datePickerVisible = YES;
 
-    [self reloadFirstSection];
+    [self reloadSelectTimePeriodSection];
 
     [self updateDateCellDateTextColorWithColor:[self.view tintColor] atIndexPath:_selectedIndexPath];
 }
@@ -279,26 +340,28 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 
         _selectedIndexPath = nil;
 
-        [self reloadFirstSection];
+        [self reloadSelectTimePeriodSection];
 
         [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
         self.fetchedResultsController.fetchRequest.predicate = [self compoundPredicateForFetchedResultsController];
         [self performFetch];
+        
+        [self updateSegmentedControlState];
 
-        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self reloadExpensesSection];
     }
 }
 
 - (void)dateChanged:(UIDatePicker *)datePicker {
     switch (_selectedIndexPath.row) {
-        case DateCellTypeStartDateCell: {
+        case StartDateCellType: {
             _startDate = [NSDate getBeginningOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_startDate];
 
             break;
         }
-        case DateCellTypeEndDateCell: {
+        case EndDateCellType: {
             _endDate = [NSDate getEndOfDayDateFromDate:datePicker.date];
 
             [self updateDateStringOnDateCellAtIndexPath:_selectedIndexPath withDate:_endDate];
@@ -310,47 +373,39 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     }
 }
 
-- (void)updateDateCellDateTextColorWithColor:(UIColor *)color atIndexPath:(NSIndexPath *)indexPath {
-    CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.rightDetailLabel.textColor = color;
-}
-
-- (void)updateDateStringOnDateCellAtIndexPath:(NSIndexPath *)indexPath withDate:(NSDate *)date {
-    CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.rightDetailLabel.text = [NSString formatDate:date];
-}
-
-- (void)reloadFirstSection {
-    [self.tableView beginUpdates];
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.tableView endUpdates];
-}
-
 #pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
+        
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             UITableViewCell *cell = (UITableViewCell *)sender;
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
 
-            NSIndexPath *correctIndexPath = [self correctIndexPathForFetchedResultsControllerFromIndexPath:indexPath];
-            ExpenseData *expense = [_fetchedResultsController objectAtIndexPath:correctIndexPath];
+            ExpenseData *expense = [self sortedArrayBySegmentedControlState][indexPath.row];
             controller.expenseToShow = expense;
         }
+        
     }
 }
+
+#pragma mark - IBAction -
+
+- (IBAction)segmentedControlDidChangeValue:(UISegmentedControl *)sender {
+    [self reloadExpensesSection];
+}
+
 
 #pragma mark - NSFetchedResultsController -
 
 - (NSIndexPath *)correctIndexPathForFetchedResultsControllerFromIndexPath:(NSIndexPath *)indexPath {
-    return [NSIndexPath indexPathForRow:indexPath.row inSection:0];
+    return (indexPath == nil ? nil : [NSIndexPath indexPathForRow:indexPath.row inSection:0]);
 }
 
 - (NSIndexPath *)correctIndexPathForTableViewUpdatesFromIndexPath:(NSIndexPath *)indexPath {
-    return [NSIndexPath indexPathForRow:indexPath.row inSection:1];
+    return (indexPath == nil ? nil : [NSIndexPath indexPathForRow:indexPath.row inSection:1]);
 }
 
 - (NSPredicate *)compoundPredicateForFetchedResultsController {
@@ -424,30 +479,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath {
-
-    UITableView *tableView = self.tableView;
-
-    NSIndexPath *correctNewIndexPath = [self correctIndexPathForTableViewUpdatesFromIndexPath:newIndexPath];
-    NSIndexPath *correctIndexPath    = [self correctIndexPathForTableViewUpdatesFromIndexPath:indexPath];
-
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            [tableView insertRowsAtIndexPaths:@[correctNewIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeDelete:
-            [tableView deleteRowsAtIndexPaths:@[correctIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-
-        case NSFetchedResultsChangeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:@[correctIndexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            break;
-
-        case NSFetchedResultsChangeMove:
-            [tableView deleteRowsAtIndexPaths:@[correctIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            [tableView insertRowsAtIndexPaths:@[correctNewIndexPath] withRowAnimation:UITableViewRowAnimationFade];
-            break;
-    }
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type {

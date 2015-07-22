@@ -212,7 +212,6 @@
 		5015A5681AC02C230056271A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5015A5691AC02C230056271A /* TodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayViewController.h; sourceTree = "<group>"; };
 		5015A56A1AC02C230056271A /* TodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayViewController.m; sourceTree = "<group>"; };
-		501B14171B54D0300016910C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		501CCAFC1B48B35400609142 /* iRate.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRate.bundle; sourceTree = "<group>"; };
 		501CCAFD1B48B35400609142 /* iRate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iRate.h; sourceTree = "<group>"; };
 		501CCAFE1B48B35400609142 /* iRate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iRate.m; sourceTree = "<group>"; };
@@ -271,6 +270,7 @@
 		508DF84D1B04C4720015DC9F /* Edit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit@3x.png"; sourceTree = "<group>"; };
 		508DF8521B04C86B0015DC9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		508DF8551B04C8700015DC9F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
+		508EB1071B5F4E9B0040B69A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		5095D5E41B4FC34800F8333D /* PieChart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PieChart.png; sourceTree = "<group>"; };
 		5095D5E51B4FC34800F8333D /* PieChart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PieChart@2x.png"; sourceTree = "<group>"; };
 		5095D5E61B4FC34800F8333D /* PieChart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PieChart@3x.png"; sourceTree = "<group>"; };
@@ -1351,7 +1351,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				506E72911A1E0B450006F2DF /* Base */,
-				501B14171B54D0300016910C /* ru */,
+				508EB1071B5F4E9B0040B69A /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
