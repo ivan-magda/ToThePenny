@@ -71,8 +71,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self dataCheck];
+
+#warning uncomment this for App Store disribution
+    //[self dataCheck];
 
     self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:_categoriesInfo];
 
@@ -163,12 +164,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                     
                     _delegateNotified = YES;
                     
+#warning uncomment this for App Store disribution
 //                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 //                    Persistence *persistence = appDelegate.persistence;
-                    
-#warning uncomment this for App Store disribution
-                    //[persistence deleteAllCategories];
-                    //[persistence insertNecessaryCategoryData];
+//                    
+//                    [persistence deleteAllCategories];
+//                    [persistence insertNecessaryCategoryData];
                     
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
                     });

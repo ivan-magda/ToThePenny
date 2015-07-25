@@ -88,14 +88,14 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
         _maximumDate = maxDate;
     }
     
-    if ([minDate compare:oldestDate] == NSOrderedAscending) {
+    if ([minDate compare:oldestDate] == NSOrderedDescending) {
         _minimumDate = oldestDate;
     } else {
         _minimumDate = minDate;
     }
     
-    _startDate = _minimumDate;
-    _endDate   = _maximumDate;
+    _startDate = minDate;
+    _endDate   = maxDate;
 }
 
 - (BOOL)isNothingFound {
@@ -387,7 +387,6 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
             ExpenseData *expense = [self sortedArrayBySegmentedControlState][indexPath.row];
             controller.expenseToShow = expense;
         }
-        
     }
 }
 

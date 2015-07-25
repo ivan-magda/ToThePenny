@@ -210,10 +210,11 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat sectionHeaderHeight = self.tableView.sectionHeaderHeight;
 
+    //49.0f tabBar height
     if (scrollView.contentOffset.y <= sectionHeaderHeight && scrollView.contentOffset.y >= 0.0f) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0.0f, 0.0f, 0.0f);
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0.0f, 48.0f, 0.0f);
     } else if (scrollView.contentOffset.y >= sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0.0f, 0.0f, 0.0f);
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0.0f, 48.0f, 0.0f);
     }
 
     ScrollDirection scrollDirection = ScrollDirectionNone;
