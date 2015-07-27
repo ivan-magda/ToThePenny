@@ -25,4 +25,18 @@
     return isBetween;
 }
 
+- (BOOL)isDateBetweenMonth:(NSDate *)dateToCompare {
+    NSArray *dates = [self getFirstAndLastDatesFromMonth];
+    NSDate *startDate = dates.firstObject;
+    NSDate *endDate = dates.lastObject;
+    
+    //dateToCompare >= startDate && dateToCompare <= endDate
+    BOOL isBetween = ([dateToCompare compare:startDate] == NSOrderedSame ||
+                      [dateToCompare compare:startDate] == NSOrderedDescending) &&
+    ([dateToCompare compare:endDate]   == NSOrderedSame ||
+     [dateToCompare compare:endDate]   == NSOrderedAscending);
+    
+    return isBetween;
+}
+
 @end

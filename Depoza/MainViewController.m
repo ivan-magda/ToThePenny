@@ -25,11 +25,12 @@
 #import "NSDate+IsDateBetweenCurrentMonth.h"
 #import "NSDate+IsDatesWithEqualMonth.h"
 #import "NSDate+IsDatesWithEqualYear.h"
+#import "NSDate+NextMonthFirstDate.h"
+#import "NSDate+TomorrowDate.h"
 #import "NSString+FormatAmount.h"
     //Transition
 #import "ZFModalTransitionAnimator.h"
 
-#pragma mark - Defenitions -
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 
@@ -46,7 +47,7 @@ static const CGFloat kDefaultInfoViewHeightValue = 227.0f;
  */
 static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
-#pragma mark - Extension -
+
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
 
@@ -95,6 +96,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     }
 
     [self initializeLocalVariables];
+    [self configurateTimer];
 
     [self configurateTableAndFetchedControllers];
     [self configurateTitleViewButton];
@@ -332,20 +334,23 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         return;
     }
 
+    [self reloadMonthDataWithDate:date];
+}
+
+- (void)reloadMonthDataWithDate:(NSDate *)date {
     _dateToShow = date;
-
+    
     [self loadCategoriesDataBetweenDate:_dateToShow];
-
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
-
+    
     [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
-
+    
     NSArray *todayDates = nil;
     NSPredicate *todayPredicate = nil;
     NSArray *monthDates = [_dateToShow getFirstAndLastDatesFromMonth];
     NSPredicate *monthPredicate = [ExpenseData compoundPredicateBetweenDates:monthDates];
-
+    
     if ([NSDate isDateBetweenCurrentMonth:_dateToShow]) {
         todayDates = [NSDate getStartAndEndDatesOfTheCurrentDate];
         todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
@@ -353,17 +358,48 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         todayDates = [_dateToShow getFirstAndLastDatesFromMonth];
         todayPredicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
     }
-
+    
     self.todayFetchedResultsController.fetchRequest.predicate = todayPredicate;
     self.monthFetchedResultsController.fetchRequest.predicate = monthPredicate;
     [self performFetches];
-
+    
     [self.tableView reloadData];
-
+    
     [self updateAmountLabel];
-
+    
     _titleViewButton = nil;
     [self configurateTitleViewButton];
+}
+
+#pragma mark NSTimer
+
+- (void)configurateTimer {
+    NSDate *fireDate = [[NSDate date]tomorrowDate];
+    NSTimer *timer = [[NSTimer alloc]initWithFireDate:fireDate interval:0 target:self selector:@selector(timerDidFire:) userInfo:nil repeats:NO];
+    
+    NSRunLoop *runner = [NSRunLoop currentRunLoop];
+    [runner addTimer:timer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)timerDidFire:(NSTimer *)timer {
+        //next day
+    if ([timer.fireDate isDateBetweenMonth:_dateToShow]) {
+        _dateToShow = [NSDate date];
+        NSArray *todayDates = [NSDate getStartAndEndDatesOfTheCurrentDate];
+        
+        [NSFetchedResultsController deleteCacheWithName:@"todayFetchedResultsController"];
+        self.todayFetchedResultsController.fetchRequest.predicate = [ExpenseData compoundPredicateBetweenDates:todayDates];
+        
+        [self todayPerformFetch];
+        [self.tableView reloadData];
+        
+        //next month
+    } else if ([[NSDate date]isDatesWithEqualMonth:_dateToShow] &&
+               [timer.fireDate isDatesWithEqualMonth:[_dateToShow nextMonthFirstDate]]) {
+        [self reloadMonthDataWithDate:timer.fireDate];
+    }
+    
+    [self configurateTimer];
 }
 
 #pragma mark Public

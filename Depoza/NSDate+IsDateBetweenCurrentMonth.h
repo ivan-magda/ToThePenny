@@ -11,5 +11,6 @@
 @interface NSDate (IsDateBetweenCurrentMonth)
 
 + (BOOL)isDateBetweenCurrentMonth:(NSDate *)dateToCompare;
+- (BOOL)isDateBetweenMonth:(NSDate *)dateToCompare;
 
 @end
