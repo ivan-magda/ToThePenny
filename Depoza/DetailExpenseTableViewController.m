@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     ScrollDirectionCrazy,
 };
 
-@interface DetailExpenseTableViewController () <UITextFieldDelegate, UIScrollViewDelegate>
+@interface DetailExpenseTableViewController () <UITextFieldDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *amountTextField;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
@@ -403,14 +403,19 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 - (void)deleteButtonPressed:(UIBarButtonItem *)sender {
-    [self.managedObjectContext deleteObject:_expenseToShow];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"Delete transaction?", @"Delete transaction alert view title in DetailExpenseVC") message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"No", @"Cancel button title in DetailExpenseVC") otherButtonTitles:NSLocalizedString(@"Delete", @"Delete transaction alert view other button title in DetailExpenseVC"), nil];
+    [alertView show];
+}
 
+- (void)deleteTransaction {
+    [self.managedObjectContext deleteObject:_expenseToShow];
+    
     NSError *error = nil;
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-
+    
     [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Deleted", @"Successful deleted message in DetailVC") completion:^{
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -491,6 +496,14 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     if (_isEditMode && scrollDirection == ScrollDirectionDown && _datePickerVisible) {
         [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:NO];
         [self hideDatePicker];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate -
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.cancelButtonIndex != buttonIndex) {
+        [self deleteTransaction];
     }
 }
 
