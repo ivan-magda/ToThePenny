@@ -14,16 +14,21 @@
     //CoreData
 #import "CategoryData+Fetch.h"
 
-static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+#import <SmileTouchID/SmileAuthenticator.h>
 
-@interface SettingsTableViewController ()
+static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
+
+@interface SettingsTableViewController () <SmileAuthenticatorDelegate>
 
 @property (weak, nonatomic) IBOutlet UISwitch *startupScreenSwitch;
+@property (weak, nonatomic) IBOutlet UISwitch *touchIdSwitch;
 
 @end
 
 @implementation SettingsTableViewController {
     BOOL _addExpenseOnStartup;
+    BOOL _touchIdDataProtecting;
 
     ZFModalTransitionAnimator *_transitionAnimator;
 }
@@ -32,9 +37,20 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
     [super viewDidLoad];
 
     NSParameterAssert(_managedObjectContext);
+    
+    [SmileAuthenticator sharedInstance].delegate = self;
 
+    [self configurateSwitches];
+}
+
+#pragma mark - Helpers -
+
+- (void)configurateSwitches {
     _addExpenseOnStartup = [[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey];
+    _touchIdDataProtecting = [[NSUserDefaults standardUserDefaults]boolForKey:kLoginWithTouchId];
+    
     [self.startupScreenSwitch setOn:_addExpenseOnStartup];
+    [self.touchIdSwitch setOn:_touchIdDataProtecting];
 }
 
 #pragma mark - Navigation -
@@ -74,7 +90,7 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2 && indexPath.row == 0) {
+    if (indexPath.section > 1) {
         return nil;
     }
     return indexPath;
@@ -94,6 +110,34 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setBool:_addExpenseOnStartup forKey:kAddExpenseOnStartupKey];
     [userDefaults synchronize];
+}
+
+- (IBAction)touchIdSwitchDidChangeValue:(UISwitch *)sender {
+    _touchIdDataProtecting = sender.on;
+    
+    if (sender.on) {
+        [SmileAuthenticator sharedInstance].securityType = INPUT_TWICE;
+    } else {
+        [SmileAuthenticator sharedInstance].securityType = INPUT_ONCE;
+    }
+    
+    [[SmileAuthenticator sharedInstance] presentAuthViewController];
+}
+
+#pragma mark - SmileAuthenticatorDelegate -
+
+- (void)updateTouchIdState:(BOOL)use {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:use forKey:kLoginWithTouchId];
+    [userDefaults synchronize];
+}
+
+- (void)userTurnPasswordOn {
+    [self updateTouchIdState:YES];
+}
+
+- (void)userTurnPasswordOff {
+    [self updateTouchIdState:NO];
 }
 
 @end

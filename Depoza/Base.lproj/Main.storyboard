@@ -806,6 +806,48 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="Open the application using fingerprint." id="Iic-KC-7yR" userLabel="Touch ID">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="7KF-kx-c95" userLabel="StartupScreen">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7KF-kx-c95" id="AIN-Zp-Ctw">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" text="Touch ID" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQK-CH-0UZ">
+                                                    <rect key="frame" x="52" y="11" width="65" height="21"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RlH-jT-aSW">
+                                                    <rect key="frame" x="263" y="6" width="51" height="31"/>
+                                                    <connections>
+                                                        <action selector="touchIdSwitchDidChangeValue:" destination="Dv6-6c-FEv" eventType="valueChanged" id="ghY-t6-sQL"/>
+                                                    </connections>
+                                                </switch>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FingerprintScan.png" translatesAutoresizingMaskIntoConstraints="NO" id="Pll-90-x1G">
+                                                    <rect key="frame" x="15" y="11" width="22" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="22" id="Gc8-h8-FRZ"/>
+                                                        <constraint firstAttribute="height" constant="22" id="Ulq-oe-6Fz"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="Pll-90-x1G" secondAttribute="centerY" id="4tC-9n-JoZ"/>
+                                                <constraint firstItem="Pll-90-x1G" firstAttribute="leading" secondItem="AIN-Zp-Ctw" secondAttribute="leading" constant="15" id="HpH-e0-RCe"/>
+                                                <constraint firstAttribute="bottom" secondItem="RlH-jT-aSW" secondAttribute="bottom" constant="6" id="Tyj-oz-h3V"/>
+                                                <constraint firstItem="RlH-jT-aSW" firstAttribute="top" secondItem="AIN-Zp-Ctw" secondAttribute="top" constant="6" id="XVC-Ym-Hdw"/>
+                                                <constraint firstAttribute="bottom" secondItem="uQK-CH-0UZ" secondAttribute="bottom" constant="11" id="glv-Qe-731"/>
+                                                <constraint firstItem="RlH-jT-aSW" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="uQK-CH-0UZ" secondAttribute="trailing" constant="8" symbolic="YES" id="iU6-dt-f1g"/>
+                                                <constraint firstItem="uQK-CH-0UZ" firstAttribute="top" secondItem="AIN-Zp-Ctw" secondAttribute="top" constant="11" id="ieS-6z-zHd"/>
+                                                <constraint firstAttribute="trailing" secondItem="RlH-jT-aSW" secondAttribute="trailing" constant="8" id="wDK-lZ-H9Y"/>
+                                                <constraint firstItem="uQK-CH-0UZ" firstAttribute="leading" secondItem="Pll-90-x1G" secondAttribute="trailing" constant="15" id="wt3-bd-8WG"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Dv6-6c-FEv" id="hkS-AJ-vvg"/>
@@ -816,6 +858,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="startupScreenSwitch" destination="nJY-OX-oOW" id="nut-pn-RzT"/>
+                        <outlet property="touchIdSwitch" destination="RlH-jT-aSW" id="aOC-Oj-yxB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q4Y-gS-7h3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1527,6 +1570,7 @@
         <image name="Content.png" width="22" height="22"/>
         <image name="CreateNew.png" width="22" height="22"/>
         <image name="DeleteSign.png" width="21" height="21"/>
+        <image name="FingerprintScan.png" width="22" height="22"/>
         <image name="MoneyBox.png" width="22" height="22"/>
         <image name="PieChart.png" width="22" height="22"/>
         <image name="Plugin.png" width="22" height="22"/>
@@ -1540,10 +1584,10 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="akn-K6-Nv2"/>
-        <segue reference="Ke7-wc-ErB"/>
-        <segue reference="eiF-x1-yp8"/>
         <segue reference="qiW-IC-btw"/>
+        <segue reference="akn-K6-Nv2"/>
+        <segue reference="bBY-Me-af6"/>
+        <segue reference="eiF-x1-yp8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.023529411760000001" green="0.47843137250000001" blue="0.70980392160000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

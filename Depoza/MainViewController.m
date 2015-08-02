@@ -30,6 +30,8 @@
 #import "NSString+FormatAmount.h"
     //Transition
 #import "ZFModalTransitionAnimator.h"
+    //SmileTouchID
+#import <SmileTouchID/SmileAuthenticator.h>
 
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
@@ -114,6 +116,11 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if ([SmileAuthenticator hasPassword]) {
+        [SmileAuthenticator sharedInstance].securityType = INPUT_TOUCHID;
+        [[SmileAuthenticator sharedInstance] presentAuthViewController];
+    }
 
     if (self.tableView.alpha == 0.0f) {
         [UIView animateWithDuration:1.0 animations:^{

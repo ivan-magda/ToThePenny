@@ -24,6 +24,8 @@
 #import "Fetch.h"
     //iRate
 #import "iRate.h"
+    //TouchID
+#import <SmileTouchID/SmileAuthenticator.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -41,6 +43,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     SettingsTableViewController *_settingsTableViewController;
 
     NSUserDefaults *_appGroupUserDefaults;
+    
+    UIColor *_mainColor;
 }
 
 #pragma mark - Persistent Stack
@@ -109,8 +113,9 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 #pragma mark - UI -
 
 - (void)customiseAppearance {
+    _mainColor = UIColorFromRGB(0x067AB5);
     //008CC7
-    [[UINavigationBar appearance]setBarTintColor:UIColorFromRGB(0x067AB5)];
+    [[UINavigationBar appearance]setBarTintColor:_mainColor];
     [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
 
     [[UINavigationBar appearance]setTitleTextAttributes:
@@ -119,7 +124,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [[UINavigationBar appearance]setTranslucent:NO];
     [[UITabBar appearance]setTranslucent:YES];
     
-    [[UITabBar appearance]setTintColor:UIColorFromRGB(0x067AB5)];
+    [[UITabBar appearance]setTintColor:_mainColor];
 
     [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:17]} forState:UIControlStateNormal];
     
@@ -128,6 +133,19 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
         //When contained in UISearchBar
     [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil]setDefaultTextAttributes:@{                  NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
+}
+
+#pragma mark - SmileTouchID -
+
+- (void)configurateSmileTouchId {
+    NSParameterAssert(_tabBarController != nil);
+    
+    [SmileAuthenticator sharedInstance].rootVC = self.window.rootViewController;
+    
+    [SmileAuthenticator sharedInstance].passcodeDigit = 4;
+    [SmileAuthenticator sharedInstance].tintColor = _mainColor;
+    [SmileAuthenticator sharedInstance].touchIDIconName = @"TouchIDIcon.jpg";
+    [SmileAuthenticator sharedInstance].navibarTranslucent = NO;
 }
 
 #pragma mark - AppDelegate -
@@ -143,6 +161,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
     [self spreadManagedObjectContext];
     [self setKVNDisplayTime];
+    [self configurateSmileTouchId];
 
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     

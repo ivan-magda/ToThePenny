@@ -39,6 +39,12 @@
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
 		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
 		500980A21AE3908B007DFCEA /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
+		500CA6C61B6CA7B600643F2B /* FingerprintScan.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C31B6CA7B600643F2B /* FingerprintScan.png */; };
+		500CA6C71B6CA7B600643F2B /* FingerprintScan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C41B6CA7B600643F2B /* FingerprintScan@2x.png */; };
+		500CA6C81B6CA7B600643F2B /* FingerprintScan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C51B6CA7B600643F2B /* FingerprintScan@3x.png */; };
+		500CA6CC1B6CB2E700643F2B /* TouchIDIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C91B6CB2E700643F2B /* TouchIDIcon.jpg */; };
+		500CA6CD1B6CB2E700643F2B /* TouchIDIcon@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6CA1B6CB2E700643F2B /* TouchIDIcon@2x.jpg */; };
+		500CA6CE1B6CB2E700643F2B /* TouchIDIcon@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6CB1B6CB2E700643F2B /* TouchIDIcon@3x.jpg */; };
 		500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */ = {isa = PBXBuildFile; fileRef = 500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */; };
 		5011BBCC1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCB1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.m */; };
 		5011BBCF1AFFA037005E9EDF /* SearchForCategoryCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5011BBCE1AFFA037005E9EDF /* SearchForCategoryCell.m */; };
@@ -233,6 +239,13 @@
 		50086E8D1AC6E7F600162677 /* MainViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewCell.m; sourceTree = "<group>"; };
 		500980A01AE3908B007DFCEA /* CustomRightDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomRightDetailCell.h; sourceTree = "<group>"; };
 		500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomRightDetailCell.m; sourceTree = "<group>"; };
+		500CA6C31B6CA7B600643F2B /* FingerprintScan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FingerprintScan.png; sourceTree = "<group>"; };
+		500CA6C41B6CA7B600643F2B /* FingerprintScan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FingerprintScan@2x.png"; sourceTree = "<group>"; };
+		500CA6C51B6CA7B600643F2B /* FingerprintScan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "FingerprintScan@3x.png"; sourceTree = "<group>"; };
+		500CA6C91B6CB2E700643F2B /* TouchIDIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = TouchIDIcon.jpg; sourceTree = "<group>"; };
+		500CA6CA1B6CB2E700643F2B /* TouchIDIcon@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "TouchIDIcon@2x.jpg"; sourceTree = "<group>"; };
+		500CA6CB1B6CB2E700643F2B /* TouchIDIcon@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "TouchIDIcon@3x.jpg"; sourceTree = "<group>"; };
+		500CA6D01B6E925700643F2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		500DA1D91AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZFModalTransitionAnimator.h; sourceTree = "<group>"; };
 		500DA1DA1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZFModalTransitionAnimator.m; sourceTree = "<group>"; };
 		5011BBCA1AFF969B005E9EDF /* NSDate+IsDatesWithEqualDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualDate.h"; sourceTree = "<group>"; };
@@ -295,7 +308,6 @@
 		508DF84D1B04C4720015DC9F /* Edit@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit@3x.png"; sourceTree = "<group>"; };
 		508DF8521B04C86B0015DC9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		508DF8551B04C8700015DC9F /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/MainInterface.strings; sourceTree = "<group>"; };
-		508EB1071B5F4E9B0040B69A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		5095D5E41B4FC34800F8333D /* PieChart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PieChart.png; sourceTree = "<group>"; };
 		5095D5E51B4FC34800F8333D /* PieChart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PieChart@2x.png"; sourceTree = "<group>"; };
 		5095D5E61B4FC34800F8333D /* PieChart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "PieChart@3x.png"; sourceTree = "<group>"; };
@@ -677,6 +689,9 @@
 				5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */,
 				508213F81B023B40003740D2 /* LaunchImage.jpg */,
 				508213F91B023B40003740D2 /* LaunchImage@2x.jpg */,
+				500CA6C91B6CB2E700643F2B /* TouchIDIcon.jpg */,
+				500CA6CA1B6CB2E700643F2B /* TouchIDIcon@2x.jpg */,
+				500CA6CB1B6CB2E700643F2B /* TouchIDIcon@3x.jpg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -916,6 +931,9 @@
 				50C929CD1B0B322100690F2C /* Plugin.png */,
 				50C929CE1B0B322100690F2C /* Plugin@2x.png */,
 				50C929CF1B0B322100690F2C /* Plugin@3x.png */,
+				500CA6C31B6CA7B600643F2B /* FingerprintScan.png */,
+				500CA6C41B6CA7B600643F2B /* FingerprintScan@2x.png */,
+				500CA6C51B6CA7B600643F2B /* FingerprintScan@3x.png */,
 			);
 			name = SettingsIcons;
 			sourceTree = "<group>";
@@ -1115,9 +1133,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				500CA6C71B6CA7B600643F2B /* FingerprintScan@2x.png in Resources */,
 				5058F2121B00A27B007BBDE6 /* DeleteSign@3x.png in Resources */,
+				500CA6C61B6CA7B600643F2B /* FingerprintScan.png in Resources */,
 				50C929D11B0B322100690F2C /* Content@2x.png in Resources */,
 				50AA306E1AF2241300A60DCB /* Trash.png in Resources */,
+				500CA6CE1B6CB2E700643F2B /* TouchIDIcon@3x.jpg in Resources */,
 				501CCAFF1B48B35400609142 /* iRate.bundle in Resources */,
 				500541061AC56226007EF006 /* SettingsFilled.png in Resources */,
 				5058F2101B00A27B007BBDE6 /* DeleteSign.png in Resources */,
@@ -1136,6 +1157,7 @@
 				509B7D711B0A1F29007711EA /* Localizable.strings in Resources */,
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */,
+				500CA6C81B6CA7B600643F2B /* FingerprintScan@3x.png in Resources */,
 				50C929DB1B0B322100690F2C /* Plugin@3x.png in Resources */,
 				50C929D31B0B322100690F2C /* CreateNew.png in Resources */,
 				50C929D71B0B322100690F2C /* MoneyBox@2x.png in Resources */,
@@ -1146,6 +1168,7 @@
 				50C8A3651AC8BA2B000347D3 /* Search@2x.png in Resources */,
 				508DF84F1B04C4720015DC9F /* Edit@2x.png in Resources */,
 				50C929DA1B0B322100690F2C /* Plugin@2x.png in Resources */,
+				500CA6CD1B6CB2E700643F2B /* TouchIDIcon@2x.jpg in Resources */,
 				50A6E5631ACFB9110042BA6E /* seedRU.sqlite in Resources */,
 				50C929D61B0B322100690F2C /* MoneyBox.png in Resources */,
 				50E094BC1B5112FC00BB6217 /* Back@2x.png in Resources */,
@@ -1157,6 +1180,7 @@
 				500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */,
 				5095D5E91B4FC34800F8333D /* PieChart@3x.png in Resources */,
 				500540EF1AC560CC007EF006 /* BanknotesFilled@2x.png in Resources */,
+				500CA6CC1B6CB2E700643F2B /* TouchIDIcon.jpg in Resources */,
 				5058F20C1B00A1A1007BBDE6 /* Checkmark@3x.png in Resources */,
 				50E094BB1B5112FC00BB6217 /* Back.png in Resources */,
 				50C929D81B0B322100690F2C /* MoneyBox@3x.png in Resources */,
@@ -1351,7 +1375,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				506E72911A1E0B450006F2DF /* Base */,
-				508EB1071B5F4E9B0040B69A /* ru */,
+				500CA6D01B6E925700643F2B /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

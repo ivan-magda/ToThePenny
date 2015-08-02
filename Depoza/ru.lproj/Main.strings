@@ -175,3 +175,6 @@
 
 /* Class = "UISegmentedControl"; McN-eI-x8J.segmentTitles[1] = "By Amount"; ObjectID = "McN-eI-x8J"; */
 "McN-eI-x8J.segmentTitles[1]" = "По сумме";
+
+/* Class = "UITableViewSection"; footerTitle = "Open the application using fingerprint."; ObjectID = "Iic-KC-7yR"; */
+"Iic-KC-7yR.footerTitle" = "Вход в приложение используя отпечаток пальца, либо 4-х значный пароль.";
