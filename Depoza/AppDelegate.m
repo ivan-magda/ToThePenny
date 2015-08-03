@@ -32,9 +32,16 @@
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 
 NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
+
+@interface AppDelegate () <SmileAuthenticatorDelegate>
+
+@property (nonatomic, strong) UIVisualEffectView *visualEffectViewWithBlurAndVibrancyEffects;
+
+@end
 
 @implementation AppDelegate {
     CustomTabBarController *_tabBarController;
@@ -45,6 +52,9 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     NSUserDefaults *_appGroupUserDefaults;
     
     UIColor *_mainColor;
+    
+    BOOL _authViewControllerPresented;
+    BOOL _visualEffectViewWithBlurAndVibrancyEffectsPresented;
 }
 
 #pragma mark - Persistent Stack
@@ -140,6 +150,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (void)configurateSmileTouchId {
     NSParameterAssert(_tabBarController != nil);
     
+    [SmileAuthenticator sharedInstance].delegate = self;
     [SmileAuthenticator sharedInstance].rootVC = self.window.rootViewController;
     
     [SmileAuthenticator sharedInstance].passcodeDigit = 4;
@@ -171,12 +182,24 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     return YES;
 }
 
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    if (_visualEffectViewWithBlurAndVibrancyEffectsPresented) {
+        [self hideVisualEffectViewWithBlurAndVibrancyEffects];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
+    if (!_authViewControllerPresented) {
+        [self presentVisualEffectViewWithBlurAndVibrancyEffects];
+    }
+    
     [Fetch updateTodayExpensesDictionary:self.managedObjectContext];
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [self hideVisualEffectViewWithBlurAndVibrancyEffects];
+    
     if (![_appGroupUserDefaults boolForKey:kDetailViewControllerPresentingFromExtensionKey]) {
         if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
             _tabBarController.selectedIndex = 0;
@@ -270,6 +293,67 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (void)statusBarTouchedAction {
     [[NSNotificationCenter defaultCenter]postNotificationName:StatusBarTappedNotification
                                                         object:nil];
+}
+
+#pragma mark - SmileAuthenticatorDelegate -
+
+- (void)updateTouchIdState:(BOOL)use {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:use forKey:kLoginWithTouchId];
+    [userDefaults synchronize];
+}
+
+- (void)userTurnPasswordOn {
+    [self updateTouchIdState:YES];
+}
+
+- (void)userTurnPasswordOff {
+    [self updateTouchIdState:NO];
+}
+
+- (void)AuthViewControllerDismssed {
+    _authViewControllerPresented = NO;
+}
+
+- (void)AuthViewControllerPresented {
+    _authViewControllerPresented = YES;
+}
+
+#pragma mark - UIVisualEffectView -
+
+- (UIVisualEffectView *)visualEffectViewWithBlurAndVibrancyEffects {
+    if (_visualEffectViewWithBlurAndVibrancyEffects == nil) {
+            // Blur effect
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc]initWithEffect:blurEffect];
+        [blurEffectView setFrame:_tabBarController.view.bounds];
+        
+            // Vibrancy effect
+        UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+        UIVisualEffectView *vibrancyEffectView = [[UIVisualEffectView alloc]initWithEffect:vibrancyEffect];
+        [vibrancyEffectView setFrame:_tabBarController.view.bounds];
+        
+            // Add the vibrancy view to the blur view
+        [[blurEffectView contentView]addSubview:vibrancyEffectView];
+        
+        _visualEffectViewWithBlurAndVibrancyEffects = blurEffectView;
+    }
+    
+    return _visualEffectViewWithBlurAndVibrancyEffects;
+}
+
+- (void)presentVisualEffectViewWithBlurAndVibrancyEffects {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kLoginWithTouchId]) {
+        _visualEffectViewWithBlurAndVibrancyEffectsPresented = YES;
+        [_tabBarController.view addSubview:self.visualEffectViewWithBlurAndVibrancyEffects];
+    }
+}
+
+- (void)hideVisualEffectViewWithBlurAndVibrancyEffects {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kLoginWithTouchId]) {
+        _visualEffectViewWithBlurAndVibrancyEffectsPresented = NO;
+        [self.visualEffectViewWithBlurAndVibrancyEffects removeFromSuperview];
+    }
 }
 
 @end

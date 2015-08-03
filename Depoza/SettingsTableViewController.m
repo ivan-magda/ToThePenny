@@ -13,13 +13,13 @@
 #import "ZFModalTransitionAnimator.h"
     //CoreData
 #import "CategoryData+Fetch.h"
-
+    //SmileTouchID
 #import <SmileTouchID/SmileAuthenticator.h>
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
 
-@interface SettingsTableViewController () <SmileAuthenticatorDelegate>
+@interface SettingsTableViewController ()
 
 @property (weak, nonatomic) IBOutlet UISwitch *startupScreenSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *touchIdSwitch;
@@ -37,8 +37,6 @@ static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
     [super viewDidLoad];
 
     NSParameterAssert(_managedObjectContext);
-    
-    [SmileAuthenticator sharedInstance].delegate = self;
 
     [self configurateSwitches];
 }
@@ -122,22 +120,6 @@ static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
     }
     
     [[SmileAuthenticator sharedInstance] presentAuthViewController];
-}
-
-#pragma mark - SmileAuthenticatorDelegate -
-
-- (void)updateTouchIdState:(BOOL)use {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:use forKey:kLoginWithTouchId];
-    [userDefaults synchronize];
-}
-
-- (void)userTurnPasswordOn {
-    [self updateTouchIdState:YES];
-}
-
-- (void)userTurnPasswordOff {
-    [self updateTouchIdState:NO];
 }
 
 @end
