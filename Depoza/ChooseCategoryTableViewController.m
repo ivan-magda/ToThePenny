@@ -23,6 +23,7 @@
 
     NSParameterAssert(_titles && _iconName);
 
+    _titles = [_titles sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
     _categoriesIcons = [CategoryData getAllIconsNameInContext:_context];
 
     _selectedCategoryName = self.originalCategoryName;
