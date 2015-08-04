@@ -116,7 +116,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
             [self seedInitialData:_persistentStoreCoordinator];
         } else {
             NSError *error = nil;
-            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:(_iCloudStoreExists ? _iCloudOptions : nil) error:&error]) {
+            if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:self.storeURL options:([self iCloudEnabled] ? _iCloudOptions : nil) error:&error]) {
                 NSLog(@"Error adding persistent store %@, %@", error, [error userInfo]);
                 abort();
             }
@@ -157,7 +157,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     NSPersistentStore *seedStore = [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:seedStoreURL options:seedStoreOptions error:&seedStoreError];
 
     NSError *error = nil;
-    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:(_iCloudStoreExists ? _iCloudOptions : nil) withType:NSSQLiteStoreType error:&error]) {
+    if (![coordinator migratePersistentStore:seedStore toURL:storeURL options:([self iCloudEnabled] ? _iCloudOptions : nil) withType:NSSQLiteStoreType error:&error]) {
         NSLog(@"Error adding seed persistent store %@, %@", error, [error userInfo]);
     }
     NSLog(@"Store succesfully initialized using the original seed");
