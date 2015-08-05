@@ -35,6 +35,7 @@
 
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
+static NSString * const kSmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
 
 static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
@@ -80,7 +81,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     NSDate *_dateToShow;
 
     BOOL _isFirstTimeFetchForCategoriesInfo;
-    BOOL _isAddExpensePresenting;
     BOOL _selectMonthIsVisible;
 }
 
@@ -172,20 +172,27 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [NSFetchedResultsController deleteCacheWithName:@"monthFetchedResultsController"];
 }
 
-- (void)presentAddExpenseViewControllerIfNeeded {
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-        if (!_isShowExpenseDetailFromExtension) {
-            [self performAddExpense];
-            self.isShowExpenseDetailFromExtension = NO;
-        }
-    }
-    
-    _isShowExpenseDetailFromExtension = NO;
-}
-
 - (void)setScrollViewContentOffsetToZeroWithAnimation:(BOOL)animated {
     UIScrollView *scrollView = (UIScrollView *)self.tableView;
     [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, 0.0f) animated:animated];
+}
+
+- (void)performAddExpense {
+    if (_categoriesInfo.count == 0) {
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self performAddExpense];
+        });
+    } else {
+        if (_selectMonthIsVisible) {
+            NSParameterAssert(_selectTimePeriodViewController != nil);
+            
+            _selectMonthIsVisible = NO;
+            
+            [_selectTimePeriodViewController dismissFromParentViewController];
+            [self changeMonthToShowFromDate:[NSDate date]];
+        }
+        [self performSegueWithIdentifier:@"AddExpense" sender:nil];
+    }
 }
 
 #pragma mark FetchCategoriesData
@@ -411,22 +418,15 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 #pragma mark Public
 
-- (void)performAddExpense {
-    if (_categoriesInfo.count == 0) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+- (void)presentAddExpenseViewControllerIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        if (!_isShowExpenseDetailFromExtension && ![SmileAuthenticator hasPassword]) {
             [self performAddExpense];
-        });
-    } else {
-        if (_selectMonthIsVisible) {
-            NSParameterAssert(_selectTimePeriodViewController != nil);
-
-            _selectMonthIsVisible = NO;
-
-            [_selectTimePeriodViewController dismissFromParentViewController];
-            [self changeMonthToShowFromDate:[NSDate date]];
+        } else {
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(smileTouchIdUserSuccessAuthentication) name:kSmileTouchIdUserSuccessAuthenticationNotification object:nil];
         }
-        [self performSegueWithIdentifier:@"AddExpense" sender:nil];
     }
+    _isShowExpenseDetailFromExtension = NO;
 }
 
 - (BOOL)isAddExpensePresenting {
@@ -637,6 +637,13 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
 - (void)statusBarTappedAction:(NSNotification *)notification {
     [self setScrollViewContentOffsetToZeroWithAnimation:YES];
+}
+
+- (void)smileTouchIdUserSuccessAuthentication {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:kSmileTouchIdUserSuccessAuthenticationNotification object:nil];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self performAddExpense];
+    });
 }
 
 #pragma mark DetailExpenseTableViewControllerNotification

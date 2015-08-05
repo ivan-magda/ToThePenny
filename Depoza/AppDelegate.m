@@ -29,17 +29,21 @@
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
+typedef void(^SmileTouchIdUserSuccessAuthenticationBlock)();
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
+static NSString * const kSmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
 
 NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 @interface AppDelegate () <SmileAuthenticatorDelegate>
 
 @property (nonatomic, strong) UIVisualEffectView *visualEffectViewWithBlurAndVibrancyEffects;
+
+@property (nonatomic, copy) SmileTouchIdUserSuccessAuthenticationBlock successAuthenticationHandler;
 
 @end
 
@@ -54,6 +58,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     UIColor *_mainColor;
     
     BOOL _authViewControllerPresented;
+    BOOL _userSuccessAuthentication;
     BOOL _visualEffectViewWithBlurAndVibrancyEffectsPresented;
 }
 
@@ -200,23 +205,29 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [self hideVisualEffectViewWithBlurAndVibrancyEffects];
     
-    if (![_appGroupUserDefaults boolForKey:kDetailViewControllerPresentingFromExtensionKey]) {
-        if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-            _tabBarController.selectedIndex = 0;
-            if (!_mainViewController.isAddExpensePresenting) {
-                [_mainViewController.navigationController popToRootViewControllerAnimated:YES];
-                [_mainViewController performAddExpense];
-            }
-        }
-    } else {
+    if ([_appGroupUserDefaults boolForKey:kDetailViewControllerPresentingFromExtensionKey]) {
         _tabBarController.selectedIndex = 0;
         
         [_appGroupUserDefaults setBool:NO forKey:kDetailViewControllerPresentingFromExtensionKey];
         [_appGroupUserDefaults synchronize];
-
+        
         if (_mainViewController.isAddExpensePresenting) {
             [_mainViewController dismissViewControllerAnimated:YES completion:nil];
         }
+    } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
+        _tabBarController.selectedIndex = 0;
+        
+        if (_mainViewController.isAddExpensePresenting && ![SmileAuthenticator hasPassword]) {
+            return;
+        }
+        
+        if (_mainViewController.isAddExpensePresenting) {
+            [_mainViewController dismissViewControllerAnimated:YES completion:nil];
+            _mainViewController.isAddExpensePresenting = NO;
+        }
+        
+        [_mainViewController.navigationController popToRootViewControllerAnimated:YES];
+        [_mainViewController presentAddExpenseViewControllerIfNeeded];
     }
 }
 
@@ -250,9 +261,17 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
             __weak MainViewController *weakMainVC = _mainViewController;
             if (_mainViewController.isAddExpensePresenting) {
-                [_mainViewController dismissViewControllerAnimated:YES completion:^{
-                    [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
-                }];
+                if ([self isNeedForWaitingAuthenticator]) {
+                    self.successAuthenticationHandler = [^{
+                        [weakMainVC dismissViewControllerAnimated:YES completion:nil];
+                        [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                    } copy];
+                } else {
+                    [_mainViewController dismissViewControllerAnimated:YES completion:^{
+                        [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                    }];
+                }
+                
                 return YES;
             }
 
@@ -261,11 +280,21 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
             }
 
             _mainViewController.isShowExpenseDetailFromExtension = YES;
+            
+            if ([self isNeedForWaitingAuthenticator]) {
+                self.successAuthenticationHandler = [^{
+                    [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                } copy];
+                
+                return YES;
+            }
+            
             [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
             
             return YES;
         }
     }
+    
     return NO;
 }
 
@@ -313,10 +342,33 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 - (void)AuthViewControllerDismssed {
     _authViewControllerPresented = NO;
+    
+    if (_userSuccessAuthentication) {
+        _userSuccessAuthentication = NO;
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:kSmileTouchIdUserSuccessAuthenticationNotification object:nil];
+
+        if (self.successAuthenticationHandler) {
+            self.successAuthenticationHandler();
+            self.successAuthenticationHandler = nil;
+        }
+    }
 }
 
 - (void)AuthViewControllerPresented {
     _authViewControllerPresented = YES;
+}
+
+- (void)userSuccessAuthentication {
+    _userSuccessAuthentication = YES;
+}
+
+- (void)userFailAuthenticationWithCount:(NSInteger)failCount {
+    _userSuccessAuthentication = NO;
+}
+
+- (BOOL)isNeedForWaitingAuthenticator {
+    return ([SmileAuthenticator hasPassword] && !_visualEffectViewWithBlurAndVibrancyEffectsPresented);
 }
 
 #pragma mark - UIVisualEffectView -

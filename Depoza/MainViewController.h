@@ -15,12 +15,12 @@
 @property (strong, nonatomic) id<MainViewControllerDelegate> delegate;
 
 @property (nonatomic, assign) BOOL isShowExpenseDetailFromExtension;
+@property (nonatomic,assign) BOOL isAddExpensePresenting;
 
 - (void)updateUserInterfaceWithNewFetch:(BOOL)fetch;
 
-- (void)performAddExpense;
+- (void)presentAddExpenseViewControllerIfNeeded;
 
-- (BOOL)isAddExpensePresenting;
 - (BOOL)isSelectMonthIsPresenting;
 
 - (void)dismissSelectMonthViewController;
