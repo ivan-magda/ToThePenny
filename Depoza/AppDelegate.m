@@ -36,6 +36,7 @@ static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
 static NSString * const kDetailViewControllerPresentingFromExtensionKey = @"DetailViewPresenting";
 static NSString * const kSmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
+static NSString * const kDetailExpenseTableViewControllerSegueIdentifier = @"MoreInfo";
 
 NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
@@ -264,11 +265,11 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
                 if ([self isNeedForWaitingAuthenticator]) {
                     self.successAuthenticationHandler = [^{
                         [weakMainVC dismissViewControllerAnimated:YES completion:nil];
-                        [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                        [weakMainVC performSegueWithIdentifier:kDetailExpenseTableViewControllerSegueIdentifier sender:selectedExpense];
                     } copy];
                 } else {
                     [_mainViewController dismissViewControllerAnimated:YES completion:^{
-                        [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                        [weakMainVC performSegueWithIdentifier:kDetailExpenseTableViewControllerSegueIdentifier sender:selectedExpense];
                     }];
                 }
                 
@@ -283,13 +284,13 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
             
             if ([self isNeedForWaitingAuthenticator]) {
                 self.successAuthenticationHandler = [^{
-                    [weakMainVC performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+                    [weakMainVC performSegueWithIdentifier:kDetailExpenseTableViewControllerSegueIdentifier sender:selectedExpense];
                 } copy];
                 
                 return YES;
             }
             
-            [_mainViewController performSegueWithIdentifier:@"MoreInfo" sender:selectedExpense];
+            [_mainViewController performSegueWithIdentifier:kDetailExpenseTableViewControllerSegueIdentifier sender:selectedExpense];
             
             return YES;
         }
