@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42CE70EE0C99677BB045BD51 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE7CC9DD3529E2200689E8 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m */; };
 		42CE7125290E4A6E35D9A576 /* HSDatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE7F8253FD8DB7876A8B95 /* HSDatePickerViewController.m */; };
 		42CE7196EFF22F8C6F227577 /* ManageCategoryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE76CDD55F14C0857FA0EF /* ManageCategoryTableViewController.m */; };
 		42CE727900BC1403073FB88E /* SelectTimePeriodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE7E70C2C7917718F5CFFC /* SelectTimePeriodViewController.m */; };
@@ -205,6 +206,7 @@
 		42CE7620B6B41E6017A95AA0 /* EditDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditDescriptionViewController.m; sourceTree = "<group>"; };
 		42CE763222D104BA0AD6C23C /* PieChartTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartTableViewController.h; sourceTree = "<group>"; };
 		42CE765CDF521E923E39E6BE /* AddExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseTableViewController.h; sourceTree = "<group>"; };
+		42CE76B4DFC859ACB7620900 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h; sourceTree = "<group>"; };
 		42CE76CDD55F14C0857FA0EF /* ManageCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManageCategoryTableViewController.m; sourceTree = "<group>"; };
 		42CE773FAD7ED367F613B6AF /* HSDatePickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HSDatePickerViewController.h; sourceTree = "<group>"; };
 		42CE779D4395ADB13BEF0912 /* CategoryIconsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryIconsCollectionViewController.m; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 		42CE7B121C0E45216317E523 /* DetailExpenseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailExpenseTableViewController.h; sourceTree = "<group>"; };
 		42CE7C16B70C70BA22B2586C /* ChooseCategoryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChooseCategoryTableViewController.m; sourceTree = "<group>"; };
 		42CE7C5A19C820E8B0326AC1 /* ExtensionSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExtensionSettingsTableViewController.m; sourceTree = "<group>"; };
+		42CE7CC9DD3529E2200689E8 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m; sourceTree = "<group>"; };
 		42CE7D69A5C633C55F649EFE /* MainViewControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewControllerDelegate.h; sourceTree = "<group>"; };
 		42CE7D7F590F2BBD9916EE0E /* SelectedCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectedCategoryTableViewController.h; sourceTree = "<group>"; };
 		42CE7E70C2C7917718F5CFFC /* SelectTimePeriodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectTimePeriodViewController.m; sourceTree = "<group>"; };
@@ -822,6 +825,8 @@
 				5025479B1A1ED27600DCB8FB /* Resources */,
 				500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
+				42CE7CC9DD3529E2200689E8 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m */,
+				42CE76B4DFC859ACB7620900 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h */,
 			);
 			path = Depoza;
 			sourceTree = "<group>";
@@ -1335,6 +1340,7 @@
 				42CE7D0CC600E3E9D91F4DED /* CategoriesTableViewController.m in Sources */,
 				42CE7196EFF22F8C6F227577 /* ManageCategoryTableViewController.m in Sources */,
 				42CE7E0530B4366308A53B28 /* CategoryIconsCollectionViewController.m in Sources */,
+				42CE70EE0C99677BB045BD51 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

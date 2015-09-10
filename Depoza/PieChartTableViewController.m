@@ -193,7 +193,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     [_segmentedControl addTarget:self action:@selector(segmentedControlDidChangeValue:) forControlEvents:UIControlEventValueChanged];
     
     for (int i = 0; i < self.segmentedControl.numberOfSegments; ++i) {
-        [self.segmentedControl setWidth:66.0f forSegmentAtIndex:i];
+        [self.segmentedControl setWidth:66.0f forSegmentAtIndex:(NSInteger)i];
     }
     
     self.navigationItem.titleView = self.segmentedControl;
@@ -327,7 +327,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     fadeInAnimation.duration = 1.0f;
     fadeInAnimation.removedOnCompletion = NO;
     fadeInAnimation.fillMode = kCAFillModeForwards;
-    fadeInAnimation.toValue = [NSNumber numberWithFloat:1.0];
+    fadeInAnimation.toValue = @1.0;
     [graph addAnimation:fadeInAnimation forKey:@"animateOpacity"];
 }
 
@@ -338,17 +338,13 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    PieChartTableViewCell *cell = (PieChartTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kPieChartTableViewCellIdentifier];
-    
-    [self configuratePieChartTableViewCell:cell forRowAtIndexPath:indexPath];
-    
-    return cell;
+    return (PieChartTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kPieChartTableViewCellIdentifier];
 }
 
 - (void)configuratePieChartTableViewCell:(PieChartTableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    CategoriesInfo *category = _categoriesInfo[indexPath.row];
+    CategoriesInfo *category = _categoriesInfo[(NSInteger)indexPath.row];
     
-    cell.coloredCategoryView.backgroundColor    = [self getUIColorForIndex:indexPath.row];
+    cell.coloredCategoryView.backgroundColor    = [self getUIColorForIndex:(NSInteger)indexPath.row];
     cell.coloredCategoryView.layer.cornerRadius = (CGRectGetHeight(cell.coloredCategoryView.bounds) / 2.0f);
     cell.categoryTitleLabel.text = category.title;
     cell.amountLabel.text   = [NSString formatAmount:category.amount];
@@ -373,11 +369,15 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     return separator;
 }
 
+#pragma mark - UITableViewDelegate -
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self configuratePieChartTableViewCell:(PieChartTableViewCell *)cell forRowAtIndexPath:indexPath];
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return (_categoriesInfo.count == 0 ? 0.0f : 0.5f);
 }
-
-#pragma mark - UITableViewDelegate -
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -394,7 +394,7 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
         if ([sender isKindOfClass:[UITableViewCell class]]) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
             
-            category = _categoriesInfo[indexPath.row];
+            category = _categoriesInfo[(NSInteger)indexPath.row];
         } else if ([sender isKindOfClass:[CategoriesInfo class]]) {
             category = (CategoriesInfo *)sender;
         }

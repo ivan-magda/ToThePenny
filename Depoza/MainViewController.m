@@ -9,18 +9,17 @@
 #import "SelectTimePeriodViewController.h"
 #import "ManageCategoryTableViewController.h"
 #import "CategoriesTableViewController.h"
-#import "CategoriesContainerViewController.h"
 #import "PieChartTableViewController.h"
+#import "MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h"
     //View
 #import "TitleViewButton.h"
     //CoreData
-#import "Persistence.h"
 #import "Expense.h"
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
 #import "CategoriesInfo.h"
-    //Caategories
+    //Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.m"
 #import "NSDate+IsDateBetweenCurrentMonth.h"
@@ -34,11 +33,10 @@
     //SmileTouchID
 #import <SmileTouchID/SmileAuthenticator.h>
 
+    static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
 static NSString * const kSmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
-
-static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 /*!
  * The default constant value of info view height equals to 227.0f.
@@ -81,7 +79,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     TitleViewButton *_titleViewButton;
     NSDate *_dateToShow;
 
-    BOOL _isFirstTimeFetchForCategoriesInfo;
+    //BOOL _isFirstTimeFetchForCategoriesInfo;
     BOOL _selectMonthIsVisible;
 }
 
@@ -104,7 +102,8 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self configurateTableAndFetchedControllers];
     [self configurateTitleViewButton];
 
-    [self addMotionEffectToViews];
+    [MotionEffectWithTiltAlongVerticalAndHorizontalAxis addMotionEffectToView:self.tableView magnitude:kMotionEffectMagnitudeValue];
+    [MotionEffectWithTiltAlongVerticalAndHorizontalAxis addMotionEffectToView:_addTransactionRoundedButton magnitude:kMotionEffectMagnitudeValue];
     [self addNotificationSubscribes];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
@@ -153,7 +152,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 - (void)initializeLocalVariables {
     _isAddExpensePresenting = NO;
     _selectMonthIsVisible = NO;
-    _isFirstTimeFetchForCategoriesInfo = YES;
 
     _dateToShow = [NSDate date];
 
@@ -202,7 +200,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [self loadCategoriesDataBetweenDate:[NSDate date]];
 
     [self presentAddExpenseViewControllerIfNeeded];
-    _isFirstTimeFetchForCategoriesInfo = NO;
 
     [self notificateCategoriesContainerViewControllerWithNewCategoriesInfo:_categoriesInfo];
 
@@ -570,7 +567,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)updateCategoriesExpensesDataAtIndex:(NSInteger)index withValue:(CGFloat)amount {
-    CategoriesInfo *info = _categoriesInfo[index];
+    CategoriesInfo *info = _categoriesInfo[(NSInteger)index];
     CGFloat value = [[info amount] floatValue] + amount;
 
     info.amount = @(value);
@@ -782,41 +779,6 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
             return;
         }
     }
-}
-
-#pragma mark - MotionEffect -
-
-- (void)addMotionEffectToViews {
-    for (UIView *aView in self.view.subviews) {
-        if ([aView isKindOfClass:[UITableView class]]) {
-            [self makeLargerFrameForView:aView withValue:kMotionEffectMagnitudeValue];
-            [self addMotionEffectToView:aView magnitude:kMotionEffectMagnitudeValue];
-        }
-    }
-    
-    [self addMotionEffectToView:_addTransactionRoundedButton magnitude:kMotionEffectMagnitudeValue];
-}
-
-- (void)makeLargerFrameForView:(UIView *)view withValue:(CGFloat)value {
-    view.frame = CGRectInset(view.frame, -value, -value);
-}
-
-- (void)addMotionEffectToView:(UIView *)view magnitude:(CGFloat)magnitude {
-    UIInterpolatingMotionEffect *xMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.x"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
-    xMotion.minimumRelativeValue = @(-magnitude);
-    xMotion.maximumRelativeValue = @(magnitude);
-
-    UIInterpolatingMotionEffect *yMotion = [[UIInterpolatingMotionEffect alloc]
-                                            initWithKeyPath:@"center.y"
-                                            type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
-    yMotion.minimumRelativeValue = @(-magnitude);
-    yMotion.maximumRelativeValue = @(magnitude);
-    
-    UIMotionEffectGroup *group = [UIMotionEffectGroup new];
-    group.motionEffects = @[xMotion, yMotion];
-    [view addMotionEffect:group];
 }
 
 @end

@@ -8,9 +8,6 @@
     //View
 #import "MainTableViewProtocolsImplementer.h"
 #import "MainViewCell.h"
-#import <UIKit/UITableViewCell.h>
-#import <UIKit/UILabel.h>
-#import <UIKit/UIKit.h>
     //CoreData
 #import "ExpenseData.h"
 #import "CategoryData.h"
@@ -104,19 +101,12 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    id<NSFetchedResultsSectionInfo> sectionInfo = [[self.fetchedResultsController sections]objectAtIndex:section];
+    id<NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][(NSInteger)section];
     return [sectionInfo numberOfObjects];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainViewCell *cell = (MainViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
-    [self configureCell:cell atIndexPath:indexPath];
-
-    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, kTableViewRowHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
-    separator.backgroundColor = tableView.separatorColor;
-
-    [cell addSubview:separator];
 
     return cell;
 }
@@ -160,6 +150,15 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 #pragma mark - UITableViewDelegate -
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self configureCell:(MainViewCell *)cell atIndexPath:indexPath];
+
+    UIView *separator = [[UIView alloc]initWithFrame: CGRectMake(15.0f, kTableViewRowHeight - 0.5f,tableView.bounds.size.width - 15.0f, 0.5f)];
+    separator.backgroundColor = tableView.separatorColor;
+
+    [cell addSubview:separator];
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if ([self noNewTransactionsToday]) {

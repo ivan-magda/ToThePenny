@@ -19,7 +19,6 @@
 #import "CategoriesInfo.h"
     //Categories
 #import "NSString+FormatAmount.h"
-#import "NSDate+IsDateBetweenCurrentYear.h"
 #import "NSString+FormatDate.h"
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
@@ -28,6 +27,12 @@ static NSString * const kFoundExpenseCellReuseIdentifier = @"FoundExpenseCell";
 static NSString * const kPlainCellReuseIdentifier = @"AllCell";
 
 static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense";
+
+typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
+    SearchTableViewCellTypeExpense,
+    SearchTableViewCellTypeCategory,
+    SearchTableViewCellTypeNothingFound
+};
 
 @interface SearchTableViewController () <NSFetchedResultsControllerDelegate, UISearchBarDelegate>
 
@@ -155,7 +160,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 }
 
 - (CategoryData *)filteredCategoryForIndexPath:(NSIndexPath *)indexPath {
-    return _filteredCategories[indexPath.row];
+    return _filteredCategories[(NSInteger)indexPath.row];
 }
 
 - (NSNumber *)sumOfExpensesWhenSearchProceed {
@@ -251,7 +256,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
             _searchBarFirstResponder = (self.searchBar.isFirstResponder);
         } else {
             NSArray *filteredExpenses = [_expenseFetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
-            ExpenseData *expense = filteredExpenses[indexPath.row];
+            ExpenseData *expense = filteredExpenses[(NSInteger)indexPath.row];
             detailsViewController.expenseToShow = expense;
 
             _searchBarFirstResponder = YES;
@@ -283,7 +288,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if ([self isSearchPredicatesIsNil]) {
         if (section == 0) {
-            id <NSFetchedResultsSectionInfo> sectionInfo = [self.expenseFetchedResultsController sections][section];
+            id <NSFetchedResultsSectionInfo> sectionInfo = [self.expenseFetchedResultsController sections][(NSInteger)section];
             return [sectionInfo numberOfObjects];
         } else {
             return 0;
@@ -299,27 +304,27 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
     }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = nil;
+- (SearchTableViewCellType)searchTableViewCellTypeForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 && _categoriesSearchPredicate != nil && ![self isNothingFound]) {
-        cell = (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
-
-        [self configureCell:cell atIndexPath:indexPath];
+        return SearchTableViewCellTypeCategory;
     } else if ([self isNothingFound] && indexPath.section == 0) {
-        CustomRightDetailCell *nothingFoundCell = [tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
-        nothingFoundCell.leftLabel.text = NSLocalizedString(@"Nothing found", @"Nothing found text for nothing found cell in SearchVC");
-        nothingFoundCell.rightDetailLabel.text = nil;
-        nothingFoundCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        nothingFoundCell.accessoryType = UITableViewCellAccessoryNone;
-
-        return nothingFoundCell;
+        return SearchTableViewCellTypeNothingFound;
     } else {
-        cell = (FoundExpenseCell *)[tableView dequeueReusableCellWithIdentifier:kFoundExpenseCellReuseIdentifier];
-
-        [self configureCell:cell atIndexPath:indexPath];
+        return SearchTableViewCellTypeExpense;
     }
+}
 
-    return cell;
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([self searchTableViewCellTypeForRowAtIndexPath:indexPath]) {
+        case SearchTableViewCellTypeCategory :
+            return (CustomRightDetailCell *)[tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
+        case SearchTableViewCellTypeNothingFound :
+            return [tableView dequeueReusableCellWithIdentifier:kPlainCellReuseIdentifier];
+        case SearchTableViewCellTypeExpense :
+            return (FoundExpenseCell *)[tableView dequeueReusableCellWithIdentifier:kFoundExpenseCellReuseIdentifier];
+        default :
+            return nil;
+    }
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
@@ -335,7 +340,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
             CategoryData *category = [self filteredCategoryForIndexPath:indexPath];
 
             cellToConfigurate.leftLabel.text = category.title;
-            cellToConfigurate.selectionStyle = UITableViewCellStyleDefault;
+            cellToConfigurate.selectionStyle = UITableViewCellSelectionStyleDefault;
             cellToConfigurate.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
             NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"idValue == %@", category.idValue]];
@@ -345,7 +350,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
             cellToConfigurate.rightDetailLabel.text = [NSString formatAmount:[results lastObject][@"sum"]];
         } else {
             FoundExpenseCell *cellToConfigurate = (FoundExpenseCell *)cell;
-            expense = _filteredExpenses[indexPath.row];
+            expense = _filteredExpenses[(NSInteger)indexPath.row];
 
             [self configureFoundExpenseCell:cellToConfigurate withExpense:expense];
         }
@@ -408,27 +413,31 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
     return nil;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (![self isSearchPredicatesIsNil]) {
-        if (section == 0 && _filteredCategories.count == 0) {
-            return 0.0f;
-        } else if ([[self sumOfExpensesWhenSearchProceed]floatValue] == 0.0f) {
-            return 0.0f;
-        }
-        return self.tableView.sectionHeaderHeight + 16.0f;
-    }
-    return 0.0f;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![self isSearchPredicatesIsNil] && indexPath.section == 0) {
-        return 44.0f;
-    } else {
-        return 60.0f;
-    }
-}
-
 #pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch ([self searchTableViewCellTypeForRowAtIndexPath:indexPath]) {
+        case SearchTableViewCellTypeCategory : {
+            [self configureCell:cell atIndexPath:indexPath];
+            break;
+        }
+        case SearchTableViewCellTypeNothingFound : {
+            CustomRightDetailCell  *nothingFoundCell = (CustomRightDetailCell *)cell;
+            nothingFoundCell.leftLabel.text = NSLocalizedString(@"Nothing found", @"Nothing found text for nothing found cell in SearchVC");
+            nothingFoundCell.rightDetailLabel.text = nil;
+            nothingFoundCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            nothingFoundCell.accessoryType = UITableViewCellAccessoryNone;
+            break;
+        }
+        case SearchTableViewCellTypeExpense : {
+            [self configureCell:cell atIndexPath:indexPath];
+            break;
+        }
+        default :
+            NSAssert(NO, @"Unsopported type of cell!");
+            break;
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -460,6 +469,26 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
             backgroundView.backgroundColor = [UIColor colorWithRed:255 green:255 blue:255 alpha:0.85f];
             footer.backgroundView = backgroundView;
         }
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (![self isSearchPredicatesIsNil]) {
+        if (section == 0 && _filteredCategories.count == 0) {
+            return 0.0f;
+        } else if ([[self sumOfExpensesWhenSearchProceed]floatValue] == 0.0f) {
+            return 0.0f;
+        }
+        return self.tableView.sectionHeaderHeight + 16.0f;
+    }
+    return 0.0f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![self isSearchPredicatesIsNil] && indexPath.section == 0) {
+        return 44.0f;
+    } else {
+        return 60.0f;
     }
 }
 
@@ -554,7 +583,7 @@ static NSString * const kExpenseFetchedResultsControllerCacheName = @"AllExpense
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller {
-    if ([self isSearchPredicatesIsNil] == NO) {
+    if (![self isSearchPredicatesIsNil]) {
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, 2)] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
 
