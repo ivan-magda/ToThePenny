@@ -45,4 +45,6 @@
 
 - (void)deviceListChanged:(NSNotification *)notification;
 
+- (BOOL)iCloudEnabled;
+
 @end

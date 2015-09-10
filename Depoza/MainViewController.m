@@ -14,6 +14,7 @@
     //View
 #import "TitleViewButton.h"
     //CoreData
+#import "Persistence.h"
 #import "Expense.h"
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"

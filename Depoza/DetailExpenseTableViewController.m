@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
     NSParameterAssert(self.managedObjectContext);
     NSParameterAssert(self.expenseToShow);
-
+    
     _amountTextField.delegate = self;
     _dateOfExpense = _expenseToShow.dateOfExpense;
     _iconName = _expenseToShow.category.iconName;
@@ -212,6 +212,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
         [controller setExpenseDescription:text withDidSaveCompletionHandler:^(NSString *text) {
             self.descriptionLabel.text = text;
+            [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
         }];
     }
 }
@@ -275,15 +276,26 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2 && _datePickerVisible) {
         return 217.0f;
-    } else if (indexPath.row == 4 && _datePickerVisible) {
-        NSIndexPath *correctIndex = [NSIndexPath indexPathForRow:3 inSection:0];
-        return [super tableView:tableView heightForRowAtIndexPath:correctIndex];
+    } else if (( _datePickerVisible && indexPath.row == 4) ||
+               (!_datePickerVisible && indexPath.row == 3)) {
+        // UILabels can display their content in multiple rows but this takes
+        // some trickery. We first say to the label: this is your width, now
+        // try to fit all the text in there (sizeToFit). This resizes both the
+        // label's width and height.
+        
+        CGRect rect = CGRectMake(_descriptionLabel.frame.origin.x, _descriptionLabel.frame.origin.y, CGRectGetWidth(_descriptionLabel.frame), CGFLOAT_MAX);
+        self.descriptionLabel.frame = rect;
+        [self.descriptionLabel sizeToFit];
+        
+        rect.size.height = CGRectGetHeight(self.descriptionLabel.frame);
+        self.descriptionLabel.frame = rect;
+        
+        return self.descriptionLabel.frame.size.height + 21.0f;
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 
-    // Need to override this or the app crashes
 - (NSInteger)tableView:(UITableView *)tableView indentationLevelForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row == 2 && _datePickerVisible) {
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:indexPath.section];
