@@ -423,7 +423,6 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
 
 - (SelectTimePeriodViewController *)getConfiguratedSelectTimePeriodViewController {
     SelectTimePeriodViewController *selectTimePeriodViewController = [[SelectTimePeriodViewController alloc]initWithNibName:NSStringFromClass([SelectTimePeriodViewController class]) bundle:nil];
-    
     selectTimePeriodViewController.managedObjectContext = self.managedObjectContext;
     selectTimePeriodViewController.delegate = self;
     

@@ -60,8 +60,6 @@
 		501CCB001B48B35400609142 /* iRate.m in Sources */ = {isa = PBXBuildFile; fileRef = 501CCAFE1B48B35400609142 /* iRate.m */; };
 		501CCB041B48B5E600609142 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 501CCB061B48B5E600609142 /* InfoPlist.strings */; };
 		502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502839121ACC11A700C97C99 /* CoreData.framework */; };
-		503268E61B147BD400A24667 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503268E41B147BD400A24667 /* Fabric.framework */; };
-		503268E71B147BD400A24667 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503268E51B147BD400A24667 /* Crashlytics.framework */; };
 		504C435F1A9F4856007D6D4B /* CategoriesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 504C435E1A9F4856007D6D4B /* CategoriesInfo.m */; };
 		5058F20A1B00A1A1007BBDE6 /* Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2071B00A1A1007BBDE6 /* Checkmark.png */; };
 		5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5058F2081B00A1A1007BBDE6 /* Checkmark@2x.png */; };
@@ -145,6 +143,7 @@
 		50E094CD1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CC1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m */; };
 		50E094D01B5379C000BB6217 /* NSDate+NextYearFirstDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
+		50E654EA1BA2FFD300550A69 /* SearchableExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E654E91BA2FFD300550A69 /* SearchableExtensions.m */; settings = {ASSET_TAGS = (); }; };
 		50E784B71AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */; };
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
@@ -272,8 +271,6 @@
 		501CCB051B48B5E600609142 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		501CCB071B48B5E800609142 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		502839121ACC11A700C97C99 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		503268E41B147BD400A24667 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Depoza/Fabric.framework; sourceTree = "<group>"; };
-		503268E51B147BD400A24667 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Depoza/Crashlytics.framework; sourceTree = "<group>"; };
 		504C435D1A9F4856007D6D4B /* CategoriesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesInfo.h; sourceTree = "<group>"; };
 		504C435E1A9F4856007D6D4B /* CategoriesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesInfo.m; sourceTree = "<group>"; };
 		5058F2071B00A1A1007BBDE6 /* Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Checkmark.png; sourceTree = "<group>"; };
@@ -386,6 +383,8 @@
 		50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NextYearFirstDate.m"; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
+		50E654E81BA2FFD300550A69 /* SearchableExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchableExtensions.h; sourceTree = "<group>"; };
+		50E654E91BA2FFD300550A69 /* SearchableExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchableExtensions.m; sourceTree = "<group>"; };
 		50E784B51AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfYear.h"; sourceTree = "<group>"; };
 		50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfYear.m"; sourceTree = "<group>"; };
 		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
@@ -409,8 +408,6 @@
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
 				A70581F20A7C1421A8099790 /* libPods.a in Frameworks */,
-				503268E71B147BD400A24667 /* Crashlytics.framework in Frameworks */,
-				503268E61B147BD400A24667 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,6 +706,8 @@
 				504C43611A9F580B007D6D4B /* Fetch */,
 				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
 				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
+				50E654E81BA2FFD300550A69 /* SearchableExtensions.h */,
+				50E654E91BA2FFD300550A69 /* SearchableExtensions.m */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -993,13 +992,11 @@
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				503268E41B147BD400A24667 /* Fabric.framework */,
-				503268E51B147BD400A24667 /* Crashlytics.framework */,
 				50E021E71AD8F78D008489DA /* QuartzCore.framework */,
 				50E021E51AD8F63C008489DA /* Accelerate.framework */,
 				502839121ACC11A700C97C99 /* CoreData.framework */,
-				583FFBE7D2D90CA3E7515346 /* libPods.a */,
 				5015A5641AC02C230056271A /* NotificationCenter.framework */,
+				583FFBE7D2D90CA3E7515346 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1034,7 +1031,7 @@
 				506E727E1A1E0B450006F2DF /* Resources */,
 				A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */,
 				5015A5741AC02C230056271A /* Embed App Extensions */,
-				503268E31B147B2800A24667 /* ShellScript */,
+				50EF0F2B1BA281D300D96D39 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1215,7 +1212,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		503268E31B147B2800A24667 /* ShellScript */ = {
+		50EF0F2B1BA281D300D96D39 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1226,7 +1223,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run bc5ec3b27cb51435f8a751d3af6b7c12ab3d3573 9e76b8fae47fb5b6db4d70a5201671f9ae6be32ba2dce7965d7fe4ee6b67bd05";
+			shellScript = "\"${PODS_ROOT}/Fabric/Fabric.framework/run\" bc5ec3b27cb51435f8a751d3af6b7c12ab3d3573 9e76b8fae47fb5b6db4d70a5201671f9ae6be32ba2dce7965d7fe4ee6b67bd05";
 		};
 		A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1305,6 +1302,7 @@
 				500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */,
+				50E654EA1BA2FFD300550A69 /* SearchableExtensions.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
 				5014C3711B5636A5007B29B7 /* NSDate+BeginningOfDay.m in Sources */,

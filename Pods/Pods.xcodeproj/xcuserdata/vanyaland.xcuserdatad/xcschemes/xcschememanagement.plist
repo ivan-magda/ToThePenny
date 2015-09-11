@@ -4,22 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-CorePlot.xcscheme</key>
+		<key>CorePlot.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-KBRoundedButton.xcscheme</key>
+		<key>KBRoundedButton.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-KVNProgress.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>Pods-SmileTouchID.xcscheme</key>
+		<key>KVNProgress.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -29,30 +24,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SmileTouchID.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1A86434E25E539F4B86C1115</key>
+		<key>2EA7858DF5643F631D601F6091771390</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2A46FBD78802D81CABFED9A5</key>
+		<key>7DCE554928BD1F0945382322C881261B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>576469A96CECFFAD166B4852</key>
+		<key>827422F7FE9E767FF1C6F1A8D91B34B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D24EDE3EAE99C9921C02D7E6</key>
+		<key>A3FF7BF165931786B8996D04C700D893</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EA2FD46696BAFA9E482080F6</key>
+		<key>F5B83B068338F096966D78A6332120B3</key>
 		<dict>
 			<key>primary</key>
 			<true/>

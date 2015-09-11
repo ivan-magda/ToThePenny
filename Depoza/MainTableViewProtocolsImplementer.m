@@ -243,24 +243,23 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     UITableView *tableView = self.tableView;
 
     switch(type) {
-        case NSFetchedResultsChangeInsert: {
+        case NSFetchedResultsChangeInsert:
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-        }
 
-        case NSFetchedResultsChangeDelete: {
+        case NSFetchedResultsChangeDelete:
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
-        }
 
         case NSFetchedResultsChangeUpdate:
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
             break;
 
-        case NSFetchedResultsChangeMove:
+        case NSFetchedResultsChangeMove: {
             [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
             [tableView insertRowsAtIndexPaths:@[newIndexPath] withRowAnimation:UITableViewRowAnimationFade];
             break;
+        }
     }
 }
 

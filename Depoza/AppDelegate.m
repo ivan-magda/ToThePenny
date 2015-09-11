@@ -17,6 +17,7 @@
 #import "SearchTableViewController.h"
 #import "DetailExpenseTableViewController.h"
 #import "SettingsTableViewController.h"
+#import "SelectedCategoryTableViewController.h"
 #import <KVNProgress/KVNProgress.h>
     //CoreData
 #import "ExpenseData+Fetch.h"
@@ -169,7 +170,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Fabric with:@[CrashlyticsKit]];
-
+    
     [self customiseAppearance];
 
     self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];
