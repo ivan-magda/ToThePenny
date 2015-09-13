@@ -13,8 +13,24 @@
 #import "ExpenseData+Fetch.h"
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+    //CoreSearch
+#import "SearchableExtension.h"
 
 @implementation CategoryData (Fetch)
+
+#pragma mark - Managing Life Cycle -
+
+- (void)didSave {
+    SearchableExtension *searchableExtension = [SearchableExtension new];
+    
+    if ([self isDeleted]) {
+        [searchableExtension removeCategoriesFromIndex:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
+    } else {
+        [searchableExtension indexCategories:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
+    }
+}
+
+#pragma mark - Public -
 
 + (CategoryData *)categoryDataWithTitle:(NSString *)title iconName:(NSString *)iconName andExpenses:(NSSet *)expenses inManagedObjectContext:(NSManagedObjectContext *)context {
     CategoryData *category = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([CategoryData class]) inManagedObjectContext:context];

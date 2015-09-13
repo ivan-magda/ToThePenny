@@ -7,15 +7,15 @@
 //
 #import "Fetch.h"
 #import "CategoriesInfo.h"
-
     //CoreData
 #import "CategoryData+Fetch.h"
 #import "ExpenseData+Fetch.h"
 #import "Persistence.h"
 #import "Expense.h"
-
     //Categories
 #import "NSDate+FirstAndLastDaysOfMonth.h"
+    //CoreSearch
+#import "SearchableExtension.h"
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kTodayExpensesKey = @"todayExpenses";
@@ -110,6 +110,9 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
         }];
     }
     *totalExpeditures = countForExpenditures;
+    
+    SearchableExtension *searchableExtension = [SearchableExtension new];
+    [searchableExtension indexCategories:categoriesInfo];
 
     NSDate *end = [NSDate date];
     NSLog(@"Load categories data time execution: %f", [end timeIntervalSinceDate:start]);

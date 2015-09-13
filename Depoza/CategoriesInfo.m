@@ -8,6 +8,11 @@
 
 #import "CategoriesInfo.h"
 #import "CategoryData.h"
+    //CoreSearch
+#import "SearchableExtension.h"
+@import CoreSpotlight;
+    //Categories
+#import "NSString+FormatAmount.h"
 
 @implementation CategoriesInfo
 
@@ -23,6 +28,38 @@
 
 + (instancetype)categoryInfoFromCategoryData:(CategoryData *)category {
     return [[CategoriesInfo alloc]initWithTitle:category.title iconName:category.iconName idValue:category.idValue andAmount:@0];
+}
+
+- (CSSearchableItemAttributeSet *)searchableAttributeSet {
+    if (!_searchableAttributeSet) {
+        NSString *title = self.title;
+        
+        _searchableAttributeSet = [[CSSearchableItemAttributeSet alloc]initWithItemContentType:(NSString *)kUTTypeContent];
+        
+        NSString *contentDescription = nil;
+        if ([self.amount floatValue] > 0.0f) {
+            contentDescription = [NSString stringWithFormat:@"%@ %@", [NSString formatAmount:self.amount], NSLocalizedString(@"spent this month", @"Category expenses amount this month for searcheble set")];
+        } else {
+            contentDescription = NSLocalizedString(@"No expenses this month", @"No expenses message for searcheble set");
+        }
+        self.searchableAttributeSet.contentDescription = contentDescription;
+        
+        _searchableAttributeSet.title = title;
+        _searchableAttributeSet.displayName = title;
+
+        self.searchableAttributeSet.keywords = @[title];
+        
+        UIImage *thumbnail = [UIImage imageNamed:self.iconName];
+        _searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(thumbnail, 1.0);
+    }
+    return _searchableAttributeSet;
+}
+
+- (CSSearchableItem *)searchableItem {
+    if (!_searchableItem) {
+        _searchableItem = [[CSSearchableItem alloc]initWithUniqueIdentifier:[NSString stringWithFormat:@"%@",_idValue] domainIdentifier:CategoryDomainID attributeSet:self.searchableAttributeSet];
+    }
+    return _searchableItem;
 }
 
 @end

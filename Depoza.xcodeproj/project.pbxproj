@@ -40,6 +40,7 @@
 		500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500541031AC56226007EF006 /* SettingsFilled@2x.png */; };
 		50086E8E1AC6E7F600162677 /* MainViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50086E8D1AC6E7F600162677 /* MainViewCell.m */; };
 		500980A21AE3908B007DFCEA /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
+		500C968B1BA532DB00538F73 /* SearchableExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E654E91BA2FFD300550A69 /* SearchableExtension.m */; settings = {ASSET_TAGS = (); }; };
 		500CA6C61B6CA7B600643F2B /* FingerprintScan.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C31B6CA7B600643F2B /* FingerprintScan.png */; };
 		500CA6C71B6CA7B600643F2B /* FingerprintScan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C41B6CA7B600643F2B /* FingerprintScan@2x.png */; };
 		500CA6C81B6CA7B600643F2B /* FingerprintScan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500CA6C51B6CA7B600643F2B /* FingerprintScan@3x.png */; };
@@ -143,7 +144,7 @@
 		50E094CD1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CC1B53783700BB6217 /* NSDate+IsDatesWithEqualYear.m */; };
 		50E094D01B5379C000BB6217 /* NSDate+NextYearFirstDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */; };
 		50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */; };
-		50E654EA1BA2FFD300550A69 /* SearchableExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E654E91BA2FFD300550A69 /* SearchableExtensions.m */; settings = {ASSET_TAGS = (); }; };
+		50E654EA1BA2FFD300550A69 /* SearchableExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E654E91BA2FFD300550A69 /* SearchableExtension.m */; settings = {ASSET_TAGS = (); }; };
 		50E784B71AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */; };
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
@@ -383,8 +384,8 @@
 		50E094CF1B5379C000BB6217 /* NSDate+NextYearFirstDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NextYearFirstDate.m"; sourceTree = "<group>"; };
 		50E227131A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfTheCurrentDate.h"; sourceTree = "<group>"; };
 		50E227141A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfTheCurrentDate.m"; sourceTree = "<group>"; };
-		50E654E81BA2FFD300550A69 /* SearchableExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchableExtensions.h; sourceTree = "<group>"; };
-		50E654E91BA2FFD300550A69 /* SearchableExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchableExtensions.m; sourceTree = "<group>"; };
+		50E654E81BA2FFD300550A69 /* SearchableExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchableExtension.h; sourceTree = "<group>"; };
+		50E654E91BA2FFD300550A69 /* SearchableExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchableExtension.m; sourceTree = "<group>"; };
 		50E784B51AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+StartAndEndDatesOfYear.h"; sourceTree = "<group>"; };
 		50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfYear.m"; sourceTree = "<group>"; };
 		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
@@ -706,8 +707,7 @@
 				504C43611A9F580B007D6D4B /* Fetch */,
 				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
 				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
-				50E654E81BA2FFD300550A69 /* SearchableExtensions.h */,
-				50E654E91BA2FFD300550A69 /* SearchableExtensions.m */,
+				50E654EE1BA31B9900550A69 /* CoreSearch */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -824,8 +824,7 @@
 				5025479B1A1ED27600DCB8FB /* Resources */,
 				500DA1DC1AEC6BDB00B0ADC8 /* ThirdParty */,
 				506E72831A1E0B450006F2DF /* Supporting Files */,
-				42CE7CC9DD3529E2200689E8 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m */,
-				42CE76B4DFC859ACB7620900 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h */,
+				50E654EF1BA31BA800550A69 /* MotionEffect */,
 			);
 			path = Depoza;
 			sourceTree = "<group>";
@@ -980,6 +979,24 @@
 			name = View;
 			sourceTree = "<group>";
 		};
+		50E654EE1BA31B9900550A69 /* CoreSearch */ = {
+			isa = PBXGroup;
+			children = (
+				50E654E81BA2FFD300550A69 /* SearchableExtension.h */,
+				50E654E91BA2FFD300550A69 /* SearchableExtension.m */,
+			);
+			name = CoreSearch;
+			sourceTree = "<group>";
+		};
+		50E654EF1BA31BA800550A69 /* MotionEffect */ = {
+			isa = PBXGroup;
+			children = (
+				42CE7CC9DD3529E2200689E8 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.m */,
+				42CE76B4DFC859ACB7620900 /* MotionEffectWithTiltAlongVerticalAndHorizontalAxis.h */,
+			);
+			name = MotionEffect;
+			sourceTree = "<group>";
+		};
 		8845E87CAED0D14A2C22C71A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1031,7 +1048,7 @@
 				506E727E1A1E0B450006F2DF /* Resources */,
 				A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */,
 				5015A5741AC02C230056271A /* Embed App Extensions */,
-				50EF0F2B1BA281D300D96D39 /* ShellScript */,
+				500867E21BA31CF900F5B82C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1212,7 +1229,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		50EF0F2B1BA281D300D96D39 /* ShellScript */ = {
+		500867E21BA31CF900F5B82C /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1263,6 +1280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50BB50441AC6391C001AE915 /* CategoryData.m in Sources */,
+				500C968B1BA532DB00538F73 /* SearchableExtension.m in Sources */,
 				50A1D4E01AC0475100E56EB1 /* NSDate+FirstAndLastDaysOfMonth.m in Sources */,
 				50000FBB1B039E2D00509F45 /* CustomRightDetailCell.m in Sources */,
 				5064C6D71AC5491200979BF0 /* NSString+FormatAmount.m in Sources */,
@@ -1302,7 +1320,7 @@
 				500DA1DB1AEC6BD500B0ADC8 /* ZFModalTransitionAnimator.m in Sources */,
 				50E227151A874DEE009209E2 /* NSDate+StartAndEndDatesOfTheCurrentDate.m in Sources */,
 				507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */,
-				50E654EA1BA2FFD300550A69 /* SearchableExtensions.m in Sources */,
+				50E654EA1BA2FFD300550A69 /* SearchableExtension.m in Sources */,
 				5097DACD1A921CD7006DB197 /* CategoryData+Fetch.m in Sources */,
 				50BB50431AC6391C001AE915 /* CategoryData.m in Sources */,
 				5014C3711B5636A5007B29B7 /* NSDate+BeginningOfDay.m in Sources */,

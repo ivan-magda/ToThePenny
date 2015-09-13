@@ -23,16 +23,11 @@
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+BeginningOfDay.h"
 #import "NSDate+EndOfDay.h"
-    //CoreSearch
-#import "SearchableExtensions.h"
-@import CoreSpotlight;
 
 static NSString * const kSelectStartAndEndDatesCellReuseIdentifier = @"SelectStartAndEndDatesCell";
 static NSString * const kCustomRightDetailCellReuseIdentifier = @"SelectedCell";
 
 static NSString * const kFetchedResultsControllerCacheName = @"Selected";
-
-static NSString * const kCategoryActivityName = @"com.vanyaland.ToThePenny.category";
 
 static const NSInteger kNumberOfSectionsInTableView = 2;
 static const NSInteger kNumberOfRowsInFirstSection = 2;
@@ -67,23 +62,14 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     [super viewDidLoad];
     
     NSParameterAssert(self.timePeriodDates.count == 2);
-    
-    self.userActivity = [self prepareUserActivity];
 
     self.title = _selectedCategory.title;
-
     _datePickerVisible = NO;
 
     [self configureTimePeriod];
 
     [NSFetchedResultsController deleteCacheWithName:kFetchedResultsControllerCacheName];
     [self performFetch];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    self.userActivity.needsSave = YES;
 }
 
 #pragma mark - Helpers -
@@ -165,25 +151,6 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
 - (void)updateDateStringOnDateCellAtIndexPath:(NSIndexPath *)indexPath withDate:(NSDate *)date {
     CustomRightDetailCell *cell = (CustomRightDetailCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.rightDetailLabel.text = [NSString formatDate:date];
-}
-
-#pragma mark - CoreSearch -
-
-- (NSUserActivity *)prepareUserActivity {
-    NSUserActivity *activity = [[NSUserActivity alloc]initWithActivityType:kCategoryActivityName];
-    activity.eligibleForHandoff = NO;
-    activity.eligibleForPublicIndexing = YES;
-    activity.eligibleForSearch = YES;
-    
-    return activity;
-}
-
-- (void)updateUserActivityState:(NSUserActivity *)activity {
-    SearchableExtensions *searchableExtensions = [SearchableExtensions searchableExtensionsWithCategory:_selectedCategory];
-    activity.contentAttributeSet = searchableExtensions.searchableAttributeSet;
-    activity.title = _selectedCategory.title;
-    [activity addUserInfoEntriesFromDictionary:@{@"id" : _selectedCategory.idValue}];
-    activity.keywords = [NSSet setWithArray:searchableExtensions.categoryKeywords];
 }
 
 #pragma mark - UITableViewDataSource -
