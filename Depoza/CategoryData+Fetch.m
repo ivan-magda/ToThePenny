@@ -21,12 +21,13 @@
 #pragma mark - Managing Life Cycle -
 
 - (void)didSave {
-    SearchableExtension *searchableExtension = [SearchableExtension new];
-    
-    if ([self isDeleted]) {
-        [searchableExtension removeCategoriesFromIndex:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
-    } else {
-        [searchableExtension indexCategories:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
+    if ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9) {
+        SearchableExtension *searchableExtension = [SearchableExtension new];
+        if ([self isDeleted]) {
+            [searchableExtension removeCategoriesFromIndex:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
+        } else {
+            [searchableExtension indexCategories:@[[CategoriesInfo categoryInfoFromCategoryData:self]]];
+        }
     }
 }
 

@@ -93,6 +93,9 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
 
     float __block countForExpenditures = 0.0f;
 
+    SearchableExtension *searchableExtension = [SearchableExtension new];
+    searchableExtension.managedObjectContext = managedObjectContext;
+
     for (CategoryData *category in categories) {
         [categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CategoriesInfo *anInfo = obj;
@@ -102,6 +105,8 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
                         [expense.dateOfExpense compare:[days lastObject]]  != NSOrderedDescending) {
                         anInfo.amount = @([anInfo.amount floatValue] + [expense.amount floatValue]);
                         countForExpenditures += [expense.amount floatValue];
+                        
+                        [searchableExtension indexExpenses:@[[Expense expenseFromExpenseData:expense]]];
                     }
                     [managedObjectContext refreshObject:expense mergeChanges:NO];
                 }
@@ -111,8 +116,9 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     }
     *totalExpeditures = countForExpenditures;
     
-    SearchableExtension *searchableExtension = [SearchableExtension new];
-    [searchableExtension indexCategories:categoriesInfo];
+    if ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9) {
+        [searchableExtension indexCategories:categoriesInfo];
+    }
 
     NSDate *end = [NSDate date];
     NSLog(@"Load categories data time execution: %f", [end timeIntervalSinceDate:start]);

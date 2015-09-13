@@ -38,16 +38,14 @@
         
         NSString *contentDescription = nil;
         if ([self.amount floatValue] > 0.0f) {
-            contentDescription = [NSString stringWithFormat:@"%@ %@", [NSString formatAmount:self.amount], NSLocalizedString(@"spent this month", @"Category expenses amount this month for searcheble set")];
+            contentDescription = [NSString stringWithFormat:@"%@ %@.", NSLocalizedString(@"Spent this month", @"Category expenses amount this month for searcheble set"), [NSString formatAmount:self.amount]];
         } else {
-            contentDescription = NSLocalizedString(@"No expenses this month", @"No expenses message for searcheble set");
+            contentDescription = NSLocalizedString(@"No expenses this month.", @"No expenses message for searcheble set");
         }
-        self.searchableAttributeSet.contentDescription = contentDescription;
-        
+        _searchableAttributeSet.contentDescription = contentDescription;
         _searchableAttributeSet.title = title;
         _searchableAttributeSet.displayName = title;
-
-        self.searchableAttributeSet.keywords = @[title];
+        _searchableAttributeSet.keywords = @[title];
         
         UIImage *thumbnail = [UIImage imageNamed:self.iconName];
         _searchableAttributeSet.thumbnailData = UIImageJPEGRepresentation(thumbnail, 1.0);
@@ -57,7 +55,7 @@
 
 - (CSSearchableItem *)searchableItem {
     if (!_searchableItem) {
-        _searchableItem = [[CSSearchableItem alloc]initWithUniqueIdentifier:[NSString stringWithFormat:@"%@",_idValue] domainIdentifier:CategoryDomainID attributeSet:self.searchableAttributeSet];
+        _searchableItem = [[CSSearchableItem alloc]initWithUniqueIdentifier:[NSString stringWithFormat:@"category.%@",_idValue] domainIdentifier:CategoryDomainID attributeSet:self.searchableAttributeSet];
     }
     return _searchableItem;
 }

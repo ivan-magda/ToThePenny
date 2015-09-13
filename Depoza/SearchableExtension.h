@@ -13,9 +13,16 @@
 extern NSString * const CategoryDomainID;
 extern NSString * const ExpenseDomainID;
 
+@class NSManagedObjectContext;
+
 @interface SearchableExtension : NSObject
 
-- (void)indexCategories:(NSArray *)anArrayOfCategoies;
-- (void)removeCategoriesFromIndex:(NSArray *)anArrayOfCategoies;
+@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
+
+- (void)indexCategories:(NSArray *)categoies;
+- (void)removeCategoriesFromIndex:(NSArray *)categoies;
+
+-(void)indexExpenses:(NSArray *)expenses;
+- (void)removeExpensesFromIndex:(NSArray *)expenses;
 
 @end

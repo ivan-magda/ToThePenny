@@ -1,6 +1,12 @@
+    //CoreData
 #import "Expense.h"
 #import "ExpenseData+Fetch.h"
 #import "CategoryData.h"
+    //CoreSearch
+#import "SearchableExtension.h"
+@import CoreSpotlight;
+    //Categories
+#import "NSString+FormatAmount.h"
 
 @implementation Expense
 
@@ -82,5 +88,40 @@
     NSString *stringToHash = [NSString stringWithFormat:@"%@:%@:%@:%@:%li", _amount, _category, _descriptionOfExpense, _dateOfExpense, (long)_idValue];
     return [stringToHash hash];
 }
+
+#pragma mark - CoreSearch -
+
+- (CSSearchableItemAttributeSet *)searchableAttributeSet {
+    if (_descriptionOfExpense.length < 1) {
+        return nil;
+    }
+    
+    if (!_searchableAttributeSet) {
+        NSString *title = _category;
+        
+        _searchableAttributeSet = [[CSSearchableItemAttributeSet alloc]initWithItemContentType:(NSString *)kUTTypeContent];
+        _searchableAttributeSet.contentDescription = _descriptionOfExpense;
+        _searchableAttributeSet.title = title;
+        _searchableAttributeSet.displayName = [NSString stringWithFormat:@"%@, %@", title, [NSString formatAmount:_amount]];;
+        _searchableAttributeSet.contentCreationDate = _dateOfExpense;
+        
+        NSArray *keywords = [_descriptionOfExpense componentsSeparatedByCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        keywords = [keywords filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"SELF != ''"]];
+        _searchableAttributeSet.keywords = keywords;
+    }
+    return _searchableAttributeSet;
+}
+
+- (CSSearchableItem *)searchableItem {
+    if (self.searchableAttributeSet == nil) {
+        return nil;
+    }
+    
+    if (!_searchableItem) {
+        _searchableItem = [[CSSearchableItem alloc]initWithUniqueIdentifier:[NSString stringWithFormat:@"expense.%@",@(_idValue)] domainIdentifier:ExpenseDomainID attributeSet:self.searchableAttributeSet];
+    }
+    return _searchableItem;
+}
+
 
 @end

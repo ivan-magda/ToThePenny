@@ -8,6 +8,7 @@
 
 #import "ExpenseData+Fetch.h"
 #import "Persistence.h"
+#import "Expense.h"
     //Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -16,8 +17,26 @@
 #import "NSDate+IsDatesWithEqualMonth.h"
 #import "NSDate+IsDatesWithEqualYear.h"
 #import "NSDate+StartAndEndDatesOfYear.h"
+    //CoreSearch
+#import "SearchableExtension.h"
 
 @implementation ExpenseData (Fetch)
+
+#pragma mark - Managing Life Cycle -
+
+- (void)didSave {
+    if ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9) {
+        SearchableExtension *searchableExtension = [SearchableExtension new];
+        
+        if ([self isDeleted]) {
+            [searchableExtension removeExpensesFromIndex:@[[Expense expenseFromExpenseData:self]]];
+        } else {
+            [searchableExtension indexExpenses:@[[Expense expenseFromExpenseData:self]]];
+        }
+        
+    }
+}
+
 
 + (NSInteger)nextId {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
