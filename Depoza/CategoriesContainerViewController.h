@@ -35,6 +35,8 @@ extern const CGFloat ReducedCollectionViewHeightValue;
  */
 extern const CGFloat DefaultPageControlHeightValue;
 
+extern NSString * const PresentSearchedCategoryFromSpotlightNotification;
+
 @interface CategoriesContainerViewController : UIViewController <MainViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

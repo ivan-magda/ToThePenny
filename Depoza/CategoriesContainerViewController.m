@@ -26,6 +26,10 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
 
 const CGFloat DefaultPageControlHeightValue = 37.0f;
 
+NSString * const PresentSearchedCategoryFromSpotlightNotification = @"PresentSearchedCategoryFromSpotlightNotification";
+
+static NSString * const kCategorySelectedSegueIdentifier = @"CategorySelected";
+
 @interface CategoriesContainerViewController ()
 
 @property (nonatomic, weak) IBOutlet UIPageControl *pageControl;
@@ -40,6 +44,12 @@ const CGFloat DefaultPageControlHeightValue = 37.0f;
     [super viewDidLoad];
 
     NSParameterAssert(_managedObjectContext);
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentSearchedCategoryFromSpotlight:) name:PresentSearchedCategoryFromSpotlightNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self];
 }
 
 #pragma mark - Private -
@@ -48,10 +58,15 @@ const CGFloat DefaultPageControlHeightValue = 37.0f;
     return self.pageControl.numberOfPages;
 }
 
+- (void)presentSearchedCategoryFromSpotlight:(NSNotification *)notification {
+    CategoryData *category = (CategoryData *)notification.object;
+    [self performSegueWithIdentifier:kCategorySelectedSegueIdentifier sender:[CategoriesInfo categoryInfoFromCategoryData:category]];
+}
+
 #pragma mark - Navigation -
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"CategorySelected"]) {
+    if ([segue.identifier isEqualToString:kCategorySelectedSegueIdentifier]) {
         SelectedCategoryTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
 
@@ -60,9 +75,11 @@ const CGFloat DefaultPageControlHeightValue = 37.0f;
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:sender];
 
             category = _categories[indexPath.row];
-
-            [self.delegate categoriesContainerViewController:self didChooseCategory:category];
+        } else if ([sender isKindOfClass:[CategoriesInfo class]]) {
+            category = (CategoriesInfo *)sender;
         }
+        [self.delegate categoriesContainerViewController:self didChooseCategory:category];
+        
         controller.selectedCategory = category;
         controller.timePeriodDates = [_timePeriod getFirstAndLastDatesFromMonth];
     }

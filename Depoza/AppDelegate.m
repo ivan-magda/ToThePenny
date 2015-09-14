@@ -18,6 +18,7 @@
 #import "DetailExpenseTableViewController.h"
 #import "SettingsTableViewController.h"
 #import "SelectedCategoryTableViewController.h"
+#import "CategoriesContainerViewController.h"
 #import <KVNProgress/KVNProgress.h>
     //CoreData
 #import "ExpenseData+Fetch.h"
@@ -27,6 +28,8 @@
 #import "iRate.h"
     //TouchID
 #import <SmileTouchID/SmileAuthenticator.h>
+    //CoreSearch
+@import CoreSpotlight;
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
@@ -207,18 +210,17 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [self hideVisualEffectViewWithBlurAndVibrancyEffects];
     
+    _tabBarController.selectedIndex = 0;
+    
     if ([_appGroupUserDefaults boolForKey:kDetailViewControllerPresentingFromExtensionKey]) {
-        _tabBarController.selectedIndex = 0;
-        
         [_appGroupUserDefaults setBool:NO forKey:kDetailViewControllerPresentingFromExtensionKey];
         [_appGroupUserDefaults synchronize];
         
         if (_mainViewController.isAddExpensePresenting) {
             [_mainViewController dismissViewControllerAnimated:YES completion:nil];
         }
-    } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
-        _tabBarController.selectedIndex = 0;
         
+    } else if ([[NSUserDefaults standardUserDefaults]boolForKey:kAddExpenseOnStartupKey]) {
         if (_mainViewController.isAddExpensePresenting && ![SmileAuthenticator hasPassword]) {
             return;
         }
@@ -306,6 +308,24 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     
     [self.persistence saveContext];
     [self.persistence removePersistentStoreNotificationSubscribes];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    NSDictionary *userInfo = userActivity.userInfo;
+    NSString *identifier = userInfo[CSSearchableItemActivityIdentifier];
+    NSArray *searchedItemInfo = [identifier componentsSeparatedByString:@"."];
+    NSInteger idValue = [searchedItemInfo.lastObject integerValue];
+    
+    NSParameterAssert(searchedItemInfo.count == 2);
+    if ([searchedItemInfo.firstObject isEqualToString:@"category"]) {
+        CategoryData *category = [[CategoryData getCategoryFromIdValue:idValue inManagedObjectContext:_managedObjectContext]firstObject];
+
+        [[NSNotificationCenter defaultCenter]postNotificationName:PresentSearchedCategoryFromSpotlightNotification object:category];
+    } else {
+        ExpenseData *expense = [ExpenseData getExpenseFromIdValue:idValue inManagedObjectContext:_managedObjectContext];
+    }
+    
+    return YES;
 }
 
 #pragma mark - StatusBarTouchTracking -
