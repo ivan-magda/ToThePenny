@@ -311,21 +311,45 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
-    NSDictionary *userInfo = userActivity.userInfo;
-    NSString *identifier = userInfo[CSSearchableItemActivityIdentifier];
+    
+    if (_mainViewController.isAddExpensePresenting) {
+        [_mainViewController dismissViewControllerAnimated:YES completion:^{
+            [self handlingResultSelectionWithUserActivity:userActivity];
+        }];
+        _mainViewController.isAddExpensePresenting = NO;
+    } else {
+        //Remove observer in MainVC, that listen to touch id success auth
+        //if not, then AddExpenseVC may be present.
+        if ([SmileAuthenticator hasPassword]) {
+            [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController name:SmileTouchIdUserSuccessAuthenticationNotification object:nil];
+        }
+        [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
+        
+        [self handlingResultSelectionWithUserActivity:userActivity];
+    }
+    
+    return YES;
+}
+
+- (void)handlingResultSelectionWithUserActivity:(NSUserActivity *)userActivity {
+    // This activity represents an item indexed using Core Spotlight, so restore the context related to the unique identifier.
+    // Note that the unique identifier of the Core Spotlight item is set in the activity’s userInfo property for the key CSSearchableItemActivityIdentifier.
+    NSString *identifier = userActivity.userInfo[CSSearchableItemActivityIdentifier];
+    // Next, find and open the item specified by uniqueIdentifer.
     NSArray *searchedItemInfo = [identifier componentsSeparatedByString:@"."];
     NSInteger idValue = [searchedItemInfo.lastObject integerValue];
     
     NSParameterAssert(searchedItemInfo.count == 2);
+
     if ([searchedItemInfo.firstObject isEqualToString:@"category"]) {
         CategoryData *category = [[CategoryData getCategoryFromIdValue:idValue inManagedObjectContext:_managedObjectContext]firstObject];
-
-        [[NSNotificationCenter defaultCenter]postNotificationName:PresentSearchedCategoryFromSpotlightNotification object:category];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:ContinuingActivityRepresentsSearchableCategoryNotification object:category];
     } else {
         ExpenseData *expense = [ExpenseData getExpenseFromIdValue:idValue inManagedObjectContext:_managedObjectContext];
+        
+        [[NSNotificationCenter defaultCenter]postNotificationName:ContinuingActivityRepresentsSearchableExpenseNotification object:expense];
     }
-    
-    return YES;
 }
 
 #pragma mark - StatusBarTouchTracking -

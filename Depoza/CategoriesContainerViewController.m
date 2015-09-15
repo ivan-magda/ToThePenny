@@ -26,7 +26,7 @@ const CGFloat ReducedCollectionViewHeightValue = 69.0f;
 
 const CGFloat DefaultPageControlHeightValue = 37.0f;
 
-NSString * const PresentSearchedCategoryFromSpotlightNotification = @"PresentSearchedCategoryFromSpotlightNotification";
+NSString * const ContinuingActivityRepresentsSearchableCategoryNotification = @"ContinuingActivityRepresentsSearchableCategory";
 
 static NSString * const kCategorySelectedSegueIdentifier = @"CategorySelected";
 
@@ -45,7 +45,7 @@ static NSString * const kCategorySelectedSegueIdentifier = @"CategorySelected";
 
     NSParameterAssert(_managedObjectContext);
     
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentSearchedCategoryFromSpotlight:) name:PresentSearchedCategoryFromSpotlightNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentSearchedCategoryFromSpotlight:) name:ContinuingActivityRepresentsSearchableCategoryNotification object:nil];
 }
 
 - (void)dealloc {

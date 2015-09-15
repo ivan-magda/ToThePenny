@@ -33,10 +33,12 @@
     //SmileTouchID
 #import <SmileTouchID/SmileAuthenticator.h>
 
-    static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
+static const CGFloat kMotionEffectMagnitudeValue = 10.0f;
 
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
-static NSString * const kSmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
+NSString * const SmileTouchIdUserSuccessAuthenticationNotification = @"smileTouchIdUserSuccessAuthentication";
+
+static NSString * const kDetailExpenseTableViewControllerSegueIdentifier = @"MoreInfo";
 
 /*!
  * The default constant value of info view height equals to 227.0f.
@@ -49,6 +51,7 @@ static const CGFloat kDefaultInfoViewHeightValue = 227.0f;
  */
 static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 
+NSString * const ContinuingActivityRepresentsSearchableExpenseNotification = @"ContinuingActivityRepresentsSearchableExpense";
 
 
 @interface MainViewController () <NSFetchedResultsControllerDelegate>
@@ -421,7 +424,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         if (!_isShowExpenseDetailFromExtension && ![SmileAuthenticator hasPassword]) {
             [self performAddExpense];
         } else {
-            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(smileTouchIdUserSuccessAuthentication) name:kSmileTouchIdUserSuccessAuthenticationNotification object:nil];
+            [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(smileTouchIdUserSuccessAuthentication) name:SmileTouchIdUserSuccessAuthenticationNotification object:nil];
         }
     }
     _isShowExpenseDetailFromExtension = NO;
@@ -507,7 +510,7 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
         navigationController.transitioningDelegate = _transitionAnimator;
         navigationController.modalPresentationStyle = UIModalPresentationCustom;
 
-    } else if ([segue.identifier isEqualToString:@"MoreInfo"]) {
+    } else if ([segue.identifier isEqualToString:kDetailExpenseTableViewControllerSegueIdentifier]) {
         DetailExpenseTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _managedObjectContext;
 
@@ -625,6 +628,8 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(manageCategoryTableViewControllerDidUpdateCategory:) name:ManageCategoryTableViewControllerDidUpdateCategoryNotification object:nil];
 
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(categoriesTableViewControllerDidRemoveCategory:) name:CategoriesTableViewControllerDidRemoveCategoryNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(presentSearchedExpenseFromSpotlight:) name:ContinuingActivityRepresentsSearchableExpenseNotification object:nil];
 }
 
 #pragma mark - HandleNotifications
@@ -638,10 +643,15 @@ static const CGFloat kReducedInfoViewHeightValue = 158.0f;
 }
 
 - (void)smileTouchIdUserSuccessAuthentication {
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kSmileTouchIdUserSuccessAuthenticationNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:SmileTouchIdUserSuccessAuthenticationNotification object:nil];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self performAddExpense];
     });
+}
+
+- (void)presentSearchedExpenseFromSpotlight:(NSNotification *)notification {
+    ExpenseData *expense = (ExpenseData *)notification.object;
+    [self performSegueWithIdentifier:kDetailExpenseTableViewControllerSegueIdentifier sender:expense];
 }
 
 #pragma mark DetailExpenseTableViewControllerNotification

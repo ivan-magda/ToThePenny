@@ -8,6 +8,10 @@
 
 @class NSManagedObjectContext;
 
+extern NSString * const ContinuingActivityRepresentsSearchableExpenseNotification;
+
+extern NSString * const SmileTouchIdUserSuccessAuthenticationNotification;
+
 @interface MainViewController : UIViewController <AddExpenseTableViewControllerDelegate, SelectTimePeriodViewControllerDelegate, CategoriesContainerViewControllerDelegate>
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
