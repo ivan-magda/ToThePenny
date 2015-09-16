@@ -30,8 +30,10 @@
 #import <SmileTouchID/SmileAuthenticator.h>
     //CoreSearch
 @import CoreSpotlight;
-
-#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+    //AppAppearance
+#import "AppConfiguration.h"
+    //View
+#import "VisualEffectViewWithBlurAndVibrancyEffects.h"
 
 typedef void(^SmileTouchIdUserSuccessAuthenticationBlock)();
 
@@ -46,7 +48,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 @interface AppDelegate () <SmileAuthenticatorDelegate>
 
-@property (nonatomic, strong) UIVisualEffectView *visualEffectViewWithBlurAndVibrancyEffects;
+@property (nonatomic, strong) VisualEffectViewWithBlurAndVibrancyEffects *visualEffectViewWithBlurAndVibrancyEffects;
 
 @property (nonatomic, copy) SmileTouchIdUserSuccessAuthenticationBlock successAuthenticationHandler;
 
@@ -61,6 +63,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     NSUserDefaults *_appGroupUserDefaults;
     
     UIColor *_mainColor;
+    
+    AppConfiguration *_appConfiguration;
     
     BOOL _authViewControllerPresented;
     BOOL _userSuccessAuthentication;
@@ -116,73 +120,37 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [_settingsTableViewController.navigationController popToRootViewControllerAnimated:animated];
 }
 
-#pragma mark - KVNProgress
+#pragma mark - AppConfiguration -
 
-- (void)setKVNDisplayTime {
-    KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
-    configuration.minimumSuccessDisplayTime = 0.75f;
-    configuration.minimumErrorDisplayTime   = 1.0f;
-
-    configuration.statusFont = [UIFont fontWithName:@"HelveticaNeue-Light" size:19.0f];
-    configuration.circleSize = 100.0f;
-    configuration.lineWidth = 1.0f;
-
-    [KVNProgress setConfiguration:configuration];
+- (void)applyAppConfiguration {
+    _appConfiguration = [AppConfiguration new];
+    
+    [self applyAppAppearance];
+    [self configurateSmileTouchId];
+    [_appConfiguration setKVNProgressConfiguration];
 }
 
-#pragma mark - UI -
-
-- (void)customiseAppearance {
-    _mainColor = UIColorFromRGB(0x067AB5);
-    //008CC7
-    [[UINavigationBar appearance]setBarTintColor:_mainColor];
-    [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
-
-    [[UINavigationBar appearance]setTitleTextAttributes:
-     [NSDictionary dictionaryWithObjectsAndKeys:[UIColor colorWithRed:245.0/255.0 green:245.0/255.0 blue:245.0/255.0 alpha:1.0], NSForegroundColorAttributeName, [UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:21.0], NSFontAttributeName, nil]];
-
-    [[UINavigationBar appearance]setTranslucent:NO];
-    [[UITabBar appearance]setTranslucent:YES];
-    
-    [[UITabBar appearance]setTintColor:_mainColor];
-
-    [[UIBarButtonItem appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:17]} forState:UIControlStateNormal];
-    
-    [[UISegmentedControl appearance]setTitleTextAttributes:@{NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:14]} forState:UIControlStateNormal];
-
-        //When contained in UISearchBar
-    [[UIBarButtonItem appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
-    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil]setDefaultTextAttributes:@{                  NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:14]}];
+- (void)applyAppAppearance {
+    _mainColor = _appConfiguration.mainColor;
+    [_appConfiguration applyAppAppearance];
 }
-
-#pragma mark - SmileTouchID -
 
 - (void)configurateSmileTouchId {
-    NSParameterAssert(_tabBarController != nil);
-    
-    [SmileAuthenticator sharedInstance].delegate = self;
-    [SmileAuthenticator sharedInstance].rootVC = self.window.rootViewController;
-    
-    [SmileAuthenticator sharedInstance].passcodeDigit = 4;
-    [SmileAuthenticator sharedInstance].tintColor = _mainColor;
-    [SmileAuthenticator sharedInstance].touchIDIconName = @"TouchIDIcon.jpg";
-    [SmileAuthenticator sharedInstance].navibarTranslucent = NO;
+    [_appConfiguration configurateSmileTouchIdWithRootViewController:self.window.rootViewController];
+    _appConfiguration.smileAuthenticatorDelegate = self;
 }
 
 #pragma mark - AppDelegate -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Fabric with:@[CrashlyticsKit]];
-    
-    [self customiseAppearance];
 
     self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];
     self.managedObjectContext = self.persistence.managedObjectContext;
     self.persistence.delegate = self;
 
     [self spreadManagedObjectContext];
-    [self setKVNDisplayTime];
-    [self configurateSmileTouchId];
+    [self applyAppConfiguration];
 
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     
@@ -311,6 +279,9 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    if (![userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+        return NO;
+    }
     
     if (_mainViewController.isAddExpensePresenting) {
         [_mainViewController dismissViewControllerAnimated:YES completion:^{
@@ -419,37 +390,10 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 #pragma mark - UIVisualEffectView -
 
-- (UIVisualEffectView *)visualEffectViewWithBlurAndVibrancyEffects {
+- (VisualEffectViewWithBlurAndVibrancyEffects *)visualEffectViewWithBlurAndVibrancyEffects {
     if (_visualEffectViewWithBlurAndVibrancyEffects == nil) {
-            // Blur effect
-        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
-        UIVisualEffectView *blurEffectView = [[UIVisualEffectView alloc]initWithEffect:blurEffect];
-        [blurEffectView setFrame:_tabBarController.view.bounds];
-        
-            // Vibrancy effect
-        UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
-        UIVisualEffectView *vibrancyEffectView = [[UIVisualEffectView alloc]initWithEffect:vibrancyEffect];
-        [vibrancyEffectView setFrame:_tabBarController.view.bounds];
-        
-        // Label for vibrant text
-        UILabel *vibrantLabel = [UILabel new];
-        [vibrantLabel setText:NSLocalizedString(@"ToThePenny", @"App name for vibrant label")];
-        [vibrantLabel setFont:[UIFont fontWithName:@"HelveticaNeue-CondensedBold" size:21.0]];
-        [vibrantLabel sizeToFit];
-        
-        CGPoint location = _tabBarController.view.center;
-        location.y = CGRectGetHeight([UIApplication sharedApplication].statusBarFrame) + 22.0f;
-        [vibrantLabel setCenter:location];
-        
-        // Add label to the vibrancy view
-        [[vibrancyEffectView contentView]addSubview:vibrantLabel];
-        
-            // Add the vibrancy view to the blur view
-        [[blurEffectView contentView]addSubview:vibrancyEffectView];
-        
-        _visualEffectViewWithBlurAndVibrancyEffects = blurEffectView;
+        _visualEffectViewWithBlurAndVibrancyEffects = [[VisualEffectViewWithBlurAndVibrancyEffects alloc]initWithFrame:_tabBarController.view.bounds];
     }
-    
     return _visualEffectViewWithBlurAndVibrancyEffects;
 }
 
