@@ -279,7 +279,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DatePickerCell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-                UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetHeight(self.view.bounds), 216.0f)];
+                UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), 216.0f)];
                 datePicker.tag = 112;
 
                 [datePicker setMaximumDate:[NSDate getStartAndEndDatesOfTheCurrentDate].lastObject];
