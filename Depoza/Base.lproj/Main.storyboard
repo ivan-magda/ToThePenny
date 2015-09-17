@@ -1345,11 +1345,11 @@
             </objects>
             <point key="canvasLocation" x="82" y="-1357"/>
         </scene>
-        <!--Settings-->
+        <!--Navigation Controller-->
         <scene sceneID="FHe-Il-uU4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l5R-23-sta" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="Settings.png" id="RJ6-dR-x4Q"/>
+                    <tabBarItem key="tabBarItem" systemItem="more" id="RJ6-dR-x4Q"/>
                     <toolbarItems/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="pjl-9k-Al6">
@@ -1786,7 +1786,6 @@
         <image name="PieChart.png" width="22" height="22"/>
         <image name="Plugin.png" width="22" height="22"/>
         <image name="Search.png" width="32" height="32"/>
-        <image name="Settings.png" width="32" height="32"/>
         <image name="Tomato" width="42" height="42"/>
     </resources>
     <inferredMetricsTieBreakers>
