@@ -8,9 +8,6 @@
 
     //AppDelegate
 #import "AppDelegate.h"
-    //Crashlytics
-#import <Fabric/Fabric.h>
-#import <Crashlytics/Crashlytics.h>
     //ViewControllers
 #import "CustomTabBarController.h"
 #import "MainViewController.h"
@@ -24,16 +21,20 @@
 #import "ExpenseData+Fetch.h"
 #import "CategoryData+Fetch.h"
 #import "Fetch.h"
-    //iRate
-#import "iRate.h"
-    //TouchID
-#import <SmileTouchID/SmileAuthenticator.h>
     //CoreSearch
 @import CoreSpotlight;
     //AppAppearance
 #import "AppConfiguration.h"
     //View
 #import "VisualEffectViewWithBlurAndVibrancyEffects.h"
+//ThirdParty
+    //Crashlytics
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+    //iRate
+#import "iRate.h"
+    //TouchID
+#import <SmileTouchID/SmileAuthenticator.h>
 
 typedef void(^SmileTouchIdUserSuccessAuthenticationBlock)();
 
@@ -156,6 +157,8 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     
     [iRate sharedInstance].appStoreID = 994476075;
     [iRate sharedInstance].previewMode = NO;
+    
+    [_persistence indexAllExpenses];
 
     return YES;
 }

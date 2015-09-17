@@ -722,7 +722,7 @@
 				504C43611A9F580B007D6D4B /* Fetch */,
 				504C435D1A9F4856007D6D4B /* CategoriesInfo.h */,
 				504C435E1A9F4856007D6D4B /* CategoriesInfo.m */,
-				50E654EE1BA31B9900550A69 /* CoreSearch */,
+				50E654EE1BA31B9900550A69 /* SpotlightSearch */,
 			);
 			name = DataModel;
 			sourceTree = "<group>";
@@ -997,13 +997,13 @@
 			name = View;
 			sourceTree = "<group>";
 		};
-		50E654EE1BA31B9900550A69 /* CoreSearch */ = {
+		50E654EE1BA31B9900550A69 /* SpotlightSearch */ = {
 			isa = PBXGroup;
 			children = (
 				50E654E81BA2FFD300550A69 /* SearchableExtension.h */,
 				50E654E91BA2FFD300550A69 /* SearchableExtension.m */,
 			);
-			name = CoreSearch;
+			name = SpotlightSearch;
 			sourceTree = "<group>";
 		};
 		50E654EF1BA31BA800550A69 /* MotionEffect */ = {

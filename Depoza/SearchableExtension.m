@@ -54,7 +54,7 @@ NSString * const ExpenseDomainID  = @"com.vanyaland.ToThePenny.expense";
     
     for (Expense *anExpense in expenses) {
         if (!anExpense.searchableItem) {
-            return;
+            continue;
         }
         
         if (self.managedObjectContext) {

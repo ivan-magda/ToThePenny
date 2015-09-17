@@ -15,6 +15,8 @@
 + (NSInteger)nextId;
 + (void)setNextIdValueToUserDefaults:(NSInteger)expenses;
 
++ (NSArray *)getAllExpensesInContext:(NSManagedObjectContext *)context;
+
 + (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context;
 + (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
 

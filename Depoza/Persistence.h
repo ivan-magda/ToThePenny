@@ -35,6 +35,8 @@
 - (void)saveContext;
 - (void)deleteAllCategories;
 
+- (NSManagedObjectContext *)createManagedObjectContext;
+
 - (void)removePersistentStoreNotificationSubscribes;
 - (void)addPersistentStoreNotificationSubscribes;
 
@@ -46,5 +48,10 @@
 - (void)deviceListChanged:(NSNotification *)notification;
 
 - (BOOL)iCloudEnabled;
+
+- (void)indexAllData;
+- (void)indexAllExpenses;
+- (void)indexAllCategories;
+- (void)indexCategories:(NSArray *)categoriesInfosToIndex;
 
 @end

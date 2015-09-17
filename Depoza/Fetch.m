@@ -48,7 +48,8 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
 }
 
 + (NSMutableArray *)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext totalExpenses:(CGFloat *)totalExpeditures andBetweenMonthDate:(NSDate *)date {
-    [[Persistence sharedInstance]deduplication];
+    Persistence *persistence = [Persistence sharedInstance];
+    [persistence deduplication];
 
     NSArray *fetchedCategories = [self getObjectsWithEntity:NSStringFromClass([CategoryData class]) predicate:nil context:managedObjectContext sortKey:NSStringFromSelector(@selector(idValue))];
 
@@ -88,25 +89,22 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(SUBQUERY(expense, $x, ($x.dateOfExpense >= %@) AND ($x.dateOfExpense <= %@)).@count > 0)", [days firstObject], [days lastObject]];
 
     NSDate *start = [NSDate date];
-
+    
     NSArray *categories = [managedObjectContext executeFetchRequest:fetchRequest error:nil];
-
-    float __block countForExpenditures = 0.0f;
-
-    SearchableExtension *searchableExtension = [SearchableExtension new];
-    searchableExtension.managedObjectContext = managedObjectContext;
-
+    float __block summaForMonth = 0.0f;
+    
     for (CategoryData *category in categories) {
+        
         [categoriesInfo enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CategoriesInfo *anInfo = obj;
             if (category.idValue == anInfo.idValue) {
+                
                 for (ExpenseData *expense in category.expense) {
+                    
                     if ([expense.dateOfExpense compare:[days firstObject]] != NSOrderedAscending &&
                         [expense.dateOfExpense compare:[days lastObject]]  != NSOrderedDescending) {
                         anInfo.amount = @([anInfo.amount floatValue] + [expense.amount floatValue]);
-                        countForExpenditures += [expense.amount floatValue];
-                        
-                        [searchableExtension indexExpenses:@[[Expense expenseFromExpenseData:expense]]];
+                        summaForMonth += [expense.amount floatValue];
                     }
                     [managedObjectContext refreshObject:expense mergeChanges:NO];
                 }
@@ -114,11 +112,10 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
             }
         }];
     }
-    *totalExpeditures = countForExpenditures;
+    *totalExpeditures = summaForMonth;
     
-    if ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9) {
-        [searchableExtension indexCategories:categoriesInfo];
-    }
+    //Indexing categories for Spotlight search
+    [persistence indexCategories:categoriesInfo];
 
     NSDate *end = [NSDate date];
     NSLog(@"Load categories data time execution: %f", [end timeIntervalSinceDate:start]);

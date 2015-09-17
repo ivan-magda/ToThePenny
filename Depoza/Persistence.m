@@ -7,12 +7,17 @@
     //
 
 #import "Persistence.h"
-#import "AppDelegate.h"
 #import "CategoryData+Fetch.h"
+#import "CategoriesInfo.h"
 #import "ExpenseData+Fetch.h"
+#import "Expense.h"
 #import "CoreDataDeviceList.h"
-
+    //Categories
 #import "NSURL+InternalExtensions.h"
+    //AppDelegate
+#import "AppDelegate.h"
+    //SpotlightSearch
+#import "SearchableExtension.h"
 
 typedef void(^DeduplicationsCompletionHandlerBlock)(BOOL deduplicationsFound);
 
@@ -140,6 +145,13 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
         }
     }
     return _managedObjectContext;
+}
+
+- (NSManagedObjectContext *)createManagedObjectContext {
+    NSManagedObjectContext *managedObjectContext = [NSManagedObjectContext new];
+    [managedObjectContext setPersistentStoreCoordinator:self.persistentStoreCoordinator];
+    
+    return managedObjectContext;
 }
 
 #pragma mark - SeedInitialData -
@@ -656,6 +668,68 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
         [_managedObjectContext deleteObject:category];
     }
     [self saveContext];
+}
+
+#pragma mark - Indexing -
+
+- (BOOL)iOSVersionGreaterThenOrEqualToNine {
+    return ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9 ? YES : NO);
+}
+
+- (void)indexAllData {
+    [self indexAllCategories];
+    [self indexAllExpenses];
+}
+
+- (void)indexAllExpenses {
+    if ([self iOSVersionGreaterThenOrEqualToNine]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSManagedObjectContext *context = [self createManagedObjectContext];
+            NSArray *fetchedExpenses = [ExpenseData getAllExpensesInContext:context];
+            
+            __block NSMutableArray *expensesToIndex = [NSMutableArray arrayWithCapacity:fetchedExpenses.count];
+            [fetchedExpenses enumerateObjectsUsingBlock:^(ExpenseData *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [expensesToIndex addObject:[Expense expenseFromExpenseData:obj]];
+            }];
+            
+            SearchableExtension *searchableExtension = [SearchableExtension new];
+            searchableExtension.managedObjectContext = context;
+            
+            [searchableExtension indexExpenses:expensesToIndex];
+        });
+    }
+}
+
+- (void)categoriesIndexing:(NSArray *)categoriesToIndex {
+    if ([self iOSVersionGreaterThenOrEqualToNine]) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            SearchableExtension *searchableExtension = [SearchableExtension new];
+            NSArray *fetchedCategories = nil;
+            
+            if (!categoriesToIndex) {
+                NSManagedObjectContext *context = [self createManagedObjectContext];
+                fetchedCategories = [CategoryData getAllCategoriesInContext:context];
+                
+                __block NSMutableArray *categoriesToIndex = [NSMutableArray arrayWithCapacity:fetchedCategories.count];
+                [fetchedCategories enumerateObjectsUsingBlock:^(CategoryData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [categoriesToIndex addObject:[CategoriesInfo categoryInfoFromCategoryData:obj]];
+                }];
+                
+                [searchableExtension indexCategories:categoriesToIndex];
+            } else {
+                [searchableExtension indexCategories:categoriesToIndex];
+            }
+        });
+    }
+}
+
+- (void)indexAllCategories {
+    [self categoriesIndexing:nil];
+}
+
+- (void)indexCategories:(NSArray *)categoriesInfosToIndex {
+    [self categoriesIndexing:categoriesInfosToIndex];
 }
 
 @end

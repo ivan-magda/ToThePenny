@@ -37,6 +37,7 @@
     }
 }
 
+#pragma mark - Methods implementation -
 
 + (NSInteger)nextId {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -73,6 +74,18 @@
                                                                            type:NSBetweenPredicateOperatorType
                                                                         options:0];
     return predicate;
+}
+
++ (NSArray *)getAllExpensesInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    
+    NSError *error = nil;
+    NSArray *foundExpenses = [context executeFetchRequest:request error:&error];
+    if (error) {
+        NSLog(@"***Error: %@", [error localizedDescription]);
+    }
+    
+    return foundExpenses;
 }
 
 + (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context {
