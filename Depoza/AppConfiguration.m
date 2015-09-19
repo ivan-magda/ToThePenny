@@ -8,6 +8,7 @@
 
 #import "AppConfiguration.h"
 #import <KVNProgress/KVNProgress.h>
+#import <iRate.h>
 @import UIKit;
 
 @interface AppConfiguration ()
@@ -73,7 +74,7 @@
 
 #pragma mark - KVNProgress -
 
-- (void)setKVNProgressConfiguration {
+- (void)setUpKVNProgressConfiguration {
     KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
     configuration.minimumSuccessDisplayTime = 0.75f;
     configuration.minimumErrorDisplayTime   = 1.0f;
@@ -83,6 +84,13 @@
     configuration.lineWidth = 1.0f;
     
     [KVNProgress setConfiguration:configuration];
+}
+
+#pragma mark - iRate -
+
+- (void)setUpIrate {
+    [iRate sharedInstance].appStoreID = 994476075;
+    [iRate sharedInstance].previewMode = NO;
 }
 
 

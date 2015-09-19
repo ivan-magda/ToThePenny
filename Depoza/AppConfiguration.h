@@ -26,6 +26,8 @@
 
 - (void)configurateSmileTouchIdWithRootViewController:(UIViewController * _Nonnull)rootViewController;
 
-- (void)setKVNProgressConfiguration;
+- (void)setUpKVNProgressConfiguration;
+
+- (void)setUpIrate;
 
 @end

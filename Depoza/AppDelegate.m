@@ -74,6 +74,14 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 #pragma mark - Persistent Stack
 
+- (void)setUpPersistence {
+    self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];
+    self.managedObjectContext = self.persistence.managedObjectContext;
+    self.persistence.delegate = self;
+    
+    [self spreadManagedObjectContext];
+}
+
 - (void)spreadManagedObjectContext {
     _tabBarController = (CustomTabBarController *)self.window.rootViewController;
 
@@ -123,12 +131,14 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
 #pragma mark - AppConfiguration -
 
-- (void)applyAppConfiguration {
+- (void)setUpAppConfiguration {
     _appConfiguration = [AppConfiguration new];
     
     [self applyAppAppearance];
-    [self configurateSmileTouchId];
-    [_appConfiguration setKVNProgressConfiguration];
+    [self setUpSmileTouchId];
+    
+    [_appConfiguration setUpKVNProgressConfiguration];
+    [_appConfiguration setUpIrate];
 }
 
 - (void)applyAppAppearance {
@@ -136,7 +146,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     [_appConfiguration applyAppAppearance];
 }
 
-- (void)configurateSmileTouchId {
+- (void)setUpSmileTouchId {
     [_appConfiguration configurateSmileTouchIdWithRootViewController:self.window.rootViewController];
     _appConfiguration.smileAuthenticatorDelegate = self;
 }
@@ -146,17 +156,10 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [Fabric with:@[CrashlyticsKit]];
 
-    self.persistence = [[Persistence alloc]initWithStoreURL:self.storeURL modelURL:self.modelURL];
-    self.managedObjectContext = self.persistence.managedObjectContext;
-    self.persistence.delegate = self;
-
-    [self spreadManagedObjectContext];
-    [self applyAppConfiguration];
+    [self setUpPersistence];
+    [self setUpAppConfiguration];
 
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
-    
-    [iRate sharedInstance].appStoreID = 994476075;
-    [iRate sharedInstance].previewMode = NO;
     
     [_persistence indexAllExpenses];
 
@@ -174,7 +177,11 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
         [self presentVisualEffectViewWithBlurAndVibrancyEffects];
     }
     
-    [Fetch updateTodayExpensesDictionary:self.managedObjectContext];
+    __weak Persistence *persistenceStack = _persistence;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       [Fetch updateTodayExpensesDictionary:[persistenceStack createManagedObjectContext]];
+    });
+    
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
 }
 
@@ -282,27 +289,27 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
-    if (![userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+    
+    if ([userActivity.activityType isEqualToString:CSSearchableItemActionType]) {
+        if (_mainViewController.isAddExpensePresenting) {
+            [_mainViewController dismissViewControllerAnimated:YES completion:^{
+                [self handlingResultSelectionWithUserActivity:userActivity];
+            }];
+            _mainViewController.isAddExpensePresenting = NO;
+        } else {
+            //Remove observer in MainVC, that listen to touch id success auth
+            //if not, then AddExpenseVC may be present.
+            if ([SmileAuthenticator hasPassword]) {
+                [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController name:SmileTouchIdUserSuccessAuthenticationNotification object:nil];
+            }
+            [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
+            
+            [self handlingResultSelectionWithUserActivity:userActivity];
+        }
+        return YES;
+    } else {
         return NO;
     }
-    
-    if (_mainViewController.isAddExpensePresenting) {
-        [_mainViewController dismissViewControllerAnimated:YES completion:^{
-            [self handlingResultSelectionWithUserActivity:userActivity];
-        }];
-        _mainViewController.isAddExpensePresenting = NO;
-    } else {
-        //Remove observer in MainVC, that listen to touch id success auth
-        //if not, then AddExpenseVC may be present.
-        if ([SmileAuthenticator hasPassword]) {
-            [[NSNotificationCenter defaultCenter]removeObserver:_mainViewController name:SmileTouchIdUserSuccessAuthenticationNotification object:nil];
-        }
-        [_mainViewController.navigationController popToRootViewControllerAnimated:NO];
-        
-        [self handlingResultSelectionWithUserActivity:userActivity];
-    }
-    
-    return YES;
 }
 
 - (void)handlingResultSelectionWithUserActivity:(NSUserActivity *)userActivity {
