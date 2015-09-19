@@ -235,8 +235,8 @@ static NSString * const kPieChartTableViewCellIdentifier = @"PieChartTableViewCe
     if (!labelText) {
         labelText = [CPTMutableTextStyle new];
         labelText.color = [CPTColor blackColor];
-        labelText.fontName = @"HelveticaNeue-Light";
-        labelText.fontSize = 15.0f;
+        labelText.fontName = @".SFUIText-Light";
+        labelText.fontSize = 14.0f;
     }
     
     CategoriesInfo *category = _categoriesInfo[index];

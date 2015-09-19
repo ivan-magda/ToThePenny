@@ -94,12 +94,6 @@ static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
     return indexPath;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
-        // Set the text color of our header/footer text.
-    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-    [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
-}
-
 #pragma mark - IBAction -
 
 - (IBAction)startupSwitchDidChangeValue:(UISwitch *)sender {

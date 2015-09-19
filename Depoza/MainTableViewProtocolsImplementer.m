@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     }
 
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15.0f, tableView.sectionHeaderHeight - 21.0f, CGRectGetWidth(tableView.bounds) - 30.0f, 21.0f)];
-    label.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    label.font = [UIFont fontWithName:@".SFUIText-Light" size:17.0f];
     label.shadowOffset = CGSizeMake(0, 1);
     label.shadowColor = [UIColor whiteColor];
 

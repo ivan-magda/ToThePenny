@@ -265,7 +265,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
             if (cell == nil) {
                 cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
-                cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17.0f];
+                cell.textLabel.font = [UIFont fontWithName:@".SFUIText-Light" size:17.0f];
                 [cell.contentView addSubview:separatorLineView];
             }
 

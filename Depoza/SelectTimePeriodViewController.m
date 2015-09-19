@@ -143,11 +143,11 @@
         cell.textLabel.text = [[NSString stringWithFormat:@"%ld", (long)year]uppercaseString];
     }
 
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    cell.textLabel.font = [UIFont fontWithName:@".SFUIText-Light" size:17.0f];
     cell.textLabel.textColor = [UIColor blackColor];
 
     cell.detailTextLabel.text = [NSString formatAmount:dictionary[@"amount"]];
-    cell.detailTextLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+    cell.detailTextLabel.font = [UIFont fontWithName:@".SFUIText-Light" size:17.0f];
     cell.detailTextLabel.textColor = UIColorFromRGB(0xFF3333);
 
     return cell;

@@ -316,11 +316,6 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
     return 44.0f;
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-    [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
-}
-
 #pragma mark - DatePicker -
 
 - (void)showDatePicker {

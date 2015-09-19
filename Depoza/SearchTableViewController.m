@@ -446,7 +446,7 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     if (![self isSearchPredicatesIsNil]) {
         UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-        [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:17]];
+        [footer.textLabel setFont:[UIFont fontWithName:@".SFUIText-Light" size:17]];
         footer.textLabel.textAlignment = NSTextAlignmentLeft;
 
         NSString *text = [tableView.dataSource tableView:tableView titleForHeaderInSection:section];

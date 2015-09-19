@@ -69,7 +69,7 @@
         }
         cell.imageView.image = [UIImage imageNamed:_iconName];
         cell.textLabel.text = NSLocalizedString(@"Icon", @"ChooseCategoryVC icon label");
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:17];
+        cell.textLabel.font = [UIFont fontWithName:@".SFUIText-Light" size:17];
 
         return cell;
     } else {
@@ -115,12 +115,6 @@
         _isChangeIconPressed = YES;
         [self performSegueWithIdentifier:@"ChangeIcon" sender:nil];
     }
-}
-
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
-        // Set the text color of our header/footer text.
-    UITableViewHeaderFooterView *footer = (UITableViewHeaderFooterView *)view;
-    [footer.textLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:14]];
 }
 
 #pragma mark - Navigation -
