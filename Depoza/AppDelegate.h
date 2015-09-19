@@ -2,7 +2,7 @@
 #import "Persistence.h"
 
 /*!
- * Status bar tapped tarcking notification name.
+ * Status bar tapped tracking notification name.
  */
 extern NSString * const StatusBarTappedNotification;
 

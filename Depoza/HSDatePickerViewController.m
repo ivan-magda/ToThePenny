@@ -345,7 +345,7 @@ static NSInteger kBufforRows = 30; //Number of rows that are prevent by scroll p
 
             break;
         case MinutePicker:
-            title = [NSString stringWithFormat:@"%02lu", row % [self realNumberOfRowsInComponent:component] * self.minuteStep];
+            title = [NSString stringWithFormat:@"%02ld", row % [self realNumberOfRowsInComponent:component] * self.minuteStep];
             [paragraphStyle setAlignment:NSTextAlignmentLeft];
 
             break;
