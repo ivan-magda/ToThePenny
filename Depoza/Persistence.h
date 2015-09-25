@@ -49,9 +49,9 @@
 
 - (BOOL)iCloudEnabled;
 
+//Indexing searcheble items only for current month.
 - (void)indexAllData;
-- (void)indexAllExpenses;
-- (void)indexAllCategories;
-- (void)indexCategories:(NSArray *)categoriesInfosToIndex;
+- (void)indexExpenses;
+- (void)indexCategories;
 
 @end

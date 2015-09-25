@@ -22,6 +22,6 @@ typedef void(^FetchCompletionHandler)(NSArray *fetchedCategories, NSNumber *tota
 
 + (void)loadCategoriesInfoInContext:(NSManagedObjectContext *)managedObjectContext betweenDates:(NSArray *)dates withCompletionHandler:(FetchCompletionHandler)completionHandler;
 
-+ (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context;
++ (void)updateTodayExpensesDictionaryInContext:(NSManagedObjectContext *)context;
 
 @end

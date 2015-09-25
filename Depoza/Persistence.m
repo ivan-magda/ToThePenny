@@ -12,8 +12,10 @@
 #import "ExpenseData+Fetch.h"
 #import "Expense.h"
 #import "CoreDataDeviceList.h"
+#import "Fetch.h"
     //Categories
 #import "NSURL+InternalExtensions.h"
+#import "NSDate+FirstAndLastDaysOfMonth.h"
     //AppDelegate
 #import "AppDelegate.h"
     //SpotlightSearch
@@ -24,6 +26,7 @@ typedef void(^DeduplicationsCompletionHandlerBlock)(BOOL deduplicationsFound);
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kUserDefaultsSeedDataKey = @"seedData";
 static NSString * const kURLForUbiquityContainerIdentifier = @"iCloud.com.MagdaIvan.Depoza";
+static NSString * const kUserDefaultsLastIndexDateKey = @"lastIndexDate";
 
 NSString* Setting_iCloudUUID = @"iCloud.UUID";
 NSString* iCloudDeviceListName = @"KnownDevices.plist";
@@ -676,16 +679,57 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     return ([[NSProcessInfo processInfo]operatingSystemVersion].majorVersion >= 9 ? YES : NO);
 }
 
-- (void)indexAllData {
-    [self indexAllCategories];
-    [self indexAllExpenses];
+- (BOOL)isUsheredInNewMonth {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastIndexDate = (NSDate *)[userDefaults objectForKey:kUserDefaultsLastIndexDateKey];
+    
+    if (!lastIndexDate) {
+        [userDefaults setObject:[NSDate date] forKey:kUserDefaultsLastIndexDateKey];
+        [userDefaults synchronize];
+        
+        return NO;
+    } else {
+        NSDictionary *todayComponents = [[NSDate date]getComponents];
+        NSDictionary *lastIndexDateComponents = [lastIndexDate getComponents];
+        
+        if (todayComponents[@"month"] > lastIndexDateComponents[@"month"] ||
+            todayComponents[@"year"]  > lastIndexDateComponents[@"year"]) {
+            [userDefaults setObject:[NSDate date] forKey:kUserDefaultsLastIndexDateKey];
+            [userDefaults synchronize];
+            
+            return YES;
+        } else {
+            [userDefaults setObject:[NSDate date] forKey:kUserDefaultsLastIndexDateKey];
+            [userDefaults synchronize];
+            
+            return NO;
+        }
+    }
 }
 
-- (void)indexAllExpenses {
+- (void)indexAllData {
+    if ([self isUsheredInNewMonth]) {
+        __weak Persistence *weakSelf = (Persistence *)self;
+        [[CSSearchableIndex defaultSearchableIndex]deleteAllSearchableItemsWithCompletionHandler:^(NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"Error deleting searcheble items: %@", [error localizedDescription]);
+            } else {
+                [weakSelf indexCategories];
+                [weakSelf indexExpenses];
+            }
+        }];
+    } else {
+        [self indexCategories];
+        [self indexExpenses];
+    }
+}
+
+- (void)indexExpenses {
     if ([self iOSVersionGreaterThenOrEqualToNine]) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSManagedObjectContext *context = [self createManagedObjectContext];
-            NSArray *fetchedExpenses = [ExpenseData getAllExpensesInContext:context];
+            NSPredicate *predicate = [ExpenseData compoundPredicateBetweenDates:[NSDate getFirstAndLastDatesFromCurrentMonth]];
+            NSArray *fetchedExpenses = [ExpenseData getExpensesInContext:context usingPredicate:predicate];
             
             __block NSMutableArray *expensesToIndex = [NSMutableArray arrayWithCapacity:fetchedExpenses.count];
             [fetchedExpenses enumerateObjectsUsingBlock:^(ExpenseData *  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -705,18 +749,13 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             
             SearchableExtension *searchableExtension = [SearchableExtension new];
-            NSArray *fetchedCategories = nil;
             
             if (!categoriesToIndex) {
                 NSManagedObjectContext *context = [self createManagedObjectContext];
-                fetchedCategories = [CategoryData getAllCategoriesInContext:context];
-                
-                __block NSMutableArray *categoriesToIndex = [NSMutableArray arrayWithCapacity:fetchedCategories.count];
-                [fetchedCategories enumerateObjectsUsingBlock:^(CategoryData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                    [categoriesToIndex addObject:[CategoriesInfo categoryInfoFromCategoryData:obj]];
+                [Fetch loadCategoriesInfoInContext:context betweenDates:[NSDate getFirstAndLastDatesFromCurrentMonth] withCompletionHandler:^(NSArray *fetchedCategories, NSNumber *totalAmount) {
+                    [searchableExtension indexCategories:fetchedCategories];
                 }];
                 
-                [searchableExtension indexCategories:categoriesToIndex];
             } else {
                 [searchableExtension indexCategories:categoriesToIndex];
             }
@@ -724,7 +763,7 @@ NSString* iCloudDeviceListName = @"KnownDevices.plist";
     }
 }
 
-- (void)indexAllCategories {
+- (void)indexCategories {
     [self categoriesIndexing:nil];
 }
 

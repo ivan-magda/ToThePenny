@@ -161,7 +161,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     
-    [_persistence indexAllExpenses];
+    [_persistence indexAllData];
 
     return YES;
 }
@@ -179,8 +179,10 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     
     __weak Persistence *persistenceStack = _persistence;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-       [Fetch updateTodayExpensesDictionary:[persistenceStack createManagedObjectContext]];
+       [Fetch updateTodayExpensesDictionaryInContext:[persistenceStack createManagedObjectContext]];
     });
+    
+    [_persistence indexAllData];
     
     [[NSUbiquitousKeyValueStore defaultStore]synchronize];
 }

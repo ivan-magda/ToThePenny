@@ -88,6 +88,19 @@
     return foundExpenses;
 }
 
++ (NSArray *)getExpensesInContext:(NSManagedObjectContext *)context usingPredicate:(NSPredicate *)predicate {
+    NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    fetchRequest.predicate = predicate;
+    
+    NSError *error = nil;
+    NSArray *fetchedExpenses = [context executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        NSLog(@"Error fetching expenses: %@", [error localizedDescription]);
+    }
+    
+    return fetchedExpenses;
+}
+
 + (NSArray *)getTodayExpensesInManagedObjectContext:(NSManagedObjectContext *)context {
     NSArray *dates = [NSDate getStartAndEndDatesOfTheCurrentDate];
 

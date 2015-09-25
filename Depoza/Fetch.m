@@ -113,9 +113,6 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
         }];
     }
     *totalExpeditures = summaForMonth;
-    
-    //Indexing categories for Spotlight search
-    [persistence indexCategories:categoriesInfo];
 
     NSDate *end = [NSDate date];
     NSLog(@"Load categories data time execution: %f", [end timeIntervalSinceDate:start]);
@@ -123,7 +120,7 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
     return categoriesInfo;
 }
 
-+ (void)updateTodayExpensesDictionary:(NSManagedObjectContext *)context {
++ (void)updateTodayExpensesDictionaryInContext:(NSManagedObjectContext *)context {
         //Get info about todays expenses from user defaults
     NSUserDefaults *userDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
 
@@ -202,7 +199,6 @@ static NSString * const kTodayExpensesKey = @"todayExpenses";
                 *stop = YES;
             }
         }];
-        [managedObjectContext refreshObject:category mergeChanges:NO];
     }
 
     if (completionHandler) {
