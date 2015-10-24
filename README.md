@@ -1,9 +1,20 @@
-# Depoza
-Expense Tracker
+#ToThePenny - is one of the most convenient and easy way to control personal finances.
 
-An application for tracking personal expenses.
-Depoza helps you to understand, where all your money goes to.
-## MAIN FEATURES:
-- Add new expense records in a convenient way;
-- Backing up and restoring data (iCloud);
-- Unlimited number of expense categories;
+![alt tag] (https://github.com/vanyaland/ToThePennyImages/blob/master/6.png)
+
+###Main features:
+
+- Add new expense records in a convenient way.
+- Backing up and restoring data via iCloud.
+- Accounting for expenses.
+- Handy pie chart.
+- Touch ID support.
+- iOS 9 Spotlight Search.
+- Adding a category when entering the expense. No need to pre-creating category.
+- Easily search for expenses and categories.
+- Ability to quickly adding expense.
+- Detailed statistics.
+- Easy and intuitive interface.
+- Unlimited number of expense categories.
+
+###ToThePenny helps you to understand, where all your money goes to.
