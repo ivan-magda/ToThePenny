@@ -122,7 +122,7 @@ NSString * const ContinuingActivityRepresentsSearchableExpenseNotification = @"C
     
     if ([SmileAuthenticator hasPassword]) {
         [SmileAuthenticator sharedInstance].securityType = INPUT_TOUCHID;
-        [[SmileAuthenticator sharedInstance] presentAuthViewController];
+        [[SmileAuthenticator sharedInstance] presentAuthViewControllerAnimated:YES];
     }
 
     if (self.tableView.alpha == 0.0f) {

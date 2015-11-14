@@ -183,9 +183,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 //                    
 //                    [persistence deleteAllCategories];
 //                    [persistence insertNecessaryCategoryData];
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
-                    });
+//                    
+//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
+//                    });
                 }];
             });
         }

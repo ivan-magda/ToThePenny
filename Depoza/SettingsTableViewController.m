@@ -113,7 +113,7 @@ static NSString * const kLoginWithTouchId = @"LoginWithTouchId";
         [SmileAuthenticator sharedInstance].securityType = INPUT_ONCE;
     }
     
-    [[SmileAuthenticator sharedInstance] presentAuthViewController];
+    [[SmileAuthenticator sharedInstance] presentAuthViewControllerAnimated:YES];
 }
 
 @end
