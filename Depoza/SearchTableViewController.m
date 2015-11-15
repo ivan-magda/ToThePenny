@@ -42,13 +42,9 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
 @property (strong, nonatomic) NSPredicate *categoriesSearchPredicate;
 @property (strong, nonatomic) NSPredicate *expensesSearchPredicate;
 
-@property (strong, nonatomic) UIBarButtonItem *searchButton;
-
 @end
 
 @implementation SearchTableViewController {
-    BOOL _searchBarFirstResponder;
-
     NSArray *_filteredCategories;
     NSArray *_filteredExpenses;
 }
@@ -61,25 +57,9 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
     NSParameterAssert(_managedObjectContext);
 
     [self configurateSearchBar];
-    _searchBarFirstResponder = NO;
-
-    _searchButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemSearch target:self action:@selector(searchBarButtonPressed:)];
-    [self addRightBarButtonItemsToNavigationItem:@[_searchButton]];
-
-    self.definesPresentationContext = YES;
-    self.tableView.allowsSelectionDuringEditing = YES;
 
     [NSFetchedResultsController deleteCacheWithName:kExpenseFetchedResultsControllerCacheName];
-
     [self performFetch];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    if (_searchBarFirstResponder) {
-        [_searchBar becomeFirstResponder];
-    }
 }
 
 #pragma mark - Search -
@@ -87,10 +67,14 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
 - (void)configurateSearchBar {
     _searchBar = [UISearchBar new];
     _searchBar.delegate = self;
-    _searchBar.showsCancelButton = YES;
+    _searchBar.showsCancelButton = NO;
     _searchBar.tintColor = UIColorFromRGB(0x067AB5);
-    _searchBar.placeholder = NSLocalizedString(@"Search for expense", @"Placeholder text in search bar of SearchVC");
+    _searchBar.placeholder = NSLocalizedString(@"Search", @"Placeholder text in search bar of SearchVC");
     [_searchBar sizeToFit];
+    self.navigationItem.titleView = _searchBar;
+    
+    self.definesPresentationContext = YES;
+    self.tableView.allowsSelectionDuringEditing = YES;
 }
 
 - (void)addRightBarButtonItemsToNavigationItem:(NSArray *)items {
@@ -175,21 +159,15 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
 
 #pragma mark UISearchBarDelegate
 
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+    [self.searchBar setShowsCancelButton:YES animated:YES];
+    
+    return YES;
+}
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [self.searchBar resignFirstResponder];
-
-    CGRect frame = self.navigationItem.titleView.frame;
-    frame.size.width = 0.0f;
-    [UIView animateWithDuration:0.3f
-                          delay:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         self.navigationItem.titleView.frame = frame;
-                         self.navigationItem.titleView.alpha = 0;
-                     } completion:^(BOOL finished) {
-                         self.navigationItem.titleView = nil;
-                         [self addRightBarButtonItemsToNavigationItem:@[_searchButton]];
-                     }];
+    [self.searchBar setShowsCancelButton:NO animated:YES];
     self.searchBar.text = nil;
 
     _categoriesSearchPredicate = nil;
@@ -203,6 +181,7 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
 - (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString:@"\n"]) {
         [self searchBarSearchButtonClicked];
+        
         return NO;
     }
     NSString *newText = [searchBar.text stringByReplacingCharactersInRange:range withString:text];
@@ -245,36 +224,29 @@ typedef NS_ENUM(NSInteger, SearchTableViewCellType) {
         UITableViewCell *cell = (UITableViewCell *)sender;
         indexPath = [self.tableView indexPathForCell:cell];
     }
-
+    
     if ([segue.identifier isEqualToString:@"MoreInfo"]) {
         DetailExpenseTableViewController *detailsViewController = segue.destinationViewController;
         detailsViewController.managedObjectContext = _expenseFetchedResultsController.managedObjectContext;
         if ([self isSearchPredicatesIsNil]) {
             ExpenseData *expense = [_expenseFetchedResultsController objectAtIndexPath:indexPath];
             detailsViewController.expenseToShow = expense;
-
-            _searchBarFirstResponder = (self.searchBar.isFirstResponder);
         } else {
             NSArray *filteredExpenses = [_expenseFetchedResultsController.fetchedObjects filteredArrayUsingPredicate:_expensesSearchPredicate];
             ExpenseData *expense = filteredExpenses[(NSInteger)indexPath.row];
             detailsViewController.expenseToShow = expense;
-
-            _searchBarFirstResponder = YES;
         }
     } else if ([segue.identifier isEqualToString:@"CategorySelected"] && indexPath.section == 0) {
         SelectedCategoryTableViewController *controller = segue.destinationViewController;
         controller.managedObjectContext = _expenseFetchedResultsController.managedObjectContext;
-
+        
         CategoriesInfo *category = [CategoriesInfo categoryInfoFromCategoryData:[self filteredCategoryForIndexPath:indexPath]];
         controller.selectedCategory = category;
         
         NSDate *minimumDate = [ExpenseData oldestDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:category.idValue];
         NSDate *maximumDate = [ExpenseData mostRecentDateExpenseInManagedObjectContext:_managedObjectContext andCategoryId:category.idValue];
         controller.timePeriodDates = @[minimumDate, maximumDate];
-
-        _searchBarFirstResponder = YES;
     }
-
     [self.searchBar resignFirstResponder];
 }
 
