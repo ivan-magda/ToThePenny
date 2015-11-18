@@ -84,8 +84,6 @@
 		5078B6F81BAB128800CBCF6D /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 5078B6F61BAB128800CBCF6D /* Menu.png */; };
 		5078B6F91BAB128800CBCF6D /* Menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5078B6F71BAB128800CBCF6D /* Menu@2x.png */; };
 		507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */; };
-		508213FA1B023B40003740D2 /* LaunchImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 508213F81B023B40003740D2 /* LaunchImage.jpg */; };
-		508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 508213F91B023B40003740D2 /* LaunchImage@2x.jpg */; };
 		508774871A1F0C19002D1A9E /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 508774861A1F0C19002D1A9E /* Expense.m */; };
 		508DF84E1B04C4720015DC9F /* Edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 508DF84B1B04C4720015DC9F /* Edit.png */; };
 		508DF84F1B04C4720015DC9F /* Edit@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 508DF84C1B04C4720015DC9F /* Edit@2x.png */; };
@@ -151,6 +149,8 @@
 		50E654EA1BA2FFD300550A69 /* SearchableExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E654E91BA2FFD300550A69 /* SearchableExtension.m */; };
 		50E784B71AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */; };
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
+		752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E781BFC9AFA00320C92 /* LaunchImage.png */; };
+		752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */; };
 		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -310,8 +310,6 @@
 		5078B6F71BAB128800CBCF6D /* Menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu@2x.png"; sourceTree = "<group>"; };
 		507BF2B31AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualMonth.h"; sourceTree = "<group>"; };
 		507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+IsDatesWithEqualMonth.m"; sourceTree = "<group>"; };
-		508213F81B023B40003740D2 /* LaunchImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = LaunchImage.jpg; sourceTree = "<group>"; };
-		508213F91B023B40003740D2 /* LaunchImage@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LaunchImage@2x.jpg"; sourceTree = "<group>"; };
 		508774851A1F0C19002D1A9E /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
 		508774861A1F0C19002D1A9E /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		508DF84B1B04C4720015DC9F /* Edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Edit.png; sourceTree = "<group>"; };
@@ -401,6 +399,8 @@
 		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
 		50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryInfoCollectionViewCell.m; sourceTree = "<group>"; };
 		583FFBE7D2D90CA3E7515346 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		752C6E781BFC9AFA00320C92 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
+		752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
 		99C6B0C42A04101D60C4BD79 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -709,8 +709,8 @@
 				5058F20D1B00A27B007BBDE6 /* DeleteSign.png */,
 				5058F20E1B00A27B007BBDE6 /* DeleteSign@2x.png */,
 				5058F20F1B00A27B007BBDE6 /* DeleteSign@3x.png */,
-				508213F81B023B40003740D2 /* LaunchImage.jpg */,
-				508213F91B023B40003740D2 /* LaunchImage@2x.jpg */,
+				752C6E781BFC9AFA00320C92 /* LaunchImage.png */,
+				752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */,
 				500CA6C91B6CB2E700643F2B /* TouchIDIcon.jpg */,
 				500CA6CA1B6CB2E700643F2B /* TouchIDIcon@2x.jpg */,
 				500CA6CB1B6CB2E700643F2B /* TouchIDIcon@3x.jpg */,
@@ -1201,7 +1201,9 @@
 				506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */,
 				5058F20B1B00A1A1007BBDE6 /* Checkmark@2x.png in Resources */,
 				500CA6C81B6CA7B600643F2B /* FingerprintScan@3x.png in Resources */,
+				752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */,
 				50C929DB1B0B322100690F2C /* Plugin@3x.png in Resources */,
+				752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */,
 				50C929D31B0B322100690F2C /* CreateNew.png in Resources */,
 				50C929D71B0B322100690F2C /* MoneyBox@2x.png in Resources */,
 				501CCB041B48B5E600609142 /* InfoPlist.strings in Resources */,
@@ -1217,7 +1219,6 @@
 				50C929D61B0B322100690F2C /* MoneyBox.png in Resources */,
 				50E094BC1B5112FC00BB6217 /* Back@2x.png in Resources */,
 				500541071AC56226007EF006 /* SettingsFilled@2x.png in Resources */,
-				508213FB1B023B40003740D2 /* LaunchImage@2x.jpg in Resources */,
 				50A2AB271AEF4C0300463BBB /* Down@3x.png in Resources */,
 				5058F2111B00A27B007BBDE6 /* DeleteSign@2x.png in Resources */,
 				50AA306F1AF2241300A60DCB /* Trash@2x.png in Resources */,
@@ -1238,7 +1239,6 @@
 				500540EC1AC560CC007EF006 /* Banknotes.png in Resources */,
 				50E021D81AD8C7BE008489DA /* Up@2x.png in Resources */,
 				506E72941A1E0B450006F2DF /* Images.xcassets in Resources */,
-				508213FA1B023B40003740D2 /* LaunchImage.jpg in Resources */,
 				50C929D01B0B322100690F2C /* Content.png in Resources */,
 				42CE7FBA25C50B90BF5C3B26 /* SelectTimePeriodViewController.xib in Resources */,
 				42CE7590BF833A7FAB4495F5 /* HSDatePickerViewController.xib in Resources */,

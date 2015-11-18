@@ -886,7 +886,7 @@
                             <tableViewSection footerTitle="Allows you to add expense when you open application." id="qTa-8P-aGy" userLabel="StartupViewController">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Oej-r5-xpT" userLabel="StartupScreen">
-                                        <rect key="frame" x="0.0" y="255" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="257" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Oej-r5-xpT" id="XPk-aP-X1y">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
@@ -935,7 +935,7 @@
                             <tableViewSection footerTitle="Open the application using fingerprint." id="Iic-KC-7yR" userLabel="Touch ID">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="7KF-kx-c95" userLabel="StartupScreen">
-                                        <rect key="frame" x="0.0" y="350" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="354" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7KF-kx-c95" id="AIN-Zp-Ctw">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
