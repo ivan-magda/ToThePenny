@@ -197,7 +197,7 @@ typedef NS_ENUM(NSUInteger, DateCellType) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DatePickerCell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-                UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetHeight(self.view.bounds), 216.0f)];
+                UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), 216.0f)];
                 datePicker.tag = 110;
                 datePicker.datePickerMode = UIDatePickerModeDate;
                 [cell.contentView addSubview:datePicker];
