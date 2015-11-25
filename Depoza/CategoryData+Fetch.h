@@ -26,7 +26,7 @@
 
 + (NSArray *)getCategoriesWithExpensesBetweenMonthOfDate:(NSDate *)date managedObjectContext:(NSManagedObjectContext *)context;
 
-+ (NSArray *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
++ (CategoryData *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context;
 

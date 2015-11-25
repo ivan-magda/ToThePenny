@@ -172,7 +172,7 @@
     return [dictionary copy];
 }
 
-+ (NSArray *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
++ (CategoryData *)getCategoryFromIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([CategoryData class])];
     [request setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(expense))]];
 
@@ -193,7 +193,7 @@
 
     NSParameterAssert(category.count == 1);
 
-    return category;
+    return category.firstObject;
 }
 
 + (NSInteger)countForIdValue:(NSInteger)idValue inManagedObjectContext:(NSManagedObjectContext *)context {

@@ -79,7 +79,11 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     self.managedObjectContext = self.persistence.managedObjectContext;
     self.persistence.delegate = self;
     
+    /// Spread context to all VC of TabBarVC.
     [self spreadManagedObjectContext];
+    
+    /// Expense checking.
+    [ExpenseData checkForDataCorrectionInContext:_managedObjectContext];
 }
 
 - (void)spreadManagedObjectContext {
@@ -325,7 +329,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     NSParameterAssert(searchedItemInfo.count == 2);
 
     if ([searchedItemInfo.firstObject isEqualToString:@"category"]) {
-        CategoryData *category = [[CategoryData getCategoryFromIdValue:idValue inManagedObjectContext:_managedObjectContext]firstObject];
+        CategoryData *category = [CategoryData getCategoryFromIdValue:idValue inManagedObjectContext:_managedObjectContext];
         
         [[NSNotificationCenter defaultCenter]postNotificationName:ContinuingActivityRepresentsSearchableCategoryNotification object:category];
     } else {

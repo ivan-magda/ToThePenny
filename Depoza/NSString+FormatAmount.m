@@ -11,18 +11,14 @@
 @implementation NSString (FormatAmount)
 
 + (NSString *)formatAmount:(NSNumber *)amount {
-    static NSNumberFormatter *formatter = nil;
-    if (formatter == nil) {
-        formatter = [NSNumberFormatter new];
-
-        NSLocale *ruLocale = [NSLocale localeWithLocaleIdentifier:@"ru_RU"];
-        formatter.locale = ruLocale;
-
-        formatter.numberStyle = kCFNumberFormatterDecimalStyle;
-        formatter.minimumFractionDigits = 2;
-    }
+    NSNumberFormatter *formatter = [NSNumberFormatter new];
+    NSLocale *ruLocale = [NSLocale localeWithLocaleIdentifier:@"ru_RU"];
+    formatter.locale = ruLocale;
+    formatter.numberStyle = kCFNumberFormatterDecimalStyle;
+    formatter.minimumFractionDigits = 2;
+    
     NSString *formattedString = [formatter stringFromNumber:amount];
-
+    
     return [formattedString stringByReplacingOccurrencesOfString:@",00" withString:@""];
 }
 

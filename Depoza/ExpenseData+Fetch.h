@@ -35,4 +35,6 @@
 + (NSArray *)getEachMonthWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)getEachYearWithSumExpensesInManagedObjectContext:(NSManagedObjectContext *)context;
 
++ (void)checkForDataCorrectionInContext:(NSManagedObjectContext *)context;
+
 @end

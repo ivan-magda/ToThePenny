@@ -6,9 +6,11 @@
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
 
+    // CoreData
 #import "ExpenseData+Fetch.h"
 #import "Persistence.h"
 #import "Expense.h"
+#import "CategoryData+Fetch.h"
     //Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
@@ -37,7 +39,7 @@
     }
 }
 
-#pragma mark - Methods implementation -
+#pragma mark - ID -
 
 + (NSInteger)nextId {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -60,6 +62,8 @@
     [defaults synchronize];
 }
 
+#pragma mark - Predicates -
+
 + (NSPredicate *)compoundPredicateBetweenDates:(NSArray *)dates {
     NSAssert(dates.count == 2, @"Maximum 2 days.");
 
@@ -75,6 +79,14 @@
                                                                         options:0];
     return predicate;
 }
+
++ (NSPredicate *)categoryIdPredicateFromCategoryIdValue:(NSNumber *)categoryId {
+    NSExpression *categoryIdKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(categoryId))];
+    NSExpression *idValue = [NSExpression expressionForConstantValue:categoryId];
+    return [NSComparisonPredicate predicateWithLeftExpression:categoryIdKeyPath rightExpression:idValue modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:0];
+}
+
+#pragma mark - Getting -
 
 + (NSArray *)getAllExpensesInContext:(NSManagedObjectContext *)context {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
@@ -143,16 +155,7 @@
     return [expense firstObject];
 }
 
-+ (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context {
-    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
-
-    NSError *error = nil;
-    NSUInteger count = [context countForFetchRequest:fetch error:&error];
-    if (error) {
-        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
-    }
-    return count;
-}
+#pragma mark - Getting Based on Dates
 
 + (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context andCategoryId:(NSNumber *)categoryId {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
@@ -230,12 +233,6 @@
     return maxDate;
 }
 
-+ (NSPredicate *)categoryIdPredicateFromCategoryIdValue:(NSNumber *)categoryId {
-    NSExpression *categoryIdKeyPath = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(categoryId))];
-    NSExpression *idValue = [NSExpression expressionForConstantValue:categoryId];
-    return [NSComparisonPredicate predicateWithLeftExpression:categoryIdKeyPath rightExpression:idValue modifier:NSDirectPredicateModifier type:NSEqualToPredicateOperatorType options:0];
-}
-
 
 + (NSDate *)oldestDateExpenseInManagedObjectContext:(NSManagedObjectContext *)context {
     return [ExpenseData oldestDateExpenseInManagedObjectContext:context andCategoryId:nil];
@@ -262,6 +259,19 @@
     }
     
     return @[oldestDate, mostRecentDate];
+}
+
+#pragma mark - Count -
+
++ (NSInteger)countForExpensesInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *fetch = [NSFetchRequest fetchRequestWithEntityName:NSStringFromClass([ExpenseData class])];
+    
+    NSError *error = nil;
+    NSUInteger count = [context countForFetchRequest:fetch error:&error];
+    if (error) {
+        NSLog(@"Could't fetc for count number of categories: %@", [error localizedDescription]);
+    }
+    return count;
 }
 
 + (NSArray *)countForExpensesInContext:(NSManagedObjectContext *)context inEachMonth:(BOOL)countForMonth orInEachYear:(BOOL)countForYear {
@@ -308,7 +318,10 @@
             if (objects.count > 0) {
                 float amount = 0.0f;
                 for (ExpenseData *expense in objects) {
-                    amount += [expense.amount floatValue];
+                    if ([expense.dateOfExpense compare:[dates firstObject]] != NSOrderedAscending &&
+                        [expense.dateOfExpense compare:[dates lastObject]]  != NSOrderedDescending) {
+                        amount += [expense.amount floatValue];
+                    }
                     [context refreshObject:expense mergeChanges:NO];
                 }
                 
@@ -363,6 +376,37 @@
     }
 
     return count;
+}
+
+#pragma mark - Data correction -
+
++ (void)checkForDataCorrectionInContext:(NSManagedObjectContext *)context {
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:NSStringFromClass([ExpenseData class])];
+    request.predicate = [NSPredicate predicateWithFormat:@"category == nil && categoryId != nil"];
+    request.returnsObjectsAsFaults = NO;
+    
+    NSError *error = nil;
+    NSArray *fetchedExpenses = [context executeFetchRequest:request error:&error];
+    
+    if (error != nil) {
+        NSLog(@"Eror fetching: %@", error.localizedDescription);
+        return;
+    }
+    
+    if (fetchedExpenses.count > 0) {
+        NSLog(@"Expense data correction is proceeding");
+        
+        for (ExpenseData *expense in fetchedExpenses) {
+            CategoryData *category = [CategoryData getCategoryFromIdValue:expense.categoryId.integerValue inManagedObjectContext:context];
+            expense.category = category;
+            [category addExpenseObject:expense];
+            
+            [context refreshObject:expense mergeChanges:YES];
+        }
+        NSLog(@"%ld expenses are corrected.", fetchedExpenses.count);
+    }
+    
+    [[Persistence sharedInstance]saveContext];
 }
 
 
