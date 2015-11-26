@@ -16,6 +16,7 @@
     formatter.locale = ruLocale;
     formatter.numberStyle = kCFNumberFormatterDecimalStyle;
     formatter.minimumFractionDigits = 2;
+    formatter.maximumFractionDigits = 2;
     
     NSString *formattedString = [formatter stringFromNumber:amount];
     
