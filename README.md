@@ -1,5 +1,7 @@
 #ToThePenny - is one of the most convenient and easy way to control personal finances.
 
+![Platform iOS](https://img.shields.io/badge/platform-iOS-blue.svg)
+
 ![alt tag] (https://github.com/vanyaland/ToThePennyImages/blob/master/6.png)
 
 ###Main features:
