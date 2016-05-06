@@ -1,12 +1,43 @@
-##KVNProgress
+![KVNProgress](Images/logo.png)
 
+[![Coverage Status](https://coveralls.io/repos/spacedrabbit/KVNProgress/badge.svg?branch=test-jam-test-coverage)](https://coveralls.io/r/spacedrabbit/KVNProgress?branch=test-jam-test-coverage)
+[![Build Status](https://travis-ci.org/spacedrabbit/KVNProgress.svg?branch=test-jam-test-coverage)](https://travis-ci.org/spacedrabbit/KVNProgress)
 [![Twitter: @kevinh6113](http://img.shields.io/badge/contact-%40kevinh6113-70a1fb.svg?style=flat)](https://twitter.com/kevinh6113)
 [![License: MIT](http://img.shields.io/badge/license-MIT-70a1fb.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress/blob/master/README.md)
-[![Version](http://img.shields.io/badge/version-2.2.1-green.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress)
+[![Version](http://img.shields.io/badge/version-2.2.4-green.svg?style=flat)](https://github.com/kevin-hirsch/KVNProgress)
 [![Cocoapods](http://img.shields.io/badge/Cocoapods-available-green.svg?style=flat)](http://cocoadocs.org/docsets/KVNProgress/)
 
 KVNProgress is a fully customizable progress HUD that can be full screen or not.
 ***
+
+## Table of contents
+
+ * [Preview](#preview)
+ * [Advantages](#advantages)
+ * [Demo](#demo)
+ * [Installation](#installation)
+    * [Cocoapods](#cocoapods)
+    * [Source files](#source-files)
+ * [Usage](#usage)
+    * [Basics](#basics)
+    * [Progress] (#progress)
+        * [Indeterminate progress](#indeterminate-progress)
+        * [Determinate progress](#determinate-progress)
+        * [Stop button] (#stop-button)
+    * [Dismiss](#dismiss)
+    * [Success/Error](#successerror)
+ * [Customization](#customization)
+    * [KVNProgressConfiguration](#KVNProgressConfiguration)
+    * [Display times](#display-times)
+ * [Known bugs] (#known-bugs)
+ * [Remains to do](#remains-to-do)
+ * [License](#license)
+ * [Credits](#credits)
+
+***
+
+## Preview
+
 Base interface:<br/>
 [![Indeterminate progress](Images/screenshot_002.jpg)](Images/screenshot_002.jpg)
 [![Determinate progress](Images/screenshot_003.jpg)](Images/screenshot_003.jpg)
@@ -27,17 +58,18 @@ Example of customized interface:<br/>
 
 ## Advantages
 
- * Can be full screen
- * Uses `UIMotionEffect`
- * Supports all orientations
- * Supports iPad
- * Animates text update
- * Animates success checkmark
- * Is well documented
- * Is fully customizable
+ * [x] Can be full screen
+ * [x] Uses `UIMotionEffect`
+ * [x] Supports all orientations
+ * [x] Supports iPad
+ * [x] Animates text update
+ * [x] Animates success checkmark
+ * [x] Is well documented
+ * [x] Is fully customizable
     * Colors
     * Fonts
     * Circle size and thickness
+    * Blur or solid color background
 
 ## Demo
 
@@ -45,15 +77,6 @@ Here is a video of the demo app that you can find in this project.
 If you want to try it yourself, just download/checkout this repository and launch the project in Xcode.
 
 [![Demo video](Images/screenshot_video.jpg)](https://www.youtube.com/watch?v=aerOmPYG_NI)
-
-## Requirements
-
-* Xcode 6
-* iOS 7
-* ARC
-* Frameworks:
-    * QuartzCore
-    * GLKit
 
 ## Installation
 
@@ -87,16 +110,18 @@ Add the following import to the top of the file or to your Prefix header:
    #import <KVNProgress/KVNProgress.h>
    ```
 
-### Indeterminate progress
+### Progress
+
+#### Indeterminate progress
 
 To show an indeterminate progress:
 
    ```objc
    [KVNProgress show];
-   
+
    // Adds a status below the circle
    [KVNProgress showWithStatus:@"Loading"];
-   
+
    // Adds the HUD to a certain view instead of main window
    [KVNProgress showWithStatus:@"Loading"
                         onView:view];
@@ -108,27 +133,51 @@ To change the status on the fly (animated):
    [KVNProgress updateStatus:@"New status"];
    ```
 
-### Determinate progress
+#### Determinate progress
 
 To show a determinate progress and change its value along time:
 
    ```objc
    // Progress has to be between 0 and 1
    [KVNProgress showProgress:0.5f];
-   
+
    // Adds a status below the progress
    [KVNProgress showProgress:0.5f
                       status:@"Loading"];
-   
+
    // Adds the HUD to a certain view instead of main window
    [KVNProgress showProgress:0.5f
                       status:@"Loading"
                       onView:view];
-   
+
    // Updates the progress
    [KVNProgress updateProgress:0.75f
                       animated:YES];
    ```
+
+#### Stop button
+
+You can add a stop button to a progress HUD. For this you will need to use the `KVNProgressConfiguration`(see [below](#KVNProgressConfiguration)). You simply have to put:
+
+```objc
+KVNProgressConfiguration *configuration = [KVNProgressConfiguration defaultConfiguration];
+configuration.showStop = YES;
+configuration.tapBlock = ^(KVNProgress *progressView) {
+	// Do what you want
+	[KVNProgress dismiss];
+};
+
+[KVNProgress setConfiguration:configuration];
+```
+
+`tapBlock` will be executed when HUD is tapped. If no `tapBlock` is specified, `showStop` will **not** be activated!
+
+You can customize stop button size. Defaults to 30% of the circle size.
+
+```objc
+configuration.stopRelativeHeight = 0.3f;
+configuration.stopColor = [UIColor whiteColor];
+```
 
 ### Dismiss
 
@@ -150,9 +199,9 @@ To dismiss after your task is done:
 
 **Why?**
 
-Because KVNProgress remains visible for a certain time even if you call `dismiss`. This is done to ensure the user has enough time to see the HUD if the load is too quick.
+Because KVNProgress remains visible for a certain time even if you call `dismiss`. This is done to ensure the user has enough time to see the HUD if the `dismiss` is called too quick after a `show`.
 The completion block in `dismissWithCompletion` is called (on the main thread) after the HUD is completely dismissed.
-This amount of time is defined in the KVNProgressConfiguration object (explained [below](#KVNProgressConfiguration)). Default value is `0.3` seconds.
+This minimum amount of display time is defined in the KVNProgressConfiguration object (explained [below](#display-times)). Default value is `0.3` seconds.
 
 ### Success/Error
 
@@ -160,10 +209,10 @@ To show a success HUD with a checkmark:
 
    ```objc
    [KVNProgress showSuccess];
-   
+
    // Or
    [KVNProgress showSuccessWithStatus:@"Success"];
-   
+
    // Adds the HUD to a certain view instead of main window
    [KVNProgress showSuccessWithStatus:@"Success"
                                onView:view];
@@ -173,10 +222,10 @@ To show an error HUD with a cross:
 
    ```objc
    [KVNProgress showError];
-   
+
    // Or
    [KVNProgress showErrorWithStatus:@"Error"];
-   
+
    // Adds the HUD to a certain view instead of main window
    [KVNProgress showErrorWithStatus:@"Error"
                              onView:view];
@@ -186,7 +235,7 @@ Dismiss is automatic for successes and errors. If you want to do something after
 
 ## Customization
 
-The appearance of KVNProgress is very customizable. 
+The appearance of KVNProgress is very customizable.
 If something is missing or could be added, don't hesitate to ask for it!
 
 ### <a name="KVNProgressConfiguration"></a>KVNProgressConfiguration
@@ -198,14 +247,14 @@ Here is an example on how to simply set the default configuration for you HUD:
    [KVNProgress setConfiguration:[KVNProgressConfiguration defaultConfiguration]];
    ```
 
-Note that if you just want the default configuration, the above code is not needed. 
+Note that if you just want the default configuration, the above code is not needed.
 If you do not set a configuration, the default one is taken ;)
 
 Here is an example of a complete custom configuration:
 
   ```objc
    KVNProgressConfiguration *configuration = [[KVNProgressConfiguration alloc] init];
-	
+
 	configuration.statusColor = [UIColor whiteColor];
 	configuration.statusFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15.0f];
 	configuration.circleStrokeForegroundColor = [UIColor whiteColor];
@@ -215,20 +264,23 @@ Here is an example of a complete custom configuration:
 	configuration.backgroundTintColor = [UIColor colorWithRed:0.173f green:0.263f blue:0.856f alpha:1.0f];
 	configuration.successColor = [UIColor whiteColor];
 	configuration.errorColor = [UIColor whiteColor];
+	configuration.stopColor = [UIColor whiteColor];
 	configuration.circleSize = 110.0f;
 	configuration.lineWidth = 1.0f;
 	configuration.fullScreen = NO;
+	configuration.showStop = YES;
+	configuration.stopRelativeHeight = 0.4f;
 
   configuration.tapBlock = ^(KVNProgress *progressView) {
     // Do something you want to do when the user tap on the HUD
     // Does nothing by default
   };
-  
+
   // You can allow user interaction for behind views but you will losse the tapBlock functionnality just above
   // Does not work with fullscreen mode
   // Default is NO
   configuration.allowUserInteraction = NO;
-	
+
 	[KVNProgress setConfiguration:configuration];
    ```
 
@@ -245,9 +297,22 @@ There are 3 properties you can change that do that in `KVNProgressConfiguration`
 * `minimumSuccessDisplayTime` that has a default value of `2.0` seconds. It handles all success HUD's.
 * `minimumErrorDisplayTime` that has a default value of `1.3` seconds. It handles all error HUD's.
 
+## Known bugs
+
+ * Showing an HUD on `alertView:clickedButtonAtIndex:` will give an undefined behavior that can sometimes make the HUD not appear ([#29](https://github.com/kevin-hirsch/KVNProgress/issues/29) - [resolution comment](https://github.com/kevin-hirsch/KVNProgress/issues/29#issuecomment-77602300)). Instead, call the HUD on `alertView:didDismissWithButtonIndex:` to be sure the `UIAlertView` is completely dismissed before showing an HUD.
+
 ## Remains to do
 
 - [ ] Use real-time blur
+
+## Requirements
+
+* Xcode 6
+* iOS 7
+* ARC
+* Frameworks:
+    * QuartzCore
+    * GLKit
 
 ## License
 
