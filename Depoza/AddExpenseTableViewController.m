@@ -1,21 +1,21 @@
-    //ViewControllers
+//ViewControllers
 #import "AddExpenseTableViewController.h"
 #import "AppDelegate.h"
-    //View
+//View
 #import "SelectedCategoryCell.h"
 #import "SearchForCategoryCell.h"
-    //CoreData
+//CoreData
 #import "Expense.h"
 #import "ExpenseData.h"
 #import "CategoryData+Fetch.h"
 #import "CategoriesInfo.h"
 #import "Persistence.h"
-    //Categories
+//Categories
 #import "NSString+FormatAmount.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+IsDatesWithEqualDate.h"
-    //KVNProgress
+//KVNProgress
 #import <KVNProgress/KVNProgress.h>
 
 static NSString * const kExpenseTextFieldCellIdentifier     = @"ExpenseTextFieldCell";
@@ -55,14 +55,14 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 @implementation AddExpenseTableViewController {
     NSNumber *_expenseFromTextField;
     BOOL _expenseTextFieldActive;
-
+    
     NSString *_selectedCategoryTitle;
     BOOL _categorySelected;
-
+    
     NSArray *_filteredCategories;
-
+    
     BOOL _delegateNotified;
-
+    
     BOOL _datePickerVisible;
     NSDate *_date;
 }
@@ -71,33 +71,32 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
 #warning uncomment this for App Store disribution
     //[self dataCheck];
-
+    
     self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:_categoriesInfo];
-
+    
     [self createDoneBarButton];
-
+    
     _delegateNotified = NO;
     _datePickerVisible = NO;
     _date = [NSDate date];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-
-    [self expenseTextFieldBecomeFirstResponder];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [_expenseTextField becomeFirstResponder];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-
+    
     if (!_delegateNotified) {
         [self resignActiveTextField];
-
+        
         [self.delegate addExpenseTableViewControllerDidCancel:self];
-
+        
         _delegateNotified = YES;
     }
 }
@@ -151,14 +150,14 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (NSArray *)sortedCategoriesFromCategoriesInfo:(NSArray *)categories {
     NSSortDescriptor *alphabeticSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES selector:@selector(caseInsensitiveCompare:)];
-
+    
     NSArray *sortedArray = [categories sortedArrayUsingDescriptors:@[alphabeticSort]];
-
-        //Sort by frequency of use
+    
+    //Sort by frequency of use
     NSArray *dates = [[NSDate date]getFirstAndLastDatesFromMonth];
-
+    
     NSSortDescriptor *sortByFrequencyUse = [NSSortDescriptor sortDescriptorWithKey:nil ascending:NO comparator:^NSComparisonResult(CategoriesInfo *obj1, CategoriesInfo *obj2) {
-
+        
         NSNumber *obj1IdValue;
         NSNumber *obj2IdValue;
         
@@ -178,14 +177,14 @@ typedef NS_ENUM(NSUInteger, SectionType) {
                     _delegateNotified = YES;
                     
 #warning uncomment this for App Store disribution
-//                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-//                    Persistence *persistence = appDelegate.persistence;
-//                    
-//                    [persistence deleteAllCategories];
-//                    [persistence insertNecessaryCategoryData];
-//                    
-//                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
-//                    });
+                    //                    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+                    //                    Persistence *persistence = appDelegate.persistence;
+                    //
+                    //                    [persistence deleteAllCategories];
+                    //                    [persistence insertNecessaryCategoryData];
+                    //
+                    //                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{                                            [KVNProgress showErrorWithStatus:NSLocalizedString(@"Database eror", @"Database error")];
+                    //                    });
                 }];
             });
         }
@@ -194,7 +193,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         
         NSUInteger countForCategory1 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj1IdValue];
         NSUInteger countForCategory2 = [CategoryData countForFrequencyUseInManagedObjectContext:_managedObjectContext betweenDates:dates andWithCategoryIdValue:obj2IdValue];
-
+        
         if (countForCategory1 < countForCategory2) {
             return NSOrderedAscending;
         } else if (countForCategory1 > countForCategory2) {
@@ -203,17 +202,17 @@ typedef NS_ENUM(NSUInteger, SectionType) {
             return NSOrderedSame;
         }
     }];
-
+    
     return [sortedArray sortedArrayUsingDescriptors:@[sortByFrequencyUse]];
 }
 
 #pragma mark - UITableViewDataSource -
 
-    // 0 section for date and date picker
-    // 1 section for amount text field
-    // 2 section for search for category search bar
-    // 3 section for categories titles
-    // 4 section for description text field
+// 0 section for date and date picker
+// 1 section for amount text field
+// 2 section for search for category search bar
+// 3 section for categories titles
+// 4 section for description text field
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 5;
 }
@@ -257,93 +256,93 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     CGRect separatorFrame = CGRectMake(15.0f, y, CGRectGetWidth(tableView.bounds), 0.5f);
     UIView *separatorLineView = [[UIView alloc]initWithFrame:separatorFrame];
     separatorLineView.backgroundColor = tableView.separatorColor;
-
+    
     if (indexPath.section == SectionTypeSelectionDate) {
         if (indexPath.row == 0) {
             NSString *identifier = @"DateCell";
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-
+            
             if (cell == nil) {
                 cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
                 cell.textLabel.font = [UIFont fontWithName:@".SFUIText-Light" size:17.0f];
                 [cell.contentView addSubview:separatorLineView];
             }
-
+            
             cell.textLabel.text = [self formatDate:_date];
-
+            
             return cell;
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"DatePickerCell"];
-
+            
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"DatePickerCell"];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+                
                 UIDatePicker *datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0.0f, 0.0f, CGRectGetWidth(self.view.bounds), 216.0f)];
                 datePicker.tag = 112;
-
+                
                 [datePicker setMaximumDate:[NSDate getStartAndEndDatesOfTheCurrentDate].lastObject];
                 [datePicker setDate:_date];
-
+                
                 [cell.contentView addSubview:datePicker];
                 [cell.contentView addSubview:separatorLineView];
-
+                
                 [datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
             }
-
+            
             UIDatePicker *datePicker = (UIDatePicker *)[cell viewWithTag:112];
             [datePicker setDate:_date animated:NO];
-
+            
             return cell;
         }
     } else if (indexPath.section == SectionTypeExpenseAmount) {
         UITableViewCell *expenseTextFieldCell = [tableView dequeueReusableCellWithIdentifier:kExpenseTextFieldCellIdentifier];
-
+        
         self.expenseTextField = (UITextField *)[expenseTextFieldCell viewWithTag:kExpenseTextFieldTag];
         self.expenseTextField.delegate = self;
         self.expenseTextField.placeholder = [NSString formatAmount:@0];
-
+        
         [expenseTextFieldCell.contentView addSubview:separatorLineView];
-
+        
         return expenseTextFieldCell;
     } else if (indexPath.section == SectionTypeSearchForCategory) {
         SearchForCategoryCell *cell = (SearchForCategoryCell *)[tableView dequeueReusableCellWithIdentifier:kSearchForCategoryCellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-
+        
         self.searchForCategoryTextField = cell.textField;
         _searchForCategoryTextField.delegate = self;
-
+        
         self.addCategoryButton = cell.addCategoryButton;
         [self.addCategoryButton addTarget:self action:@selector(addCategoryButtonPressed) forControlEvents:UIControlEventTouchUpInside];
         self.addCategoryButton.hidden = _categoriesSearchPredicate == nil;
-
+        
         [cell.contentView addSubview:separatorLineView];
-
+        
         return cell;
     } else if (indexPath.section == SectionTypeCategoriesTitles) {
         if (_categorySelected) {
             SelectedCategoryCell *selectedCategoryCell = (SelectedCategoryCell *)[tableView dequeueReusableCellWithIdentifier:kSelectedCategoryCellIdentifier];
-
+            
             [self configurateCell:selectedCategoryCell indexPath:indexPath];
-
+            
             [selectedCategoryCell.contentView addSubview:separatorLineView];
-
+            
             return selectedCategoryCell;
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCategoryCellIdentifier];
             [self configurateCell:cell indexPath:indexPath];
-
+            
             [cell.contentView addSubview:separatorLineView];
-
+            
             return cell;
         }
     } else if (indexPath.section == SectionTypeDescription) {
         UITableViewCell *descriptionCell = [tableView dequeueReusableCellWithIdentifier:kDescriptionTextFieldCellIdentifier];
-
+        
         self.descriptionTextField = (UITextField *)[descriptionCell viewWithTag:kDescriptionTextFieldTag];
-
+        
         [descriptionCell.contentView addSubview:separatorLineView];
-
+        
         return descriptionCell;
     }
     return nil;
@@ -353,7 +352,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     if (cell) {
         if (!_categorySelected) {
             CategoriesInfo *category = (_categoriesSearchPredicate == nil ? _categoriesInfo[indexPath.row] : _filteredCategories[indexPath.row]);
-
+            
             cell.textLabel.text = category.title;
         } else {
             CategoriesInfo *category = nil;
@@ -362,7 +361,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
             } else {
                 category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_filteredCategories];
             }
-
+            
             SelectedCategoryCell *selectedCell = (SelectedCategoryCell *)cell;
             selectedCell.categoryTitle.text = category.title;
         }
@@ -382,11 +381,11 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         }
         return;
     }
-        // Also hide the date picker when tapped on any other row.
+    // Also hide the date picker when tapped on any other row.
     [self hideDatePicker];
-
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
+    
     if (indexPath.section == SectionTypeExpenseAmount) {
         [self.expenseTextField becomeFirstResponder];
         return;
@@ -394,12 +393,12 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         [self.descriptionTextField becomeFirstResponder];
         return;
     }
-
+    
     [self resignActiveTextField];
-
+    
     if (!_categorySelected) {
         _categorySelected = YES;
-
+        
         if (_categoriesSearchPredicate == nil) {
             CategoriesInfo *category = _categoriesInfo[indexPath.row];
             _selectedCategoryTitle = category.title;
@@ -407,21 +406,21 @@ typedef NS_ENUM(NSUInteger, SectionType) {
             CategoriesInfo *category = _filteredCategories[indexPath.row];
             _selectedCategoryTitle = category.title;
         }
-
+        
         [self reloadTableViewSections];
-
+        
         [self descriptionTextFieldBecomeFirstResponder];
     } else {
         _categorySelected = NO;
         _selectedCategoryTitle = nil;
-
+        
         self.categoriesSearchPredicate = nil;
         self.searchForCategoryTextField.text = nil;
         _filteredCategories = nil;
-
+        
         self.descriptionTextField.text = nil;
         [self.descriptionTextField resignFirstResponder];
-
+        
         [self reloadTableViewSections];
     }
 }
@@ -455,27 +454,17 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (CategoriesInfo *)categoryInfoFromTitle:(NSString *)title andCategoriesInfo:(NSArray *)categories {
     NSUInteger index = -1;
-
+    
     index = [categories indexOfObjectPassingTest:^BOOL(CategoriesInfo *obj, NSUInteger idx, BOOL *stop) {
         if ([obj.title isEqualToString:title]) {
             return YES;
         }
         return NO;
     }];
-
+    
     NSParameterAssert(index != -1);
-
+    
     return categories[index];
-}
-
-- (void)expenseTextFieldBecomeFirstResponder {
-    if (_expenseTextField != nil) {
-        [self.expenseTextField becomeFirstResponder];
-    } else {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self expenseTextFieldBecomeFirstResponder];
-        });
-    }
 }
 
 - (void)descriptionTextFieldBecomeFirstResponder {
@@ -498,28 +487,28 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)addCategoryButtonPressed {
     NSString *categoryTitle = [self.searchForCategoryTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-
+    
     [self hideDatePicker];
     [self resignActiveTextField];
     
     if ([CategoryData checkForUniqueName:categoryTitle managedObjectContext:_managedObjectContext]) {
         CategoryData *category = [CategoryData categoryDataWithTitle:categoryTitle iconName:nil andExpenses:nil inManagedObjectContext:_managedObjectContext];
-
+        
         CategoriesInfo *categoryInfo = [CategoriesInfo categoryInfoFromCategoryData:category];
-
+        
         NSMutableArray *categories = [NSMutableArray arrayWithArray:_categoriesInfo];
         [categories addObject:categoryInfo];
-
+        
         self.categoriesInfo = [self sortedCategoriesFromCategoriesInfo:[categories copy]];
-
+        
         _categorySelected = YES;
         _selectedCategoryTitle = categoryTitle;
-
+        
         self.categoriesSearchPredicate = nil;
         [self reloadTableViewSections];
-
+        
         [self.delegate addExpenseTableViewController:self didAddCategory:category];
-
+        
         [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Category added", @"AddExpnseVC succes text when category added") completion:^{
             [self descriptionTextFieldBecomeFirstResponder];
         }];
@@ -537,22 +526,22 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         NSExpression *categoryTitle = [NSExpression expressionForKeyPath:NSStringFromSelector(@selector(title))];
         NSExpression *title = [NSExpression expressionForConstantValue:searchText];
         NSPredicate *startsWithTextPredicate = [NSComparisonPredicate predicateWithLeftExpression:categoryTitle rightExpression:title modifier:NSDirectPredicateModifier type:NSBeginsWithPredicateOperatorType options:NSCaseInsensitivePredicateOption];
-
+        
         self.categoriesSearchPredicate = startsWithTextPredicate;
-
+        
         NSSortDescriptor *alhabeticSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(title)) ascending:YES selector:@selector(caseInsensitiveCompare:)];
-
+        
         NSArray *categories = [_categoriesInfo filteredArrayUsingPredicate:_categoriesSearchPredicate];
-
+        
         _filteredCategories = [categories sortedArrayUsingDescriptors:@[alhabeticSort]];
-
+        
         self.addCategoryButton.hidden = NO;
     } else {
         self.categoriesSearchPredicate = nil;
         _filteredCategories = nil;
         self.addCategoryButton.hidden = YES;
     }
-
+    
     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:SectionTypeCategoriesTitles] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -565,23 +554,23 @@ typedef NS_ENUM(NSUInteger, SectionType) {
         dateFormatter = [NSDateFormatter new];
         dateFormatter.timeZone = [NSTimeZone localTimeZone];
         dateFormatter.dateFormat = @"d MMMM HH:mm";
-
+        
         todayFormatter = [NSDateFormatter new];
         todayFormatter.timeZone = [NSTimeZone localTimeZone];
         todayFormatter.dateFormat = @"HH:mm";
-
+        
     }
-
+    
     if ([[NSDate date]isDatesWithEqualDates:date]) {
         return [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"Today", @"'Today' text in -formatDate:"), [todayFormatter stringFromDate:date]];
     }
-
+    
     return [dateFormatter stringFromDate:date];
 }
 
 - (void)updateDateLabelWithDate:(NSDate *)date {
     NSString *formatDate = [self formatDate:date];
-
+    
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[self dateCellIndexPath]];
     cell.textLabel.text = formatDate;
 }
@@ -599,22 +588,22 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)showDatePicker {
     _datePickerVisible = YES;
-
+    
     [self.searchForCategoryTextField resignFirstResponder];
     [self.expenseTextField resignFirstResponder];
     [self.descriptionTextField resignFirstResponder];
-
+    
     [self reloadFirstSection];
-
+    
     [self updateDateCellDateTextColorWithColor:[self.view tintColor] atIndexPath:[self dateCellIndexPath]];
 }
 
 - (void)hideDatePicker {
     if (_datePickerVisible) {
         _datePickerVisible = NO;
-
+        
         [self updateDateCellDateTextColorWithColor:[UIColor blackColor] atIndexPath:[self dateCellIndexPath]];
-
+        
         [self reloadFirstSection];
     }
 }
@@ -639,20 +628,20 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)doneBarButtonPressed:(UIBarButtonItem *)doneBarButton {
     [self resignActiveTextField];
-
+    
     if (_expenseFromTextField.floatValue > 0.0f && _categorySelected) {
         CategoriesInfo *category = [self categoryInfoFromTitle:_selectedCategoryTitle andCategoriesInfo:_categoriesInfo];
-
+        
         Expense *expense = [Expense expenseWithAmount:_expenseFromTextField categoryName:category.title description:_descriptionTextField.text];
         expense.dateOfExpense = _date;
-
+        
         [self addExpenseToCategoryData:expense];
-
+        
         if ([self.delegate respondsToSelector:@selector(addExpenseTableViewController:didFinishAddingExpense:)]) {
             [self.delegate addExpenseTableViewController:self didFinishAddingExpense:expense];
-
+            
             _delegateNotified = YES;
-
+            
             [KVNProgress showSuccessWithStatus:NSLocalizedString(@"Added", @"Successful added message in AddExpenseVC") completion:^{
                 [self dismissViewControllerAnimated:YES completion:nil];
             }];
@@ -678,7 +667,7 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (void)addExpenseToCategoryData:(Expense *)expense {
     CategoryData *categoryData = [CategoryData categoryFromTitle:expense.category context:_managedObjectContext];
-
+    
     ExpenseData *expenseData = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:self.managedObjectContext];
     expenseData.amount = expense.amount;
     expenseData.categoryId = categoryData.idValue;
@@ -686,9 +675,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     expenseData.descriptionOfExpense = expense.descriptionOfExpense;
     expenseData.idValue = @(expense.idValue);
     expenseData.category = categoryData;
-
+    
     [categoryData addExpenseObject:expenseData];
-
+    
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
@@ -707,9 +696,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
     NSString *stringFromTextField = [textField.text stringByReplacingCharactersInRange:range withString:string];
     if ([self.expenseTextField isFirstResponder]) {
         _expenseTextFieldActive = YES;
-
+        
         NSString *stringWithReplacing = [stringFromTextField stringByReplacingOccurrencesOfString:@"," withString:@"."];
-
+        
         if (stringWithReplacing.length > 0) {
             _expenseFromTextField = [NSNumber numberWithFloat:[stringFromTextField floatValue]];
         } else if (stringWithReplacing.length == 0) {
@@ -726,9 +715,9 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 - (void)textFieldDidEndEditing:(UITextField *)textField {
     if (_expenseTextFieldActive) {
         _expenseTextFieldActive = NO;
-
+        
         _expenseFromTextField = [NSNumber numberWithFloat:[[textField.text stringByReplacingOccurrencesOfString:@"," withString:@"." ]floatValue]];
-
+        
         if (_expenseFromTextField.floatValue > 0) {
             textField.text = [NSString formatAmount:_expenseFromTextField];
         } else {
@@ -741,11 +730,11 @@ typedef NS_ENUM(NSUInteger, SectionType) {
 
 - (IBAction)cancelButtonPressed:(UIBarButtonItem *)sender {
     [self resignActiveTextField];
-
+    
     [self.delegate addExpenseTableViewControllerDidCancel:self];
-
+    
     _delegateNotified = YES;
-
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:nil];
     });
