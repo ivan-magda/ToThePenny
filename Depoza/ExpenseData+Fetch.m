@@ -394,19 +394,25 @@
     }
     
     if (fetchedExpenses.count > 0) {
-        NSLog(@"Expense data correction is proceeding");
+        NSLog(@"Expense data correction is in progress.");
         
         for (ExpenseData *expense in fetchedExpenses) {
             CategoryData *category = [CategoryData getCategoryFromIdValue:expense.categoryId.integerValue inManagedObjectContext:context];
-            expense.category = category;
+            
+            ExpenseData *newExpense = [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([ExpenseData class]) inManagedObjectContext:context];
+            newExpense.amount = expense.amount;
+            newExpense.categoryId = category.idValue;
+            newExpense.dateOfExpense = expense.dateOfExpense;
+            newExpense.descriptionOfExpense = expense.descriptionOfExpense;
+            newExpense.idValue = @([ExpenseData nextId]);
+            newExpense.category = category;
             [category addExpenseObject:expense];
             
-            [context refreshObject:expense mergeChanges:YES];
+            [context deleteObject:expense];
+            [[Persistence sharedInstance]saveContext];
         }
-        NSLog(@"%ld expenses are corrected.", fetchedExpenses.count);
+        NSLog(@"%ld expenses are corrected.", (unsigned long)fetchedExpenses.count);
     }
-    
-    [[Persistence sharedInstance]saveContext];
 }
 
 
