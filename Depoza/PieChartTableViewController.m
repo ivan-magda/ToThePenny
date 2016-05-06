@@ -5,17 +5,16 @@
 //  Created by Ivan Magda on 03.05.15.
 //  Copyright (c) 2015 Ivan Magda. All rights reserved.
 //
-
-    //ViewControllers
+    // ViewControllers
 #import "PieChartTableViewController.h"
 #import "SelectTimePeriodViewController.h"
 #import "SelectedCategoryTableViewController.h"
 #import "HSDatePickerViewController.h"
-    //CoreData
+    // CoreData
 #import "ExpenseData+Fetch.h"
 #import "CategoriesInfo.h"
 #import "Fetch.h"
-    //Categories
+    // Categories
 #import "NSDate+StartAndEndDatesOfTheCurrentDate.h"
 #import "NSDate+FirstAndLastDaysOfMonth.h"
 #import "NSDate+StartAndEndDatesOfYear.h"
@@ -23,10 +22,10 @@
 #import "NSDate+IsDatesWithEqualMonth.h"
 #import "NSDate+IsDatesWithEqualYear.h"
 #import "NSString+FormatAmount.h"
-    //View
+    // View
 #import "PieChartTableViewCell.h"
-    //Frameworks
-#import <CorePlot-CocoaTouch.h>
+    // Frameworks
+#import <CorePlot.h>
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
