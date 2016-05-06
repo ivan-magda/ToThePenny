@@ -18,7 +18,6 @@
 - Detailed statistics.
 - Easy and intuitive interface.
 - Unlimited number of expense categories.
-ToThePenny helps you to understand, where all your money goes to.
 
 ToThePenny is available on the [App Store](https://itunes.apple.com/app/tothepenny/id994476075).
 
