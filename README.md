@@ -1,11 +1,11 @@
 # ToThePenny - is one of the most convenient and easy way to control personal finances.
 
 ![Platform iOS](https://img.shields.io/badge/platform-iOS-blue.svg)
+![License](https://img.shields.io/npm/l/express.svg)
 
 ![alt tag] (https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/6.png)
 
 ### Main features:
-
 - Add new expense records in a convenient way.
 - Backing up and restoring data via iCloud.
 - Accounting for expenses.
@@ -19,28 +19,31 @@
 - Easy and intuitive interface.
 - Unlimited number of expense categories.
 
+## Installation
+- Run `pod install` on project directory([CocoaPods Installation](https://guides.cocoapods.org/using/getting-started.html)).
+- Open `Depoza.xcworkspace`.
+- Build & run, enjoy.
+
+## Author
+I'm [Ivan Magda](https://www.facebook.com/ivan.magda).
+Email: [imagda15@gmail.com](mailto:imagda15@gmail.com).
+Twitter: [@magda_ivan](https://twitter.com/magda_ivan).
+
 ToThePenny is available on the [App Store](https://itunes.apple.com/app/tothepenny/id994476075).
 
-### LICENSE
+## LICENSE
+This project is open-sourced software licensed under the MIT License.
 
-The MIT License (MIT)
+See the LICENSE file for more information.
 
-Copyright (c) 2016 Ivan Magda
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## More Images
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/1.png"
+width="320" height="512" hspace="8">
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/2.png"
+width="320" height="512" hspace="8">
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/3.png"
+width="320" height="512" hspace="8">
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/4.png"
+width="320" height="512" hspace="8">
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/5.png"
+width="320" height="512" hspace="8">
