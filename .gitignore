@@ -17,9 +17,6 @@ profile
 DerivedData
 .idea/
 # Pods - for those of you who use CocoaPods
-Pods
+Pods/
 Crashlytics.framework
-
-Depoza/Fabric.framework
-
 Fabric.framework
