@@ -29,6 +29,7 @@
 		42CE7E24ED2F93AF406EEF11 /* ExpandedCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE75FBA08D14C30D645428 /* ExpandedCollectionViewFlowLayout.m */; };
 		42CE7EC3878A06590C3036B9 /* ExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE7C5A19C820E8B0326AC1 /* ExtensionSettingsTableViewController.m */; };
 		42CE7FBA25C50B90BF5C3B26 /* SelectTimePeriodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CE7F4F3D6B54C1F2AC8B3A /* SelectTimePeriodViewController.xib */; };
+		4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A809A823B6855AA3F640337 /* libPods-Depoza.a */; };
 		50000FBB1B039E2D00509F45 /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
 		500540EC1AC560CC007EF006 /* Banknotes.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D81AC560CC007EF006 /* Banknotes.png */; };
 		500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D91AC560CC007EF006 /* Banknotes@2x.png */; };
@@ -151,7 +152,6 @@
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E781BFC9AFA00320C92 /* LaunchImage.png */; };
 		752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */; };
-		A70581F20A7C1421A8099790 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 583FFBE7D2D90CA3E7515346 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,7 +186,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		264746BB42B33C07DA0F2051 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		42CE70248EE8C83638F7BA2B /* DetailExpenseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailExpenseTableViewController.m; sourceTree = "<group>"; };
 		42CE70829254D0030A1882DC /* ManageCategoryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManageCategoryTableViewController.h; sourceTree = "<group>"; };
 		42CE7098ED9A5188E9011FE5 /* PieChartTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartTableViewController.m; sourceTree = "<group>"; };
@@ -398,10 +397,11 @@
 		50E784B61AF5F54B000EA22D /* NSDate+StartAndEndDatesOfYear.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+StartAndEndDatesOfYear.m"; sourceTree = "<group>"; };
 		50FDE3B31A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryInfoCollectionViewCell.h; sourceTree = "<group>"; };
 		50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoryInfoCollectionViewCell.m; sourceTree = "<group>"; };
-		583FFBE7D2D90CA3E7515346 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E33BB0FBD1BFFE5AB9CC2FF /* Pods-Depoza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.debug.xcconfig"; sourceTree = "<group>"; };
 		752C6E781BFC9AFA00320C92 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
 		752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
-		99C6B0C42A04101D60C4BD79 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		7A809A823B6855AA3F640337 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.release.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -418,7 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
-				A70581F20A7C1421A8099790 /* libPods.a in Frameworks */,
+				4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -432,6 +432,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		234B6EC76EA1C5143FF48666 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6E33BB0FBD1BFFE5AB9CC2FF /* Pods-Depoza.debug.xcconfig */,
+				CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		42CE70ABE3138E3D66EAD1B1 /* SelectTimePeriodVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -814,8 +823,8 @@
 				5015A5661AC02C230056271A /* Depoza Extension */,
 				506E729F1A1E0B450006F2DF /* DepozaTests */,
 				506E72811A1E0B450006F2DF /* Products */,
-				8845E87CAED0D14A2C22C71A /* Pods */,
 				C73983BBCFAEFB03AF334D94 /* Frameworks */,
+				234B6EC76EA1C5143FF48666 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1021,15 +1030,6 @@
 			name = MotionEffect;
 			sourceTree = "<group>";
 		};
-		8845E87CAED0D14A2C22C71A /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				264746BB42B33C07DA0F2051 /* Pods.debug.xcconfig */,
-				99C6B0C42A04101D60C4BD79 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1037,7 +1037,7 @@
 				50E021E51AD8F63C008489DA /* Accelerate.framework */,
 				502839121ACC11A700C97C99 /* CoreData.framework */,
 				5015A5641AC02C230056271A /* NotificationCenter.framework */,
-				583FFBE7D2D90CA3E7515346 /* libPods.a */,
+				7A809A823B6855AA3F640337 /* libPods-Depoza.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1066,14 +1066,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 506E72A61A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "Depoza" */;
 			buildPhases = (
-				D54B544B976FCF6A253DA474 /* Check Pods Manifest.lock */,
+				2A6B7C2287AB35C05515A18B /* [CP] Check Pods Manifest.lock */,
 				506E727C1A1E0B450006F2DF /* Sources */,
 				506E727D1A1E0B450006F2DF /* Frameworks */,
 				506E727E1A1E0B450006F2DF /* Resources */,
-				A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */,
 				5015A5741AC02C230056271A /* Embed App Extensions */,
 				500867E21BA31CF900F5B82C /* ShellScript */,
-				126FA79E51D50D31EA5C3BD4 /* Embed Pods Frameworks */,
+				0736C3DFE26A1EEF93CB153E /* [CP] Embed Pods Frameworks */,
+				DF47BEFFC58FF783D915AA64 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1256,19 +1256,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		126FA79E51D50D31EA5C3BD4 /* Embed Pods Frameworks */ = {
+		0736C3DFE26A1EEF93CB153E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Depoza/Pods-Depoza-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2A6B7C2287AB35C05515A18B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		500867E21BA31CF900F5B82C /* ShellScript */ = {
@@ -1284,34 +1299,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" bc5ec3b27cb51435f8a751d3af6b7c12ab3d3573 9e76b8fae47fb5b6db4d70a5201671f9ae6be32ba2dce7965d7fe4ee6b67bd05";
 		};
-		A0EBA1A8F4ED878B454DB9DE /* Copy Pods Resources */ = {
+		DF47BEFFC58FF783D915AA64 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D54B544B976FCF6A253DA474 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Depoza/Pods-Depoza-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1592,7 +1592,7 @@
 		};
 		506E72A71A1E0B450006F2DF /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 264746BB42B33C07DA0F2051 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 6E33BB0FBD1BFFE5AB9CC2FF /* Pods-Depoza.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
@@ -1624,7 +1624,7 @@
 		};
 		506E72A81A1E0B450006F2DF /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 99C6B0C42A04101D60C4BD79 /* Pods.release.xcconfig */;
+			baseConfigurationReference = CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
