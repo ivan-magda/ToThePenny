@@ -81,7 +81,6 @@
 		506E72921A1E0B450006F2DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506E72901A1E0B450006F2DF /* Main.storyboard */; };
 		506E72941A1E0B450006F2DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 506E72931A1E0B450006F2DF /* Images.xcassets */; };
 		506E72971A1E0B450006F2DF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506E72951A1E0B450006F2DF /* LaunchScreen.xib */; };
-		506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 506E72A21A1E0B450006F2DF /* DepozaTests.m */; };
 		5078B6F81BAB128800CBCF6D /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 5078B6F61BAB128800CBCF6D /* Menu.png */; };
 		5078B6F91BAB128800CBCF6D /* Menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5078B6F71BAB128800CBCF6D /* Menu@2x.png */; };
 		507BF2B51AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m in Sources */ = {isa = PBXBuildFile; fileRef = 507BF2B41AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.m */; };
@@ -161,13 +160,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5015A5621AC02C230056271A;
 			remoteInfo = "Depoza Extension";
-		};
-		506E729D1A1E0B450006F2DF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 506E72781A1E0B450006F2DF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 506E727F1A1E0B450006F2DF;
-			remoteInfo = Depoza;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -302,9 +294,6 @@
 		506E72911A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		506E72931A1E0B450006F2DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		506E72961A1E0B450006F2DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		506E729C1A1E0B450006F2DF /* DepozaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		506E72A11A1E0B450006F2DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		506E72A21A1E0B450006F2DF /* DepozaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DepozaTests.m; sourceTree = "<group>"; };
 		5078B6F61BAB128800CBCF6D /* Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Menu.png; sourceTree = "<group>"; };
 		5078B6F71BAB128800CBCF6D /* Menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Menu@2x.png"; sourceTree = "<group>"; };
 		507BF2B31AE369B60035FA50 /* NSDate+IsDatesWithEqualMonth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+IsDatesWithEqualMonth.h"; sourceTree = "<group>"; };
@@ -419,13 +408,6 @@
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
 				4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		506E72991A1E0B450006F2DF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,7 +803,6 @@
 			children = (
 				506E72821A1E0B450006F2DF /* Depoza */,
 				5015A5661AC02C230056271A /* Depoza Extension */,
-				506E729F1A1E0B450006F2DF /* DepozaTests */,
 				506E72811A1E0B450006F2DF /* Products */,
 				C73983BBCFAEFB03AF334D94 /* Frameworks */,
 				234B6EC76EA1C5143FF48666 /* Pods */,
@@ -832,7 +813,6 @@
 			isa = PBXGroup;
 			children = (
 				506E72801A1E0B450006F2DF /* Depoza.app */,
-				506E729C1A1E0B450006F2DF /* DepozaTests.xctest */,
 				5015A5631AC02C230056271A /* Depoza Extension.appex */,
 			);
 			name = Products;
@@ -866,23 +846,6 @@
 				506E72841A1E0B450006F2DF /* Info.plist */,
 				501CCB061B48B5E600609142 /* InfoPlist.strings */,
 				506E72851A1E0B450006F2DF /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		506E729F1A1E0B450006F2DF /* DepozaTests */ = {
-			isa = PBXGroup;
-			children = (
-				506E72A21A1E0B450006F2DF /* DepozaTests.m */,
-				506E72A01A1E0B450006F2DF /* Supporting Files */,
-			);
-			path = DepozaTests;
-			sourceTree = "<group>";
-		};
-		506E72A01A1E0B450006F2DF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				506E72A11A1E0B450006F2DF /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1085,24 +1048,6 @@
 			productReference = 506E72801A1E0B450006F2DF /* Depoza.app */;
 			productType = "com.apple.product-type.application";
 		};
-		506E729B1A1E0B450006F2DF /* DepozaTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 506E72A91A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "DepozaTests" */;
-			buildPhases = (
-				506E72981A1E0B450006F2DF /* Sources */,
-				506E72991A1E0B450006F2DF /* Frameworks */,
-				506E729A1A1E0B450006F2DF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				506E729E1A1E0B450006F2DF /* PBXTargetDependency */,
-			);
-			name = DepozaTests;
-			productName = DepozaTests;
-			productReference = 506E729C1A1E0B450006F2DF /* DepozaTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1137,10 +1082,6 @@
 							};
 						};
 					};
-					506E729B1A1E0B450006F2DF = {
-						CreatedOnToolsVersion = 6.1;
-						TestTargetID = 506E727F1A1E0B450006F2DF;
-					};
 				};
 			};
 			buildConfigurationList = 506E727B1A1E0B450006F2DF /* Build configuration list for PBXProject "Depoza" */;
@@ -1158,7 +1099,6 @@
 			projectRoot = "";
 			targets = (
 				506E727F1A1E0B450006F2DF /* Depoza */,
-				506E729B1A1E0B450006F2DF /* DepozaTests */,
 				5015A5621AC02C230056271A /* Depoza Extension */,
 			);
 		};
@@ -1243,13 +1183,6 @@
 				50C929D01B0B322100690F2C /* Content.png in Resources */,
 				42CE7FBA25C50B90BF5C3B26 /* SelectTimePeriodViewController.xib in Resources */,
 				42CE7590BF833A7FAB4495F5 /* HSDatePickerViewController.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		506E729A1A1E0B450006F2DF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1404,14 +1337,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		506E72981A1E0B450006F2DF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				506E72A31A1E0B450006F2DF /* DepozaTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1419,11 +1344,6 @@
 			isa = PBXTargetDependency;
 			target = 5015A5621AC02C230056271A /* Depoza Extension */;
 			targetProxy = 5015A56E1AC02C230056271A /* PBXContainerItemProxy */;
-		};
-		506E729E1A1E0B450006F2DF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 506E727F1A1E0B450006F2DF /* Depoza */;
-			targetProxy = 506E729D1A1E0B450006F2DF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1654,42 +1574,6 @@
 			};
 			name = Release;
 		};
-		506E72AA1A1E0B450006F2DF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DepozaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MagdaIvan.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Depoza.app/Depoza";
-			};
-			name = Debug;
-		};
-		506E72AB1A1E0B450006F2DF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = DepozaTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "MagdaIvan.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Depoza.app/Depoza";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1716,15 +1600,6 @@
 			buildConfigurations = (
 				506E72A71A1E0B450006F2DF /* Debug */,
 				506E72A81A1E0B450006F2DF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		506E72A91A1E0B450006F2DF /* Build configuration list for PBXNativeTarget "DepozaTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				506E72AA1A1E0B450006F2DF /* Debug */,
-				506E72AB1A1E0B450006F2DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

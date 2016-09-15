@@ -8,12 +8,22 @@ PODS:
   - SmileTouchID (0.1.5)
 
 DEPENDENCIES:
-  - CorePlot
+  - CorePlot (from `https://github.com/core-plot/core-plot.git`, branch `release-2.2`)
   - Crashlytics
   - Fabric
   - KBRoundedButton
   - KVNProgress
   - SmileTouchID
+
+EXTERNAL SOURCES:
+  CorePlot:
+    :branch: release-2.2
+    :git: https://github.com/core-plot/core-plot.git
+
+CHECKOUT OPTIONS:
+  CorePlot:
+    :commit: 742eb1bcf731c1943661e9e22a65aae8b1dd1bc1
+    :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
   CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
@@ -23,6 +33,6 @@ SPEC CHECKSUMS:
   KVNProgress: 541edcea5a1fef592aceac8d791a410d38cb499d
   SmileTouchID: ad0f96782c57791e9644d5ad0b2d1b087943b3df
 
-PODFILE CHECKSUM: 6bd371f1da08780426be0bddb33e7ed2f45ec01d
+PODFILE CHECKSUM: 3a64706c9f2572a74a23dab1333479c2240ce517
 
 COCOAPODS: 1.0.1
