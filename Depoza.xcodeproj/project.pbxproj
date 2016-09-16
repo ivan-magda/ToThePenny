@@ -151,6 +151,7 @@
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E781BFC9AFA00320C92 /* LaunchImage.png */; };
 		752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */; };
+		933FE3061D8B54CA00E1AC44 /* DepozaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +161,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5015A5621AC02C230056271A;
 			remoteInfo = "Depoza Extension";
+		};
+		933FE3081D8B54CA00E1AC44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 506E72781A1E0B450006F2DF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 506E727F1A1E0B450006F2DF;
+			remoteInfo = Depoza;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -390,6 +398,9 @@
 		752C6E781BFC9AFA00320C92 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
 		752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
 		7A809A823B6855AA3F640337 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		933FE3031D8B54CA00E1AC44 /* DepozaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepozaUITests.swift; sourceTree = "<group>"; };
+		933FE3071D8B54CA00E1AC44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.release.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -408,6 +419,13 @@
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
 				4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933FE3001D8B54CA00E1AC44 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -803,6 +821,7 @@
 			children = (
 				506E72821A1E0B450006F2DF /* Depoza */,
 				5015A5661AC02C230056271A /* Depoza Extension */,
+				933FE3041D8B54CA00E1AC44 /* DepozaUITests */,
 				506E72811A1E0B450006F2DF /* Products */,
 				C73983BBCFAEFB03AF334D94 /* Frameworks */,
 				234B6EC76EA1C5143FF48666 /* Pods */,
@@ -814,6 +833,7 @@
 			children = (
 				506E72801A1E0B450006F2DF /* Depoza.app */,
 				5015A5631AC02C230056271A /* Depoza Extension.appex */,
+				933FE3031D8B54CA00E1AC44 /* DepozaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -993,6 +1013,15 @@
 			name = MotionEffect;
 			sourceTree = "<group>";
 		};
+		933FE3041D8B54CA00E1AC44 /* DepozaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */,
+				933FE3071D8B54CA00E1AC44 /* Info.plist */,
+			);
+			path = DepozaUITests;
+			sourceTree = "<group>";
+		};
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1048,6 +1077,24 @@
 			productReference = 506E72801A1E0B450006F2DF /* Depoza.app */;
 			productType = "com.apple.product-type.application";
 		};
+		933FE3021D8B54CA00E1AC44 /* DepozaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 933FE30C1D8B54CA00E1AC44 /* Build configuration list for PBXNativeTarget "DepozaUITests" */;
+			buildPhases = (
+				933FE2FF1D8B54CA00E1AC44 /* Sources */,
+				933FE3001D8B54CA00E1AC44 /* Frameworks */,
+				933FE3011D8B54CA00E1AC44 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				933FE3091D8B54CA00E1AC44 /* PBXTargetDependency */,
+			);
+			name = DepozaUITests;
+			productName = DepozaUITests;
+			productReference = 933FE3031D8B54CA00E1AC44 /* DepozaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1055,6 +1102,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
+				LastSwiftUpdateCheck = 0800;
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Ivan Magda";
 				TargetAttributes = {
@@ -1082,6 +1130,11 @@
 							};
 						};
 					};
+					933FE3021D8B54CA00E1AC44 = {
+						CreatedOnToolsVersion = 8.0;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 506E727F1A1E0B450006F2DF;
+					};
 				};
 			};
 			buildConfigurationList = 506E727B1A1E0B450006F2DF /* Build configuration list for PBXProject "Depoza" */;
@@ -1100,6 +1153,7 @@
 			targets = (
 				506E727F1A1E0B450006F2DF /* Depoza */,
 				5015A5621AC02C230056271A /* Depoza Extension */,
+				933FE3021D8B54CA00E1AC44 /* DepozaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -1183,6 +1237,13 @@
 				50C929D01B0B322100690F2C /* Content.png in Resources */,
 				42CE7FBA25C50B90BF5C3B26 /* SelectTimePeriodViewController.xib in Resources */,
 				42CE7590BF833A7FAB4495F5 /* HSDatePickerViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		933FE3011D8B54CA00E1AC44 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1337,6 +1398,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		933FE2FF1D8B54CA00E1AC44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				933FE3061D8B54CA00E1AC44 /* DepozaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1344,6 +1413,11 @@
 			isa = PBXTargetDependency;
 			target = 5015A5621AC02C230056271A /* Depoza Extension */;
 			targetProxy = 5015A56E1AC02C230056271A /* PBXContainerItemProxy */;
+		};
+		933FE3091D8B54CA00E1AC44 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 506E727F1A1E0B450006F2DF /* Depoza */;
+			targetProxy = 933FE3081D8B54CA00E1AC44 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1574,6 +1648,49 @@
 			};
 			name = Release;
 		};
+		933FE30A1D8B54CA00E1AC44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = DepozaUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bayqa.DepozaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Depoza;
+			};
+			name = Debug;
+		};
+		933FE30B1D8B54CA00E1AC44 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = DepozaUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bayqa.DepozaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = Depoza;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1603,6 +1720,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		933FE30C1D8B54CA00E1AC44 /* Build configuration list for PBXNativeTarget "DepozaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				933FE30A1D8B54CA00E1AC44 /* Debug */,
+				933FE30B1D8B54CA00E1AC44 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 
