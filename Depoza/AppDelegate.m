@@ -158,6 +158,10 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
 #pragma mark - AppDelegate -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //check for UiTesting flag
+    if ([[[NSProcessInfo processInfo] arguments] containsObject:@"isUITesting"]) {
+        [self clearUserDefaults];
+    }
     [Fabric with:@[CrashlyticsKit]];
 
     [self setUpPersistence];
@@ -166,8 +170,29 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     _appGroupUserDefaults = [[NSUserDefaults alloc]initWithSuiteName:kAppGroupSharedContainer];
     
     [_persistence indexAllData];
+    
 
     return YES;
+}
+
+- (void)clearUserDefaults {
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    NSArray *folders = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask,  YES);
+    NSFileManager *fm = [[NSFileManager alloc] init];
+    for (NSString *path in folders) {
+        [fm removeItemAtPath:path error:nil];
+    }
+    
+    NSArray *folders_document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask,  YES);
+    NSFileManager *fm1 = [[NSFileManager alloc] init];
+    for (NSString *path in folders_document) {
+        [fm1 removeItemAtPath:path error:nil];
+    }
+
+    
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
