@@ -36,12 +36,23 @@ class DepozaUITests: XCTestCase {
         
         tablesQuery.staticTexts["Clothes"].tap()
         
-        tablesQuery.textFields["enter_description"].tap()
-        tablesQuery.textFields["enter_description"].typeText("t-shirt")
+        let descriptionField = tablesQuery.textFields["enter_description"]
+        
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith:descriptionField, handler: nil)
+        descriptionField.tap()
+        waitForExpectations(timeout: 2, handler: nil)
+        descriptionField.typeText("t-shirt")
+        
         app.navigationBars["Add Expense"].buttons["Done"].tap()
         
         let actual = tablesQuery.staticTexts["total_expenses_amount"].label
         XCTAssert(actual == "100")
+    }
+    
+    func testDeleteExpense() {
+      testAddingNewExpense()
+        
     }
     
 }
