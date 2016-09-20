@@ -9,13 +9,15 @@
 import XCTest
 
 class DepozaUITests: XCTestCase {
-        
+    let app = XCUIApplication()
+    let clothes_expene = "t-shirt"
+    let price = "100"
+    
     override func setUp() {
         super.setUp()
         
         // Put setup code here. This method is called before the invocation of each test method in the class.
-                continueAfterFailure = false
-        let app = XCUIApplication()
+        continueAfterFailure = false
         app.launchArguments = ["isUITesting"]
         app.launch()
 
@@ -27,22 +29,19 @@ class DepozaUITests: XCTestCase {
     
     func testAddingNewExpense() {
         
-        let app = XCUIApplication()
+        //let app = XCUIApplication()
         app.buttons["add_button"].tap()
         
         let tablesQuery = app.tables
         tablesQuery.textFields["enter_amount"].tap()
-        tablesQuery.textFields["enter_amount"].typeText("100")
+        tablesQuery.textFields["enter_amount"].typeText(price)
         
         tablesQuery.staticTexts["Clothes"].tap()
         
         let descriptionField = tablesQuery.textFields["enter_description"]
         
-        let exists = NSPredicate(format: "exists == true")
-        expectation(for: exists, evaluatedWith:descriptionField, handler: nil)
-        descriptionField.tap()
-        waitForExpectations(timeout: 2, handler: nil)
-        descriptionField.typeText("t-shirt")
+        waitAndTap(element: descriptionField, time: 2.0)
+        descriptionField.typeText(clothes_expene)
         
         app.navigationBars["Add Expense"].buttons["Done"].tap()
         
@@ -53,6 +52,26 @@ class DepozaUITests: XCTestCase {
     func testDeleteExpense() {
       testAddingNewExpense()
         
+        let tablesQuery = app.tables
+        let expense_cell = tablesQuery.cells["\(clothes_expene), \(price)"]
+
+        waitAndTap(element: expense_cell, time: 3.0)
+        
+        let trashButton = app.navigationBars["Expense"].buttons["Trash"]
+        trashButton.tap()
+        
+        let deleteButton = app.alerts["Delete transaction?"].buttons["Delete"]
+        deleteButton.tap()
+        
+        let actual = tablesQuery.staticTexts["total_expenses_amount"].label
+        
+        XCTAssert(actual == "0")
     }
     
+    func waitAndTap(element: XCUIElement, time: Double){
+        let exists = NSPredicate(format: "exists == true")
+        expectation(for: exists, evaluatedWith:element, handler: nil)
+        element.tap()
+        waitForExpectations(timeout: time, handler: nil)
+    }
 }

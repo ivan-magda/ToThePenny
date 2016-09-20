@@ -175,6 +175,7 @@ NSString * const StatusBarTappedNotification = @"statusBarTappedNotification";
     return YES;
 }
 
+// resets all data from the app
 - (void)clearUserDefaults {
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
