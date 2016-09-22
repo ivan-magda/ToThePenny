@@ -15,12 +15,10 @@ class DepozaUITests: XCTestCase {
     
     override func setUp() {
         super.setUp()
-        
-        // Put setup code here. This method is called before the invocation of each test method in the class.
         continueAfterFailure = false
         app.launchArguments = ["isUITesting"]
         app.launch()
-
+        
     }
     
     override func tearDown() {
@@ -40,7 +38,9 @@ class DepozaUITests: XCTestCase {
         
         let descriptionField = tablesQuery.textFields["enter_description"]
         
-        waitAndTap(element: descriptionField, time: 2.0)
+        waitForElementToAppear(format: "isHittable == true", element: descriptionField, time: 2.0)
+        
+        descriptionField.tap()
         descriptionField.typeText(clothes_expene)
         
         app.navigationBars["Add Expense"].buttons["Done"].tap()
@@ -50,12 +50,14 @@ class DepozaUITests: XCTestCase {
     }
     
     func testDeleteExpense() {
-      testAddingNewExpense()
+        testAddingNewExpense()
         
         let tablesQuery = app.tables
-        let expense_cell = tablesQuery.cells["\(clothes_expene), \(price)"]
-
-        waitAndTap(element: expense_cell, time: 3.0)
+        let expense_cell = tablesQuery.cells["cell_0"].staticTexts["t-shirt"]
+        
+        waitForElementToAppear(format: "isHittable == true", element: expense_cell, time: 3.0)
+        
+        expense_cell.tap()
         
         let trashButton = app.navigationBars["Expense"].buttons["Trash"]
         trashButton.tap()
@@ -63,15 +65,24 @@ class DepozaUITests: XCTestCase {
         let deleteButton = app.alerts["Delete transaction?"].buttons["Delete"]
         deleteButton.tap()
         
-        let actual = tablesQuery.staticTexts["total_expenses_amount"].label
+        let total_ammount = tablesQuery.staticTexts["total_expenses_amount"]
+        let actual = total_ammount.label
         
+        waitForElementToAppear(format: "isEnabled == true", element: total_ammount, time: 3.0)
+        
+        print(actual)
         XCTAssert(actual == "0")
+        
+        waitForElementToAppear(format: "self.count = 1", element: tablesQuery, time: 3.0)
+        
+        
+        XCTAssertEqual(tablesQuery.cells.count, 0 , "found instead: \(tablesQuery.cells.debugDescription)")
+        
     }
     
-    func waitAndTap(element: XCUIElement, time: Double){
-        let exists = NSPredicate(format: "exists == true")
+    func waitForElementToAppear(format: String, element: AnyObject, time: Double){
+        let exists = NSPredicate(format: format)
         expectation(for: exists, evaluatedWith:element, handler: nil)
-        element.tap()
         waitForExpectations(timeout: time, handler: nil)
     }
 }
