@@ -53,7 +53,7 @@ class DepozaUITests: XCTestCase {
         testAddingNewExpense()
         
         let tablesQuery = app.tables
-        let expense_cell = tablesQuery.cells["cell_0"].staticTexts["t-shirt"]
+        let expense_cell = tablesQuery.cells["cell_0"].staticTexts[clothes_expene]
         
         waitForElementToAppear(format: "isHittable == true", element: expense_cell, time: 3.0)
         
