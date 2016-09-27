@@ -151,7 +151,13 @@
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E781BFC9AFA00320C92 /* LaunchImage.png */; };
 		752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */; };
-		933FE3061D8B54CA00E1AC44 /* DepozaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */; };
+		933FE3061D8B54CA00E1AC44 /* AddDeleteExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933FE3051D8B54CA00E1AC44 /* AddDeleteExpense.swift */; };
+		93550C971D99C7A90087FE23 /* AddExpense.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93550C961D99C7A90087FE23 /* AddExpense.swift */; };
+		93550C991D99C8540087FE23 /* ExpenseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93550C981D99C8540087FE23 /* ExpenseScreen.swift */; };
+		93550C9B1D99F2C80087FE23 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93550C9A1D99F2C80087FE23 /* XCUIElementExtension.swift */; };
+		93C67FD61D95E05200C4771C /* BaseScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C67FD51D95E05200C4771C /* BaseScreen.swift */; };
+		93C67FD81D95E75300C4771C /* BaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C67FD71D95E75300C4771C /* BaseTest.swift */; };
+		93C67FDA1D95EA0900C4771C /* ExpensesScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C67FD91D95EA0900C4771C /* ExpensesScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -399,8 +405,14 @@
 		752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
 		7A809A823B6855AA3F640337 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		933FE3031D8B54CA00E1AC44 /* DepozaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DepozaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepozaUITests.swift; sourceTree = "<group>"; };
+		933FE3051D8B54CA00E1AC44 /* AddDeleteExpense.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDeleteExpense.swift; sourceTree = "<group>"; };
 		933FE3071D8B54CA00E1AC44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93550C961D99C7A90087FE23 /* AddExpense.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddExpense.swift; sourceTree = "<group>"; };
+		93550C981D99C8540087FE23 /* ExpenseScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpenseScreen.swift; sourceTree = "<group>"; };
+		93550C9A1D99F2C80087FE23 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
+		93C67FD51D95E05200C4771C /* BaseScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseScreen.swift; sourceTree = "<group>"; };
+		93C67FD71D95E75300C4771C /* BaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTest.swift; sourceTree = "<group>"; };
+		93C67FD91D95EA0900C4771C /* ExpensesScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpensesScreen.swift; sourceTree = "<group>"; };
 		CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.release.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1016,10 +1028,48 @@
 		933FE3041D8B54CA00E1AC44 /* DepozaUITests */ = {
 			isa = PBXGroup;
 			children = (
-				933FE3051D8B54CA00E1AC44 /* DepozaUITests.swift */,
+				93C67FD41D95DE4B00C4771C /* Screens */,
+				93C67FD31D95DCF400C4771C /* Extensions */,
+				93C67FD21D95DCD800C4771C /* Support */,
+				93C67FD11D95DCC900C4771C /* Tests */,
 				933FE3071D8B54CA00E1AC44 /* Info.plist */,
 			);
 			path = DepozaUITests;
+			sourceTree = "<group>";
+		};
+		93C67FD11D95DCC900C4771C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				933FE3051D8B54CA00E1AC44 /* AddDeleteExpense.swift */,
+				93C67FD71D95E75300C4771C /* BaseTest.swift */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		93C67FD21D95DCD800C4771C /* Support */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		93C67FD31D95DCF400C4771C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				93550C9A1D99F2C80087FE23 /* XCUIElementExtension.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		93C67FD41D95DE4B00C4771C /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				93C67FD51D95E05200C4771C /* BaseScreen.swift */,
+				93C67FD91D95EA0900C4771C /* ExpensesScreen.swift */,
+				93550C961D99C7A90087FE23 /* AddExpense.swift */,
+				93550C981D99C8540087FE23 /* ExpenseScreen.swift */,
+			);
+			name = Screens;
 			sourceTree = "<group>";
 		};
 		C73983BBCFAEFB03AF334D94 /* Frameworks */ = {
@@ -1120,7 +1170,7 @@
 					};
 					506E727F1A1E0B450006F2DF = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 6UNHY8UY6E;
+						DevelopmentTeam = D8746538W7;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -1404,7 +1454,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				933FE3061D8B54CA00E1AC44 /* DepozaUITests.swift in Sources */,
+				93550C991D99C8540087FE23 /* ExpenseScreen.swift in Sources */,
+				93550C971D99C7A90087FE23 /* AddExpense.swift in Sources */,
+				93C67FD61D95E05200C4771C /* BaseScreen.swift in Sources */,
+				93C67FD81D95E75300C4771C /* BaseTest.swift in Sources */,
+				93550C9B1D99F2C80087FE23 /* XCUIElementExtension.swift in Sources */,
+				93C67FDA1D95EA0900C4771C /* ExpensesScreen.swift in Sources */,
+				933FE3061D8B54CA00E1AC44 /* AddDeleteExpense.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1596,6 +1652,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = D8746538W7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1632,6 +1689,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = D8746538W7;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
