@@ -31,4 +31,33 @@ class BaseTest : XCTestCase {
         
     }
     
+    func addNewExpense(){
+        let expenses = ExpensesScreen()
+        expenses.tapOnAddExpenseButton()
+        let addExpense = AddExpense()
+        addExpense.typeAmount(amount: "100")
+        addExpense.selectClothesCategory()
+        addExpense.typeExpesneDescription(description: "t-shirt")
+        addExpense.tapOnDoneButton()
+        let actual = expenses.totalExpenseAmount()
+        
+        XCTAssert(actual == "100", "Toral amount is \(actual)")
+    }
+    
+    func getFutureDate(daysFromToday: Int) -> (day : String, month : String){
+        var components = DateComponents()
+        components.setValue(daysFromToday, for: .day)
+        
+        let today = NSDate()
+        let futureDate = NSCalendar.current.date(byAdding: components, to: today as Date)
+        let futureDay = NSCalendar.current.component(.day, from: futureDate!)
+        let futureDayString = String(futureDay)
+        let futureMonth = NSCalendar.current.component( .month, from: futureDate!)
+        
+        let dateFormat = DateFormatter()
+        let futureMonthString = dateFormat.shortMonthSymbols[futureMonth as Int - 1]
+    
+        return(futureDayString, futureMonthString )
+    }
+    
 }

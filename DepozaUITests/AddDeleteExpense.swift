@@ -8,7 +8,7 @@
 
 import XCTest
 
-class DepozaUITests: BaseTest {
+class AddDeleteExpense: BaseTest {
     
     override func setUp() {
         super.setUp()
@@ -21,21 +21,12 @@ class DepozaUITests: BaseTest {
     
     func testAddingNewExpense() {
         
-        let expenses = ExpensesScreen()
-        expenses.tapOnAddExpenseButton()
-        let addExpense = AddExpense()
-        addExpense.typeAmount(amount: "100")
-        addExpense.selectClothesCategory()
-        addExpense.typeExpesneDescription(description: "t-shirt")
-        addExpense.tapOnDoneButton()
-    
-        let actual = expenses.totalExpenseAmount()
+        addNewExpense()
         
-        XCTAssert(actual == "100", "Toral amount is \(actual)")
     }
     
     func testDeleteExpense() {
-        testAddingNewExpense()
+        addNewExpense()
         
         let expenses = ExpensesScreen()
         expenses.tapOnExpenseCell()
@@ -55,4 +46,5 @@ class DepozaUITests: BaseTest {
         XCTAssertEqual(table.cells.count, 0 , "found instead: \(table.cells.debugDescription)")
         
     }
+    
 }

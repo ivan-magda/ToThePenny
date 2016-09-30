@@ -24,4 +24,5 @@ class BaseScreen {
         field.typeText(string)
         
     }
+    
 }
