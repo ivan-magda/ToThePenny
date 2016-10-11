@@ -39,6 +39,8 @@ class BaseTest : XCTestCase {
         addExpense.selectClothesCategory()
         addExpense.typeExpesneDescription(description: "t-shirt")
         addExpense.tapOnDoneButton()
+        
+        waitForElementToAppear(format: "isHittable = true", element: expenses.expense_cell as AnyObject, time: 3.0)
         let actual = expenses.totalExpenseAmount()
         
         XCTAssert(actual == "100", "Toral amount is \(actual)")

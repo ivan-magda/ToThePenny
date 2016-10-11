@@ -11,7 +11,7 @@ import XCTest
 class ExpensesScreen : BaseScreen {
     private let addExpenseButton = XCUIApplication().buttons["add_button"]
     private let _totalExpenseAmount = XCUIApplication().tables.staticTexts["total_expenses_amount"]
-    private let expense_cell = XCUIApplication().tables.cells["cell_0"]
+    let expense_cell = XCUIApplication().tables.cells["cell_0"]
 
 
  
