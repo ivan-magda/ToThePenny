@@ -87,6 +87,9 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
     cell.categoryLabel.text = (expense.descriptionOfExpense.length == 0 ? expense.category.title : expense.descriptionOfExpense);
     cell.amountLabel.text = [NSString stringWithFormat:@"%@", [NSString formatAmount:expense.amount]];
+    
+    cell.categoryLabel.accessibilityLabel = cell.categoryLabel.text;
+    cell.amountLabel.accessibilityLabel = cell.amountLabel.text;
 }
 
 - (BOOL)noNewTransactionsToday {
@@ -107,7 +110,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MainViewCell *cell = (MainViewCell *)[tableView dequeueReusableCellWithIdentifier:@"Cell"];
-
+    
+    cell.accessibilityLabel = [NSString stringWithFormat:@"cell_%ld", (long)indexPath.row];
     return cell;
 }
 

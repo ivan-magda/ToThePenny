@@ -110,6 +110,8 @@ NSString * const ContinuingActivityRepresentsSearchableExpenseNotification = @"C
     [self addNotificationSubscribes];
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
+    self.addTransactionRoundedButton.accessibilityIdentifier = @"add_button";
+    self.totalExpensesLabel.accessibilityIdentifier = @"total_expenses_amount";
 }
 
 - (void)viewWillAppear:(BOOL)animated {
