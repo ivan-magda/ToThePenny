@@ -1,13 +1,13 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-source 'https://github.com/CocoaPods/Specs.git'
-inhibit_all_warnings!
-
 target 'Depoza' do
-  pod 'KVNProgress'
-  pod 'CorePlot'
-  pod 'KBRoundedButton'
-  pod 'SmileTouchID'
-  pod 'Crashlytics'
-  pod 'Fabric'
+  inhibit_all_warnings!
+  
+  pod 'KVNProgress', '2.3.1'
+  pod 'CorePlot', '2.2'
+  pod 'KBRoundedButton', '1.0.4'
+  pod 'SmileTouchID', '0.1.8'
+  pod 'Crashlytics', '~> 3.8.3'
+  pod 'Fabric', '~> 1.6.11'
 end

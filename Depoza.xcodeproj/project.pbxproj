@@ -29,7 +29,6 @@
 		42CE7E24ED2F93AF406EEF11 /* ExpandedCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE75FBA08D14C30D645428 /* ExpandedCollectionViewFlowLayout.m */; };
 		42CE7EC3878A06590C3036B9 /* ExtensionSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 42CE7C5A19C820E8B0326AC1 /* ExtensionSettingsTableViewController.m */; };
 		42CE7FBA25C50B90BF5C3B26 /* SelectTimePeriodViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42CE7F4F3D6B54C1F2AC8B3A /* SelectTimePeriodViewController.xib */; };
-		4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A809A823B6855AA3F640337 /* libPods-Depoza.a */; };
 		50000FBB1B039E2D00509F45 /* CustomRightDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 500980A11AE3908B007DFCEA /* CustomRightDetailCell.m */; };
 		500540EC1AC560CC007EF006 /* Banknotes.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D81AC560CC007EF006 /* Banknotes.png */; };
 		500540ED1AC560CC007EF006 /* Banknotes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 500540D91AC560CC007EF006 /* Banknotes@2x.png */; };
@@ -152,6 +151,7 @@
 		50FDE3B51A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FDE3B41A9B5EE4007C9FC0 /* CategoryInfoCollectionViewCell.m */; };
 		752C6E7A1BFC9AFA00320C92 /* LaunchImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E781BFC9AFA00320C92 /* LaunchImage.png */; };
 		752C6E7B1BFC9AFA00320C92 /* LaunchImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */; };
+		DDBCDD9E70B14EB880F055C3 /* libPods-Depoza.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C32E8ECFA62980D9ECE62D23 /* libPods-Depoza.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -400,7 +400,7 @@
 		6E33BB0FBD1BFFE5AB9CC2FF /* Pods-Depoza.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.debug.xcconfig"; sourceTree = "<group>"; };
 		752C6E781BFC9AFA00320C92 /* LaunchImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LaunchImage.png; sourceTree = "<group>"; };
 		752C6E791BFC9AFA00320C92 /* LaunchImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImage@2x.png"; sourceTree = "<group>"; };
-		7A809A823B6855AA3F640337 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C32E8ECFA62980D9ECE62D23 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Depoza.release.xcconfig"; path = "Pods/Target Support Files/Pods-Depoza/Pods-Depoza.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -418,7 +418,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				502839131ACC11A700C97C99 /* CoreData.framework in Frameworks */,
-				4FD8F59DF7609828B91A5524 /* libPods-Depoza.a in Frameworks */,
+				DDBCDD9E70B14EB880F055C3 /* libPods-Depoza.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1037,7 +1037,7 @@
 				50E021E51AD8F63C008489DA /* Accelerate.framework */,
 				502839121ACC11A700C97C99 /* CoreData.framework */,
 				5015A5641AC02C230056271A /* NotificationCenter.framework */,
-				7A809A823B6855AA3F640337 /* libPods-Depoza.a */,
+				C32E8ECFA62980D9ECE62D23 /* libPods-Depoza.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1110,7 +1110,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = "";
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Ivan Magda";
 				TargetAttributes = {
 					5015A5621AC02C230056271A = {
@@ -1283,7 +1283,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		500867E21BA31CF900F5B82C /* ShellScript */ = {
@@ -1517,6 +1517,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1526,8 +1527,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1536,6 +1539,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -1559,6 +1563,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -1568,8 +1573,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1577,6 +1584,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1594,6 +1602,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6E33BB0FBD1BFFE5AB9CC2FF /* Pods-Depoza.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1626,6 +1635,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFAB0BD41F48196056CD2126 /* Pods-Depoza.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Depoza/Depoza.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
