@@ -21,6 +21,8 @@
 
 ## Installation
 - Follow this [instruction](https://fabric.io/kits/ios/crashlytics/install) to setup the Crashlytics.
+  - Add a Run Script Build Phase
+  - Add Your API Key
 - Run `pod install` on project directory([CocoaPods Installation](https://guides.cocoapods.org/using/getting-started.html)).
 - Open `Depoza.xcworkspace`.
 - Build & run, enjoy.
