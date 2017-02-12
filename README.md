@@ -1,4 +1,4 @@
-# ToThePenny - is one of the most convenient and easy way to control personal finances.
+# ToThePenny - is one of the most convenient and easy ways to control personal finances.
 
 ![Platform iOS](https://img.shields.io/badge/platform-iOS-blue.svg)
 ![License](https://img.shields.io/npm/l/express.svg)
@@ -20,6 +20,7 @@
 - Unlimited number of expense categories.
 
 ## Installation
+- Follow this [instruction](https://fabric.io/kits/ios/crashlytics/install) to setup the Crashlytics.
 - Run `pod install` on project directory([CocoaPods Installation](https://guides.cocoapods.org/using/getting-started.html)).
 - Open `Depoza.xcworkspace`.
 - Build & run, enjoy.
