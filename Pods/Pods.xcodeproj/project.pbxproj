@@ -280,7 +280,7 @@
 
 /* Begin PBXFileReference section */
 		00925B6B45B3ECDD27C72BD118A37644 /* SmileAuthenticator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SmileAuthenticator.h; path = SmileAuth/Classes/SmileAuthenticator.h; sourceTree = "<group>"; };
-		0194618F59B7BEAC9ABE64C53E2C561F /* libKBRoundedButton.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libKBRoundedButton.a; path = libKBRoundedButton.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		0194618F59B7BEAC9ABE64C53E2C561F /* libKBRoundedButton.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKBRoundedButton.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		02223F0B162D794F90F6A7EBACB2F3DD /* _CPTFillColor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _CPTFillColor.h; path = framework/Source/_CPTFillColor.h; sourceTree = "<group>"; };
 		02D523189A6B2A8DE70839D1D42C4109 /* _CPTAnimationCGSizePeriod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _CPTAnimationCGSizePeriod.m; path = framework/Source/_CPTAnimationCGSizePeriod.m; sourceTree = "<group>"; };
 		05117C4929DC2415BA0972185E3FFBA6 /* CPTPlotRange.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTPlotRange.h; path = framework/Source/CPTPlotRange.h; sourceTree = "<group>"; };
@@ -326,7 +326,7 @@
 		2E191ED8D07868217235C858168F5281 /* CPTAxisLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTAxisLabel.m; path = framework/Source/CPTAxisLabel.m; sourceTree = "<group>"; };
 		2F4400865AF542103916876B6FAFA120 /* UIColor+KVNContrast.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+KVNContrast.h"; path = "KVNProgress/Categories/UIColor+KVNContrast.h"; sourceTree = "<group>"; };
 		2F707315A5E6FE3D4B4598901923D46D /* CPTAnimationPeriod.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTAnimationPeriod.m; path = framework/Source/CPTAnimationPeriod.m; sourceTree = "<group>"; };
-		32718BBCD58185101CA73D816E3676D6 /* libSmileTouchID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSmileTouchID.a; path = libSmileTouchID.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		32718BBCD58185101CA73D816E3676D6 /* libSmileTouchID.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSmileTouchID.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		329BFA1683DC6D49D0315AAA3D5AD4C7 /* NSNumberExtensions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NSNumberExtensions.m; path = framework/Source/NSNumberExtensions.m; sourceTree = "<group>"; };
 		3338FC2EDE39955962A88BCC7573DC25 /* CPTTheme.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTTheme.m; path = framework/Source/CPTTheme.m; sourceTree = "<group>"; };
 		3368C40FC544165C6175D9C5F7A5EBE9 /* CPTPlotArea.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTPlotArea.h; path = framework/Source/CPTPlotArea.h; sourceTree = "<group>"; };
@@ -399,7 +399,7 @@
 		77A0FB57CD464C1842C158A7C5DA8780 /* _CPTFillImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _CPTFillImage.h; path = framework/Source/_CPTFillImage.h; sourceTree = "<group>"; };
 		77C88A1DCB42C4B7726C149B7DF1845C /* CorePlot-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "CorePlot-dummy.m"; sourceTree = "<group>"; };
 		79D40BCA34593423B034C68B723149CF /* CPTPathExtensions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTPathExtensions.h; path = framework/Source/CPTPathExtensions.h; sourceTree = "<group>"; };
-		7A48C6281C54C04D58ECECC4387E193C /* libKVNProgress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libKVNProgress.a; path = libKVNProgress.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7A48C6281C54C04D58ECECC4387E193C /* libKVNProgress.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKVNProgress.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AE33525BDA9E4F4410B8A0F7348FDB3 /* CPTLegendEntry.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTLegendEntry.m; path = framework/Source/CPTLegendEntry.m; sourceTree = "<group>"; };
 		7B624788D6554997D6073EE3EEAFB483 /* _CPTXYTheme.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = _CPTXYTheme.h; path = framework/Source/_CPTXYTheme.h; sourceTree = "<group>"; };
 		7BAEE181015CECDAF4BFCFEC9F8CF655 /* Crashlytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Crashlytics.h; path = iOS/Crashlytics.framework/Headers/Crashlytics.h; sourceTree = "<group>"; };
@@ -431,8 +431,8 @@
 		90387CF5E7BD8CE06ECE6AAFE143CB44 /* KVNProgress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KVNProgress.h; path = KVNProgress/Classes/KVNProgress.h; sourceTree = "<group>"; };
 		90FCDF15E23CF4609BF3C7A289D20ABB /* UIImage+Color.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+Color.h"; path = "KBRoundedButton/UIImage+Color.h"; sourceTree = "<group>"; };
 		92F6758EDFF1B36EBFEAEEC8DB8230C2 /* CPTExceptions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTExceptions.h; path = framework/Source/CPTExceptions.h; sourceTree = "<group>"; };
-		933266B38E2176F60E8D62042AFD748B /* CorePlotProbes.d */ = {isa = PBXFileReference; includeInIndex = 1; name = CorePlotProbes.d; path = framework/TestResources/CorePlotProbes.d; sourceTree = "<group>"; };
-		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		933266B38E2176F60E8D62042AFD748B /* CorePlotProbes.d */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.dtrace; name = CorePlotProbes.d; path = framework/TestResources/CorePlotProbes.d; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		96FA1A814597FD28BD5D21D31157F211 /* SmileTouchID-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SmileTouchID-dummy.m"; sourceTree = "<group>"; };
 		97956EC8C8FD25AD2A93A34A6E4F5375 /* CPTPlatformSpecificFunctions.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTPlatformSpecificFunctions.h; path = framework/iPhoneOnly/CPTPlatformSpecificFunctions.h; sourceTree = "<group>"; };
 		98E7BD2F00E1EA25FBD0DB53E60BE82E /* CPTAxisTitle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTAxisTitle.h; path = framework/Source/CPTAxisTitle.h; sourceTree = "<group>"; };
@@ -509,7 +509,7 @@
 		DA2EF4E7BBFC7248F8CD3F8F46EF4E74 /* CPTXYAxisSet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTXYAxisSet.h; path = framework/Source/CPTXYAxisSet.h; sourceTree = "<group>"; };
 		DAF624ED15CBAD77F556CF8E4CEEFC18 /* CPTLimitBand.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CPTLimitBand.h; path = framework/Source/CPTLimitBand.h; sourceTree = "<group>"; };
 		DB1B36F8ECFBF5356876E4C719B39F11 /* SmilePasswordContainerView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SmilePasswordContainerView.h; path = SmileAuth/Classes/SmilePasswordContainerView.h; sourceTree = "<group>"; };
-		DC751C35BAB38D090A55482ED7715BA4 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-Depoza.a"; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC751C35BAB38D090A55482ED7715BA4 /* libPods-Depoza.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Depoza.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDDEE82EBAD25B8D9D2D67EB1D30135D /* CPTPlatformSpecificCategories.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTPlatformSpecificCategories.m; path = framework/iPhoneOnly/CPTPlatformSpecificCategories.m; sourceTree = "<group>"; };
 		DDFF5F1FCBD2E7BAD15D3EA1DA05D256 /* NSDecimalNumberExtensions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NSDecimalNumberExtensions.m; path = framework/Source/NSDecimalNumberExtensions.m; sourceTree = "<group>"; };
 		DFF2A8CCAD709BD40C19C56658CC66D3 /* SmileKeychainWrapper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SmileKeychainWrapper.m; path = SmileAuth/Classes/SmileKeychainWrapper.m; sourceTree = "<group>"; };
@@ -542,7 +542,7 @@
 		F8153EE6178D27320E7F5F7E3665A451 /* CorePlot-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "CorePlot-prefix.pch"; sourceTree = "<group>"; };
 		F97528D6EDF8FC00B35FB0AA4E6A65A3 /* CPTImagePlatformSpecific.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTImagePlatformSpecific.m; path = framework/iPhoneOnly/CPTImagePlatformSpecific.m; sourceTree = "<group>"; };
 		FBAC11C2142CBD9D4E6026E2262FFDF0 /* KVNRotationViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KVNRotationViewController.h; path = KVNProgress/Classes/KVNRotationViewController.h; sourceTree = "<group>"; };
-		FC51F855A8D2333D9E8233CCA4D4EB48 /* libCorePlot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libCorePlot.a; path = libCorePlot.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC51F855A8D2333D9E8233CCA4D4EB48 /* libCorePlot.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCorePlot.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FCC0D6AC5D2DC422EACAEE0021357D6D /* _CPTSlateTheme.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = _CPTSlateTheme.m; path = framework/Source/_CPTSlateTheme.m; sourceTree = "<group>"; };
 		FCC3937609EB0101749E6624CF36A481 /* CPTAxisSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = CPTAxisSet.m; path = framework/Source/CPTAxisSet.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -622,7 +622,6 @@
 				838FA4B528732B965D0B77DD9D331EE7 /* Fabric.h */,
 				5E95DE5BF2134904DCE0F4B77351E10D /* Frameworks */,
 			);
-			name = Fabric;
 			path = Fabric;
 			sourceTree = "<group>";
 		};
@@ -709,7 +708,6 @@
 				D837738EA8B7FF296F0781BA98B1D50A /* UIImage+Color.m */,
 				96D6196D68B45AE2903D1F8E9C12BC55 /* Support Files */,
 			);
-			name = KBRoundedButton;
 			path = KBRoundedButton;
 			sourceTree = "<group>";
 		};
@@ -770,7 +768,6 @@
 				19626EAA8830D5E452F2E7A8424518CA /* Resources */,
 				D26401FF8A154468EF177D039B7D28DC /* Support Files */,
 			);
-			name = KVNProgress;
 			path = KVNProgress;
 			sourceTree = "<group>";
 		};
@@ -786,7 +783,6 @@
 				7BAEE181015CECDAF4BFCFEC9F8CF655 /* Crashlytics.h */,
 				3F19B5F83F4C1970377A391FEC9C5C6D /* Frameworks */,
 			);
-			name = Crashlytics;
 			path = Crashlytics;
 			sourceTree = "<group>";
 		};
@@ -827,7 +823,6 @@
 				E5C8968878EB3BECED6AB0FE48F4467F /* Resources */,
 				5FD4DBEE7FB590653E90B6D4FE88376E /* Support Files */,
 			);
-			name = SmileTouchID;
 			path = SmileTouchID;
 			sourceTree = "<group>";
 		};
@@ -1038,7 +1033,6 @@
 				329BFA1683DC6D49D0315AAA3D5AD4C7 /* NSNumberExtensions.m */,
 				BF7AB239CAF24C7A72F1B17D52529B70 /* Support Files */,
 			);
-			name = CorePlot;
 			path = CorePlot;
 			sourceTree = "<group>";
 		};
@@ -1282,7 +1276,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0900;
 			};
 			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1496,7 +1490,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/KBRoundedButton/KBRoundedButton-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1564,7 +1558,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1572,14 +1568,20 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_RELEASE=1",
 					"$(inherited)",
@@ -1632,7 +1634,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/SmileTouchID/SmileTouchID-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1655,7 +1657,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/KBRoundedButton/KBRoundedButton-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1677,7 +1679,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -1685,15 +1689,21 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGNING_REQUIRED = NO;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"POD_CONFIGURATION_DEBUG=1",
@@ -1749,7 +1759,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/KVNProgress/KVNProgress-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1772,7 +1782,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/KVNProgress/KVNProgress-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1795,7 +1805,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/SmileTouchID/SmileTouchID-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
