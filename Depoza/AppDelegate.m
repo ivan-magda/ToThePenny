@@ -36,7 +36,7 @@
     //TouchID
 #import <SmileTouchID/SmileAuthenticator.h>
 
-typedef void(^SmileTouchIdUserSuccessAuthenticationBlock)();
+typedef void(^SmileTouchIdUserSuccessAuthenticationBlock)(void);
 
 static NSString * const kAppGroupSharedContainer = @"group.com.vanyaland.depoza";
 static NSString * const kAddExpenseOnStartupKey = @"AddExpenseOnStartup";
