@@ -3,7 +3,8 @@
 ![Platform iOS](https://img.shields.io/badge/platform-iOS-blue.svg)
 ![License](https://img.shields.io/npm/l/express.svg)
 
-![alt tag] (https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/6.png)
+<img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/6.png"
+width="800" height="745">
 
 ### Main features:
 - Add new expense records in a convenient way.
