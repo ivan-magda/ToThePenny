@@ -35,10 +35,21 @@ Twitter: [@magda_ivan](https://twitter.com/magda_ivan).
 
 ToThePenny is available on the [App Store](https://itunes.apple.com/app/tothepenny/id994476075).
 
-## LICENSE
-This project is open-sourced software licensed under the MIT License.
+## Open Source & Copying
 
-See the LICENSE file for more information.
+I ship ToThePenny on the App Store for free and provide its entire source code for free as well. In the spirit of openness, I have licensed my work under MIT with additions so that you can use my code in your app, if you choose.
+
+However, I ask that you **please do not ship this app** under your own account. Paid or free.
+
+## LICENSE
+
+This project is open-sourced software licensed under the MIT License with Additions.
+
+* You are not able to edit About Page.
+* Delete any copyrights.
+* You are not able to fork/clone/rebuild repository to publish "YOU FORK NAME" to Play Market, ITunes or any app stores.
+
+See the [LICENSE](LICENSE) file for more information.
 
 ## More Images
 <img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/1.png"
