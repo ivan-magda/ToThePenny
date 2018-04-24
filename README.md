@@ -6,6 +6,8 @@
 <img src="https://github.com/vanyaland/ToThePenny/blob/master/Screenshots/6.png"
 width="800" height="745">
 
+## This repository is no longer maintained.
+
 ToThePenny - is one of the most convenient and easy ways to control personal finances.
 
 ### Main features:
