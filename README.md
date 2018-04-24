@@ -35,8 +35,6 @@ I'm [Ivan Magda](https://www.facebook.com/ivan.magda).
 Email: [imagda15@gmail.com](mailto:imagda15@gmail.com).
 Twitter: [@magda_ivan](https://twitter.com/magda_ivan).
 
-ToThePenny is available on the [App Store](https://itunes.apple.com/app/tothepenny/id994476075).
-
 ## Open Source & Copying
 
 I ship ToThePenny on the App Store for free and provide its entire source code for free as well. In the spirit of openness, I have licensed my work under MIT with additions so that you can use my code in your app, if you choose.
